@@ -10,6 +10,12 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="Carro Serrano"
+run/main_scene="uid://c4a6bxjt84we0"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
