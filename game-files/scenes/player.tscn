@@ -1,11 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://bnlpmggkpjkmy"]
+[gd_scene load_steps=9 format=3 uid="uid://bnlpmggkpjkmy"]
 
 [ext_resource type="Script" uid="uid://b88kw14blcnqb" path="res://scripts/camera_movement.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://biseug8aolewx" path="res://scenes/cross_hair.gd" id="2_dqkch"]
+[ext_resource type="Texture2D" uid="uid://n501qceousrk" path="res://assets/point_1.png" id="3_qlg0r"]
+[ext_resource type="Script" uid="uid://bm7qwjijf78je" path="res://scenes/texture_rect.gd" id="4_tuyoq"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_4flbx"]
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_4flbx"]
 points = PackedVector3Array(-0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_dqkch"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_qlg0r"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [node name="Player" type="RigidBody3D"]
 script = ExtResource("1_4flbx")
@@ -17,6 +25,11 @@ script = ExtResource("1_4flbx")
 [node name="Camera3D" type="Camera3D" parent="TwistPivot/PitchPivot"]
 current = true
 
+[node name="RayCast3D" type="RayCast3D" parent="TwistPivot/PitchPivot/Camera3D"]
+target_position = Vector3(0, 0, -10)
+collision_mask = 2
+collide_with_areas = true
+
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6731125, 0, -2.3245)
 mesh = SubResource("BoxMesh_4flbx")
@@ -24,3 +37,45 @@ mesh = SubResource("BoxMesh_4flbx")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6731125, 0, -2.3245)
 shape = SubResource("ConvexPolygonShape3D_4flbx")
+
+[node name="Control" type="CanvasLayer" parent="."]
+
+[node name="CrossHair" type="Control" parent="Control" node_paths=PackedStringArray("raycast")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("2_dqkch")
+raycast = NodePath("../../TwistPivot/PitchPivot/Camera3D/RayCast3D")
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="Control/CrossHair"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_qlg0r")
+expand_mode = 1
+stretch_mode = 3
+script = ExtResource("4_tuyoq")
+metadata/_edit_use_anchors_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+collision_layer = 2
+collision_mask = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+layers = 2
+mesh = SubResource("BoxMesh_dqkch")
+skeleton = NodePath("")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -3)
+shape = SubResource("ConcavePolygonShape3D_qlg0r")

@@ -38,5 +38,5 @@ mesh = SubResource("PlaneMesh_gyfs4")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("ConcavePolygonShape3D_d5x1h")
 
-[node name="Player" parent="." instance=ExtResource("1_0f027")]
+[node name="Player" parent="." groups=["interactable"] instance=ExtResource("1_0f027")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.731502, 6.164627)
