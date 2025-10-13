@@ -49,6 +49,7 @@ func _input(event):
 	if event.is_action_pressed("ui_select"):
 		space_held = true
 		_update_crosshair_immediate()
+		_try_interact()
 	elif event.is_action_released("ui_select"):
 		space_held = false
 		_update_crosshair_immediate()
@@ -105,3 +106,12 @@ func _process(delta):
 		time_passed = 0.0
 		current_index = (current_index + 1) % textures_array.size()
 		crosshair_texture.texture = textures_array[current_index]
+		
+		
+func _try_interact():
+	if not raycast or not raycast.is_colliding():
+		return
+
+	var collider = raycast.get_collider()
+	if collider and collider.has_method("interact"):
+		collider.interact()
