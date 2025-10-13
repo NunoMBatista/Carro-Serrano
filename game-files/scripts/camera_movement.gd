@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 
 var mouse_sensitivity := 0.001
 var twist_input := 0.0 # how much mouse has moved horizontally every frame
@@ -31,6 +31,9 @@ func _process(delta: float) -> void:
 	)
 	twist_input = 0.0
 	pitch_input = 0.0
+	
+	if global_position.y < 0.0:
+		global_position.y = 0.0
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
