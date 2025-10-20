@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://bnlpmggkpjkmy"]
 
 [ext_resource type="Script" uid="uid://b88kw14blcnqb" path="res://scripts/camera_movement.gd" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://biseug8aolewx" path="res://scenes/cross_hair.gd" id="2_dqkch"]
+[ext_resource type="Script" uid="uid://biseug8aolewx" path="res://scripts/cross_hair.gd" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://n501qceousrk" path="res://assets/point_1.png" id="3_qlg0r"]
-[ext_resource type="Script" uid="uid://bm7qwjijf78je" path="res://scenes/texture_rect.gd" id="4_tuyoq"]
+[ext_resource type="Script" uid="uid://bm7qwjijf78je" path="res://scripts/texture_rect.gd" id="4_tuyoq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_tuyoq"]
 

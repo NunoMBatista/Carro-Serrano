@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=3 uid="uid://c4a6bxjt84we0"]
 
-[ext_resource type="PackedScene" uid="uid://bnlpmggkpjkmy" path="res://scenes/player.tscn" id="1_0f027"]
-[ext_resource type="Script" uid="uid://4qs786lmlwo0" path="res://scripts/dialogue_test.gd" id="2_pw63i"]
-[ext_resource type="Resource" uid="uid://d1ecu80vigub" path="res://dialogue/testdialogue.dialogue" id="3_7ykc4"]
+[ext_resource type="PackedScene" uid="uid://bnlpmggkpjkmy" path="res://scenes/player.tscn" id="1_w2twt"]
+[ext_resource type="Script" uid="uid://ceqh6jtris3rt" path="res://scripts/dialogue_trigger.gd" id="2_7ykc4"]
+[ext_resource type="Resource" uid="uid://d1ecu80vigub" path="res://dialogue/testdialogue.dialogue" id="3_pu3yx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o3jxj"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -19,7 +19,8 @@ glow_enabled = true
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_gyfs4"]
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_w2twt"]
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pw63i"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -37,11 +38,11 @@ mesh = SubResource("PlaneMesh_gyfs4")
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("WorldBoundaryShape3D_w2twt")
+shape = SubResource("ConcavePolygonShape3D_pw63i")
 
-[node name="Player" parent="." groups=["interactable"] instance=ExtResource("1_0f027")]
+[node name="Player" parent="." instance=ExtResource("1_w2twt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.731502, 6.164627)
 
-[node name="Node3D" type="Node3D" parent="."]
-script = ExtResource("2_pw63i")
-dialogue = ExtResource("3_7ykc4")
+[node name="DialogueTriggerTest" type="Node3D" parent="."]
+script = ExtResource("2_7ykc4")
+dialogue = ExtResource("3_pu3yx")
