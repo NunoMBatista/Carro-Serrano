@@ -1,0 +1,12 @@
+# Blender 4.5.3 LTS MTL File: 'car.blend1'
+# www.blender.org
+
+newmtl Material.001
+Ns 250.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd -s -2 1 1 /home/kikols/Desktop/4ANO/1SEMESTRE/DJ/Projeto2/game-files/assets/carro_texture.png
+map_d -s -2 1 1 /home/kikols/Desktop/4ANO/1SEMESTRE/DJ/Projeto2/game-files/assets/carro_texture.png
