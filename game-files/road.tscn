@@ -1,0 +1,46 @@
+[gd_scene load_steps=4 format=3 uid="uid://cojrhsl6hw8jv"]
+
+[ext_resource type="Script" uid="uid://dfqfqlcyc24yo" path="res://addons/road-generator/nodes/road_manager.gd" id="1_x0d2t"]
+[ext_resource type="Script" uid="uid://bfmdcbmgrleml" path="res://addons/road-generator/nodes/road_container.gd" id="2_bpeel"]
+[ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="3_twbfo"]
+
+[node name="Road" type="Node3D"]
+
+[node name="RoadManager" type="Node3D" parent="."]
+script = ExtResource("1_x0d2t")
+metadata/_custom_type_script = "uid://dfqfqlcyc24yo"
+
+[node name="Road_001" type="Node3D" parent="RoadManager"]
+script = ExtResource("2_bpeel")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("@Node3D@92783"), NodePath("@Node3D@92783")])
+edge_rp_local_dirs = Array[int]([0, 1])
+
+[node name="RP_001" type="Node3D" parent="RoadManager/Road_001"]
+transform = Transform3D(-0.04279562, 0, -0.9990839, 0, 1, 0, 0.9990839, 0, -0.04279562, 44.787567, -2.3838425, 24.347511)
+script = ExtResource("3_twbfo")
+traffic_dir = Array[int]([2, 1])
+next_mag = 16.004665
+prior_pt_init = NodePath("../RP_002")
+next_pt_init = NodePath("../RP_003")
+
+[node name="RP_002" type="Node3D" parent="RoadManager/Road_001"]
+transform = Transform3D(-0.04279574, 0.009247186, -0.999041, 0, 0.99995714, 0.009255665, 0.9990838, 0.00039610305, -0.042793907, 76.76757, -2.1338425, 25.717373)
+script = ExtResource("3_twbfo")
+traffic_dir = Array[int]([2, 1])
+prior_mag = 8.111537
+next_mag = 16.004665
+prior_pt_init = NodePath("../RP_003")
+next_pt_init = NodePath("../RP_001")
+
+[node name="RP_003" type="Node3D" parent="RoadManager/Road_001"]
+transform = Transform3D(-0.019376885, 0.040037323, -0.99901026, -0.00021685626, 0.9991977, 0.040049035, 0.9998122, 0.0009926673, -0.019352656, 92.98442, -2.0339997, 26.221771)
+script = ExtResource("3_twbfo")
+traffic_dir = Array[int]([2, 1])
+prior_mag = 8.111537
+next_mag = 8.111537
+prior_pt_init = NodePath("../RP_001")
+next_pt_init = NodePath("../RP_002")
