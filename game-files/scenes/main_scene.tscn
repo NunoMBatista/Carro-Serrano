@@ -4,7 +4,7 @@
 [ext_resource type="Resource" uid="uid://d1ecu80vigub" path="res://dialogue/testdialogue.dialogue" id="3_7ykc4"]
 [ext_resource type="ArrayMesh" uid="uid://dghmujrcvkars" path="res://assets/Tree2.obj" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://bnlpmggkpjkmy" path="res://scenes/player.tscn" id="5_gubc5"]
-[ext_resource type="PackedScene" uid="uid://cojrhsl6hw8jv" path="res://road.tscn" id="6_c16ls"]
+[ext_resource type="PackedScene" uid="uid://cojrhsl6hw8jv" path="res://scenes/road.tscn" id="6_c16ls"]
 [ext_resource type="Script" uid="uid://b3bcv1ttmw6h" path="res://scripts/bebe_script.gd" id="6_rt2n2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o3jxj"]
@@ -60,7 +60,7 @@ shape = SubResource("ConcavePolygonShape3D_c16ls")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.580919, 0, 5.7369237)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Tree"]
-transform = Transform3D(0.82857996, -0.22142936, -0.51422197, 0.18814231, 0.9751764, -0.1167623, 0.52731174, 0, 0.8496719, 5.6348, 0, 3.9757304)
+transform = Transform3D(0.82857996, -0.22142936, -0.51422197, 0.18814231, 0.9751764, -0.1167623, 0.52731174, 0, 0.8496719, -0.7542534, 0, 6.7506833)
 mesh = ExtResource("4_pu3yx")
 skeleton = NodePath("../..")
 
@@ -74,25 +74,15 @@ transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, -2.395, 0, -0.13)
 shape = SubResource("WorldBoundaryShape3D_w2twt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0010816604, -0.0023649216, 8.716574e-05)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.66272706, -0.0042841914, -0.0012322906)
 mesh = SubResource("PlaneMesh_gyfs4")
 skeleton = NodePath("../..")
 
-[node name="Tree2" type="StaticBody3D" parent="Floor/MeshInstance3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.580919, 0, 5.7369237)
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="Floor/MeshInstance3D/Tree2"]
-mesh = ExtResource("4_pu3yx")
-skeleton = NodePath("../..")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/MeshInstance3D/Tree2"]
-shape = SubResource("ConcavePolygonShape3D_rt2n2")
-
 [node name="Tree2" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.580919, 0, 5.7369237)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.580919, 0, 5.9658313)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Tree2"]
-transform = Transform3D(0.9274386, 0, 0.3739754, 0.08584873, 0.9732952, -0.21290016, -0.36398846, 0.22955714, 0.9026716, -12.44493, 0, 0.67848825)
+transform = Transform3D(0.9274386, 0, 0.3739754, 0.08584873, 0.9732952, -0.21290016, -0.36398846, 0.22955714, 0.9026716, -12.44493, 0, 1.4276824)
 mesh = ExtResource("4_pu3yx")
 skeleton = NodePath("../..")
 
@@ -100,10 +90,10 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_rt2n2")
 
 [node name="Tree3" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.580919, 0, 5.7369237)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.580919, 0, 11.04748)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Tree3"]
-transform = Transform3D(0.49833965, -0.045258377, -0.86579984, 0.022577178, 0.99897534, -0.039224885, 0.8666879, 0, 0.4988508, 0, 0, -11.412888)
+transform = Transform3D(0.5026144, -0.045257825, -0.86332536, 0.022577176, 0.99897534, -0.039224885, 0.86421585, 0.00022354483, 0.5031211, 0, 0, -23.091177)
 mesh = ExtResource("4_pu3yx")
 skeleton = NodePath("../..")
 
@@ -114,7 +104,7 @@ shape = SubResource("ConcavePolygonShape3D_rt2n2")
 transform = Transform3D(0.8056699, 0, 0.5923647, 0, 1, 0, -0.5923647, 0, 0.8056699, 14.7144985, 0, 5.7369237)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Tree4"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.172554, 0, -11.1154175)
+transform = Transform3D(0.99989885, -0.014215534, -7.4237585e-05, 0.014215534, 0.9998444, 0.0104519, -7.429719e-05, -0.010451899, 0.99994504, 21.43412, 0, -9.69948)
 mesh = ExtResource("4_pu3yx")
 skeleton = NodePath("../..")
 
@@ -135,6 +125,7 @@ shape = SubResource("ConcavePolygonShape3D_rt2n2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.918186, 0, -5.7562227)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Tree6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8.037861)
 mesh = ExtResource("4_pu3yx")
 skeleton = NodePath("../..")
 
@@ -145,6 +136,7 @@ shape = SubResource("ConcavePolygonShape3D_rt2n2")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.199029, 0, 7.5292754)
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Tree7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.2352185)
 mesh = ExtResource("4_pu3yx")
 skeleton = NodePath("../..")
 
@@ -152,11 +144,11 @@ skeleton = NodePath("../..")
 shape = SubResource("ConcavePolygonShape3D_rt2n2")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.997997, 0, 2.371151)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.66554, 0, -10.406183)
 mesh = ExtResource("4_pu3yx")
 skeleton = NodePath("../..")
 
 [node name="Player" parent="." instance=ExtResource("5_gubc5")]
 
 [node name="Road" parent="." instance=ExtResource("6_c16ls")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -64.642365, 4.3483315, -33.044067)
+transform = Transform3D(0.49836063, 0, -0.04045609, 0, 0.5, 0, 0.04045609, 0, 0.49836063, -7.716419, 3.2224026, -16.083458)
