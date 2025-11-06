@@ -27,11 +27,7 @@ window/size/mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
-
-[filesystem]
-
-import/blender/enabled=false
+enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg", "res://addons/road-generator/plugin.cfg")
 
 [input]
 

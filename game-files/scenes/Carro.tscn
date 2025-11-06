@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cu7et3r1lagu2" path="res://scripts/carro.gd" id="1_san5m"]
 [ext_resource type="ArrayMesh" uid="uid://c3e3xdp25evbp" path="res://models/car_real.obj" id="2_d4lra"]
 [ext_resource type="ArrayMesh" uid="uid://b7a2gckx8vk04" path="res://models/car_ball.obj" id="3_d4lra"]
-[ext_resource type="Texture2D" uid="uid://bg68v0sjn7vwu" path="res://assets/car_ball_carro_texture.png" id="3_fyjh3"]
+[ext_resource type="Texture2D" uid="uid://dc3jxio6cpfna" path="res://assets/car_carro_texture.png" id="3_fyjh3"]
 [ext_resource type="Script" uid="uid://bahflgontt25" path="res://scripts/ball_spawner.gd" id="5_fyjh3"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fyjh3"]
