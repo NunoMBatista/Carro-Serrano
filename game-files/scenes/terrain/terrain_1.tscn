@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://b5d3uht1nyf1g"]
+[gd_scene load_steps=20 format=3 uid="uid://b5d3uht1nyf1g"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_lia1b"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_61ul2"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://dfqfqlcyc24yo" path="res://addons/road-generator/nodes/road_manager.gd" id="12_emool"]
 [ext_resource type="Script" uid="uid://bfmdcbmgrleml" path="res://addons/road-generator/nodes/road_container.gd" id="13_slk8x"]
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="14_f02o3"]
+[ext_resource type="PackedScene" uid="uid://brhb53p7exgm5" path="res://scenes/railing.tscn" id="15_f02o3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kqib6"]
 
@@ -471,3 +472,6 @@ prior_mag = 16.0
 next_mag = 16.0
 prior_pt_init = NodePath("../RP_031")
 next_pt_init = NodePath("../RP_026")
+
+[node name="Node3D2" parent="." instance=ExtResource("15_f02o3")]
+transform = Transform3D(-0.001303166, 0, -0.024966009, 0, 0.024999999, 0, 0.024966009, 0, -0.001303166, 114.19629, 23.129173, 282.08804)

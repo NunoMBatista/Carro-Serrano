@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://brhb53p7exgm5"]
+
+[ext_resource type="ArrayMesh" uid="uid://nkg6sdwgh33i" path="res://assets/railDeSecurite13m.obj" id="1_xpdj0"]
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1592.8403, 0, 364.7945)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 285.0586, 0, 0)
+mesh = ExtResource("1_xpdj0")

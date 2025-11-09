@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://nkg6sdwgh33i"
+path="res://.godot/imported/railDeSecurite13m.obj-8b2af883ef3dc5a09daf5a5db8470c63.mesh"
+
+[deps]
+
+files=["res://.godot/imported/railDeSecurite13m.obj-8b2af883ef3dc5a09daf5a5db8470c63.mesh"]
+
+source_file="res://assets/railDeSecurite13m.obj"
+dest_files=["res://.godot/imported/railDeSecurite13m.obj-8b2af883ef3dc5a09daf5a5db8470c63.mesh", "res://.godot/imported/railDeSecurite13m.obj-8b2af883ef3dc5a09daf5a5db8470c63.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
