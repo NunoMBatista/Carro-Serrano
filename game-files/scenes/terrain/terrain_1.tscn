@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b5d3uht1nyf1g"]
+[gd_scene load_steps=22 format=3 uid="uid://b5d3uht1nyf1g"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_lia1b"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_61ul2"]
@@ -11,10 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://bfjdw1dfung0v" path="res://models/Terrain/terrain_1_slot1_normal_roughness.png" id="9_f02o3"]
 [ext_resource type="Texture2D" uid="uid://c2kvrt11cv3gt" path="res://models/Terrain/terrain_1_slot2_normal_roughness.png" id="10_0fa2x"]
 [ext_resource type="Texture2D" uid="uid://dw2c4287fd37h" path="res://models/Terrain/terrain_1_slot3_normal_roughness.png" id="11_y43ap"]
-[ext_resource type="Script" uid="uid://dfqfqlcyc24yo" path="res://addons/road-generator/nodes/road_manager.gd" id="12_emool"]
-[ext_resource type="Script" uid="uid://bfmdcbmgrleml" path="res://addons/road-generator/nodes/road_container.gd" id="13_slk8x"]
-[ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="14_f02o3"]
-[ext_resource type="PackedScene" uid="uid://brhb53p7exgm5" path="res://scenes/railing.tscn" id="15_f02o3"]
+[ext_resource type="Script" uid="uid://msn4xj10uu35" path="res://addons/road-generator/nodes/road_manager.gd" id="12_emool"]
+[ext_resource type="Script" uid="uid://b4i13se761dqy" path="res://addons/road-generator/nodes/road_container.gd" id="13_slk8x"]
+[ext_resource type="Script" uid="uid://b5ye0al7dlwoq" path="res://addons/road-generator/nodes/road_point.gd" id="14_f02o3"]
+[ext_resource type="ArrayMesh" uid="uid://yenammuq36vh" path="res://assets/guard_rail.obj" id="16_f02o3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kqib6"]
 
@@ -30,6 +30,15 @@ tonemap_mode = 3
 script = ExtResource("3_dim0d")
 mode = 0
 textures = [[ExtResource("4_ijqil"), ExtResource("5_1qfhg"), ExtResource("6_5oodu"), ExtResource("7_emool")], [ExtResource("8_slk8x"), ExtResource("9_f02o3"), ExtResource("10_0fa2x"), ExtResource("11_y43ap")]]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_slk8x"]
+
+[sub_resource type="Curve3D" id="Curve3D_f02o3"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.120773315, -0.25447083, 0, 0, 0, 0, 0, 0, 0, 0.72049713, -0.17650986, -15.290604, 0, 0, 0, 0, 0, 0, 0.70594025, -0.115888596, -17.93959, 0, 0, 0, 0, 0, 0, 0.7737427, -0.15789795, -21.780884, 0, 0, 0, 0, 0, 0, 0.51524353, -0.18733978, -25.408997, 0, 0, 0, 0, 0, 0, 0.2842865, -0.18348885, -27.424149, 0, 0, 0, 0, 0, 0, -1.3627396, -0.18643188, -31.39798, 0, 0, 0, 0, 0, 0, -3.9675827, -0.30456734, -35.374893, 0, 0, 0, 0, 0, 0, -6.2674713, -0.25784683, -38.590668, 0, 0, 0, 0, 0, 0, -7.5788574, -0.42881775, -40.25847, 0, 0, 0, 0, 0, 0, -14.501289, -0.06720734, -48.66835, 0, 0, 0, 0, 0, 0, -16.299095, -0.00036621094, -50.87436, 0, 0, 0, 0, 0, 0, -17.220238, -0.04398918, -52.52881, 0, 0, 0, 0, 0, 0, -17.862183, 0.1500454, -55.163498, 0, 0, 0, 0, 0, 0, -17.994194, 0.29977417, -59.66565, 0, 0, 0, 0, 0, 0, -17.90477, 0.5823879, -63.987854, 0, 0, 0, 0, 0, 0, -19.253159, 0.97608376, -69.63141, 0, 0, 0, 0, 0, 0, -24.458092, 1.5874043, -78.58234),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 18
 
 [node name="Node3D" type="Node3D"]
 
@@ -67,11 +76,13 @@ metadata/_custom_type_script = "uid://dhyysmj0yhprb"
 [node name="RoadManager" type="Node3D" parent="Node3D"]
 transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
 script = ExtResource("12_emool")
-metadata/_custom_type_script = "uid://dfqfqlcyc24yo"
 
 [node name="Road_001" type="Node3D" parent="Node3D/RoadManager"]
 script = ExtResource("13_slk8x")
+density = 20.0
 use_lowpoly_preview = true
+physics_material = SubResource("PhysicsMaterial_slk8x")
+override_collision_layers = true
 edge_containers = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath("")])
 edge_rp_targets = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath("")])
 edge_rp_target_dirs = Array[int]([-1, -1, -1, -1])
@@ -88,7 +99,7 @@ prior_pt_init = NodePath("../RP_002")
 next_pt_init = NodePath("../RP_045")
 
 [node name="RP_002" type="Node3D" parent="Node3D/RoadManager/Road_001"]
-transform = Transform3D(0.999402, 0.0008941375, -0.03456657, 0.00022155847, 0.99947953, 0.032259427, 0.03457743, -0.032247797, 0.9988815, 622.3933, 110.552376, 1162.6528)
+transform = Transform3D(0.99940205, 0.0008941375, -0.03456657, 0.00022155847, 0.99947953, 0.032259427, 0.03457743, -0.032247797, 0.9988815, 622.3933, 110.552376, 1162.6528)
 script = ExtResource("14_f02o3")
 traffic_dir = Array[int]([2, 2, 1, 1])
 lanes = Array[int]([2, 4, 4, 2])
@@ -473,5 +484,38 @@ next_mag = 16.0
 prior_pt_init = NodePath("../RP_031")
 next_pt_init = NodePath("../RP_026")
 
-[node name="Node3D2" parent="." instance=ExtResource("15_f02o3")]
-transform = Transform3D(-0.001303166, 0, -0.024966009, 0, 0.024999999, 0, 0.024966009, 0, -0.001303166, 114.19629, 23.129173, 282.08804)
+[node name="PathMesh3D" type="PathMesh3D" parent="." node_paths=PackedStringArray("path_3d")]
+path_3d = NodePath("Path3D")
+mesh = ExtResource("16_f02o3")
+surface_0/tile_rotation = Vector3(0, 1.5707964, 0)
+surface_0/tile_rotation_order = 2
+surface_0/distribution = 0
+surface_0/alignment = 0
+surface_0/warp_along_curve = true
+surface_0/sample_cubic = false
+surface_0/tilt = true
+surface_0/offset = Vector2(0, 0)
+surface_0/triangle_count = 17720
+surface_1/tile_rotation = Vector3(0, 1.5707964, 0)
+surface_1/tile_rotation_order = 2
+surface_1/distribution = 0
+surface_1/alignment = 0
+surface_1/warp_along_curve = true
+surface_1/sample_cubic = false
+surface_1/tilt = true
+surface_1/offset = Vector2(0, 0)
+surface_1/triangle_count = 27704
+surface_2/tile_rotation = Vector3(0, 1.5707964, 0)
+surface_2/tile_rotation_order = 2
+surface_2/distribution = 0
+surface_2/alignment = 0
+surface_2/warp_along_curve = true
+surface_2/sample_cubic = false
+surface_2/tilt = true
+surface_2/offset = Vector2(0, 0)
+surface_2/triangle_count = 18896
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.59399, 21.971815, 254.71701)
+
+[node name="Path3D" type="Path3D" parent="PathMesh3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2559204, 0.31819725, 0.5363312)
+curve = SubResource("Curve3D_f02o3")
