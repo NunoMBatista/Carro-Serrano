@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b5d3uht1nyf1g"]
+[gd_scene load_steps=23 format=3 uid="uid://b5d3uht1nyf1g"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_lia1b"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_61ul2"]
@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://msn4xj10uu35" path="res://addons/road-generator/nodes/road_manager.gd" id="12_emool"]
 [ext_resource type="Script" uid="uid://b4i13se761dqy" path="res://addons/road-generator/nodes/road_container.gd" id="13_slk8x"]
 [ext_resource type="Script" uid="uid://b5ye0al7dlwoq" path="res://addons/road-generator/nodes/road_point.gd" id="14_f02o3"]
+[ext_resource type="PackedScene" uid="uid://mn4hil24fehx" path="res://scenes/Carro.tscn" id="16_0fa2x"]
 [ext_resource type="ArrayMesh" uid="uid://yenammuq36vh" path="res://assets/guard_rail.obj" id="16_f02o3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kqib6"]
@@ -519,3 +520,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.59399, 21.971815, 254.717
 [node name="Path3D" type="Path3D" parent="PathMesh3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2559204, 0.31819725, 0.5363312)
 curve = SubResource("Curve3D_f02o3")
+
+[node name="Carro" parent="." instance=ExtResource("16_0fa2x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 123.5979, 24.550009, 252.98288)
