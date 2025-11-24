@@ -24,16 +24,22 @@ func _process(delta: float) -> void:
 
 	twist_pivot.rotate_y(twist_input)
 	pitch_pivot.rotate_x(pitch_input)
+	print(pitch_pivot.rotation.y)
+	twist_pivot.rotation.y = clamp(
+		twist_pivot.rotation.y,
+		-PI * 0.8,
+		PI * 0.8
+	)
 	pitch_pivot.rotation.x = clamp(
-		pitch_pivot.rotation.x, 
-		-0.5,
-		0.5
+		pitch_pivot.rotation.x,
+		-PI/2 * 0.8,
+		PI/2 * 0.8
 	)
 	twist_input = 0.0
 	pitch_input = 0.0
 	
-	if global_position.y < 0.0:
-		global_position.y = 0.0
+	#if global_position.y < 0.0:
+	#	global_position.y = 0.0
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:

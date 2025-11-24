@@ -17,6 +17,6 @@ func _process(delta: float) -> void:
 
 func _spawn_ball():
 	var ball = ball_scene.instantiate()		# Create an instance
-	ball.global_transform.origin = global_transform.origin + Vector3(randi()%2, randi()%2, randi()%2)/20
-	ball.linear_velocity = Vector3(randi()%2-0.5, randi()%2, randi()%2-0.5) * randf()*5
+	ball.global_transform.origin = global_transform.origin + Vector3(randi()%2*0.5, 0, randi()%2*0.5)/20
+	ball.linear_velocity = Vector3(randi()%2*0.2, randi()%2*0.2, randi()%2*0.2) * randf()*5
 	get_tree().current_scene.add_child(ball)
