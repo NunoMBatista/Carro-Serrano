@@ -24,23 +24,24 @@ axis_lock_angular_z = true
 gravity_scale = 0.0
 
 [node name="CarMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(-2.1855694e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.1855694e-08, 0, 0, 0)
+transform = Transform3D(-1.0927847e-08, 0, -0.25, 0, 0.25, 0, 0.25, 0, -1.0927847e-08, 0, 0, 0)
+visible = false
 layers = 6
 mesh = ExtResource("2_d4lra")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(-2.1855694e-08, 0, -0.5, 0, 0.5, 0, 0.5, 0, -2.1855694e-08, 0, 0, 0)
+transform = Transform3D(-1.0927847e-08, 0, -0.25, 0, 0.25, 0, 0.25, 0, -1.0927847e-08, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_fyjh3")
 
 [node name="BallMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.59963024, 0.0022758453, -0.020938898, -0.0020943114, 0.5999735, 0.0052359235, 0.020957835, -0.005159609, 0.5996117, 0, 0, 0)
+transform = Transform3D(0.29981512, 0.0011379226, -0.010469448, -0.0010471557, 0.29998675, 0.0026179617, 0.010478916, -0.0025798045, 0.29980585, 0, 0, 0)
 layers = 2
 material_override = SubResource("StandardMaterial3D_f0nht")
 cast_shadow = 0
 mesh = ExtResource("3_d4lra")
 
 [node name="BallSpawner" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4975226, 0, -0.04758832)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28626877, -0.04902771, -0.04758832)
 script = ExtResource("5_fyjh3")
 
 [node name="Player" parent="." instance=ExtResource("5_f0nht")]
