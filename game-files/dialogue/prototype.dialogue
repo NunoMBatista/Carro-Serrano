@@ -1,0 +1,106 @@
+~ start
+
+# Initial Interaction / Interrogation Loop
+Stranger: ...
+- Who are you?
+	Stranger: Who am I? I’m the guy standing right here in the rain. Just pop the door, we’ll talk on the way.
+	=> start
+- Where do you come from?
+	Stranger: Where do YOU come from? Nowhere that matters. Couple towns back, couple lives ago. What matters is where we going, huh HUH??
+	=> start
+- Where are you going?
+	Stranger: Where am I going? Just up to the bus stop, two minutes tops. Won’t bother you long come on, man, makes no difference to you anyway.
+	=> start
+- What's with the walk?
+	Stranger: What’s with the walk? Nothin’, man — just my legs don’t listen sometimes. Long road, bad shoes. I move how I move — you driving or just interviewing?
+	=> start
+- Get in. [Start Ride]
+	=> ride_start
+- leave => END
+
+~ ride_start
+
+Stranger: Hey! Good man, most people are too busy staring at their dashboards like idiots. I talk. You listen. That’s the deal.
+Stranger: I’ve been walking all day, legs tired, brain buzzing, and you’re driving up to the mountains? Good. Quiet up there… perfect for me to unload my genius on someone who might… actually get it.
+
+- Don’t distract me too much.
+	# "Good" Path
+	Stranger: Distract you? Buddy, you’re already distracted. I can see it in how you grip that wheel.
+	Stranger: You don’t even know why you’re going up there, do you? Probably something stupid. Everyone’s scared to admit they’re running from nothing.
+	Stranger: Keep driving; maybe you’ll figure it out, good idea. Actually my house is just a little further, how about you take me there instead?
+	=> response_set_2_good
+
+- Yeah. Guess we’re both just moving.
+	=> response_set_1_neutral_bad
+- Tell me about it.
+	=> response_set_1_neutral_bad
+
+- No. Get out. I changed my mind.
+	=> expel_sequence
+
+~ response_set_1_neutral_bad
+# Shared response for Neutral / Bad
+Stranger: Exactly! That’s what I’m saying — just keep rolling, doesn’t matter where. Sitting still kills people.
+Stranger: Bus stop? Screw that. You think I’m waiting around with the sheep? Nah, we keep climbing. You’re my ride now.
+=> response_set_2_neutral_bad
+
+# ---------------------------------------------------------
+# ROUND 2
+# ---------------------------------------------------------
+
+~ response_set_2_good
+- I’ll drop you at the bus stop, like we agreed.
+	Stranger: Ah, what a buzzkill. You're really going to leave me out here in the cold?
+	Stranger: You know if you were the one in my position I would offer you a ride, any day.
+	=> response_set_3_final
+
+~ response_set_2_neutral_bad
+- We’ll see when we get to the bus stop.
+	=> response_set_2_NB_outcome
+- Fine. Tell me where your place is.
+	=> response_set_2_NB_outcome
+- Enough. Out.
+	=> expel_sequence
+
+~ response_set_2_NB_outcome
+Stranger: There you go! Finally growing a backbone. My place’s just up the road — big place, weird lights, don’t worry about it.
+Stranger: I’ll show you something better than that empty mountain stare you got goin’ on. Lemme change the music.
+=> response_set_3_final
+
+# ---------------------------------------------------------
+# ROUND 3 (FINAL)
+# ---------------------------------------------------------
+
+~ response_set_3_final
+
+- Maybe just a bit further, but then you're walking.
+	=> final_push
+- You need the ride.
+	=> final_push
+- Get out. Now.
+	=> expel_sequence
+
+~ final_push
+Stranger: Attaboy! That’s the spirit. No one ever got anywhere by stopping where they’re told. Bus stop’s a graveyard.
+Stranger: Keep going, higher, faster. Let’s see who breaks first. You got a lighter somewhere? I lost mine.
+
+- You're not smoking in here.
+	=> final_home_arrival
+- No sorry.
+	=> final_home_arrival
+- Alright, I guess everyone needs help sometimes. I'll take you there.
+	=> final_home_arrival
+
+~ final_home_arrival
+Stranger: THAT’S WHAT I’M TALKIN’ ABOUT! You’re a real one! I knew you'd come around.
+Stranger: I should quit anyway. Been saying that since... since before I started.
+Stranger: No matter, right? We’re all just moving. This is my house right here. See? wasn't that much of a detour, huh? Good thing you came to your senses.
+=> END
+
+# ---------------------------------------------------------
+# EXPEL ENDING
+# ---------------------------------------------------------
+
+~ expel_sequence
+Stranger: Fine, toss me out, like I need you. I’m already miles ahead of you anyway. Enjoy your little mountain trip to nowhere.
+=> END
