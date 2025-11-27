@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 	
 	twist_input = 0.0
 	pitch_input = 0.0
-
+	
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:

@@ -4,6 +4,7 @@
 Stranger: ...
 - Who are you?
 	Stranger: Who am I? I’m the guy standing right here in the rain. Just pop the door, we’ll talk on the way.
+	do GameManager.change_empathy(10)
 	=> start
 - Where do you come from?
 	Stranger: Where do YOU come from? Nowhere that matters. Couple towns back, couple lives ago. What matters is where we going, huh HUH??
