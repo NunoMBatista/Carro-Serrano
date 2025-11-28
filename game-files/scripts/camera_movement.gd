@@ -3,11 +3,10 @@ extends Node3D
 var mouse_sensitivity := 0.001
 var twist_input := 0.0 
 var pitch_input := 0.0 
+var keyboard_cam_speed := 2.5
 
 @onready var twist_pivot = $TwistPivot
 @onready var pitch_pivot = $TwistPivot/PitchPivot
-
-const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -16,17 +15,19 @@ func _ready() -> void:
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended) # <--- ADD THIS
 
 # 2. This function runs automatically when dialogue closes
-func _on_dialogue_ended(_resource: Resource):               # <--- ADD THIS
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)         # <--- ADD THIS
+func _on_dialogue_ended(_resource: Resource):               
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)         
 
-func run_dialogue():
-	# Optional: Unlock mouse immediately when dialogue starts
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)          # <--- ADD THIS
-	DialogueManager.show_example_dialogue_balloon(PROTOTYPE_DIALOGUE, "start")
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+
+	# Camera arrow keys movement
+	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
+	if input_dir != Vector2.ZERO:
+		twist_pivot.rotate_y(-input_dir.x * keyboard_cam_speed * delta)
+		pitch_pivot.rotate_x(-input_dir.y * keyboard_cam_speed * delta)
 
 	twist_pivot.rotate_y(twist_input)
 	pitch_pivot.rotate_x(pitch_input)
@@ -44,7 +45,3 @@ func _unhandled_input(event: InputEvent) -> void:
 			twist_input = - event.relative.x * mouse_sensitivity
 			pitch_input = - event.relative.y * mouse_sensitivity
 	
-	if event is InputEventKey and event.pressed and event.keycode == KEY_D:
-		# 3. Prevent opening dialogue if it is already open (Mouse is HIDDEN, but moving)
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED: # <--- ADD THIS
-			run_dialogue()
