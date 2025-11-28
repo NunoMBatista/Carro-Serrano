@@ -1,56 +1,36 @@
-[gd_scene load_steps=11 format=3 uid="uid://c4a6bxjt84we0"]
+[gd_scene load_steps=7 format=3 uid="uid://c4a6bxjt84we0"]
 
-[ext_resource type="PackedScene" uid="uid://mn4hil24fehx" path="res://scenes/Carro.tscn" id="2_rt2n2"]
-[ext_resource type="PackedScene" uid="uid://bnlpmggkpjkmy" path="res://scenes/player.tscn" id="5_gubc5"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="6_18nlu"]
-[ext_resource type="PackedScene" uid="uid://cojrhsl6hw8jv" path="res://scenes/road.tscn" id="6_c16ls"]
 [ext_resource type="PackedScene" uid="uid://b5d3uht1nyf1g" path="res://scenes/terrain/terrain_1.tscn" id="7_c16ls"]
-[ext_resource type="Script" path="res://scripts/game_manager.gd" id="8_18nlu"]
+[ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="8_18nlu"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o3jxj"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+[sub_resource type="Sky" id="Sky_7ykc4"]
 
-[sub_resource type="Sky" id="Sky_0f027"]
-sky_material = SubResource("ProceduralSkyMaterial_o3jxj")
-
-[sub_resource type="Environment" id="Environment_2c62f"]
-resource_local_to_scene = true
-background_mode = 2
-sky = SubResource("Sky_0f027")
-ambient_light_sky_contribution = 0.14
-tonemap_exposure = 0.2
-glow_enabled = true
-fog_density = 0.08
+[sub_resource type="Environment" id="Environment_7ykc4"]
+background_mode = 1
+background_color = Color(6.016344e-08, 0, 0.11186654, 1)
+background_energy_multiplier = 0.82
+sky = SubResource("Sky_7ykc4")
+ambient_light_source = 3
+reflected_light_source = 2
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.18
-volumetric_fog_albedo = Color(0.30588236, 0.30588236, 0.3372549, 1)
-volumetric_fog_anisotropy = 0.25
-volumetric_fog_ambient_inject = 4.35
-adjustment_enabled = true
-adjustment_saturation = 0.6
+volumetric_fog_albedo = Color(0.40784314, 0.40784314, 0.8117647, 1)
+volumetric_fog_emission = Color(0.12955844, 0.12955847, 0.12955844, 1)
 
 [sub_resource type="GDScript" id="GDScript_rt2n2"]
 
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_2c62f")
+environment = SubResource("Environment_7ykc4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 5.591373, -23.353912)
-light_color = Color(0.4745098, 0.52156866, 0.627451, 1)
-light_energy = 0.05
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 117.98833, -23.353912)
+light_color = Color(0.48333794, 0.6493677, 1, 1)
+light_energy = 0.437
+light_volumetric_fog_energy = 0.0
 shadow_enabled = true
 shadow_blur = 10.0
-
-[node name="Carro" parent="." instance=ExtResource("2_rt2n2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.51299, 0)
-
-[node name="Player" parent="." instance=ExtResource("5_gubc5")]
-
-[node name="OldRoad" parent="." instance=ExtResource("6_c16ls")]
-transform = Transform3D(0.49836063, 0, -0.04045609, 0, 0.5, 0, 0.04045609, 0, 0.49836063, -7.716419, 3.2224026, -16.083458)
 
 [node name="Terrain" parent="." instance=ExtResource("7_c16ls")]
 

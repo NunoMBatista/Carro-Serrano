@@ -2,7 +2,7 @@ extends PathFollow3D
 
 @export var cur_speed := 0.0
 
-const MAX_SPEED := 5.0
+const MAX_SPEED := 3
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0

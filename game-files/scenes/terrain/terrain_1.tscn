@@ -1,7 +1,7 @@
-[gd_scene load_steps=25 format=3 uid="uid://b5d3uht1nyf1g"]
+[gd_scene load_steps=22 format=3 uid="uid://b5d3uht1nyf1g"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_lia1b"]
-[ext_resource type="Resource" path="res://models/Terrain/data.hterrain" id="2_61ul2"]
+[ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_61ul2"]
 [ext_resource type="Script" uid="uid://dxqdn5ho6vkac" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_dim0d"]
 [ext_resource type="Texture2D" uid="uid://ed7dfxrek0cu" path="res://models/Terrain/terrain_1_slot0_albedo_bump.png" id="4_ijqil"]
 [ext_resource type="Texture2D" uid="uid://wm064rx5vwc6" path="res://models/Terrain/terrain_1_slot1_albedo_bump.png" id="5_1qfhg"]
@@ -17,16 +17,6 @@
 [ext_resource type="Script" uid="uid://b5p8ytbflt1qx" path="res://scripts/path_follow_3d.gd" id="16_0fa2x"]
 [ext_resource type="ArrayMesh" uid="uid://yenammuq36vh" path="res://assets/guard_rail.obj" id="16_f02o3"]
 [ext_resource type="PackedScene" uid="uid://mn4hil24fehx" path="res://scenes/Carro.tscn" id="17_0fa2x"]
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kqib6"]
-
-[sub_resource type="Sky" id="Sky_majpu"]
-sky_material = SubResource("ProceduralSkyMaterial_kqib6")
-
-[sub_resource type="Environment" id="Environment_81l6f"]
-background_mode = 2
-sky = SubResource("Sky_majpu")
-tonemap_mode = 3
 
 [sub_resource type="Resource" id="Resource_v81gp"]
 script = ExtResource("3_dim0d")
@@ -51,13 +41,6 @@ _data = {
 point_count = 61
 
 [node name="Node3D" type="Node3D"]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.6565331, 0.75429714, 0, -0.75429714, -0.6565331, 0, 0.3487804, 0)
-light_color = Color(0.99607843, 0.92941177, 0.69411767, 1)
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_81l6f")
 
 [node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("1_lia1b")
