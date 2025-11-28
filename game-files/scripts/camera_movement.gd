@@ -21,12 +21,12 @@ func _on_dialogue_ended(_resource: Resource):               # <--- ADD THIS
 
 func run_dialogue():
 	# Optional: Unlock mouse immediately when dialogue starts
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)          # <--- ADD THIS
+	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)          # <--- ADD THIS
 	DialogueManager.show_example_dialogue_balloon(PROTOTYPE_DIALOGUE, "start")
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
 
 	twist_pivot.rotate_y(twist_input)
 	pitch_pivot.rotate_x(pitch_input)
@@ -45,6 +45,6 @@ func _unhandled_input(event: InputEvent) -> void:
 			pitch_input = - event.relative.y * mouse_sensitivity
 	
 	if event is InputEventKey and event.pressed and event.keycode == KEY_D:
-		# 3. Prevent opening dialogue if it is already open (Mouse is visible)
+		# 3. Prevent opening dialogue if it is already open (Mouse is HIDDEN, but moving)
 		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED: # <--- ADD THIS
 			run_dialogue()
