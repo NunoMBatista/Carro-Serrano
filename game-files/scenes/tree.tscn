@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://cbj1qjxm0gm3g"]
+
+[ext_resource type="ArrayMesh" uid="uid://dghmujrcvkars" path="res://assets/Tree2.obj" id="1_avsvi"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vplca"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+physics_material_override = SubResource("PhysicsMaterial_vplca")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+visibility_range_end = 159.07
+mesh = ExtResource("1_avsvi")
