@@ -766,6 +766,11 @@ func validate_edges(autofix: bool = false) -> bool:
 			_invalidate_edge(_idx, autofix, "edge_rp_local node reference is invalid")
 			continue
 
+		# Guard against mismatched array sizes from prior invalid states
+		if _idx >= len(edge_rp_local_dirs) or _idx >= len(edge_rp_targets) or _idx >= len(edge_rp_target_dirs) or _idx >= len(edge_containers):
+			is_valid = false
+			_invalidate_edge(_idx, autofix, "edge arrays out of sync")
+			continue
 		var this_dir = edge_rp_local_dirs[_idx]
 		var target_pt = edge_rp_targets[_idx]
 		var target_dir = edge_rp_target_dirs[_idx]
