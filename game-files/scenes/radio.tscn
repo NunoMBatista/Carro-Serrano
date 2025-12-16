@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://wi5d18n37sh"]
+
+[ext_resource type="Script" uid="uid://d01auodtayvd6" path="res://scripts/radio.gd" id="1_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y83x7"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ldjbc"]
+
+[node name="Radio" type="StaticBody3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_y83x7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+layers = 2
+mesh = SubResource("BoxMesh_ldjbc")

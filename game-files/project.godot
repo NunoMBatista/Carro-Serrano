@@ -21,6 +21,7 @@ DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 GameManager="*res://scripts/game_manager.gd"
 PlaytestLogger="*res://scripts/playtest_logger.gd"
 DialogueFlow="*res://scripts/dialogue_flow.gd"
+RadioManager="*res://scripts/radio_manager.gd"
 
 [display]
 
