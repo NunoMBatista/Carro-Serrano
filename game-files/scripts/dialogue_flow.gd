@@ -23,9 +23,31 @@ var empathy: int = 50:
 ## Current branch: "good" or "bad"
 var current_branch: String = "good"
 var _active: bool = false
+var _debug_label: Label
 
 func _ready() -> void:
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+	_setup_debug_overlay()
+
+func _setup_debug_overlay() -> void:
+	_debug_label = Label.new()
+	_debug_label.add_theme_font_size_override("font_size", 18)
+	_debug_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	_debug_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	_debug_label.offset_left = -200
+	_debug_label.offset_right = -10
+	_debug_label.offset_top = 10
+	var canvas = CanvasLayer.new()
+	canvas.layer = 100
+	canvas.add_child(_debug_label)
+	add_child(canvas)
+
+func _process(_delta: float) -> void:
+	var gm = get_node_or_null("/root/GameManager")
+	var show_debug = gm and gm.get("debug_dialogue")
+	_debug_label.visible = show_debug
+	if show_debug:
+		_debug_label.text = "Empathy: %d\nBranch: %s" % [empathy, current_branch]
 
 ## Start a dialogue. Call this from anywhere.
 func run_dialogue(dialogue_resource: DialogueResource, start_title: String = "start") -> void:

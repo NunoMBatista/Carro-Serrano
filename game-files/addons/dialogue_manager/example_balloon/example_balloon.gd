@@ -24,6 +24,11 @@ var locals: Dictionary = {}
 
 var _locale: String = TranslationServer.get_locale()
 
+## Cursor state
+var _cursor_timer: float = 0.0
+var _cursor_visible: bool = true
+var _cursor_label: Label
+
 ## The current line
 var dialogue_line: DialogueLine:
 	set(value):
@@ -64,6 +69,32 @@ func _ready() -> void:
 	add_child(mutation_cooldown)
 
 
+func _process(delta: float) -> void:
+	if not is_instance_valid(_cursor_label):
+		return
+	_cursor_label.visible = dialogue_label.is_typing
+	if dialogue_label.is_typing:
+		_cursor_timer += delta
+		if _cursor_timer >= 0.35:
+			_cursor_timer = 0.0
+			_cursor_visible = not _cursor_visible
+		_cursor_label.text = "█" if _cursor_visible else ""
+		# Position cursor after visible text using font measurement
+		var visible_text = dialogue_label.get_parsed_text().substr(0, dialogue_label.visible_characters)
+		var lines = visible_text.split("\n")
+		var last_line = lines[-1] if lines.size() > 0 else ""
+		var font = dialogue_label.get_theme_font("normal_font")
+		if font == null:
+			font = ThemeDB.fallback_font
+		var font_size = dialogue_label.get_theme_font_size("normal_font_size")
+		if font_size == 0:
+			font_size = 22
+		var line_height = font.get_height(font_size)
+		var x_pos = font.get_string_size(last_line, HORIZONTAL_ALIGNMENT_LEFT, -1, font_size).x
+		var y_pos = (lines.size() - 1) * line_height
+		_cursor_label.position = Vector2(x_pos, y_pos)
+
+
 func _unhandled_input(_event: InputEvent) -> void:
 	# Only the balloon is allowed to handle input while it's showing
 	get_viewport().set_input_as_handled()
@@ -84,6 +115,12 @@ func start(dialogue_resource: DialogueResource, title: String, extra_game_states
 	temporary_game_states = [self] + extra_game_states
 	is_waiting_for_input = false
 	resource = dialogue_resource
+	# Create cursor label
+	if not _cursor_label:
+		_cursor_label = Label.new()
+		_cursor_label.text = "█"
+		_cursor_label.add_theme_color_override("font_color", Color(0.82, 0.75, 0.65, 0.9))
+		dialogue_label.add_child(_cursor_label)
 	self.dialogue_line = await resource.get_next_dialogue_line(title, temporary_game_states)
 
 

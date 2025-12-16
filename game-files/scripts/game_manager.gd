@@ -1,5 +1,8 @@
 extends Node3D
 
+## Enable/disable dialogue debug overlay (top-right corner)
+@export var debug_dialogue: bool = true
+
 # This is the variable you want to change
 @onready var empathy_score: int = 0
 
