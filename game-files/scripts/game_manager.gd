@@ -11,6 +11,10 @@ const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
 func change_empathy(amount: int):
 	empathy_score += amount
 	print("Empathy is now: ", empathy_score)
+	var logger = get_node_or_null("/root/PlaytestLogger")
+	if logger:
+		logger.current_empathy = empathy_score
+		logger.log_state("update_empathy", "%+d" % amount)
 
 func run_dialogue():
 	# Optional: Unlock mouse immediately when dialogue starts

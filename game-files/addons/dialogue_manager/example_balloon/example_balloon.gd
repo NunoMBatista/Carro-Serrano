@@ -154,6 +154,9 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 		var skip_button_was_pressed: bool = event.is_action_pressed(skip_action)
 		if mouse_was_clicked or skip_button_was_pressed:
 			get_viewport().set_input_as_handled()
+			var logger = get_node_or_null("/root/PlaytestLogger")
+			if logger:
+				logger.log_action("skip_text", dialogue_line.text.substr(0, 30))
 			dialogue_label.skip_typing()
 			return
 
@@ -170,6 +173,9 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 
 
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
+	var logger = get_node_or_null("/root/PlaytestLogger")
+	if logger:
+		logger.log_action("dialogue_choice", response.text)
 	next(response.next_id)
 
 
