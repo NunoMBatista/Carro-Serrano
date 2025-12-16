@@ -15,7 +15,7 @@ func _ready() -> void:
 	var path = _log_dir + "session_" + player_id + ".csv"
 	_file = FileAccess.open(path, FileAccess.WRITE)
 	if _file:
-		_file.store_line("user_id, statevars, datetime, category, typeof, payload")
+		_file.store_line("user_id, current_empathy, hitchhiker_count, time, category, typeof, payload")
 		print("PlaytestLogger: Writing to ", ProjectSettings.globalize_path(path))
 	else:
 		push_error("PlaytestLogger: Failed to open file: " + str(FileAccess.get_open_error()))

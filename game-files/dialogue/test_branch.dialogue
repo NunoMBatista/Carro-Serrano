@@ -1,0 +1,98 @@
+~ start
+
+# HITCHHIKER ENCOUNTER - Branching Dialogue Example
+# This dialogue demonstrates the branching system.
+# Use: do DialogueFlow.choice("positive/neutral/negative") to set alignment
+# Use: => step2_good / => step2_bad for branch-specific paths
+# Or use conditions: [if DialogueFlow.is_good()] for inline branching
+
+Stranger: Hey! You stopping? Most people just drive right past.
+
+- Sure, hop in. #positive
+	do DialogueFlow.choice("positive")
+	Stranger: Finally, someone with a heart! I knew you looked decent.
+	=> step2_good
+
+- I guess... where are you headed? #neutral
+	do DialogueFlow.choice("neutral")
+	[if DialogueFlow.is_good()] Stranger: Just up the road. Thanks for being cool about it.
+	[if DialogueFlow.is_bad()] Stranger: Does it matter? Just drive.
+	[if DialogueFlow.is_good()] => step2_good
+	[if DialogueFlow.is_bad()] => step2_bad
+
+- No, I don't pick up strangers. #negative
+	do DialogueFlow.choice("negative")
+	Stranger: Figures. Everyone's scared these days.
+	=> step2_bad
+
+# ============ STEP 2 - GOOD BRANCH ============
+~ step2_good
+
+Stranger: You know, not many people stop anymore. It means something.
+Stranger: Where you headed anyway?
+
+- Up to the mountains, clearing my head. #positive
+	do DialogueFlow.choice("positive")
+	Stranger: Mountains, huh? Good place to think. I like that.
+	=> step3_good
+
+- Just driving. #neutral
+	do DialogueFlow.choice("neutral")
+	[if DialogueFlow.is_good()] Stranger: Sometimes that's all you need.
+	[if DialogueFlow.is_bad()] Stranger: Aimless, like the rest of us.
+	[if DialogueFlow.is_good()] => step3_good
+	[if DialogueFlow.is_bad()] => step3_bad
+
+- None of your business. #negative
+	do DialogueFlow.choice("negative")
+	Stranger: Alright, alright. Didn't mean to pry.
+	=> step3_bad
+
+# ============ STEP 2 - BAD BRANCH ============
+~ step2_bad
+
+Stranger: You don't talk much, do you? Fine by me.
+Stranger: Just keep driving. I'll tell you when to stop.
+
+- Look, I'm just trying to help. #positive
+	do DialogueFlow.choice("positive")
+	Stranger: ...Yeah. Sorry. Bad day, you know?
+	=> step3_good
+
+- Whatever. #neutral
+	do DialogueFlow.choice("neutral")
+	[if DialogueFlow.is_good()] Stranger: Fair enough.
+	[if DialogueFlow.is_bad()] Stranger: Yeah, whatever.
+	[if DialogueFlow.is_good()] => step3_good
+	[if DialogueFlow.is_bad()] => step3_bad
+
+- Maybe I should just drop you here. #negative
+	do DialogueFlow.choice("negative")
+	Stranger: Do what you want. Everyone else does.
+	=> step3_bad
+
+# ============ STEP 3 - ENDINGS ============
+~ step3_good
+
+Stranger: Hey... thanks. Really. For stopping, for listening.
+Stranger: This is me up ahead. Take care of yourself, alright?
+=> ending_good
+
+~ step3_bad
+
+Stranger: Whatever. Just pull over here.
+Stranger: Don't expect a thank you.
+=> ending_bad
+
+# ============ FINAL ENDINGS ============
+~ ending_good
+
+Stranger: You're one of the good ones. Don't let the world change that.
+do DialogueFlow.empathy += 10
+=> END
+
+~ ending_bad
+
+Stranger: *slams door*
+do DialogueFlow.empathy -= 10
+=> END
