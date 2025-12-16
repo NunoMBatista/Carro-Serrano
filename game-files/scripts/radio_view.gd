@@ -9,6 +9,7 @@ signal closed
 @onready var volume_slider: VSlider = $VolumeSlider
 @onready var power_button: Button = $PowerButton
 @onready var next_button: Button = $NextButton
+@onready var prev_button: Button = $PrevButton
 
 func _ready() -> void:
 	hint_label.text = "RMB to leave"
@@ -24,6 +25,8 @@ func _ready() -> void:
 	power_button.pressed.connect(_on_power_pressed)
 	next_button.text = "NEXT"
 	next_button.pressed.connect(_on_next_pressed)
+	prev_button.text = "PREV"
+	prev_button.pressed.connect(_on_prev_pressed)
 	
 	_update_display()
 
@@ -55,6 +58,10 @@ func _on_power_pressed() -> void:
 
 func _on_next_pressed() -> void:
 	RadioManager.next_song()
+	_update_song_label()
+
+func _on_prev_pressed() -> void:
+	RadioManager.prev_song()
 	_update_song_label()
 
 func _update_display() -> void:

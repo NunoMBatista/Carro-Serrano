@@ -30,24 +30,44 @@ func _ready() -> void:
 	_setup_debug_overlay()
 
 func _setup_debug_overlay() -> void:
+	# Create a panel for background
+	var panel = PanelContainer.new()
+	panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
+	panel.offset_left = -250
+	panel.offset_right = -10
+	panel.offset_top = 10
+	panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	
+	# Style the panel with black background
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0.8)
+	style.set_corner_radius_all(8)
+	style.set_content_margin_all(12)
+	panel.add_theme_stylebox_override("panel", style)
+	
+	# Create label inside panel
 	_debug_label = Label.new()
-	_debug_label.add_theme_font_size_override("font_size", 18)
+	_debug_label.add_theme_font_size_override("font_size", 24)
+	_debug_label.add_theme_color_override("font_color", Color(1, 1, 1))
 	_debug_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	_debug_label.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_debug_label.offset_left = -200
-	_debug_label.offset_right = -10
-	_debug_label.offset_top = 10
+	panel.add_child(_debug_label)
+	
 	var canvas = CanvasLayer.new()
 	canvas.layer = 100
-	canvas.add_child(_debug_label)
+	canvas.add_child(panel)
 	add_child(canvas)
+	
+	# Store panel reference to control visibility
+	_debug_label.set_meta("panel", panel)
 
 func _process(_delta: float) -> void:
 	var gm = get_node_or_null("/root/GameManager")
 	var show_debug = gm and gm.get("debug_dialogue")
-	_debug_label.visible = show_debug
+	var panel = _debug_label.get_meta("panel") as Control
+	if panel:
+		panel.visible = show_debug
 	if show_debug:
-		_debug_label.text = "Empathy: %d\nBranch: %s" % [empathy, current_branch]
+		_debug_label.text = "DEBUG MENU\n\nEmpathy: %d\nBranch: %s" % [empathy, current_branch]
 
 ## Start a dialogue. Call this from anywhere.
 func run_dialogue(dialogue_resource: DialogueResource, start_title: String = "start") -> void:

@@ -63,6 +63,14 @@ offset_bottom = 551.0
 theme_override_font_sizes/font_size = 20
 text = "NEXT"
 
+[node name="PrevButton" type="Button" parent="."]
+offset_left = 1604.0
+offset_top = 424.0
+offset_right = 1754.0
+offset_bottom = 474.0
+theme_override_font_sizes/font_size = 20
+text = "PREV"
+
 [node name="HintLabel" type="Label" parent="."]
 anchors_preset = 3
 anchor_left = 1.0
