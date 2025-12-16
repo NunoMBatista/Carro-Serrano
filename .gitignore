@@ -1,0 +1,25 @@
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Dependencies
+node_modules/
+.env
+.env.local
+
+# Build outputs
+dist/
+build/
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+
+# IDE
+*.sublime-project
+*.sublime-workspace
