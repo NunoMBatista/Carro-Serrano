@@ -46,11 +46,11 @@ func _ready():
 
 
 func _input(event):   
-	if event.is_action_pressed("ui_select"):
+	if event.is_action_pressed("ui_select") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		space_held = true
 		_update_crosshair_immediate()
 		_try_interact()
-	elif event.is_action_released("ui_select"):
+	elif event.is_action_released("ui_select") or (event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		space_held = false
 		_update_crosshair_immediate()
 	

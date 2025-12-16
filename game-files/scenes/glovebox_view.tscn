@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://clcd71d3atfmg"]
+
+[ext_resource type="Script" uid="uid://qx7tcbnxqf0j" path="res://scripts/glovebox_view.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://d2ettpabehudj" path="res://assets/glove_box.png" id="2_texture"]
+
+[node name="GloveboxView" type="CanvasLayer"]
+layer = 50
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -467.0
+offset_top = -264.0
+offset_right = 234.0
+offset_bottom = 271.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_texture")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ItemsContainer" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 91.0
+offset_top = 97.0
+offset_right = 91.0
+offset_bottom = 97.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HintLabel" type="Label" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -40.0
+offset_right = -20.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "RMB to leave"
+horizontal_alignment = 2

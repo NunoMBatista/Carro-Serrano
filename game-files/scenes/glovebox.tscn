@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://io4wpitjti8x"]
+
+[ext_resource type="Script" uid="uid://df2m4fu7puae6" path="res://scripts/glovebox.gd" id="1_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t8hbk"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6buo1"]
+
+[node name="Glovebox" type="StaticBody3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_script")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_t8hbk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_6buo1")
