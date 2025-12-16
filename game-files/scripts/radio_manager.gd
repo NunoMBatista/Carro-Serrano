@@ -8,7 +8,8 @@ const SONGS = [
 	"res://assets/audio/radio/Joe Rogan.mp3",
 	"res://assets/audio/radio/Qubit.mp3",
 	"res://assets/audio/radio/We Are Charlie Kirk.mp3",
-	"res://assets/audio/radio/Alex Jones.mp3"
+	"res://assets/audio/radio/Alex Jones.mp3",
+	"res://assets/audio/radio/Tempo Para Cantar.mp3"
 ]
 
 const STATIC_PATH = "res://assets/audio/radio/radio_static.mp3"
