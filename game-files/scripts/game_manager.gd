@@ -24,7 +24,8 @@ func run_dialogue():
 	DialogueManager.show_example_dialogue_balloon(PROTOTYPE_DIALOGUE, "start")
 
 func _process(delta: float) -> void:
-	prints("gangsta: ", empathy_score)
+	pass
+	#prints("gangsta: ", empathy_score)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
