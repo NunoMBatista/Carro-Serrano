@@ -1,0 +1,10 @@
+user_id,current_empathy,hitchhiker_count,datetime,category,typeof,payload
+20251216132532,0,0,20251216132532,event,session_start,"session_started"
+20251216132532,0,0,20251216132532,state,set_empathy,"0"
+20251216132532,0,0,20251216132532,state,update_progress,"Hitchhiker 0"
+20251216132532,0,0,20251216132534,state,update_empathy,"-5"
+20251216132532,0,0,20251216132534,state,update_empathy,"-5"
+20251216132532,0,0,20251216132534,action,dialogue_skip,"typing_skip"
+20251216132532,0,0,20251216132535,action,dialogue_choice,"{""alignment"":""unspecified"",""decision_ms"":514,""line_id"":""28"",""line_text"":""Back again? Thought you'd speed off."",""text"":""Yeah, I'm watching you. #alignment=negative""}"
+20251216132532,0,0,20251216132536,action,dialogue_skip,"typing_skip"
+20251216132532,0,0,20251216132538,action,dialogue_choice,"{""alignment"":""unspecified"",""decision_ms"":1205,""line_id"":""41"",""line_text"":""This ride's cold, just like you."",""text"":""I'm dropping you off. #alignment=negative""}"

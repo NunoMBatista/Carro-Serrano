@@ -12,7 +12,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	# 1. Listen for when the dialogue finishes
-	DialogueManager.dialogue_ended.connect(_on_dialogue_ended) # <--- ADD THIS
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 
 # 2. This function runs automatically when dialogue closes
 func _on_dialogue_ended(_resource: Resource):               

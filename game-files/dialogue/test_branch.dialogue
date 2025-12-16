@@ -1,0 +1,51 @@
+~ good_1
+
+Hitchhiker (Calm): Thanks for stopping again.
+- Keep talking, I'm listening. #alignment=positive
+	Hitchhiker (Calm): Appreciate it. Feels good to have someone on my side.
+	=> good_2
+- Sure, let's just keep driving. #alignment=neutral
+	Hitchhiker (Calm): Alright, steady as we go.
+	=> good_2
+- Hurry up, I'm not a therapist. #alignment=negative
+	Hitchhiker (Calm): Right, right. I'll keep it short.
+	=> bad_2
+
+~ good_2
+
+Hitchhiker (Calm): Honestly, you're making this ride better.
+- You seem decent; hang in there. #alignment=positive
+	Hitchhiker (Calm): Thanks. Means a lot.
+	=> END
+- Just stay quiet and we'll get there. #alignment=neutral
+	Hitchhiker (Calm): Got it. Quiet it is.
+	=> END
+- I'm done with this conversation. #alignment=negative
+	Hitchhiker (Calm): Fine, have it your way.
+	=> END
+
+~ bad_1
+
+Hitchhiker (Icy): Back again? Thought you'd speed off.
+- Sorry, long day. I'll try. #alignment=positive
+	Hitchhiker (Icy): Huh. Didn't expect that. Maybe this won't suck.
+	=> good_2
+- Let's just get this over with. #alignment=neutral
+	Hitchhiker (Icy): Figures. Just drive.
+	=> bad_2
+- Yeah, I'm watching you. #alignment=negative
+	Hitchhiker (Icy): Keep watching. I'm not here to impress you.
+	=> bad_2
+
+~ bad_2
+
+Hitchhiker (Icy): This ride's cold, just like you.
+- Look, let's reset and be decent. #alignment=positive
+	Hitchhiker (Icy): Maybe. We'll see.
+	=> good_2
+- Whatever, stay in your lane. #alignment=neutral
+	Hitchhiker (Icy): Fine by me.
+	=> END
+- I'm dropping you off. #alignment=negative
+	Hitchhiker (Icy): Figures. Do it.
+	=> END

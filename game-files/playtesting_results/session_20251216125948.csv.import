@@ -1,0 +1,17 @@
+[remap]
+
+importer="csv_translation"
+type="Translation"
+uid="uid://4po58ddajajl"
+
+[deps]
+
+files=["res://playtesting_results/session_20251216125948.current.translation", "res://playtesting_results/session_20251216125948.hitchhiker.translation", "res://playtesting_results/session_20251216125948.datetime.translation", "res://playtesting_results/session_20251216125948.category.translation", "res://playtesting_results/session_20251216125948.typeof.translation", "res://playtesting_results/session_20251216125948.payload.translation"]
+
+source_file="res://playtesting_results/session_20251216125948.csv"
+dest_files=["res://playtesting_results/session_20251216125948.current.translation", "res://playtesting_results/session_20251216125948.hitchhiker.translation", "res://playtesting_results/session_20251216125948.datetime.translation", "res://playtesting_results/session_20251216125948.category.translation", "res://playtesting_results/session_20251216125948.typeof.translation", "res://playtesting_results/session_20251216125948.payload.translation"]
+
+[params]
+
+compress=true
+delimiter=0

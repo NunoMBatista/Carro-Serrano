@@ -1,0 +1,6 @@
+user_id,current_empathy,hitchhiker_count,datetime,category,typeof,payload
+20251216130927,0,0,20251216130927,event,session_start,"session_started"
+20251216130927,0,0,20251216130928,state,set_empathy,"0"
+20251216130927,0,0,20251216130928,state,update_progress,"Hitchhiker 0"
+20251216130927,0,0,20251216130929,state,update_empathy,"-5"
+20251216130927,0,0,20251216130930,action,dialogue_skip,"typing_skip"

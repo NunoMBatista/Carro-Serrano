@@ -1,0 +1,13 @@
+user_id,current_empathy,hitchhiker_count,datetime,category,typeof,payload
+20251216125710,0,0,20251216125710,event,session_start,"session_started"
+20251216125710,0,0,20251216125710,state,set_empathy,"0"
+20251216125710,0,0,20251216125710,state,update_progress,"Hitchhiker 0"
+20251216125710,0,0,20251216125712,state,update_empathy,"-5"
+20251216125710,0,0,20251216125712,state,update_empathy,"-5"
+20251216125710,0,0,20251216125714,action,dialogue_choice,"{""alignment"":""unspecified"",""decision_ms"":1565,""line_id"":""28"",""line_text"":""Back again? Thought you'd speed off."",""text"":""Yeah, I'm watching you. #alignment=negative""}"
+20251216125710,0,0,20251216125715,action,dialogue_skip,"typing_skip"
+20251216125710,0,0,20251216125720,action,dialogue_choice,"{""alignment"":""unspecified"",""decision_ms"":2850,""line_id"":""41"",""line_text"":""This ride's cold, just like you."",""text"":""Look, let's reset and be decent. #alignment=positive""}"
+20251216125710,0,0,20251216125724,action,dialogue_choice,"{""alignment"":""unspecified"",""decision_ms"":1694,""line_id"":""15"",""line_text"":""Honestly, you're making this ride better."",""text"":""I'm done with this conversation. #alignment=negative""}"
+20251216125710,0,0,20251216125730,action,dialogue_choice,"{""alignment"":""unspecified"",""decision_ms"":-1,""line_id"":""15"",""line_text"":""Honestly, you're making this ride better."",""text"":""Let's just get this over with. #alignment=neutral""}"
+20251216125710,0,0,20251216125731,action,dialogue_skip,"typing_skip"
+20251216125710,0,0,20251216125731,action,dialogue_skip,"typing_skip"

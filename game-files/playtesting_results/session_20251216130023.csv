@@ -1,0 +1,8 @@
+user_id,current_empathy,hitchhiker_count,datetime,category,typeof,payload
+20251216130023,0,0,20251216130023,event,session_start,"session_started"
+20251216130023,0,0,20251216130024,state,set_empathy,"0"
+20251216130023,0,0,20251216130024,state,update_progress,"Hitchhiker 0"
+20251216130023,0,0,20251216130025,state,update_empathy,"-5"
+20251216130023,0,0,20251216130025,state,update_empathy,"-5"
+20251216130023,0,0,20251216130026,action,dialogue_skip,"typing_skip"
+20251216130023,0,0,20251216130030,action,dialogue_choice,"{""alignment"":""unspecified"",""decision_ms"":3350,""line_id"":""28"",""line_text"":""Back again? Thought you'd speed off."",""text"":""Yeah, I'm watching you. #alignment=negative""}"

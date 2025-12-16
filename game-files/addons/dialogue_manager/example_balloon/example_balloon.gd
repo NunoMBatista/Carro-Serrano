@@ -32,6 +32,8 @@ var dialogue_line: DialogueLine:
 			apply_dialogue_line()
 		else:
 			# The dialogue has finished so close the balloon
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			Engine.get_singleton("DialogueManager").dialogue_ended.emit(resource)
 			queue_free()
 	get:
 		return dialogue_line
@@ -55,6 +57,7 @@ var mutation_cooldown: Timer = Timer.new()
 func _ready() -> void:
 	balloon.hide()
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
+	dialogue_label.skipped_typing.connect(_on_dialogue_skipped_typing)
 
 	# If the responses menu doesn't have a next action set, use this one
 	if responses_menu.next_action.is_empty():
@@ -94,6 +97,7 @@ func apply_dialogue_line() -> void:
 	is_waiting_for_input = false
 	balloon.focus_mode = Control.FOCUS_ALL
 	balloon.grab_focus()
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 	character_label.visible = not dialogue_line.character.is_empty()
 	character_label.text = tr(dialogue_line.character, "dialogue")
@@ -117,6 +121,7 @@ func apply_dialogue_line() -> void:
 	if dialogue_line.responses.size() > 0:
 		balloon.focus_mode = Control.FOCUS_NONE
 		responses_menu.show()
+		PlaytestLogger.start_decision_timer({"line_id": dialogue_line.id, "line_text": dialogue_line.text})
 	elif dialogue_line.time != "":
 		var time = dialogue_line.text.length() * 0.02 if dialogue_line.time == "auto" else dialogue_line.time.to_float()
 		await get_tree().create_timer(time).timeout
@@ -170,7 +175,35 @@ func _on_balloon_gui_input(event: InputEvent) -> void:
 
 
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:
+	# Hide current options immediately so they don't linger on screen while the next balloon loads.
+	responses_menu.hide()
+	is_waiting_for_input = false
+	if dialogue_label.is_typing:
+		dialogue_label.skip_typing()
+	# Keep mouse free for the next choices.
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+
+	# If this response ends the conversation, close cleanly and exit.
+	var next_id: String = response.next_id if response.next_id != null else ""
+	var next_id_clean := next_id.strip_edges().to_lower()
+	if next_id_clean == "end" or next_id_clean == "end_conversation" or next_id_clean == "":
+		if Engine.has_singleton("DialogueFlow"):
+			Engine.get_singleton("DialogueFlow").is_dialogue_active = false
+			Engine.get_singleton("DialogueFlow").current_step = 0
+		balloon.hide()
+		queue_free()
+		return
+
+	if Engine.has_singleton("DialogueFlow") and Engine.get_singleton("DialogueFlow").handle_response_selected(response):
+		balloon.hide()
+		queue_free()
+		return
+	PlaytestLogger.record_dialogue_choice(response)
 	next(response.next_id)
+
+
+func _on_dialogue_skipped_typing() -> void:
+	PlaytestLogger.log_dialogue_skipped("typing_skip")
 
 
 #endregion
