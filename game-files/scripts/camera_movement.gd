@@ -5,11 +5,19 @@ var twist_input := 0.0
 var pitch_input := 0.0 
 var keyboard_cam_speed := 2.5
 
+@export var tremble_pos_amplitude := Vector3(0.001, 0.0015, 0.001)
+@export var tremble_rot_amplitude_deg := Vector3(0.02, 0.02, 0.04)
+@export var tremble_frequency := 16.0
+
+var _tremble_time := 0.0
+var _pitch_pos_base := Vector3.ZERO
+
 @onready var twist_pivot = $TwistPivot
 @onready var pitch_pivot = $TwistPivot/PitchPivot
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	_pitch_pos_base = pitch_pivot.position
 	
 	# 1. Listen for when the dialogue finishes
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended) # <--- ADD THIS
@@ -38,6 +46,24 @@ func _process(delta: float) -> void:
 	
 	twist_input = 0.0
 	pitch_input = 0.0
+
+	# Engine-like tremble: small positional and rotational noise on the pitch pivot.
+	var base_pitch_rot: Vector3 = pitch_pivot.rotation
+	_tremble_time += delta
+	var w := _tremble_time * tremble_frequency
+	var pos_noise := Vector3(
+		sin(w) * tremble_pos_amplitude.x,
+		sin(w * 1.31) * tremble_pos_amplitude.y,
+		sin(w * 1.87) * tremble_pos_amplitude.z
+	)
+	var rot_noise := Vector3(
+		sin(w * 1.17) * deg_to_rad(tremble_rot_amplitude_deg.x),
+		sin(w * 1.43) * deg_to_rad(tremble_rot_amplitude_deg.y),
+		sin(w * 0.93) * deg_to_rad(tremble_rot_amplitude_deg.z)
+	)
+
+	pitch_pivot.position = _pitch_pos_base + pos_noise
+	pitch_pivot.rotation = base_pitch_rot + rot_noise
 	
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
