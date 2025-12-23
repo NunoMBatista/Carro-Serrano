@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bnlpmggkpjkmy"]
+[gd_scene load_steps=6 format=3 uid="uid://bnlpmggkpjkmy"]
 
 [ext_resource type="Script" uid="uid://b88kw14blcnqb" path="res://scripts/camera_movement.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://biseug8aolewx" path="res://scripts/cross_hair.gd" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://n501qceousrk" path="res://assets/point_1.png" id="3_qlg0r"]
 [ext_resource type="Script" uid="uid://bm7qwjijf78je" path="res://scripts/texture_rect.gd" id="4_tuyoq"]
+[ext_resource type="Script" uid="uid://eo23qsd71fc7" path="res://scripts/apply_bayer_shader.gd" id="5_ab01"]
 
 [node name="Player" type="Node3D"]
 script = ExtResource("1_4flbx")
@@ -51,3 +52,8 @@ expand_mode = 1
 stretch_mode = 3
 script = ExtResource("4_tuyoq")
 metadata/_edit_use_anchors_ = true
+
+[node name="PostProcess" type="Node" parent="Control"]
+script = ExtResource("5_ab01")
+resolution_downsampling = 2.0
+bit_depth = 8.0
