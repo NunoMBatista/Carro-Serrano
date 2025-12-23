@@ -31,8 +31,6 @@ uniform float bit_depth: hint_range(2.0, 64.0, 1.0) = 4.0;
 ///     - 0.1 = slider step increment (fine-grained control).
 /// - Values above 1 can be used experimentally to exaggerate dither influence.
 uniform float dither_strength: hint_range(0.0, 2.0, 0.1) = 1.0;
-// Optional desaturation: set to 0.0 to disable (faster when disabled)
-uniform float desaturate_amount: hint_range(0.0, 1.0, 0.05) = 0.15;
 
 /// 4x4 Bayer threshold map pre-scaled to roughly center around 0.
 /// Values are offsets applied to color channels prior to quantization.
@@ -50,30 +48,32 @@ void fragment() {
     // SCREEN_PIXEL_SIZE is the size of one screen pixel in UV coordinates (Vec2).
     vec2 pixel_size = SCREEN_PIXEL_SIZE * resolution_downsampling;
 
-    // Compute block coordinates and center sample UV
-    vec2 block_coords = floor(SCREEN_UV / pixel_size);
-    vec2 UV_block = (block_coords + vec2(0.5)) * pixel_size;
+    // Compute block coordinates and center sample UV; store integer coords for speed
+    vec2 block_coords_f = floor(SCREEN_UV / pixel_size);
+    int block_coords_x = int(block_coords_f.x);
+    int block_coords_y = int(block_coords_f.y);
+    vec2 UV_block = (vec2(float(block_coords_x), float(block_coords_y)) + vec2(0.5)) * pixel_size;
 
     // Single texture fetch (nearest filter), cheap when using integer-aligned UVs
     vec3 tex = texture(SCREEN_TEXTURE, UV_block).rgb;
 
     // Bayer index (0..3 for x and y), then flatten: idx = x*4 + y
-    int ix = int(mod(block_coords.x, 4.0));
-    int iy = int(mod(block_coords.y, 4.0));
+    int ix = block_coords_x % 4;
+    int iy = block_coords_y % 4;
     int idx = ix * 4 + iy;
     float bayer_shift = bayer[idx];
 
     // Apply dithering offset and posterize
-    float inv_levels = 1.0 / max(bit_depth, 2.0);
-    tex += vec3(bayer_shift) * (dither_strength * inv_levels);
-    float levels_minus1 = max(bit_depth, 2.0) - 1.0;
-    tex = floor(tex * levels_minus1 + 0.5) / levels_minus1;
+    // float inv_levels = 1.0 / bit_depth;
+    // tex += vec3(bayer_shift) * (dither_strength * inv_levels);
+    // float levels_minus1 = bit_depth - 1.0;
+    // tex = floor(tex * levels_minus1 + 0.5) / levels_minus1;
 
-    // Optional mild desaturation to mimic compressed/GIF look.
-    if (desaturate_amount > 0.001) {
-        float luma = dot(tex, vec3(0.299, 0.587, 0.114));
-        tex = mix(vec3(luma), tex, 1.0 - desaturate_amount);
-    }
+    // Apply dithering offset and posterize (sped up)
+    float inv_levels = 1.0 / bit_depth;
+    tex += vec3(bayer_shift) * (dither_strength * inv_levels);
+    tex = floor(tex * (bit_depth-0.5)) / (bit_depth-1.0);
+
 
     // Output color (opaque).
     COLOR.rgb = tex;
