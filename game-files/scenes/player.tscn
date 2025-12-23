@@ -53,7 +53,9 @@ stretch_mode = 3
 script = ExtResource("4_tuyoq")
 metadata/_edit_use_anchors_ = true
 
-[node name="PostProcess" type="Node" parent="Control"]
+[node name="Shaders" type="CanvasLayer" parent="."]
+
+[node name="PostProcess" type="Node" parent="Shaders"]
 script = ExtResource("5_ab01")
 resolution_downsampling = 2.0
 bit_depth = 8.0
