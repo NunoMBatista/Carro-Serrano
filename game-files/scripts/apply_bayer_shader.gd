@@ -35,21 +35,24 @@ func _ready():
 	cr.z_index = 1000
 
 	var mat = ShaderMaterial.new()
-	var sh = ResourceLoader.load(shader_path)
-	if not sh:
-		# Fallback: try reading the file and creating a Shader from code using FileAccess (Godot 4)
-		if FileAccess.file_exists(shader_path):
-			var f := FileAccess.open(shader_path, FileAccess.READ)
-			if f != null:
-				var code := f.get_as_text()
-				f.close()
-				var shader_obj := Shader.new()
-				shader_obj.code = code
-				sh = shader_obj
-			else:
-				push_error("[apply_bayer] Failed to open shader file: " + str(shader_path))
+	var sh = null
+	# If the path points to a plain text shader file, read it directly to avoid
+	# ResourceLoader emitting errors for unknown extensions (e.g. .shader).
+	if FileAccess.file_exists(shader_path):
+		var f := FileAccess.open(shader_path, FileAccess.READ)
+		if f != null:
+			var code := f.get_as_text()
+			f.close()
+			var shader_obj := Shader.new()
+			shader_obj.code = code
+			sh = shader_obj
 		else:
-			push_error("[apply_bayer] Shader file not found: " + str(shader_path))
+			push_error("[apply_bayer] Failed to open shader file: " + str(shader_path))
+	else:
+		# Otherwise try ResourceLoader for packed resources (.tres/.res etc.)
+		sh = ResourceLoader.load(shader_path)
+		if not sh:
+			push_error("[apply_bayer] Failed to load shader resource: " + str(shader_path))
 
 	if sh:
 		mat.shader = sh
