@@ -15,6 +15,7 @@ var current_index := 0
 
 var is_colliding_state := false  
 var space_held := false  
+var _force_colliding := false
 
 
 func _ready():
@@ -74,7 +75,7 @@ func _update_crosshair_immediate():  #para ser imediato
 
 
 func _process(delta):
-	var is_currently_colliding = raycast and raycast.is_colliding() #se existe e esta a colidir
+	var is_currently_colliding = (_force_colliding) or (raycast and raycast.is_colliding()) #se existe e esta a colidir
 
 	if is_currently_colliding != is_colliding_state:
 		is_colliding_state = is_currently_colliding
@@ -115,3 +116,16 @@ func _try_interact():
 	var collider = raycast.get_collider()
 	if collider and collider.has_method("interact"):
 		collider.interact()
+
+
+func set_ui_hovering(enabled: bool) -> void:
+	_force_colliding = enabled
+	_update_crosshair_immediate()
+
+
+func simulate_click(duration: float = 0.12) -> void:
+	space_held = true
+	_update_crosshair_immediate()
+	await get_tree().create_timer(duration).timeout
+	space_held = false
+	_update_crosshair_immediate()
