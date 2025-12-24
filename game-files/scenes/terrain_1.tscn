@@ -526,7 +526,7 @@ curve = SubResource("Curve3D_a0mms")
 transform = Transform3D(-0.115325324, 0.0414615, 0.9923406, 0, 0.9989787, -0.041741267, -0.9932213, -0.004814195, -0.11522307, -2.8559113, -0.23949385, 0.2235527)
 script = ExtResource("16_dyvd8")
 road_container_path = NodePath("Node3D/RoadManager/Road_001")
-start_road_point_path = NodePath("../Node3D/RoadManager/Road_001/RP_016")
+start_road_point_path = NodePath("../Node3D/RoadManager/Road_001/RP_044")
 
 [node name="Carro" parent="Terrain/CarFollower" instance=ExtResource("17_c6uc2")]
 transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, -0.00012588501, 0.58342606, -0.009887695)
