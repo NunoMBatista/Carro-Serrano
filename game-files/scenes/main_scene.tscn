@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4a6bxjt84we0"]
+[gd_scene load_steps=7 format=3 uid="uid://c4a6bxjt84we0"]
 
 [ext_resource type="PackedScene" uid="uid://crvhgyfvyr5l4" path="res://scenes/terrain_1.tscn" id="1_pw63i"]
 [ext_resource type="PackedScene" uid="uid://dfmyjabbccxsr" path="res://scenes/terrain_2.tscn" id="2_7ykc4"]
+[ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="2_rt2n2"]
 [ext_resource type="Script" uid="uid://dl7l87n055idr" path="res://scripts/road_car_follower.gd" id="3_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://mn4hil24fehx" path="res://scenes/Carro.tscn" id="4_gubc5"]
+[ext_resource type="PackedScene" uid="uid://c5hksj70ixl23" path="res://scenes/terrain_3.tscn" id="6_c16ls"]
 
 [node name="Node3D" type="Node3D"]
 
@@ -17,6 +19,9 @@ shadow_blur = 10.0
 
 [node name="terrain_1" parent="." instance=ExtResource("1_pw63i")]
 
+[node name="Road_001" parent="terrain_1/Terrain/Node3D/RoadManager" index="0"]
+material_resource = ExtResource("2_rt2n2")
+
 [node name="terrain_2" parent="." instance=ExtResource("2_7ykc4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1.0000541, 0, 0, 509.22595)
 
@@ -29,6 +34,9 @@ loop_route = false
 
 [node name="Carro" parent="CarFollower" instance=ExtResource("4_gubc5")]
 transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, -0.00012588501, 0.58342606, -0.009887695)
+
+[node name="terrain_3" parent="." instance=ExtResource("6_c16ls")]
+transform = Transform3D(-1.00563, 0, 0, 0, 1, 0, 0, 0, -1.0048895, 3.6162224, 1.2266693, 510.62756)
 
 [editable path="terrain_1"]
 [editable path="terrain_2"]
