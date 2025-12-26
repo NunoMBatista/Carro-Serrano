@@ -6,6 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://mn4hil24fehx" path="res://scenes/Carro.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://c5hksj70ixl23" path="res://scenes/terrain_3.tscn" id="6_c16ls"]
 
+[ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="6_18nlu"]
+[ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="8_18nlu"]
+[ext_resource type="Script" path="res://scripts/fog_controller.gd" id="9_fog"]
+
 [sub_resource type="Curve3D" id="Curve3D_gubc5"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, 9.1144853e-10, 0.62634265, -0.48000002, -2.1827873e-11, 0, 0.034620356, 0.011232763, -0.6389586, -2.697937, 0.13981628, 40.102783, -0.53140515, -0.00027104095, 1.5811396),
