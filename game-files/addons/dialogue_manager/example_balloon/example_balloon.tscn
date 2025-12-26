@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://73jm5qjy52vq"]
+[gd_scene load_steps=11 format=3 uid="uid://73jm5qjy52vq"]
 
 [ext_resource type="Script" uid="uid://d1wt4ma6055l8" path="res://addons/dialogue_manager/example_balloon/example_balloon.gd" id="1_36de5"]
 [ext_resource type="PackedScene" uid="uid://ckvgyvclnwggo" path="res://addons/dialogue_manager/dialogue_label.tscn" id="2_a8ve6"]
 [ext_resource type="Script" uid="uid://bb52rsfwhkxbn" path="res://addons/dialogue_manager/dialogue_responses_menu.gd" id="3_72ixx"]
 [ext_resource type="FontFile" path="res://fonts/SpecialElite-Regular.ttf" id="4_font"]
+[ext_resource type="Script" path="res://scripts/dialogue_sam_voice.gd" id="5_beep"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_spyqn"]
 bg_color = Color(0.10, 0.08, 0.06, 0.95)
@@ -139,6 +140,9 @@ size_flags_vertical = 3
 text = "Dialogue..."
 seconds_per_step = 0.045
 seconds_per_pause_step = 0.4
+
+[node name="DialogueSAMVoice" type="Node" parent="Balloon/MarginContainer/PanelContainer/MarginContainer/VBoxContainer/DialogueLabel"]
+script = ExtResource("5_beep")
 
 [node name="ResponsesMenu" type="VBoxContainer" parent="Balloon" node_paths=PackedStringArray("response_template")]
 unique_name_in_owner = true
