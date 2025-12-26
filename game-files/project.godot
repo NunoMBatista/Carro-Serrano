@@ -22,6 +22,7 @@ GameManager="*res://scripts/game_manager.gd"
 PlaytestLogger="*res://scripts/playtest_logger.gd"
 DialogueFlow="*res://scripts/dialogue_flow.gd"
 RadioManager="*res://scripts/radio_manager.gd"
+DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 
 [display]
 
@@ -31,7 +32,7 @@ window/size/mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PathMesh3D/plugin.cfg", "res://addons/SunshineClouds2/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
+enabled=PackedStringArray("res://addons/PathMesh3D/plugin.cfg", "res://addons/SunshineClouds2/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
 
 [filesystem]
 
