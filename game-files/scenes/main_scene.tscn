@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4a6bxjt84we0"]
+[gd_scene load_steps=8 format=3 uid="uid://c4a6bxjt84we0"]
 
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="6_18nlu"]
 [ext_resource type="PackedScene" uid="uid://b5d3uht1nyf1g" path="res://scenes/terrain/terrain_1.tscn" id="7_c16ls"]
 [ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="8_18nlu"]
+[ext_resource type="Script" path="res://scripts/fog_controller.gd" id="9_fog"]
 
 [sub_resource type="Sky" id="Sky_7ykc4"]
 
@@ -22,6 +23,9 @@ volumetric_fog_emission = Color(0.12955844, 0.12955847, 0.12955844, 1)
 [node name="Node3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+script = ExtResource("9_fog")
+world_environment_path = NodePath(".")
+directional_light_path = NodePath("../DirectionalLight3D")
 environment = SubResource("Environment_7ykc4")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
