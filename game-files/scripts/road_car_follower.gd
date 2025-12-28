@@ -11,12 +11,13 @@ extends Node3D
 @export var steering_preview_speed_factor := 0.25  # meters of lookahead added per m/s
 @export var steering_far_multiplier := 6  # extra far lookahead multiplier to soften tight turns
 @export var loop_route := true
+@export_node_path("Node3D") var loop_road_point_path = NodePath("")
 @export var transition_distance := 10.0
 
 var cur_speed := 0.0
 var _force_start_rp: Node3D = null
 
-const MAX_SPEED := 24
+const MAX_SPEED := 100
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0
@@ -229,6 +230,10 @@ func _advance_along_route(delta: float) -> void:
 				if _try_transition_to_next_road():
 					return
 				
+				if loop_route and loop_road_point_path != NodePath(""):
+					if _try_loop_to_specific_point():
+						return
+
 				if not loop_route:
 					cur_speed = 0.0
 					remaining = 0.0
@@ -312,6 +317,38 @@ func _apply_transform(delta: float) -> void:
 		_smoothed_basis = Basis(q_blend).orthonormalized()
 
 	global_transform = Transform3D(_smoothed_basis, pos)
+
+func _try_loop_to_specific_point() -> bool:
+	if loop_road_point_path == null or loop_road_point_path == NodePath(""):
+		return false
+		
+	var target_rp = get_node_or_null(loop_road_point_path)
+	if not target_rp:
+		return false
+		
+	# Find which container owns this RP
+	var container = _find_container_for_rp(target_rp)
+	if not container:
+		return false
+		
+	_container = container
+	_force_start_rp = target_rp
+	_route = _build_route(_container)
+	if _route.is_empty():
+		return false
+	
+	_current_seg_idx = 0
+	_distance_on_seg = 0.0
+	_apply_transform(0.0)
+	return true
+
+func _find_container_for_rp(rp: Node) -> Node:
+	var p = rp.get_parent()
+	while p:
+		if p.has_method("is_road_container"):
+			return p
+		p = p.get_parent()
+	return null
 
 func _try_transition_to_next_road() -> bool:
 	if _route.is_empty():

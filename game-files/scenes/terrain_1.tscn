@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://crvhgyfvyr5l4"]
+[gd_scene load_steps=23 format=3 uid="uid://crvhgyfvyr5l4"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_hgkgj"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_kqhsf"]
@@ -16,7 +16,6 @@
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="14_2hvby"]
 [ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="14_hgkgj"]
 [ext_resource type="ArrayMesh" uid="uid://yenammuq36vh" path="res://assets/guard_rail.obj" id="15_w2kbn"]
-[ext_resource type="Script" uid="uid://dl7l87n055idr" path="res://scripts/road_car_follower.gd" id="16_dyvd8"]
 [ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="18_jl3ay"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="19_ddnyo"]
 
@@ -522,12 +521,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.59399, 21.971815, 254.717
 [node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2559204, 0.31819725, 0.5363312)
 curve = SubResource("Curve3D_a0mms")
-
-[node name="CarFollower" type="Node3D" parent="Terrain"]
-transform = Transform3D(-0.115325324, 0.0414615, 0.9923406, 0, 0.9989787, -0.041741267, -0.9932213, -0.004814195, -0.11522307, -2.8559113, -0.23949385, 0.2235527)
-script = ExtResource("16_dyvd8")
-road_container_path = NodePath("Node3D/RoadManager/Road_001")
-start_road_point_path = NodePath("../Node3D/RoadManager/Road_001/RP_044")
 
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("18_jl3ay")

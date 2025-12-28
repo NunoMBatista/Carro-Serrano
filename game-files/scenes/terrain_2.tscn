@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://bfmdcbmgrleml" path="res://addons/road-generator/nodes/road_container.gd" id="13_jpiyq"]
 [ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="14_80jls"]
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="14_eg15q"]
-[ext_resource type="ArrayMesh" uid="uid://yenammuq36vh" path="res://assets/guard_rail.obj" id="15_iimnb"]
+[ext_resource type="ArrayMesh" uid="uid://dvd5dp4p31pax" path="res://assets/uploads_files_3766105_Guard_Rails.obj" id="16_80jls"]
 [ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="18_hxmah"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="19_l7y6d"]
 
@@ -439,7 +439,7 @@ prior_pt_init = NodePath("../RP_032")
 next_pt_init = NodePath("../RP_028")
 
 [node name="RP_032" type="Node3D" parent="Terrain/Node3D/RoadManager/Road_001"]
-transform = Transform3D(0.25136515, 0.35149294, 0.9018141, -0.017368447, 0.93321764, -0.3588919, -0.96773636, 0.074549794, 0.24068339, 2.5872374, 258.74527, 853.88434)
+transform = Transform3D(0.25136515, 0.35149294, 0.9018141, -0.017368447, 0.93321764, -0.3588919, -0.96773636, 0.074549794, 0.24068339, 2.5872374, 253.90068, 853.88434)
 script = ExtResource("14_eg15q")
 traffic_dir = Array[int]([2, 2, 1, 1])
 lanes = Array[int]([2, 4, 4, 2])
@@ -448,8 +448,8 @@ next_mag = 16.0
 next_pt_init = NodePath("../RP_030")
 
 [node name="PathMesh3D" type="PathMesh3D" parent="Terrain"]
-mesh = ExtResource("15_iimnb")
-surface_0/tile_rotation = Vector3(0, -1.5707964, 0)
+mesh = ExtResource("16_80jls")
+surface_0/tile_rotation = Vector3(0, 0, 0)
 surface_0/tile_rotation_order = 2
 surface_0/distribution = 0
 surface_0/alignment = 0
@@ -458,24 +458,6 @@ surface_0/sample_cubic = false
 surface_0/tilt = true
 surface_0/offset = Vector2(0, 0)
 surface_0/triangle_count = 0
-surface_1/tile_rotation = Vector3(0, -1.5707964, 0)
-surface_1/tile_rotation_order = 2
-surface_1/distribution = 0
-surface_1/alignment = 0
-surface_1/warp_along_curve = true
-surface_1/sample_cubic = false
-surface_1/tilt = true
-surface_1/offset = Vector2(0, 0)
-surface_1/triangle_count = 0
-surface_2/tile_rotation = Vector3(0, -1.5707964, 0)
-surface_2/tile_rotation_order = 2
-surface_2/distribution = 0
-surface_2/alignment = 0
-surface_2/warp_along_curve = true
-surface_2/sample_cubic = false
-surface_2/tilt = true
-surface_2/offset = Vector2(0, 0)
-surface_2/triangle_count = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.59399, 21.971815, 254.71701)
 
 [node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D"]
