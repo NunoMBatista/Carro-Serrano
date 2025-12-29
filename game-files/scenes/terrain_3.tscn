@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://c5hksj70ixl23"]
+[gd_scene load_steps=36 format=4 uid="uid://c5hksj70ixl23"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_07emt"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_owkif"]
@@ -16,6 +16,7 @@
 [ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="14_jpn8r"]
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="15_7sdwx"]
 [ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="17_t3o2f"]
+[ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/Rocks006_1K-JPG/Rocks006_1K-JPG_Roughness.jpg" id="18_07emt"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="18_lb77h"]
 
 [sub_resource type="Resource" id="Resource_bvgow"]
@@ -106,17 +107,38 @@ point_count = 86
 
 [sub_resource type="GDScript" id="GDScript_jliok"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_owkif"]
+albedo_texture = ExtResource("18_07emt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e3k6c"]
+albedo_texture = ExtResource("18_07emt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6w70u"]
+albedo_texture = ExtResource("18_07emt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hki7a"]
+albedo_texture = ExtResource("18_07emt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hwmyp"]
+albedo_texture = ExtResource("18_07emt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1dpee"]
+albedo_texture = ExtResource("18_07emt")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4si6q"]
+albedo_texture = ExtResource("18_07emt")
+
 [sub_resource type="FogMaterial" id="FogMaterial_07emt"]
 density = 4.8335
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_owkif"]
 
-[sub_resource type="Sky" id="Sky_e3k6c"]
+[sub_resource type="Sky" id="Sky_ecna2"]
 sky_material = SubResource("ProceduralSkyMaterial_owkif")
 
 [sub_resource type="Environment" id="Environment_6w70u"]
 background_mode = 2
-sky = SubResource("Sky_e3k6c")
+sky = SubResource("Sky_ecna2")
 volumetric_fog_enabled = true
 volumetric_fog_density = 0.0
 
@@ -1104,38 +1126,45 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -38.655785, -60.818764, 86.07
 [node name="Tree280" parent="Forest" instance=ExtResource("18_lb77h")]
 transform = Transform3D(0.99916106, 0, -0.040986165, 0, 1, 0, 0.040986165, 0, 0.99916106, 36.832397, -70.53407, -17.830044)
 
-[node name="Node3D" type="Node3D" parent="."]
+[node name="tunelFim" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 9.80181, 0, 0, 0, 1, 48.687088, 350.64056, 98.306404)
 
-[node name="CSGCylinder3D" type="CSGCylinder3D" parent="Node3D"]
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="tunelFim"]
 transform = Transform3D(1, 0, 0, 0, 0.25683552, 0, 0, 0, 1, -28.52339, -27.151413, -49.014156)
 height = 1.9077148
+material = SubResource("StandardMaterial3D_owkif")
 
-[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="Node3D"]
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="tunelFim"]
 transform = Transform3D(1, 0, 0, 0, 0.24964307, 0, 0, 0, 1, -24.343544, -27.139835, -49.153202)
 height = 1.9077148
+material = SubResource("StandardMaterial3D_e3k6c")
 
-[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="Node3D"]
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="tunelFim"]
 transform = Transform3D(-0.0002975762, -1.7638719, 0, 0.11840036, -0.0044331127, 0, 0, 0, 0.8623475, -26.416813, -26.848917, -49.169666)
 height = 1.9077148
+material = SubResource("StandardMaterial3D_6w70u")
 
-[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="Node3D"]
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="tunelFim"]
 transform = Transform3D(0.008868865, -0.3409644, 0, 0.115710035, 0.026134014, 0, 0, 0, 0.8623474, -24.416996, -26.868713, -49.169666)
 height = 1.9077148
+material = SubResource("StandardMaterial3D_hki7a")
 
-[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="Node3D"]
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="tunelFim"]
 transform = Transform3D(-0.0052400725, -0.3416157, 0, 0.11593105, -0.015440982, 0, 0, 0, 0.8623474, -28.400383, -26.86576, -49.169666)
 height = 1.9077148
+material = SubResource("StandardMaterial3D_hwmyp")
 
-[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="Node3D"]
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="tunelFim"]
 transform = Transform3D(0.008716474, -0.11437351, 0, 0.10819391, 0.009214333, 0, 0, 0, 0.8623471, -23.991617, -26.896936, -49.169666)
 height = 1.9077148
+material = SubResource("StandardMaterial3D_1dpee")
 
-[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="Node3D"]
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="tunelFim"]
 transform = Transform3D(-0.010269635, -0.114229366, 0, 0.108057566, -0.010856187, 0, 0, 0, 0.8623471, -28.831036, -26.885849, -49.169666)
 height = 1.9077148
+material = SubResource("StandardMaterial3D_4si6q")
 
-[node name="FogVolume" type="FogVolume" parent="Node3D"]
+[node name="FogVolume" type="FogVolume" parent="tunelFim"]
 transform = Transform3D(-2.1411867, 0, 0, 0, 0.42936182, 0, 0, 0, 4.897965, -26.39666, -27.272827, -42.955795)
 size = Vector3(1.9852295, 2, 2)
 material = SubResource("FogMaterial_07emt")

@@ -2,17 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbc26vrvpqt5i"
-path.s3tc="res://.godot/imported/Rocks006.png-0eb1247e77a86153b07db3cb33655bff.s3tc.ctex"
+uid="uid://bsvhdplhri50p"
+path.s3tc="res://.godot/imported/Untitled_iron galvanized matte_albedo.jpg-3c00cd02ea94d6a4a166add132ed96ab.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
+generator_parameters={
+"md5": "86c7dd2e8eeee4110c68daeb46e8a389"
+}
 
 [deps]
 
-source_file="res://assets/raw_textures/Rocks006_1K-JPG/Rocks006.png"
-dest_files=["res://.godot/imported/Rocks006.png-0eb1247e77a86153b07db3cb33655bff.s3tc.ctex"]
+source_file="res://assets/Untitled_iron galvanized matte_albedo.jpg"
+dest_files=["res://.godot/imported/Untitled_iron galvanized matte_albedo.jpg-3c00cd02ea94d6a4a166add132ed96ab.s3tc.ctex"]
 
 [params]
 

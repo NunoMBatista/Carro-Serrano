@@ -345,7 +345,7 @@ func _try_loop_to_specific_point() -> bool:
 func _find_container_for_rp(rp: Node) -> Node:
 	var p = rp.get_parent()
 	while p:
-		if p.has_method("is_road_container"):
+		if p.has_method("is_road_container"):	
 			return p
 		p = p.get_parent()
 	return null
