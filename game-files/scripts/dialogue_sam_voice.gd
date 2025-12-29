@@ -21,6 +21,7 @@ class_name DialogueSAMVoice
 
 var _label: DialogueLabel
 var _current_word: String = ""
+var _word_flushed: bool = false
 var _player: AudioStreamPlayer
 var _sam: GDSAM
 
@@ -43,6 +44,8 @@ func _connect_label() -> void:
 		_label.paused_typing.connect(_on_paused)
 
 func _on_spoke(letter: String, _idx: int, _speed: float) -> void:
+	if _idx == 0:
+		_word_flushed = false
 	if not enabled or not speak_per_word:
 		return
 	if letter in separators:
@@ -50,27 +53,53 @@ func _on_spoke(letter: String, _idx: int, _speed: float) -> void:
 			_speak(_current_word)
 			_current_word = ""
 	else:
+		_word_flushed = false
 		_current_word += letter
 
 func _on_paused(_duration: float) -> void:
-	if _current_word.length() > 0 and speak_per_word:
-		_speak(_current_word)
-		_current_word = ""
+	_flush_pending_word()
 
 func _on_finished() -> void:
 	if stop_on_new_line:
 		_stop()
-	if _current_word.length() > 0 and speak_per_word:
-		_speak(_current_word)
-		_current_word = ""
+	_flush_pending_word()
 	if enabled and speak_full_line_when_finished and _label and _label.has_method("dialogue_line"):
 		var line = _label.dialogue_line if _label.dialogue_line else null
 		if line and line.has_method("get"):
 			_speak(str(line.text))
 
 func _on_skipped() -> void:
-	if stop_on_skip:
+	var flushed := _flush_pending_word()
+	if stop_on_skip and not (flushed or speak_full_line_when_finished):
 		_stop()
+
+func _flush_pending_word() -> bool:
+	if _word_flushed:
+		return true
+	if not enabled or not speak_per_word:
+		_current_word = ""
+		return false
+	var word := ""
+	if _label:
+		var text: String = _label.get_parsed_text()
+		var end_idx: int = min(_label.visible_characters, text.length())
+		var visible := text.substr(0, end_idx)
+		var tail := visible.length() - 1
+		while tail >= 0 and visible[tail] in separators:
+			tail -= 1
+		if tail >= 0:
+			var start := tail
+			while start >= 0 and not visible[start] in separators:
+				start -= 1
+			word = visible.substr(start + 1, tail - start)
+	if word == "" and _current_word.length() > 0:
+		word = _current_word
+	if word == "":
+		return false
+	_current_word = ""
+	_word_flushed = true
+	_speak(word)
+	return true
 
 func _speak(text: String) -> void:
 	if not enabled:
