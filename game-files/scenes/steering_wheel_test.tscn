@@ -1,0 +1,60 @@
+[gd_scene load_steps=5 format=4 uid="uid://c7j8lal0m1n2o"]
+
+[ext_resource type="Script" path="res://scripts/road_car_follower.gd" id="1_car"]
+[ext_resource type="PackedScene" uid="uid://mn4hil24fehx" path="res://scenes/Carro.tscn" id="2_carro"]
+[ext_resource type="PackedScene" uid="uid://d2k8m9n4p5q6r" path="res://scenes/steering_wheel_ui.tscn" id="3_steering"]
+
+[sub_resource type="Curve3D" id="Curve3D_test"]
+_data = {
+"points": PackedVector3Array(0, 0, -5, 0, 0, 5, 0, 0, 0, 0, 0, -5, 0, 0, 5, 10, 0, 0, 0, 0, -5, 0, 0, 5, 20, 0, 10, 0, 0, -5, 0, 0, 5, 10, 0, 20, 0, 0, -5, 0, 0, 5, 0, 0, 30, 0, 0, -5, 0, 0, 5, -10, 0, 40, 0, 0, -5, 0, 0, 5, -20, 0, 50, 0, 0, -5, 0, 0, 5, -10, 0, 60, 0, 0, -5, 0, 0, 5, 0, 0, 70, 0, 0, -5, 0, 0, 5, 10, 0, 80, 0, 0, -5, 0, 0, 5, 0, 0, 90),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 10
+
+[node name="SteeringWheelTest" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, -0.75, 0.433013, 0, 10, 0)
+light_energy = 0.8
+shadow_enabled = true
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_test")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="CarFollower" type="Node3D" parent="Path3D/PathFollow3D"]
+script = ExtResource("1_car")
+forward_sample_distance = 1.5
+ride_height = 0.4
+invert_forward = false
+invert_travel = false
+steering_slerp = 0.05
+steering_preview_distance = 5.0
+steering_preview_speed_factor = 0.25
+steering_far_multiplier = 6.0
+
+[node name="Carro" parent="Path3D/PathFollow3D/CarFollower" instance=ExtResource("2_carro")]
+
+[node name="SteeringWheelUI" parent="Path3D/PathFollow3D/CarFollower/Carro" instance=ExtResource("3_steering")]
+
+[node name="Ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 45)
+size = Vector3(100, 2, 200)
+
+[node name="Instructions" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Instructions"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 600.0
+offset_bottom = 150.0
+theme_override_font_sizes/font_size = 20
+text = "Steering Wheel Test Scene
+
+Watch the steering wheel in the bottom-right corner.
+It should rotate left/right as the car follows the curved path.
+
+Press SPACE to brake and slow down.
+Press L to toggle headlights."
