@@ -1,88 +1,100 @@
 [gd_scene load_steps=3 format=3 uid="uid://c5mpwl5isf05w"]
 
 [ext_resource type="Script" uid="uid://0cnp3ngnxnb0" path="res://scripts/radio_view.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://cgc0oo765nk80" path="res://assets/radio.jpg" id="2_texture"]
+[ext_resource type="Texture2D" uid="uid://5ao8a6ni070w" path="res://assets/radio.jpg" id="2_texture"]
 
-[node name="RadioView" type="CanvasLayer"]
-layer = 50
+[node name="RadioView" type="Node"]
 script = ExtResource("1_script")
 
-[node name="Background" type="TextureRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_texture")
-expand_mode = 1
-stretch_mode = 5
+[node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = 50
 
-[node name="SongLabel" type="Label" parent="."]
+[node name="Background" type="TextureRect" parent="BackgroundLayer"]
+texture = ExtResource("2_texture")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 101
+
+[node name="Root" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="SongLabel" type="Label" parent="UILayer/Root"]
+layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -117.0
-offset_top = 380.0
-offset_right = 623.0
-offset_bottom = 530.0
+offset_left = 1916.0
+offset_top = 1253.0
+offset_right = 2361.0
+offset_bottom = 1398.0
 grow_horizontal = 2
 theme_override_colors/font_color = Color(0.2, 1, 0.3, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 48
 text = "-- OFF --"
 horizontal_alignment = 1
 vertical_alignment = 1
+clip_text = true
 
-[node name="VolumeSlider" type="VSlider" parent="."]
-offset_left = 448.0
-offset_top = 440.0
-offset_right = 488.0
-offset_bottom = 640.0
+[node name="VolumeSlider" type="VSlider" parent="UILayer/Root"]
+layout_mode = 0
+offset_left = 1695.0
+offset_top = 1213.0
+offset_right = 1735.0
+offset_bottom = 1413.0
 value = 50.0
 
-[node name="VolumeLabel" type="Label" parent="."]
-offset_left = 367.0
-offset_top = 530.0
-offset_right = 437.0
-offset_bottom = 560.0
+[node name="VolumeLabel" type="Label" parent="UILayer/Root"]
+layout_mode = 0
+offset_left = 1762.0
+offset_top = 1363.0
+offset_right = 1862.0
+offset_bottom = 1397.0
+theme_override_font_sizes/font_size = 24
 text = "VOLUME"
 horizontal_alignment = 1
 
-[node name="PowerButton" type="Button" parent="."]
-offset_left = 1558.0
-offset_top = 347.0
-offset_right = 1708.0
-offset_bottom = 397.0
-theme_override_font_sizes/font_size = 20
+[node name="PowerButton" type="Button" parent="UILayer/Root"]
+layout_mode = 0
+offset_left = 1309.0
+offset_top = 1190.0
+offset_right = 1459.0
+offset_bottom = 1240.0
+theme_override_font_sizes/font_size = 24
 text = "POWER"
 
-[node name="NextButton" type="Button" parent="."]
-offset_left = 1604.0
-offset_top = 501.0
-offset_right = 1754.0
-offset_bottom = 551.0
-theme_override_font_sizes/font_size = 20
+[node name="NextButton" type="Button" parent="UILayer/Root"]
+layout_mode = 0
+offset_left = 2340.0
+offset_top = 1344.0
+offset_right = 2490.0
+offset_bottom = 1394.0
+theme_override_font_sizes/font_size = 24
 text = "NEXT"
 
-[node name="PrevButton" type="Button" parent="."]
-offset_left = 1604.0
-offset_top = 424.0
-offset_right = 1754.0
-offset_bottom = 474.0
-theme_override_font_sizes/font_size = 20
+[node name="PrevButton" type="Button" parent="UILayer/Root"]
+layout_mode = 0
+offset_left = 2340.0
+offset_top = 1200.0
+offset_right = 2490.0
+offset_bottom = 1250.0
+theme_override_font_sizes/font_size = 24
 text = "PREV"
 
-[node name="HintLabel" type="Label" parent="."]
+[node name="HintLabel" type="Label" parent="UILayer/Root"]
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -150.0
-offset_top = -40.0
-offset_right = -20.0
-offset_bottom = -10.0
+offset_left = 3852.0
+offset_top = 2257.0
+offset_right = 4032.0
+offset_bottom = 2332.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 0.8)
+theme_override_font_sizes/font_size = 24
 text = "RMB to leave"
 horizontal_alignment = 2

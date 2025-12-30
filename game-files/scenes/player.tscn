@@ -22,7 +22,7 @@ collision_mask = 2
 collide_with_areas = true
 
 [node name="Control" type="CanvasLayer" parent="."]
-layer = 101
+layer = 102
 offset = Vector2(2, 16)
 transform = Transform2D(1, 0, 0, 1, 2, 16)
 
@@ -55,8 +55,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Shaders" type="CanvasLayer" parent="."]
 layer = 100
-offset = Vector2(2, 16)
-transform = Transform2D(1, 0, 0, 1, 2, 16)
 
 [node name="PostProcess" type="Node" parent="Shaders"]
 script = ExtResource("5_ab01")
