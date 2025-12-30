@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=4 uid="uid://d2k8nan4p5q6r"]
+
+[ext_resource type="Script" path="res://scripts/steering_wheel.gd" id="1_steering"]
+[ext_resource type="Texture2D" uid="uid://bwlljk0jkjvch" path="res://assets/car_steering_wheel.png" id="2_wheel"]
+
+[node name="SteeringWheelUI" type="CanvasLayer"]
+layer = 50
+
+[node name="SteeringWheel" type="TextureRect" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -280.0
+offset_top = -280.0
+offset_right = -80.0
+offset_bottom = -80.0
+grow_horizontal = 0
+grow_vertical = 0
+texture = ExtResource("2_wheel")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("1_steering")
+car_path = NodePath("../..")
+rotation_multiplier = 8.0
+smoothing = 0.15
+max_rotation_degrees = 90.0
+center_spring = 0.1
