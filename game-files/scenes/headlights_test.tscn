@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bwx7y3lam4n2p"]
+
+[ext_resource type="PackedScene" uid="uid://c8yavqh2m3kl1" path="res://scenes/headlights.tscn" id="1_test"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_car"]
+size = Vector3(2, 1, 4)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+size = Vector2(100, 100)
+
+[node name="HeadlightsTest" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 5, 10)
+
+[node name="CarMockup" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CarMockup"]
+mesh = SubResource("BoxMesh_car")
+
+[node name="Headlights" parent="CarMockup" instance=ExtResource("1_test")]
+aim_angle = 100.0
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_ground")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 0)
+light_energy = 0.1
+shadow_enabled = true
+
+[node name="Label" type="Label" parent="."]
+offset_right = 400.0
+offset_bottom = 100.0
+text = "Headlights Test Scene
+
+Press L to toggle headlights on/off
+
+The dim directional light simulates night.
+Watch the ground for spotlight cones."

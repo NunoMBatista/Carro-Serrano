@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=4 uid="uid://c8x9vqh2m3kl1"]
+
+[ext_resource type="Script" path="res://scripts/headlights.gd" id="1_headlights"]
+
+[node name="Headlights" type="Node3D"]
+script = ExtResource("1_headlights")
+light_energy = 4.0
+light_range = 60.0
+spot_angle = 25.0
+spot_angle_attenuation = 3.0
+attenuation = 2.0
+light_offset_x = 0.4
+light_offset_y = 0.3
+light_offset_z = 1.2
+aim_angle = 20.0
+light_color = Color(1, 0.95, 0.9, 1)
+shadow_enabled = true
