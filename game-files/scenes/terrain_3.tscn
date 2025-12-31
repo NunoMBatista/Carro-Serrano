@@ -1165,7 +1165,7 @@ height = 1.9077148
 material = SubResource("StandardMaterial3D_4si6q")
 
 [node name="FogVolume" type="FogVolume" parent="tunelFim"]
-transform = Transform3D(-2.1411867, 0, 0, 0, 0.42936182, 0, 0, 0, 4.897965, -26.39666, -27.272827, -42.955795)
+transform = Transform3D(-2.1411867, 0, 0, 0, 0.42936182, 0, 0, 0, 4.897965, -26.39666, -27.272827, -44.449924)
 size = Vector3(1.9852295, 2, 2)
 material = SubResource("FogMaterial_07emt")
 
