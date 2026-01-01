@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2ettpabehudj"
-path="res://.godot/imported/glove_box.png-e552fefa8e83855b1820654f04f85201.ctex"
+uid="uid://s1vw5o5ydf1f"
+path="res://.godot/imported/glove_box.jpg-f89c51aa8e358b12c42d9bbe33315e97.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/glove_box.png"
-dest_files=["res://.godot/imported/glove_box.png-e552fefa8e83855b1820654f04f85201.ctex"]
+source_file="res://assets/glove_box.jpg"
+dest_files=["res://.godot/imported/glove_box.jpg-f89c51aa8e358b12c42d9bbe33315e97.ctex"]
 
 [params]
 
