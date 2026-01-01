@@ -1,20 +1,23 @@
-extends CanvasLayer
+extends Node
 ## 2D Glovebox view overlay
 
 signal closed
 
 var _clickable_items: Array[Control] = []
 
-@onready var background: TextureRect = $Background
-@onready var hint_label: Label = $HintLabel
-@onready var items_container: Control = $ItemsContainer
+var _initial_hint_pos: Vector2 = Vector2.ZERO
+var _initial_items_pos: Vector2 = Vector2.ZERO
+
+@onready var background: TextureRect = $BackgroundLayer/Background
+@onready var hint_label: Label = $UILayer/ItemsContainer/HintLabel
+@onready var items_container: Control = $UILayer/ItemsContainer
 
 func _ready() -> void:
 	# Setup hint label
 	hint_label.text = "RMB to leave"
 	hint_label.add_theme_font_size_override("font_size", 18)
 	hint_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7, 0.8))
-	
+
 	# Create example clickable circle
 	_create_clickable_circle(Vector2(300, 200), 40, Color(0.8, 0.3, 0.3))
 	_create_clickable_circle(Vector2(500, 300), 30, Color(0.3, 0.8, 0.3))
@@ -23,6 +26,16 @@ func _ready() -> void:
 	# existing dynamically created items will have their signals connected in _create_clickable_circle
 	# nothing else to connect here for now
 
+	# store original positions so we can maintain relative offsets when scaling
+	_initial_hint_pos = hint_label.position
+	_initial_items_pos = items_container.position
+
+	# initial layout and connect to viewport resize
+	_update_layout()
+	var vp = get_viewport()
+	if vp:
+		vp.size_changed.connect(Callable(self, "_update_layout"))
+
 func _create_clickable_circle(pos: Vector2, radius: float, color: Color) -> void:
 	var circle = ColorRect.new()
 	circle.custom_minimum_size = Vector2(radius * 2, radius * 2)
@@ -30,12 +43,12 @@ func _create_clickable_circle(pos: Vector2, radius: float, color: Color) -> void
 	circle.position = pos - Vector2(radius, radius)
 	circle.color = color
 	circle.mouse_filter = Control.MOUSE_FILTER_STOP
-	
+
 	# Make it round-ish with a shader or just keep square for simplicity
 	circle.gui_input.connect(_on_circle_clicked.bind(circle))
 	circle.mouse_entered.connect(Callable(self, "_on_item_mouse_entered").bind(circle))
 	circle.mouse_exited.connect(Callable(self, "_on_item_mouse_exited").bind(circle))
-	
+
 	items_container.add_child(circle)
 	_clickable_items.append(circle)
 
@@ -94,6 +107,27 @@ func _find_node(root: Node, name: String) -> Node:
 			if res:
 				return res
 	return null
+
+func _update_layout() -> void:
+	if not background or not background.texture:
+		return
+
+	var vsize: Vector2 = get_viewport().get_visible_rect().size
+	var tex_size: Vector2 = background.texture.get_size()
+
+	# weakest-link fit (match radio_view behavior): scale uniformly
+	var uniform_scale = max(vsize.x / tex_size.x, vsize.y / tex_size.y)
+
+	# apply to background
+	background.scale = Vector2(uniform_scale, uniform_scale)
+	background.position = (vsize - tex_size * uniform_scale) / 2.0
+
+	# scale and position items container and hint relative to background
+	items_container.scale = Vector2(uniform_scale, uniform_scale)
+	items_container.position = background.position + _initial_items_pos * uniform_scale
+
+	hint_label.scale = Vector2(uniform_scale, uniform_scale)
+	hint_label.position = background.position + _initial_hint_pos * uniform_scale
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
