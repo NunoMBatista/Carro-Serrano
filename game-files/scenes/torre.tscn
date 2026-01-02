@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c0pdyu0v2ae3b"]
+[gd_scene load_steps=29 format=3 uid="uid://c0pdyu0v2ae3b"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_xf7u0"]
 [ext_resource type="Resource" uid="uid://dstyegoambfu1" path="res://torre_data/data.hterrain" id="2_yp8l3"]
@@ -18,7 +18,8 @@
 [ext_resource type="PackedScene" uid="uid://c71vwi82qu3k5" path="res://scenes/house_1.tscn" id="16_8ee8r"]
 [ext_resource type="PackedScene" uid="uid://dw7wi85d1qrva" path="res://scenes/house_2.tscn" id="17_2j81h"]
 [ext_resource type="PackedScene" uid="uid://dhomypn0xefw7" path="res://scenes/house_3.tscn" id="18_2j81h"]
-[ext_resource type="PackedScene" uid="uid://cnaqh3kxkaud8" path="res://scenes/parking.tscn" id="19_bwf7j"]
+[ext_resource type="PackedScene" uid="uid://deq3i7d44rt0b" path="res://scenes/parking_slot.tscn" id="19_bwf7j"]
+[ext_resource type="PackedScene" uid="uid://cqxwr5nb0gl44" path="res://castelo.tscn" id="20_dy7xw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_th5b8"]
 
@@ -35,7 +36,19 @@ script = ExtResource("3_vc61h")
 mode = 0
 textures = [[ExtResource("4_ei2t2"), ExtResource("5_ge27s"), ExtResource("6_q363w"), ExtResource("7_8ee8r")], [ExtResource("8_2j81h"), ExtResource("9_bwf7j"), ExtResource("10_dy7xw"), ExtResource("11_kw4hc")]]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_2j81h"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2j81h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwf7j"]
+albedo_color = Color(0.15294118, 1, 1, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dy7xw"]
+radius = 15.0
+height = 15.0
+rings = 18
+is_hemisphere = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kw4hc"]
+albedo_color = Color(0.48376602, 0.48376566, 1.92523e-07, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -105,18 +118,8 @@ traffic_dir = Array[int]([2, 2, 1, 1])
 lanes = Array[int]([2, 4, 4, 2])
 prior_mag = 20.339811
 next_mag = 18.952736
-prior_pt_init = NodePath("../RP_004")
-next_pt_init = NodePath("../RP_002")
-
-[node name="RP_004" type="Node3D" parent="HTerrain/RoadManager/Road_001"]
-transform = Transform3D(-0.84599733, 0.13355182, -0.5161908, -1.362137e-08, 0.96812195, 0.2504783, 0.53318775, 0.21190378, -0.81902874, 545.326, 217.17436, 353.93323)
-script = ExtResource("14_q363w")
-traffic_dir = Array[int]([2, 2, 1, 1])
-lanes = Array[int]([2, 4, 4, 2])
-prior_mag = 16.0
-next_mag = 20.339811
 prior_pt_init = NodePath("../RP_005")
-next_pt_init = NodePath("../RP_003")
+next_pt_init = NodePath("../RP_002")
 
 [node name="RP_005" type="Node3D" parent="HTerrain/RoadManager/Road_001"]
 transform = Transform3D(-0.99211985, -0.06700906, -0.10587093, -0.08120464, 0.98737055, 0.13603204, 0.0954185, 0.14355722, -0.9850315, 554.28687, 217.33565, 414.27933)
@@ -126,7 +129,7 @@ lanes = Array[int]([2, 4, 4, 2])
 prior_mag = 16.0
 next_mag = 16.0
 prior_pt_init = NodePath("../RP_006")
-next_pt_init = NodePath("../RP_004")
+next_pt_init = NodePath("../RP_003")
 
 [node name="RP_006" type="Node3D" parent="HTerrain/RoadManager/Road_001"]
 transform = Transform3D(-0.99945533, 0.0008020783, -0.03300252, 0, 0.9997045, 0.024296384, 0.033012275, 0.024283132, -0.99916005, 556.455, 215.31, 444.39764)
@@ -173,19 +176,47 @@ transform = Transform3D(0.9821976, 0.0006391535, -0.1878516, 0, 0.99999374, 0.00
 script = ExtResource("14_q363w")
 traffic_dir = Array[int]([2, 2, 1, 1])
 lanes = Array[int]([2, 4, 4, 2])
-prior_mag = 59.945045
+prior_mag = 62.145157
 next_mag = 70.049515
 prior_pt_init = NodePath("../RP_011")
 next_pt_init = NodePath("../RP_009")
 
 [node name="RP_011" type="Node3D" parent="HTerrain/RoadManager/Road_001"]
-transform = Transform3D(0.42136732, -0.0029746743, 0.9068854, 0, 0.99999416, 0.0032800843, -0.90689045, -0.0013821189, 0.42136496, 573.47217, 215.31, 467.00278)
+transform = Transform3D(0.5427406, -0.0027917302, 0.83989596, 0, 0.999994, 0.0033238842, -0.8399008, -0.0018040052, 0.5427375, 582.8196, 215.31, 455.754)
 script = ExtResource("14_q363w")
 traffic_dir = Array[int]([2, 2, 1, 1])
 lanes = Array[int]([2, 4, 4, 2])
-prior_mag = 59.945045
-next_mag = 59.945045
+prior_mag = 62.145157
+next_mag = 62.145157
 next_pt_init = NodePath("../RP_010")
+
+[node name="Road_002" type="Node3D" parent="HTerrain/RoadManager"]
+transform = Transform3D(0.9787459, 0, -0.20507684, 0, 1, 0, 0.20507684, 0, 0.9787459, 132.10526, 0, -104.12161)
+script = ExtResource("13_ge27s")
+use_lowpoly_preview = true
+edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
+edge_rp_local_dirs = Array[int]([0, 1])
+metadata/_custom_type_script = "uid://bfmdcbmgrleml"
+
+[node name="RP_001" type="Node3D" parent="HTerrain/RoadManager/Road_002"]
+transform = Transform3D(-0.9820734, 0.00045836825, -0.1884982, 0, 0.999997, 0.0024316777, 0.18849877, 0.002388086, -0.9820705, 441.9198, 215.31, 367.9926)
+script = ExtResource("14_q363w")
+traffic_dir = Array[int]([2, 2, 2, 2, 2, 1, 1, 1, 1, 1])
+lanes = Array[int]([2, 3, 3, 3, 4, 4, 3, 3, 3, 2])
+next_mag = 51.404842
+prior_pt_init = NodePath("../RP_002")
+
+[node name="RP_002" type="Node3D" parent="HTerrain/RoadManager/Road_002"]
+transform = Transform3D(-0.9820735, 0.0009401549, -0.18849663, 0, 0.99998754, 0.004987585, 0.18849903, 0.0048981747, -0.9820611, 461.29926, 215.31, 468.95895)
+script = ExtResource("14_q363w")
+traffic_dir = Array[int]([2, 2, 2, 2, 2, 1, 1, 1, 1, 1])
+lanes = Array[int]([2, 3, 3, 3, 4, 4, 3, 3, 3, 2])
+prior_mag = 51.404842
+next_mag = 51.404842
+next_pt_init = NodePath("../RP_001")
 
 [node name="big_house" parent="." instance=ExtResource("15_ge27s")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 549.39465, 208.60593, 565.0161)
@@ -200,19 +231,109 @@ transform = Transform3D(-1.1848769, -0.017234582, -1.6111401, -0.05227242, 1.999
 transform = Transform3D(0.49895048, 0, 0.032379482, 0, 0.5, 0, -0.032379482, 0, 0.49895048, 398.35284, 215.0849, 605.87067)
 
 [node name="house_3" parent="." instance=ExtResource("18_2j81h")]
-transform = Transform3D(-0.7975403, 0, -3.9196851, 0, 4, 0, 3.9196851, 0, -0.7975403, 670.7728, 215.66718, 596.2222)
+transform = Transform3D(-0.7975403, 0, -3.9196851, 0, 3.1339073, 0, 3.9196851, 0, -0.7975403, 670.7728, 215.66718, 596.2222)
 
 [node name="GNR" type="Node3D" parent="."]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="GNR"]
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="GNR"]
+transform = Transform3D(30, 0, 0, 0, 12.336, 0, 0, 0, 30, 532, 226.839, 720)
+sides = 25
+material = SubResource("StandardMaterial3D_2j81h")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="GNR/StaticBody3D"]
-transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 518.56805, 230.7525, 707.66705)
-mesh = SubResource("CapsuleMesh_2j81h")
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="GNR"]
+transform = Transform3D(30, 0, 0, 0, 12.121764, 0, 0, 0, 30, 532, 251.593, 720)
+sides = 25
+material = SubResource("StandardMaterial3D_bwf7j")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 640.9959, 230.99365, 722.6088)
-mesh = SubResource("CapsuleMesh_2j81h")
+[node name="CSGMesh3D" type="CSGMesh3D" parent="GNR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 532, 263.676, 720)
+mesh = SubResource("SphereMesh_dy7xw")
+material = SubResource("StandardMaterial3D_kw4hc")
 
-[node name="park" parent="." instance=ExtResource("19_bwf7j")]
-transform = Transform3D(3.5609267, 0, -3.5099576, 0, 5, 0, 3.5099576, 0, 3.5609267, 601.5007, 215.17188, 408.7064)
+[node name="Label3D" type="Label3D" parent="GNR"]
+transform = Transform3D(-2.3081794, 0, -0.08641288, 0, 2.3000374, 0, 0.18133362, 0, -1.0999418, 530.95276, 252.83325, 704.8584)
+modulate = Color(0, 0, 0, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "GNR"
+font_size = 200
+outline_size = 20
+
+[node name="GNR2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 575.15796, 153.4526, 192.60202)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="GNR2"]
+transform = Transform3D(30, 0, 0, 0, 8.786309, 0, 0, 0, 30, 17.891846, 70.087875, 529.96265)
+sides = 25
+material = SubResource("StandardMaterial3D_2j81h")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="GNR2"]
+transform = Transform3D(30, 0, 0, 0, 8.764603, 0, 0, 0, 30, 17.891846, 87.64818, 529.96265)
+sides = 25
+material = SubResource("StandardMaterial3D_bwf7j")
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="GNR2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.891846, 96.461914, 529.96265)
+mesh = SubResource("SphereMesh_dy7xw")
+material = SubResource("StandardMaterial3D_kw4hc")
+
+[node name="Label3D" type="Label3D" parent="GNR2"]
+transform = Transform3D(-2.3081794, 0, -0.08641288, 0, 2.3000374, 0, 0.18133362, 0, -1.0999418, 16.844604, 90.58458, 514.82104)
+modulate = Color(0, 0, 0, 1)
+outline_modulate = Color(1, 1, 1, 1)
+text = "GNR"
+font_size = 200
+outline_size = 20
+
+[node name="Parking" type="Node3D" parent="."]
+transform = Transform3D(0.9777796, 0, -0.20963562, 0, 1, 0, 0.20963562, 0, 0.9777796, 130.20062, 0, -91.56253)
+
+[node name="Sketchfab_Scene" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 463.51227, 215.59589, 414.59277)
+
+[node name="Sketchfab_Scene2" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 461.73422, 215.49567, 405.2103)
+
+[node name="Sketchfab_Scene3" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 460.2576, 215.59589, 395.5837)
+
+[node name="Sketchfab_Scene4" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 458.4796, 215.49567, 386.2012)
+
+[node name="Sketchfab_Scene5" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 470.8469, 215.59589, 451.2776)
+
+[node name="Sketchfab_Scene6" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 469.0689, 215.49567, 441.8951)
+
+[node name="Sketchfab_Scene7" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 467.5922, 215.59589, 432.26852)
+
+[node name="Sketchfab_Scene8" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 465.8142, 215.49567, 422.886)
+
+[node name="Sketchfab_Scene9" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 442.8926, 215.59589, 395.33008)
+
+[node name="Sketchfab_Scene10" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 444.75406, 215.49567, 404.69635)
+
+[node name="Sketchfab_Scene11" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 446.31638, 215.59589, 414.3094)
+
+[node name="Sketchfab_Scene12" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 448.17783, 215.49567, 423.67575)
+
+[node name="Sketchfab_Scene13" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 435.23172, 215.59589, 358.712)
+
+[node name="Sketchfab_Scene14" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 437.0932, 215.49567, 368.07828)
+
+[node name="Sketchfab_Scene15" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 438.6555, 215.59589, 377.69138)
+
+[node name="Sketchfab_Scene16" parent="Parking" instance=ExtResource("19_bwf7j")]
+transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 440.51697, 215.49567, 387.05768)
+
+[node name="castelo" parent="." instance=ExtResource("20_dy7xw")]
+transform = Transform3D(0.005098224, 0, -0.008602797, 0, 0.006301972, 0, 0.008602797, 0, 0.005098224, 445.9457, 220.15643, 689.9212)
