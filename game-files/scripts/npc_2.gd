@@ -9,7 +9,7 @@ var y_translation_offset = 11.3  # How many units to move UP (Y+)
 # X = 90  -> Flips "Upside Down" to "Standing Up"
 # Y = 0   -> Resets the spin.
 # Z = 0   -> No ear-to-shoulder tilting.
-var fix_rotation = Vector3(180, 0, -90) 
+var fix_rotation = Vector3(0, 0, 0) 
 
 func _ready():
 	var anim_player = $AnimationPlayer

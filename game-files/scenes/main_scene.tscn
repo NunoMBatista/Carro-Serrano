@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://c4a6bxjt84we0"]
 
-[ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="1_pu3yx"]
+[ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="6_18nlu"]
 [ext_resource type="PackedScene" uid="uid://b5d3uht1nyf1g" path="res://scenes/terrain/terrain_1.tscn" id="7_c16ls"]
 [ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="8_18nlu"]
@@ -22,9 +22,6 @@ volumetric_fog_emission = Color(0.12955844, 0.12955847, 0.12955844, 1)
 
 [node name="Node3D" type="Node3D"]
 
-[node name="npc_2" parent="." instance=ExtResource("1_pu3yx")]
-transform = Transform3D(-0.9999006, 0, -0.014101904, 0, 1, 0, 0.014101904, 0, -0.9999006, 95.74951, 24.21717, 176.7331)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_7ykc4")
 
@@ -43,6 +40,7 @@ script = ExtResource("8_18nlu")
 
 [node name="Forest" type="Node3D" parent="."]
 transform = Transform3D(0.9956307, 0, -0.0933785, 0, 1, 0, 0.0933785, 0, 0.9956307, 73.702484, 103.778915, 48.323795)
+visible = false
 script = SubResource("GDScript_rt2n2")
 
 [node name="Tree" parent="Forest" instance=ExtResource("6_18nlu")]
@@ -770,3 +768,6 @@ transform = Transform3D(0.99913436, -0.0060877306, -0.041183025, 0.008743007, 0.
 
 [node name="Tree242" parent="Forest" instance=ExtResource("6_18nlu")]
 transform = Transform3D(0.9672014, -0.2539936, 0.0030761212, 0.25399366, 0.9669125, -0.023821626, 0.0030761212, 0.023821624, 0.99971104, 126.42664, -90.42457, 157.93796)
+
+[node name="npc_2" parent="." instance=ExtResource("4_pu3yx")]
+transform = Transform3D(-0.9964166, -0.012320188, 0.08367776, -0.0122169815, 0.99992377, 0.0017453283, -0.083692886, 0.00071678445, -0.9964913, 95.84092, 26.97998, 81.419014)
