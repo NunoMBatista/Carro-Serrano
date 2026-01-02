@@ -170,11 +170,8 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="Headlights" parent="." instance=ExtResource("11_xa45b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18159771, 0.02865073, -0.96883464)
-light_energy = 100.0
-
-[node name="Headlights2" parent="." instance=ExtResource("11_xa45b")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14115322, 0, -0.91769373)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12909627, -0.17638423, -0.7182284)
+spot_range = 200.0
 
 [node name="SteeringWheel3D" parent="." instance=ExtResource("12_hkks4")]
 transform = Transform3D(0.1999954, 4.1129183e-11, 0.001357856, -0.00067498366, 0.17353924, 0.09941675, -0.0011782061, -0.09941903, 0.17353521, 0, -0.18, -0.297)
