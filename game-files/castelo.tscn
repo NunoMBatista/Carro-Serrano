@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqxwr5nb0gl44"]
+
+[ext_resource type="PackedScene" uid="uid://chehp25aoxemk" path="res://assets/medieval_stone_tower.glb" id="1_e3p62"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_e3p62")]

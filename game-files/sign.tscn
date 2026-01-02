@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://c026r7n2c1ebg"]
+
+[ext_resource type="PackedScene" uid="uid://dcv2k3gdbvxfp" path="res://assets/old_medieval_sign_board.glb" id="1_mbcot"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_mbcot")]
