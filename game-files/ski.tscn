@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://vx6csh1j7nmm"]
+
+[ext_resource type="PackedScene" uid="uid://b2v7njerlot0t" path="res://assets/ski_gongola_and_lift_station_detailed_drafts.glb" id="1_jp814"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_jp814")]

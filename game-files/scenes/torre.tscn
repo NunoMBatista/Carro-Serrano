@@ -1,5 +1,6 @@
-[gd_scene load_steps=29 format=3 uid="uid://c0pdyu0v2ae3b"]
+[gd_scene load_steps=36 format=3 uid="uid://c0pdyu0v2ae3b"]
 
+[ext_resource type="CompositorEffect" uid="uid://cil7asi5ishrm" path="res://NewCloudsGD.tres" id="1_th5b8"]
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_xf7u0"]
 [ext_resource type="Resource" uid="uid://dstyegoambfu1" path="res://torre_data/data.hterrain" id="2_yp8l3"]
 [ext_resource type="Script" uid="uid://dxqdn5ho6vkac" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_vc61h"]
@@ -20,16 +21,31 @@
 [ext_resource type="PackedScene" uid="uid://dhomypn0xefw7" path="res://scenes/house_3.tscn" id="18_2j81h"]
 [ext_resource type="PackedScene" uid="uid://deq3i7d44rt0b" path="res://scenes/parking_slot.tscn" id="19_bwf7j"]
 [ext_resource type="PackedScene" uid="uid://cqxwr5nb0gl44" path="res://castelo.tscn" id="20_dy7xw"]
+[ext_resource type="Script" uid="uid://djusduuxf0voj" path="res://addons/SunshineClouds2/SunshineCloudsDriver.gd" id="22_sqaxk"]
+[ext_resource type="PackedScene" uid="uid://c026r7n2c1ebg" path="res://sign.tscn" id="23_sqaxk"]
+[ext_resource type="PackedScene" uid="uid://cwwb56f2l1fn6" path="res://shed.tscn" id="24_fvriv"]
+[ext_resource type="PackedScene" uid="uid://b2v7njerlot0t" path="res://assets/ski_gongola_and_lift_station_detailed_drafts.glb" id="25_6ekmd"]
+[ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="26_jwbu7"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_th5b8"]
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_dy7xw"]
+rayleigh_color = Color(0.62352943, 0.39607844, 0.7019608, 1)
+mie_color = Color(0.846034, 0.71111226, 0.39955893, 1)
+ground_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Sky" id="Sky_sqaxk"]
-sky_material = SubResource("ProceduralSkyMaterial_th5b8")
+sky_material = SubResource("PhysicalSkyMaterial_dy7xw")
 
 [sub_resource type="Environment" id="Environment_fvriv"]
 background_mode = 2
 sky = SubResource("Sky_sqaxk")
 tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 0.23
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.005
+
+[sub_resource type="Compositor" id="Compositor_fvriv"]
+compositor_effects = Array[CompositorEffect]([ExtResource("1_th5b8")])
 
 [sub_resource type="Resource" id="Resource_6ekmd"]
 script = ExtResource("3_vc61h")
@@ -53,10 +69,11 @@ albedo_color = Color(0.48376602, 0.48376566, 1.92523e-07, 1)
 [node name="Node3D" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -0.70710677, 0.70710677, 0, -0.70710677, -0.70710677, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.99625075, 0.08651251, 0, -0.08651251, 0.99625075, 0, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fvriv")
+compositor = SubResource("Compositor_fvriv")
 
 [node name="HTerrain" type="Node3D" parent="."]
 script = ExtResource("1_xf7u0")
@@ -222,16 +239,16 @@ next_pt_init = NodePath("../RP_001")
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 549.39465, 208.60593, 565.0161)
 
 [node name="Sketchfab_Scene" parent="big_house" instance=ExtResource("16_8ee8r")]
-transform = Transform3D(-0.34227628, 0, -1.9704942, 0, 2, 0, 1.9704942, 0, -0.34227628, -46.530853, 6.529602, 0)
+transform = Transform3D(-0.070461795, 0, -1.9987583, 0, 2, 0, 1.9987583, 0, -0.070461795, -45.715317, 6.529602, 12.054459)
 
 [node name="Sketchfab_Scene2" parent="big_house" instance=ExtResource("16_8ee8r")]
-transform = Transform3D(-1.1848769, -0.017234582, -1.6111401, -0.05227242, 1.9992441, 0.01705638, 1.6103839, 0.05221393, -1.1848793, -43.900513, 6.9210052, -11.784958)
+transform = Transform3D(-0.9542874, -0.009955859, -1.7576236, -0.052272424, 1.9992442, 0.01705639, 1.7568741, 0.05407595, -0.9541867, -44.716064, 6.9210052, 0.020950317)
 
 [node name="house_2" parent="." instance=ExtResource("17_2j81h")]
-transform = Transform3D(0.49895048, 0, 0.032379482, 0, 0.5, 0, -0.032379482, 0, 0.49895048, 398.35284, 215.0849, 605.87067)
+transform = Transform3D(-0.49962875, 0, -0.01926376, 0, 0.5, 0, 0.01926376, 0, -0.49962875, 689.56714, 215.0849, 548.6847)
 
 [node name="house_3" parent="." instance=ExtResource("18_2j81h")]
-transform = Transform3D(-0.7975403, 0, -3.9196851, 0, 3.1339073, 0, 3.9196851, 0, -0.7975403, 670.7728, 215.66718, 596.2222)
+transform = Transform3D(2.0445726, 0, 3.437982, 0, 3.133907, 0, -3.437982, 0, 2.0445726, 439.834, 215.66718, 482.56168)
 
 [node name="GNR" type="Node3D" parent="."]
 
@@ -337,3 +354,32 @@ transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.0294
 
 [node name="castelo" parent="." instance=ExtResource("20_dy7xw")]
 transform = Transform3D(0.005098224, 0, -0.008602797, 0, 0.006301972, 0, 0.008602797, 0, 0.005098224, 445.9457, 220.15643, 689.9212)
+
+[node name="SunshineCloudsDriverGD" type="Node" parent="." node_paths=PackedStringArray("tracked_directional_lights")]
+script = ExtResource("22_sqaxk")
+update_continuously = true
+clouds_resource = ExtResource("1_th5b8")
+ambience_sample_environment = SubResource("Environment_fvriv")
+tracked_directional_lights = [NodePath("../DirectionalLight3D")]
+tracked_directional_light_shadow_steps = Array[int]([12])
+metadata/_custom_type_script = "uid://djusduuxf0voj"
+
+[node name="1900" parent="." instance=ExtResource("23_sqaxk")]
+transform = Transform3D(19.051222, 0, 23.17436, 0, 30, 0, -23.17436, 0, 19.051222, 565.25934, 213.5383, 331.72284)
+
+[node name="Label3D" type="Label3D" parent="1900"]
+transform = Transform3D(-0.3998528, 0, 0.010847539, 0, 0.39999932, 0, -0.010847539, 0, -0.3998528, -0.0040273666, 0.25298738, -0.021341324)
+modulate = Color(0.24705882, 0.39215687, 0.3137255, 1)
+text = "1900m"
+
+[node name="shed_1" parent="." instance=ExtResource("24_fvriv")]
+transform = Transform3D(-2.4468687, 0, -1.7357516, 0, 3, 0, 1.7357516, 0, -2.4468687, 585.28156, 216.06532, 314.24298)
+
+[node name="shed_2" parent="." instance=ExtResource("24_fvriv")]
+transform = Transform3D(1.1551051, 0, 10.268943, 0, 3, 0, -4.7155356, 0, 2.515453, 384.2396, 216.06532, 430.97028)
+
+[node name="ski" parent="." instance=ExtResource("25_6ekmd")]
+transform = Transform3D(-1.0871427, 0, 0.88211155, 0, 1.4, 0, -0.88211155, 0, -1.0871427, 284.23376, 215.46513, 337.49155)
+
+[node name="pelourinho" parent="." instance=ExtResource("26_jwbu7")]
+transform = Transform3D(-1.1648507, 0, -6.9023995, 0, 5.2142677, 0, 6.9023995, 0, -1.1648507, 552.35956, 225.27496, 561.58026)

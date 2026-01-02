@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwwb56f2l1fn6"]
+
+[ext_resource type="PackedScene" uid="uid://wp881ihkxv60" path="res://assets/shed.glb" id="1_skq4x"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_skq4x")]
