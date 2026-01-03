@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvq8yh3m5qxnm"]
+
+[ext_resource type="Script" path="res://scripts/bottle.gd" id="1_bottle"]
+
+[node name="Bottle" type="RigidBody3D"]
+script = ExtResource("1_bottle")
+collision_layer = 1
+collision_mask = 1048575
+mass = 2.0
+gravity_scale = 1.0
+linear_damp = 3.0
+angular_damp = 4.0
+contact_monitor = true
+max_contacts_reported = 8
+continuous_cd = true
+can_sleep = false

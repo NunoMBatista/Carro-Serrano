@@ -17,7 +17,7 @@ extends Node3D
 var cur_speed := 0.0
 var _force_start_rp: Node3D = null
 
-const MAX_SPEED := 100
+const MAX_SPEED := 2
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0
@@ -90,7 +90,7 @@ func _search_container_recursive(root: Node) -> Node:
 		var node: Node = stack.pop_back()
 		if node.has_method("is_road_container"):
 			return node
-		
+
 		# Push children in reverse order so the first child is popped first
 		var children = node.get_children()
 		for i in range(children.size() - 1, -1, -1):
@@ -139,7 +139,7 @@ func _build_route(container: Node) -> Array:
 
 func _choose_start_rp(container: Node, rps: Array) -> Node3D:
 	if _force_start_rp != null and _force_start_rp.is_inside_tree():
-		# Verify it belongs to this container? 
+		# Verify it belongs to this container?
 		# Usually we trust the transition logic.
 		var rp = _force_start_rp
 		_force_start_rp = null
@@ -225,11 +225,11 @@ func _advance_along_route(delta: float) -> void:
 
 		if _distance_on_seg > seg_len:
 			remaining = _distance_on_seg - seg_len
-			
+
 			if _current_seg_idx == _route.size() - 1:
 				if _try_transition_to_next_road():
 					return
-				
+
 				if loop_route and loop_road_point_path != NodePath(""):
 					if _try_loop_to_specific_point():
 						return
@@ -321,22 +321,22 @@ func _apply_transform(delta: float) -> void:
 func _try_loop_to_specific_point() -> bool:
 	if loop_road_point_path == null or loop_road_point_path == NodePath(""):
 		return false
-		
+
 	var target_rp = get_node_or_null(loop_road_point_path)
 	if not target_rp:
 		return false
-		
+
 	# Find which container owns this RP
 	var container = _find_container_for_rp(target_rp)
 	if not container:
 		return false
-		
+
 	_container = container
 	_force_start_rp = target_rp
 	_route = _build_route(_container)
 	if _route.is_empty():
 		return false
-	
+
 	_current_seg_idx = 0
 	_distance_on_seg = 0.0
 	_apply_transform(0.0)
@@ -345,7 +345,7 @@ func _try_loop_to_specific_point() -> bool:
 func _find_container_for_rp(rp: Node) -> Node:
 	var p = rp.get_parent()
 	while p:
-		if p.has_method("is_road_container"):	
+		if p.has_method("is_road_container"):
 			return p
 		p = p.get_parent()
 	return null
@@ -353,25 +353,25 @@ func _find_container_for_rp(rp: Node) -> Node:
 func _try_transition_to_next_road() -> bool:
 	if _route.is_empty():
 		return false
-		
+
 	var last_info = _route.back()
 	var last_seg = last_info["seg"]
 	var last_from_start = last_info["from_start"]
 	var end_point = last_seg.end_point if last_from_start else last_seg.start_point
 	var end_pos = end_point.global_position
-	
+
 	var containers = _find_all_road_containers(get_tree().current_scene)
-	
+
 	var best_container = null
 	var best_rp = null
 	var min_dist = transition_distance * transition_distance
-	
+
 	for cont in containers:
 		if cont == _container:
 			continue
 		if not cont.has_method("get_roadpoints"):
 			continue
-			
+
 		var rps = cont.get_roadpoints()
 		for rp in rps:
 			var d = rp.global_position.distance_squared_to(end_pos)
@@ -379,32 +379,32 @@ func _try_transition_to_next_road() -> bool:
 				min_dist = d
 				best_container = cont
 				best_rp = rp
-	
+
 	if best_container:
 		_container = best_container
 		_force_start_rp = best_rp
 		_route = _build_route(_container)
 		if _route.is_empty():
 			return false
-		
+
 		_current_seg_idx = 0
 		_distance_on_seg = 0.0
 		_apply_transform(0.0) # Snap to new road start
 		return true
-		
+
 	return false
 
 func _find_all_road_containers(root: Node) -> Array:
 	var result = []
 	if root == null:
 		return result
-		
+
 	var stack: Array = [root]
 	while not stack.is_empty():
 		var node: Node = stack.pop_back()
 		if node.has_method("is_road_container"):
 			result.append(node)
-		
+
 		for child in node.get_children():
 			stack.append(child)
 	return result
