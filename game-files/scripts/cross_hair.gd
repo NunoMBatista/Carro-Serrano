@@ -2,8 +2,8 @@ extends Control
 
 @onready var crosshair_texture = $TextureRect
 @export var textures_default: Array[Texture2D] = []
-@export var textures_colliding: Array[Texture2D] = [] 
-@export var textures_close: Array[Texture2D] = [] 
+@export var textures_colliding: Array[Texture2D] = []
+@export var textures_close: Array[Texture2D] = []
 
 
 @export var interval := 0.2 # 12 FPS
@@ -13,9 +13,10 @@ var current_index := 0
 @export var raycast: RayCast3D #nao esquecer de arrastar o raycast3D objeto para o crosshair Inspector
 
 
-var is_colliding_state := false  
-var space_held := false  
+var is_colliding_state := false
+var space_held := false
 var _force_colliding := false
+var _force_dragging := false
 
 
 func _ready():
@@ -46,7 +47,7 @@ func _ready():
 		crosshair_texture.visible = true
 
 
-func _input(event):   
+func _input(event):
 	if event.is_action_pressed("ui_select") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		space_held = true
 		_update_crosshair_immediate()
@@ -54,14 +55,14 @@ func _input(event):
 	elif event.is_action_released("ui_select") or (event is InputEventMouseButton and not event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		space_held = false
 		_update_crosshair_immediate()
-	
-	
-	
+
+
+
 func _update_crosshair_immediate():  #para ser imediato
 	var textures_array: Array[Texture2D]
-	
+
 	if is_colliding_state:
-		if space_held:
+		if space_held or _force_dragging:
 			textures_array = textures_close
 		else:
 			textures_array = textures_colliding
@@ -81,7 +82,7 @@ func _process(delta):
 		is_colliding_state = is_currently_colliding
 		time_passed = 0.0
 		current_index = 0
-		
+
 		if is_colliding_state:
 			if not textures_colliding.is_empty():
 				crosshair_texture.texture = textures_colliding[0]
@@ -91,24 +92,24 @@ func _process(delta):
 
 	var textures_array: Array[Texture2D]
 	if is_colliding_state:
-		if space_held:
+		if space_held or _force_dragging:
 			textures_array = textures_close
 		else:
 			textures_array = textures_colliding
 	else:
 		textures_array = textures_default
 
-	
+
 	if textures_array.is_empty():
 		return
-	
+
 	time_passed += delta
 	if time_passed >= interval:
 		time_passed = 0.0
 		current_index = (current_index + 1) % textures_array.size()
 		crosshair_texture.texture = textures_array[current_index]
-		
-		
+
+
 func _try_interact():
 	if not raycast or not raycast.is_colliding():
 		return
@@ -120,6 +121,11 @@ func _try_interact():
 
 func set_ui_hovering(enabled: bool) -> void:
 	_force_colliding = enabled
+	_update_crosshair_immediate()
+
+
+func set_ui_dragging(dragging: bool) -> void:
+	_force_dragging = dragging
 	_update_crosshair_immediate()
 
 

@@ -6,6 +6,17 @@ extends Node3D
 # This is the variable you want to change
 @onready var empathy_score: int = 0
 
+## Call this when starting a new game/playthrough to reset session state
+func start_new_game() -> void:
+	empathy_score = 0
+
+	# Reset glovebox state for new playthrough
+	if has_node("/root/GloveboxState"):
+		get_node("/root/GloveboxState").clear_all_states()
+
+	# Add other new game initialization here
+	print("New game started - all session states cleared")
+
 const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
 const TEST_BRANCH_DIALOGUE = preload("res://dialogue/test_branch.dialogue")
 
