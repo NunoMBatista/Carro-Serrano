@@ -1,7 +1,7 @@
 [gd_scene load_steps=21 format=3 uid="uid://b5d3uht1nyf1g"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_lia1b"]
-[ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_61ul2"]
+[ext_resource type="Resource" path="res://models/Terrain/data.hterrain" id="2_61ul2"]
 [ext_resource type="Script" uid="uid://dxqdn5ho6vkac" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_dim0d"]
 [ext_resource type="Texture2D" uid="uid://ed7dfxrek0cu" path="res://models/Terrain/terrain_1_slot0_albedo_bump.png" id="4_ijqil"]
 [ext_resource type="Texture2D" uid="uid://wm064rx5vwc6" path="res://models/Terrain/terrain_1_slot1_albedo_bump.png" id="5_1qfhg"]
@@ -482,15 +482,6 @@ traffic_dir = Array[int]([2, 2, 1, 1])
 lanes = Array[int]([2, 4, 4, 2])
 
 [node name="PathMesh3D" type="PathMesh3D" parent="."]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
 mesh = ExtResource("16_f02o3")
 surface_0/tile_rotation = Vector3(0, -1.5707964, 0)
 surface_0/tile_rotation_order = 2
@@ -500,7 +491,7 @@ surface_0/warp_along_curve = true
 surface_0/sample_cubic = false
 surface_0/tilt = true
 surface_0/offset = Vector2(0, 0)
-surface_0/triangle_count = 84908
+surface_0/triangle_count = 0
 surface_1/tile_rotation = Vector3(0, -1.5707964, 0)
 surface_1/tile_rotation_order = 2
 surface_1/distribution = 0
@@ -509,7 +500,7 @@ surface_1/warp_along_curve = true
 surface_1/sample_cubic = false
 surface_1/tilt = true
 surface_1/offset = Vector2(0, 0)
-surface_1/triangle_count = 132748
+surface_1/triangle_count = 0
 surface_2/tile_rotation = Vector3(0, -1.5707964, 0)
 surface_2/tile_rotation_order = 2
 surface_2/distribution = 0
@@ -518,9 +509,8 @@ surface_2/warp_along_curve = true
 surface_2/sample_cubic = false
 surface_2/tilt = true
 surface_2/offset = Vector2(0, 0)
-surface_2/triangle_count = 90543
+surface_2/triangle_count = 0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.59399, 21.971815, 254.71701)
-script = null
 
 [node name="Path3D" type="Path3D" parent="PathMesh3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2559204, 0.31819725, 0.5363312)
@@ -530,7 +520,7 @@ curve = SubResource("Curve3D_f02o3")
 transform = Transform3D(-0.115325324, 0.0414615, 0.9923406, 0, 0.9989787, -0.041741267, -0.9932213, -0.004814195, -0.11522307, -2.8559113, -0.23949385, 0.2235527)
 script = ExtResource("18_car")
 road_container_path = NodePath("Node3D/RoadManager/Road_001")
-start_road_point_path = NodePath("../Node3D/RoadManager/Road_001/RP_016")
+start_road_point_path = NodePath("../Node3D/RoadManager/Road_001/RP_019")
 
 [node name="Carro" parent="CarFollower" instance=ExtResource("17_0fa2x")]
 transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, -0.00012588501, 0.58342606, -0.009887695)

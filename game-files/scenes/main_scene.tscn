@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://mn4hil24fehx" path="res://scenes/Carro.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://c5hksj70ixl23" path="res://scenes/terrain_3.tscn" id="7_c16ls"]
 
+[ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="6_18nlu"]
 [ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="8_18nlu"]
 [ext_resource type="Script" uid="uid://byn3gfaemrrwf" path="res://scripts/fog_controller.gd" id="9_fog"]
@@ -46,6 +47,7 @@ script = ExtResource("8_18nlu")
 
 [node name="Forest" type="Node3D" parent="."]
 transform = Transform3D(0.9956307, 0, -0.0933785, 0, 1, 0, 0.0933785, 0, 0.9956307, 73.702484, 103.778915, 48.323795)
+visible = false
 
 [node name="Tree" parent="Forest" instance=ExtResource("6_18nlu")]
 transform = Transform3D(0.99346846, -0.11402108, -0.0044016615, 0.10601553, 0.9366082, -0.33395487, 0.042200528, 0.33130705, 0.94257885, 103.121544, -115.99252, -14.679766)
