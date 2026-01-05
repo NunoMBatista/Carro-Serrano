@@ -154,7 +154,7 @@ Drunk: I won't go back to the white room!
 **He tries to open the door, but the seatbelt restrains him. He struggles against it, panic rising in his eyes.**
 Drunk: Let me out! LET ME OUT!
 **He starts banging his head against the window repeatedly.**
-**You eventually just release the seatbelt lock and he leaves the car, stumbling into the night.**
+**Eventually, he figures out how to release the seatbelt lock and he leaves the car, stumbling into the night.**
 
 do DialogueFlow.empathy -= 30
 => END
