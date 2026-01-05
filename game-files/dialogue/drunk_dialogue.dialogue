@@ -40,7 +40,7 @@ Drunk: But there were no wires... just... goo. And the blueprints! Yes, I put th
 Drunk: Wait. This belt... it locked when I pulled it. It's a restraint system!
 Drunk: You're not Charlie. Charlie knows I don't wear restraints. You're a Fed! You're taking me to the adjustment facility, aren't you?!
 Drunk: I won't go back to the white room!
-**He reaches into his jacket pocket and pulls out a festive, red Christmas bauble. He holds the little metal hook like a grenade pin.**
+**He reaches into his jacket pocket and pulls out a festive, red Christmas bauble.**
 Drunk: I'll do it! I'll pull the pin! This is a special thermal detonator unit!
 Drunk: If you are really Charlie, prove you aren't a cop! You know the year I fixed Frank. You were there holding the flashlight!
 Drunk: WHEN WAS IT?
@@ -75,7 +75,7 @@ Drunk: YOU! YOU WORK WITH THE RACCOON DON'T YOU, CHARLIE?
 Drunk: You are not Charlie, you're a biological clone sent to extract information!
 **He reaches into his jacket pocket and pulls out a festive, red Christmas bauble.**
 Drunk: STAY BACK! I'll detonate this grenade! I swear to god I'll do it.
-Drunk: Unless... unless you can prove you're really charlie. The real charlie was there in the night of the surgery, when I hid the legacy of this world.
+Drunk: Unless... unless you can prove you're really Charlie. The real Charlie was there in the night of the surgery, when I hid the legacy of this world.
 Drunk: If you are him... tell me when this happened. TELL ME!
 
 - It was in 1989. #positive
@@ -126,9 +126,9 @@ Drunk: FOR THE REVOLUTION!!!!!!
 Drunk: It... it was a dud!? They replaced my grenade with...
 **He stares at the blood on his hand, mixing up with the glitter. The maniac energy left him for a second.**
 Drunk: Is this what Frank felt? He screamed so loud...
-Drunk: It was the only way right?
+Drunk: It was the only way, right?
 
-- You're sick. I'm taking you to the hospital. #positive
+- You're bleeding. I'm taking you to the hospital. #positive
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
@@ -149,17 +149,27 @@ Drunk: The white room?
 Drunk: You want to take me back to the guys who once tried convincing me the machine isn't real?
 **He laughs, a rattling sound like an old engine.**
 Drunk: I thought you were Charlie. But Charlie wouldn't send me back. Charlie knows the doctors put static inside my head.
-**He raises up his hand, holding a rusty spoon.**
-Drunk: I won't go back to the white room! I'll take us both first!
+**He lifts his hand, hastily reaching for the door handle.**
+Drunk: I won't go back to the white room!
+**He tries to open the door, but the seatbelt restrains him. He struggles against it, panic rising in his eyes.**
+Drunk: Let me out! LET ME OUT!
+**He starts banging his head against the window repeatedly.**
+**You eventually just release the seatbelt lock and he leaves the car, stumbling into the night.**
+
 do DialogueFlow.empathy -= 30
 => END
 
 # ===== STEP 3 BAD BRANCH (ENDING) =====
 ~ step3_bad
 
-**His posture straightens instantly. A terrifying, lucid smile cuts across his face. He wipes his hand on your upholstery, leaving a long streak.**
+**His posture straightens instantly. A terrifying, lucid smile cuts across his face. He wipes his hand on your upholstery, leaving a long grimy streak.**
 Drunk: Exactly. You see it too. The Pattern.
 Drunk: Pain is just data, Charlie. Frank was holding me back with his morality. You understand that. You are the only one who understands the weight of the crown.
 Drunk: We can't stop now. If we stop, Frank's sacrifice means nothing. They win if we stop!
+Drunk: I can feel it, Charlie. You are ready to give your body to our cause. Just like Frank did.
+**He raises his hand, holding a rust-covered spoon. The handle had been filed down into a sharp blade.**
+**He lunges at you with the makeshift weapon.**
+
+
 do DialogueFlow.empathy -= 30
 => END
