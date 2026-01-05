@@ -58,19 +58,98 @@ var responses: Array = []:
 
 				add_child(item)
 
-			_configure_focus()
+			_configure_menu()
+
+
+var _selected_index: int = 0
 
 
 func _ready() -> void:
+	# Set focus mode so this container can receive input
+	focus_mode = Control.FOCUS_ALL
+
 	visibility_changed.connect(func():
 		if visible and get_menu_items().size() > 0:
-			var first_item: Control = get_menu_items()[0]
-			if first_item.is_inside_tree():
-				first_item.grab_focus()
+			# Hide cursor when showing dialogue choices
+			print("[RESPONSES_MENU] Showing - setting mouse mode to HIDDEN")
+			DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
+			var items = get_menu_items()
+			print("[RESPONSES_MENU] Menu items count: ", items.size())
+			_selected_index = 0
+			_update_selection()
+			grab_focus()
+			print("[RESPONSES_MENU] Grabbed focus on container, selected index 0")
+		elif not visible:
+			# Restore cursor to captured mode when response menu is hidden
+			print("[RESPONSES_MENU] Hiding - setting mouse mode to CAPTURED")
+			DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 	)
 
 	if is_instance_valid(response_template):
 		response_template.hide()
+
+
+func _input(event: InputEvent) -> void:
+	if not visible:
+		return
+
+	var items = get_menu_items()
+	if items.is_empty():
+		return
+
+	# Ignore mouse motion - let it pass through to camera
+	if event is InputEventMouseMotion:
+		return
+
+	# Handle keyboard input
+	if event is InputEventKey and event.pressed:
+		print("[RESPONSES_MENU] Key pressed: keycode=", event.keycode)
+
+		# Check for down arrow (keycode 4194322)
+		if event.keycode == KEY_DOWN or event.keycode == 4194322:
+			print("[RESPONSES_MENU] Down arrow pressed, current index: ", _selected_index)
+			_selected_index = (_selected_index + 1) % items.size()
+			_update_selection()
+			get_viewport().set_input_as_handled()
+			print("[RESPONSES_MENU] New index: ", _selected_index)
+		# Check for up arrow (keycode 4194320)
+		elif event.keycode == KEY_UP or event.keycode == 4194320:
+			print("[RESPONSES_MENU] Up arrow pressed, current index: ", _selected_index)
+			_selected_index = (_selected_index - 1 + items.size()) % items.size()
+			_update_selection()
+			get_viewport().set_input_as_handled()
+			print("[RESPONSES_MENU] New index: ", _selected_index)
+		# Check for Enter (keycode 4194309)
+		elif event.keycode == KEY_ENTER or event.keycode == 4194309:
+			print("[RESPONSES_MENU] Accept pressed on index: ", _selected_index)
+			var item: Control = items[_selected_index]
+			if item.has_meta("response") and not ("Disallowed" in item.name):
+				get_viewport().set_input_as_handled()
+				DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
+				var logger = get_node_or_null("/root/PlaytestLogger")
+				if logger:
+					logger.log_action("dialogue_choice", item.get_meta("response").text)
+				response_selected.emit(item.get_meta("response"))
+				print("[RESPONSES_MENU] Response selected and emitted")
+
+
+func _update_selection() -> void:
+	var items = get_menu_items()
+	for i in items.size():
+		var item: Control = items[i]
+		if i == _selected_index:
+			# Highlight selected item - bright yellow
+			if item is RichTextLabel:
+				item.add_theme_color_override("default_color", Color(1.0, 1.0, 0.3))
+			else:
+				item.add_theme_color_override("font_color", Color(1.0, 1.0, 0.3))
+			print("[RESPONSES_MENU] Highlighted item ", i, ": ", item.name)
+		else:
+			# Normal color - original beige
+			if item is RichTextLabel:
+				item.remove_theme_color_override("default_color")
+			else:
+				item.remove_theme_color_override("font_color")
 
 
 ## Get the selectable items in the menu.
@@ -87,61 +166,21 @@ func get_menu_items() -> Array:
 #region Internal
 
 
-# Prepare the menu for keyboard and mouse navigation.
-func _configure_focus() -> void:
+# Prepare the menu for keyboard navigation - manual selection handling
+func _configure_menu() -> void:
 	var items = get_menu_items()
+	print("[RESPONSES_MENU] _configure_menu() called with ", items.size(), " items")
+
+	_selected_index = 0
+
 	for i in items.size():
 		var item: Control = items[i]
+		# Don't use Godot's focus system, we handle selection manually
+		item.focus_mode = Control.FOCUS_NONE
+		item.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Ignore mouse completely
+		print("[RESPONSES_MENU] Configured item ", i, ": ", item.name)
 
-		item.focus_mode = Control.FOCUS_ALL
-
-		item.focus_neighbor_left = item.get_path()
-		item.focus_neighbor_right = item.get_path()
-
-		if i == 0:
-			item.focus_neighbor_top = item.get_path()
-			item.focus_neighbor_left = item.get_path()
-			item.focus_previous = item.get_path()
-		else:
-			item.focus_neighbor_top = items[i - 1].get_path()
-			item.focus_neighbor_left = items[i - 1].get_path()
-			item.focus_previous = items[i - 1].get_path()
-
-		if i == items.size() - 1:
-			item.focus_neighbor_bottom = item.get_path()
-			item.focus_neighbor_right = item.get_path()
-			item.focus_next = item.get_path()
-		else:
-			item.focus_neighbor_bottom = items[i + 1].get_path()
-			item.focus_neighbor_right = items[i + 1].get_path()
-			item.focus_next = items[i + 1].get_path()
-
-		item.mouse_entered.connect(_on_response_mouse_entered.bind(item))
-		item.gui_input.connect(_on_response_gui_input.bind(item, item.get_meta("response")))
-
-	items[0].grab_focus()
-
-
-#endregion
-
-#region Signals
-
-
-func _on_response_mouse_entered(item: Control) -> void:
-	if "Disallowed" in item.name: return
-
-	item.grab_focus()
-
-
-func _on_response_gui_input(event: InputEvent, item: Control, response) -> void:
-	if "Disallowed" in item.name: return
-
-	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-		get_viewport().set_input_as_handled()
-		response_selected.emit(response)
-	elif event.is_action_pressed(&"ui_accept" if next_action.is_empty() else next_action) and item in get_menu_items():
-		get_viewport().set_input_as_handled()
-		response_selected.emit(response)
+	print("[RESPONSES_MENU] Menu configured, ready for keyboard input")
 
 
 #endregion

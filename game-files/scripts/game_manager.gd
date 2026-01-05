@@ -30,8 +30,7 @@ func change_empathy(amount: int):
 		logger.log_state("update_empathy", "%+d" % amount)
 
 func run_dialogue():
-	# Optional: Unlock mouse immediately when dialogue starts
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	# Don't change mouse mode - camera stays active during dialogue
 	DialogueManager.show_example_dialogue_balloon(PROTOTYPE_DIALOGUE, "start")
 
 func _process(delta: float) -> void:

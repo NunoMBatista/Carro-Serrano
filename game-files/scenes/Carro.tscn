@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b5bjqg31sbrdj" path="res://assets/hitchhiker2_texture.png" id="4_ji8be"]
 [ext_resource type="PackedScene" uid="uid://bnlpmggkpjkmy" path="res://scenes/player.tscn" id="5_f0nht"]
 [ext_resource type="Script" uid="uid://bahflgontt25" path="res://scripts/ball_spawner.gd" id="5_fyjh3"]
-[ext_resource type="Texture2D" uid="uid://b1awa2qjssdgv" path="res://assets/hitchhiker3_texture.png" id="5_xa45b"]
+[ext_resource type="Texture2D" uid="uid://bhh5fnbgqr6t7" path="res://assets/hitchhiker3_texture.png" id="5_xa45b"]
 [ext_resource type="PackedScene" uid="uid://io4wpitjti8x" path="res://scenes/glovebox.tscn" id="6_f0nht"]
 [ext_resource type="Texture2D" uid="uid://b8s6yjn1yflq0" path="res://assets/hitchhiker4_texture.png" id="6_hkks4"]
 [ext_resource type="PackedScene" uid="uid://wi5d18n37sh" path="res://scenes/radio.tscn" id="7_ohtuf"]
@@ -136,7 +136,6 @@ skeleton = NodePath("../Car_BallMesh")
 
 [node name="Hitchhiker3_BallMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.24984592, 0.0009482687, -0.008724541, -0.00087262964, 0.24998896, 0.0021816338, 0.008732432, -0.0021498362, 0.24983819, 0, 0, 0)
-visible = false
 layers = 2
 material_override = SubResource("StandardMaterial3D_et1co")
 cast_shadow = 0

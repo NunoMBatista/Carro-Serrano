@@ -48,6 +48,10 @@ func _ready():
 
 
 func _input(event):
+	# Don't handle mouse motion, let it pass to camera
+	if event is InputEventMouseMotion:
+		return
+
 	if event.is_action_pressed("ui_select") or (event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT):
 		space_held = true
 		_update_crosshair_immediate()
@@ -142,13 +146,9 @@ func simulate_click(duration: float = 0.12) -> void:
 
 
 func _is_dialogue_active() -> bool:
-	# Check if DialogueFlow is active
-	var dialogue_flow = get_node_or_null("/root/DialogueFlow")
-	if dialogue_flow and dialogue_flow.get("is_dialogue_active"):
-		return dialogue_flow.is_dialogue_active
-
-	# Check if mouse is not captured (indicating dialogue or UI is open)
-	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+	# Only block interaction when response choices are showing (cursor is hidden)
+	# During regular dialogue text, cursor is captured and player can interact
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
 		return true
 
 	return false
