@@ -33,7 +33,7 @@ Drunk: I know you have an extra cigarette for me, huh?
 **The man stares at you with disdain. He fumbles with the belt, getting it twisted before finally clicking it in.**
 Drunk: Fine. Fine! I'll wear the suppression strap. Happy?
 Drunk: You sound just like him. Frank. Always with the crazy safety talk. Weirdo...
-Drunk: Frank didn't understand the sacrifice required for science. He was too attached to the physical real. That's why I had to... liberate him.
+Drunk: Frank didn't understand the sacrifice required for science. He was too attached to the physical realm. That's why I had to... liberate him.
 Drunk: I told him: "Frank, I need to check your heart for transmitters!". But he wouldn't sit still! It was 1989. The year of the Great Tragedy. I had to open him up to check the wiring. I HAD TO DO IT, CHARLIE!
 Drunk: But there were no wires... just... goo. And the blueprints! Yes, I put the blueprints inside later to fill the empty space left by all of the goo that left his body. It made so much sense at the time.
 **He tugs violently at the seatbelt, testing its locking mechanism. His breathing becomes shallow and rapid.**
@@ -41,7 +41,7 @@ Drunk: Wait. This belt... it locked when I pulled it. It's a restraint system!
 Drunk: You're not Charlie. Charlie knows I don't wear restraints. You're a Fed! You're taking me to the adjustment facility, aren't you?!
 Drunk: I won't go back to the white room!
 **He reaches into his jacket pocket and pulls out a festive, red Christmas bauble. He holds the little metal hook like a grenade pin.**
-Drunk: I'll do it! I'll pull the pin! This is a class-4 thermal detonator!
+Drunk: I'll do it! I'll pull the pin! This is a special thermal detonator unit!
 Drunk: If you are really Charlie, prove you aren't a cop! You know the year I fixed Frank. You were there holding the flashlight!
 Drunk: WHEN WAS IT?
 
@@ -151,6 +151,7 @@ Drunk: You want to take me back to the guys who once tried convincing me the mac
 Drunk: I thought you were Charlie. But Charlie wouldn't send me back. Charlie knows the doctors put static inside my head.
 **He raises up his hand, holding a rusty spoon.**
 Drunk: I won't go back to the white room! I'll take us both first!
+do DialogueFlow.empathy -= 30
 => END
 
 # ===== STEP 3 BAD BRANCH (ENDING) =====
@@ -160,4 +161,5 @@ Drunk: I won't go back to the white room! I'll take us both first!
 Drunk: Exactly. You see it too. The Pattern.
 Drunk: Pain is just data, Charlie. Frank was holding me back with his morality. You understand that. You are the only one who understands the weight of the crown.
 Drunk: We can't stop now. If we stop, Frank's sacrifice means nothing. They win if we stop!
+do DialogueFlow.empathy -= 30
 => END
