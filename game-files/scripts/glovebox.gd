@@ -16,7 +16,11 @@ func _ready() -> void:
 func interact() -> void:
 	if _view_open:
 		return
-	
+
+	# Don't allow interaction during dialogue
+	if _is_dialogue_active():
+		return
+
 	_view_open = true
 	_audio_player.play()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -70,3 +74,20 @@ func _find_node(root: Node, name: String) -> Node:
 			if res:
 				return res
 	return null
+
+
+func _is_dialogue_active() -> bool:
+	# Check if DialogueFlow is active
+	var dialogue_flow = get_node_or_null("/root/DialogueFlow")
+	if dialogue_flow and dialogue_flow.get("is_dialogue_active"):
+		return dialogue_flow.is_dialogue_active
+
+	# Check if mouse is visible (indicating UI is open, including dialogue)
+	if Input.get_mouse_mode() == Input.MOUSE_MODE_VISIBLE:
+		# Check if there's an active dialogue balloon in the scene
+		var root = get_tree().root
+		for child in root.get_children():
+			if child.name.contains("Balloon") or child is CanvasLayer:
+				return true
+
+	return false

@@ -114,6 +114,10 @@ func _try_interact():
 	if not raycast or not raycast.is_colliding():
 		return
 
+	# Don't allow interaction during dialogue
+	if _is_dialogue_active():
+		return
+
 	var collider = raycast.get_collider()
 	if collider and collider.has_method("interact"):
 		collider.interact()
@@ -135,3 +139,16 @@ func simulate_click(duration: float = 0.12) -> void:
 	await get_tree().create_timer(duration).timeout
 	space_held = false
 	_update_crosshair_immediate()
+
+
+func _is_dialogue_active() -> bool:
+	# Check if DialogueFlow is active
+	var dialogue_flow = get_node_or_null("/root/DialogueFlow")
+	if dialogue_flow and dialogue_flow.get("is_dialogue_active"):
+		return dialogue_flow.is_dialogue_active
+
+	# Check if mouse is not captured (indicating dialogue or UI is open)
+	if Input.get_mouse_mode() != Input.MOUSE_MODE_CAPTURED:
+		return true
+
+	return false

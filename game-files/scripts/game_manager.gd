@@ -18,7 +18,7 @@ func start_new_game() -> void:
 	print("New game started - all session states cleared")
 
 const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
-const TEST_BRANCH_DIALOGUE = preload("res://dialogue/test_branch.dialogue")
+const DRUNK_DIALOGUE = preload("res://dialogue/drunk_dialogue.dialogue")
 
 # Optional: A helper function if you want to print logic
 func change_empathy(amount: int):
@@ -46,4 +46,4 @@ func _unhandled_input(event: InputEvent) -> void:
 					run_dialogue()
 			KEY_G:
 				if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-					DialogueFlow.run_dialogue(TEST_BRANCH_DIALOGUE, "start")
+					DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")

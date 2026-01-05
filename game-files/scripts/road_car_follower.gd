@@ -17,7 +17,7 @@ extends Node3D
 var cur_speed := 0.0
 var _force_start_rp: Node3D = null
 
-const MAX_SPEED := 2
+const MAX_SPEED := 20
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0
