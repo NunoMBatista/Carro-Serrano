@@ -2,7 +2,7 @@
 
 [ext_resource type="CompositorEffect" uid="uid://cil7asi5ishrm" path="res://NewCloudsGD.tres" id="1_th5b8"]
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_xf7u0"]
-[ext_resource type="Resource" path="res://torre_data/data.hterrain" id="2_yp8l3"]
+[ext_resource type="Resource" uid="uid://dstyegoambfu1" path="res://torre_data/data.hterrain" id="2_yp8l3"]
 [ext_resource type="Script" uid="uid://dxqdn5ho6vkac" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_vc61h"]
 [ext_resource type="Texture2D" uid="uid://d02y0r658ygci" path="res://slot0_albedo_bump.png" id="4_ei2t2"]
 [ext_resource type="Texture2D" uid="uid://42clyokl46g5" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Color.jpg" id="6_0ma4t"]
@@ -273,12 +273,12 @@ outline_size = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 575.15796, 153.4526, 192.60202)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="GNR2"]
-transform = Transform3D(30, 0, 0, 0, 8.786309, 0, 0, 0, 30, -118.607086, 70.087875, 599.4663)
+transform = Transform3D(30, 0, 0, 0, 16.196884, 0, 0, 0, 30, -118.607086, 70.087875, 599.4663)
 sides = 25
 material = SubResource("StandardMaterial3D_2j81h")
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="GNR2"]
-transform = Transform3D(30, 0, 0, 0, 8.764603, 0, 0, 0, 30, -118.607086, 87.64818, 599.4663)
+transform = Transform3D(30, 0, 0, 0, 17.417034, 0, 0, 0, 30, -118.607086, 103.34146, 599.4663)
 sides = 25
 material = SubResource("StandardMaterial3D_bwf7j")
 
@@ -392,4 +392,4 @@ transform = Transform3D(-0.49214274, 0, -0.026749782, 0, 0.5, 0, 0.018975127, 0,
 transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 377.53168, 272.00293, 705.0375)
 
 [node name="balls2" parent="." instance=ExtResource("30_0ma4t")]
-transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 457.31665, 257.1031, 792.0458)
+transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 457.31665, 270.9851, 792.0458)
