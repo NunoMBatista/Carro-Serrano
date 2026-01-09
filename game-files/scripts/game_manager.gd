@@ -6,8 +6,19 @@ extends Node3D
 # This is the variable you want to change
 @onready var empathy_score: int = 0
 
+## Call this when starting a new game/playthrough to reset session state
+func start_new_game() -> void:
+	empathy_score = 0
+
+	# Reset glovebox state for new playthrough
+	if has_node("/root/GloveboxState"):
+		get_node("/root/GloveboxState").clear_all_states()
+
+	# Add other new game initialization here
+	print("New game started - all session states cleared")
+
 const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
-const TEST_BRANCH_DIALOGUE = preload("res://dialogue/test_branch.dialogue")
+const DRUNK_DIALOGUE = preload("res://dialogue/drunk_dialogue.dialogue")
 
 # Optional: A helper function if you want to print logic
 func change_empathy(amount: int):
@@ -19,8 +30,7 @@ func change_empathy(amount: int):
 		logger.log_state("update_empathy", "%+d" % amount)
 
 func run_dialogue():
-	# Optional: Unlock mouse immediately when dialogue starts
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	# Don't change mouse mode - camera stays active during dialogue
 	DialogueManager.show_example_dialogue_balloon(PROTOTYPE_DIALOGUE, "start")
 
 func _process(delta: float) -> void:
@@ -35,4 +45,4 @@ func _unhandled_input(event: InputEvent) -> void:
 					run_dialogue()
 			KEY_G:
 				if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-					DialogueFlow.run_dialogue(TEST_BRANCH_DIALOGUE, "start")
+					DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")

@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://isqhckpru2lx"]
+
+[ext_resource type="Script" uid="uid://c7uj2tw7vr772" path="res://scripts/glovebox_item.gd" id="1_lebron_script"]
+[ext_resource type="Texture2D" uid="uid://dg2aml2y2apxh" path="res://assets/widgets/lebron.png" id="2_lebron_texture"]
+
+[sub_resource type="ConvexPolygonShape2D" id="ConvexPolygonShape2D_wjm7f"]
+points = PackedVector2Array(-20, -39, 2, -45, 18, -27, 28, 22, 63, 53, 9, 53, -68, 53, -37, 27, -28, -10)
+
+[node name="Lebron" type="RigidBody2D"]
+linear_damp = 2.0
+angular_damp = 3.0
+script = ExtResource("1_lebron_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2.861023e-06, -10.000002)
+scale = Vector2(0.13207237, 0.13207237)
+texture = ExtResource("2_lebron_texture")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4, -13)
+shape = SubResource("ConvexPolygonShape2D_wjm7f")

@@ -25,6 +25,11 @@ var current_branch: String = "good"
 var _active: bool = false
 var _debug_label: Label
 
+## Public property to check if dialogue is active
+var is_dialogue_active: bool = false:
+	get:
+		return _active
+
 func _ready() -> void:
 	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
 	_setup_debug_overlay()
@@ -37,26 +42,26 @@ func _setup_debug_overlay() -> void:
 	panel.offset_right = -10
 	panel.offset_top = 10
 	panel.grow_horizontal = Control.GROW_DIRECTION_BEGIN
-	
+
 	# Style the panel with black background
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0, 0, 0, 0.8)
 	style.set_corner_radius_all(8)
 	style.set_content_margin_all(12)
 	panel.add_theme_stylebox_override("panel", style)
-	
+
 	# Create label inside panel
 	_debug_label = Label.new()
 	_debug_label.add_theme_font_size_override("font_size", 24)
 	_debug_label.add_theme_color_override("font_color", Color(1, 1, 1))
 	_debug_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	panel.add_child(_debug_label)
-	
+
 	var canvas = CanvasLayer.new()
 	canvas.layer = 100
 	canvas.add_child(panel)
 	add_child(canvas)
-	
+
 	# Store panel reference to control visibility
 	_debug_label.set_meta("panel", panel)
 
@@ -74,22 +79,22 @@ func run_dialogue(dialogue_resource: DialogueResource, start_title: String = "st
 	if _active:
 		return
 	_active = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	
+	# Don't change mouse mode - keep camera active during dialogue
+
 	# Determine starting branch based on empathy
 	current_branch = "good" if empathy >= empathy_threshold else "bad"
-	
+
 	var logger = get_node_or_null("/root/PlaytestLogger")
 	if logger:
 		logger.log_event("dialogue_start", start_title)
-	
+
 	dialogue_started.emit()
 	DialogueManager.show_example_dialogue_balloon(dialogue_resource, start_title)
 
 ## Called from dialogue files: do DialogueFlow.choice("positive")
 func choice(alignment: String) -> void:
 	var old_branch = current_branch
-	
+
 	match alignment.to_lower():
 		"positive", "good", "+":
 			current_branch = "good"
@@ -104,7 +109,7 @@ func choice(alignment: String) -> void:
 			else:
 				current_branch = "bad"
 				empathy -= empathy_loss
-	
+
 	# Log
 	var logger = get_node_or_null("/root/PlaytestLogger")
 	if logger:
@@ -112,7 +117,7 @@ func choice(alignment: String) -> void:
 		logger.log_action("choice_alignment", alignment)
 		if old_branch != current_branch:
 			logger.log_state("branch_change", current_branch)
-	
+
 	if old_branch != current_branch:
 		branch_changed.emit(current_branch)
 
@@ -124,14 +129,14 @@ func next(base_title: String) -> String:
 func is_good() -> bool:
 	return current_branch == "good"
 
-## Check if we should go to bad branch title  
+## Check if we should go to bad branch title
 func is_bad() -> bool:
 	return current_branch == "bad"
 
 func _on_dialogue_ended(_resource) -> void:
 	if _active:
 		_active = false
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		# Don't change mouse mode - camera stays active
 		var logger = get_node_or_null("/root/PlaytestLogger")
 		if logger:
 			logger.log_event("dialogue_end", "branch:%s empathy:%d" % [current_branch, empathy])

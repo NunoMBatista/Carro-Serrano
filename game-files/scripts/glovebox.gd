@@ -16,7 +16,7 @@ func _ready() -> void:
 func interact() -> void:
 	if _view_open:
 		return
-	
+
 	_view_open = true
 	_audio_player.play()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)

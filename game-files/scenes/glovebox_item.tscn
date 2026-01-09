@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8j2xvq3nh5yw"]
+
+[ext_resource type="Script" path="res://scripts/glovebox_item.gd" id="1_item_script"]
+
+[node name="GloveboxItem" type="RigidBody2D"]
+script = ExtResource("1_item_script")
+gravity_scale = 0.0
+linear_damp = 2.0
+angular_damp = 3.0

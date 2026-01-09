@@ -59,6 +59,8 @@ var mutation_cooldown: Timer = Timer.new()
 
 func _ready() -> void:
 	balloon.hide()
+	# Allow mouse events to pass through to camera
+	balloon.mouse_filter = Control.MOUSE_FILTER_PASS
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
 	# If the responses menu doesn't have a next action set, use this one
@@ -95,9 +97,37 @@ func _process(delta: float) -> void:
 		_cursor_label.position = Vector2(x_pos, y_pos)
 
 
-func _unhandled_input(_event: InputEvent) -> void:
-	# Only the balloon is allowed to handle input while it's showing
-	get_viewport().set_input_as_handled()
+func _unhandled_input(event: InputEvent) -> void:
+	# Handle dialogue advancement with keyboard - use _unhandled_input to allow mouse motion through
+	if not balloon.visible:
+		return
+
+	print("[BALLOON] _unhandled_input received event: ", event, " Type: ", event.get_class())
+
+	# See if we need to skip typing of the dialogue (keyboard only, no mouse)
+	if dialogue_label.is_typing:
+		var skip_button_was_pressed: bool = event.is_action_pressed(next_action)  # Use next_action (Enter) to skip
+		if skip_button_was_pressed:
+			print("[BALLOON] Skipping typing")
+			get_viewport().set_input_as_handled()
+			var logger = get_node_or_null("/root/PlaytestLogger")
+			if logger:
+				logger.log_action("skip_text", dialogue_line.text.substr(0, 30))
+			dialogue_label.skip_typing()
+			return
+
+	if not is_waiting_for_input:
+		print("[BALLOON] Not waiting for input, ignoring")
+		return
+	if dialogue_line.responses.size() > 0:
+		print("[BALLOON] Responses visible, letting responses menu handle input")
+		return
+
+	# When there are no response options, accept enter key to advance
+	if event.is_action_pressed(next_action):
+		print("[BALLOON] Advancing to next dialogue line")
+		get_viewport().set_input_as_handled()
+		next(dialogue_line.next_id)
 
 
 func _notification(what: int) -> void:
@@ -185,28 +215,8 @@ func _on_mutated(_mutation: Dictionary) -> void:
 
 
 func _on_balloon_gui_input(event: InputEvent) -> void:
-	# See if we need to skip typing of the dialogue
-	if dialogue_label.is_typing:
-		var mouse_was_clicked: bool = event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed()
-		var skip_button_was_pressed: bool = event.is_action_pressed(skip_action)
-		if mouse_was_clicked or skip_button_was_pressed:
-			get_viewport().set_input_as_handled()
-			var logger = get_node_or_null("/root/PlaytestLogger")
-			if logger:
-				logger.log_action("skip_text", dialogue_line.text.substr(0, 30))
-			dialogue_label.skip_typing()
-			return
-
-	if not is_waiting_for_input: return
-	if dialogue_line.responses.size() > 0: return
-
-	# When there are no response options the balloon itself is the clickable thing
-	get_viewport().set_input_as_handled()
-
-	if event is InputEventMouseButton and event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-		next(dialogue_line.next_id)
-	elif event.is_action_pressed(next_action) and get_viewport().gui_get_focus_owner() == balloon:
-		next(dialogue_line.next_id)
+	# Mouse clicks disabled - use keyboard only for dialogue advancement
+	pass
 
 
 func _on_responses_menu_response_selected(response: DialogueResponse) -> void:

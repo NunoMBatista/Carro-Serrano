@@ -54,8 +54,8 @@ func _process(delta: float) -> void:
 	var yaw_delta := _angle_difference(current_yaw, previous_yaw)
 
 	# AGGRESSIVE DEBUG
-	if abs(yaw_delta) > 0.0001:
-		print("YAW CHANGE! Delta: ", yaw_delta, " (degrees: ", rad_to_deg(yaw_delta), ")")
+	#if abs(yaw_delta) > 0.0001:
+	#	print("YAW CHANGE! Delta: ", yaw_delta, " (degrees: ", rad_to_deg(yaw_delta), ")")
 
 	previous_yaw = current_yaw
 

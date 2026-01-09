@@ -10,9 +10,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	if Input.is_action_pressed("dev_spawn_ball"):
-		_spawn_ball()
-
+	#if Input.is_action_pressed("dev_spawn_ball"):
+		#_spawn_ball()
+	pass
 
 
 func _spawn_ball():

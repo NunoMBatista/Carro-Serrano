@@ -5,27 +5,31 @@
 
 [node name="GloveboxView" type="Node"]
 script = ExtResource("1_script")
+boundary_polygon = PackedVector2Array(1020, 461, 2926, 352, 2986, 760, 2786, 1080, 1134, 1459, 1163, 1220)
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="."]
+layer = -1
 
 [node name="Background" type="TextureRect" parent="BackgroundLayer"]
 offset_right = 4032.0
 offset_bottom = 2500.0
 texture = ExtResource("2_uli87")
 
+[node name="PhysicsLayer" type="CanvasLayer" parent="."]
+
+[node name="PhysicsWorld" type="Node2D" parent="PhysicsLayer"]
+
 [node name="UILayer" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="ItemsContainer" type="Control" parent="UILayer"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 91.0
-offset_top = 97.0
-offset_right = 91.0
-offset_bottom = 97.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="HintLabel" type="Label" parent="UILayer/ItemsContainer"]
 layout_mode = 1
@@ -42,3 +46,6 @@ grow_horizontal = 0
 grow_vertical = 0
 text = "RMB to leave"
 horizontal_alignment = 2
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(1020, 461, 2926, 352, 2986, 760, 2786, 1080, 1134, 1459, 1163, 1220)

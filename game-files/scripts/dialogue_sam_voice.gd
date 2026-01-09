@@ -48,6 +48,9 @@ func _on_spoke(letter: String, _idx: int, _speed: float) -> void:
 		_word_flushed = false
 	if not enabled or not speak_per_word:
 		return
+	# Don't speak any words from lines that start with **
+	if _is_stage_direction():
+		return
 	if letter in separators:
 		if _current_word.length() > 0:
 			_speak(_current_word)
@@ -57,18 +60,23 @@ func _on_spoke(letter: String, _idx: int, _speed: float) -> void:
 		_current_word += letter
 
 func _on_paused(_duration: float) -> void:
-	_flush_pending_word()
+	if not _is_stage_direction():
+		_flush_pending_word()
 
 func _on_finished() -> void:
 	if stop_on_new_line:
 		_stop()
-	_flush_pending_word()
-	if enabled and speak_full_line_when_finished and _label and _label.has_method("dialogue_line"):
-		var line = _label.dialogue_line if _label.dialogue_line else null
-		if line and line.has_method("get"):
-			_speak(str(line.text))
+	if not _is_stage_direction():
+		_flush_pending_word()
+	if enabled and speak_full_line_when_finished and not _is_stage_direction():
+		if _label and _label.dialogue_line:
+			_speak(str(_label.dialogue_line.text))
 
 func _on_skipped() -> void:
+	if _is_stage_direction():
+		_current_word = ""
+		_stop()
+		return
 	var flushed := _flush_pending_word()
 	if stop_on_skip and not (flushed or speak_full_line_when_finished):
 		_stop()
@@ -79,6 +87,7 @@ func _flush_pending_word() -> bool:
 	if not enabled or not speak_per_word:
 		_current_word = ""
 		return false
+
 	var word := ""
 	if _label:
 		var text: String = _label.get_parsed_text()
@@ -124,3 +133,13 @@ func _stop() -> void:
 
 func _safe_linear_to_db(v: float) -> float:
 	return linear_to_db(max(v, 0.0001))
+
+func _is_stage_direction() -> bool:
+	if not _label:
+		return false
+	var line = _label.dialogue_line if _label.dialogue_line else null
+	if not line:
+		return false
+	# Check if the text starts with ** (stage directions)
+	var text = str(line.text).strip_edges()
+	return text.begins_with("**")
