@@ -1,8 +1,8 @@
 extends Node3D
 
 @export var speed_threshold: float = 4.0
-@export var walk_speed: float = 2.0  # Speed when walking to car
-@export var stop_distance: float = 2.0                                                    # How close to get to the window
+@export var walk_speed: float = 1.2  # Speed when walking to car
+@export var stop_distance: float = 0.1                                                    # How close to get to the window
 
 var car_inside: Node3D = null
 var car_inside_area2: Node3D = null
@@ -19,7 +19,7 @@ func _ready():
 func _fix_walk_animation():
 	var animation_name = "walk"
 	var y_translation_offset = 11.3*2  # How many units to offset
-	var fix_rotation = Vector3(0, 0, 180)  # Rotation fix if needed
+	var fix_rotation = Vector3(0, 0, 0)  # Rotation fix if needed
 	
 	var anim_player = $AnimationPlayer
 	if not anim_player.has_animation(animation_name):
@@ -117,7 +117,7 @@ func _physics_process(delta):
 		var target_pos = window_target.global_position
 		var current_pos = global_position
 		
-		# Ignore Y coordinate - only move on horizontal plane
+		# Ignore Y coordinate - only face horizontal direction to window
 		target_pos.y = current_pos.y
 		
 		var direction = (target_pos - current_pos)
@@ -134,18 +134,35 @@ func _physics_process(delta):
 			# Reached the window, stop and idle
 			walking_to_car = false
 			$AnimationPlayer.play("Idle")
-			# Face the window
-			look_at(target_pos, Vector3.UP)
+			# Face the Player node inside the car
+			if car_inside_area2:
+				var player = car_inside_area2.get_node_or_null("Player")
+				if player:
+					var player_pos = player.global_position
+					player_pos.y = current_pos.y
+					look_at(player_pos, Vector3.UP)
+					print("NPC facing Player")
+					# Rotate 180º around Y axis to compensate for model orientation
+					rotate_y(deg_to_rad(180))
+				else:
+					print("WARNING: Player node not found in car")
 			print("NPC reached car window")
 
 func start_sequence():
 	print("Car detected at low speed within range!")
 	
-	# Use the car as target for now
+	# Find the WindowMarker child node of the car
 	if car_inside_area2:
-		window_target = car_inside_area2
+		var marker = car_inside_area2.get_node_or_null("WindowMarker")
+		if marker:
+			window_target = marker
+			print("Found WindowMarker as target")
+		else:
+			# Fallback to car itself if WindowMarker not found
+			window_target = car_inside_area2
+			print("WARNING: WindowMarker not found, using car as target")
 	
-	# Start walking towards the car
+	# Start walking towards the car window
 	walking_to_car = true
 	$AnimationPlayer.play("walk")
-	print("NPC starting to walk to car")
+	print("NPC starting to walk to car window")
