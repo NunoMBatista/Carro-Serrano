@@ -23,6 +23,7 @@ PlaytestLogger="*res://scripts/playtest_logger.gd"
 DialogueFlow="*res://scripts/dialogue_flow.gd"
 RadioManager="*res://scripts/radio_manager.gd"
 GloveboxState="*res://scripts/glovebox_state.gd"
+DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
 
 [display]
 
@@ -32,7 +33,7 @@ window/size/mode=2
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PathMesh3D/plugin.cfg", "res://addons/SunshineClouds2/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
+enabled=PackedStringArray("res://addons/SunshineClouds2/plugin.cfg", "res://addons/debug_menu/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/gdsam/plugin.cfg", "res://addons/road-generator/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
 
 [filesystem]
 
@@ -102,4 +103,4 @@ toggle_headlights={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogue/testdialogue.dialogue", "res://dialogue/prototype.dialogue", "res://dialogue/test_branch.dialogue", "res://dialogue/drunk_dialogue.dialogue", "res://dialogue/middle_aged_dialogue.dialogue")
+locale/translations_pot_files=PackedStringArray("res://dialogue/testdialogue.dialogue", "res://dialogue/prototype.dialogue", "res://dialogue/test_branch.dialogue", "res://dialogue/drunk_dialogue.dialogue", "res://dialogue/middle_aged_dialogue.dialogue", "res://dialogue/novinha.dialogue")

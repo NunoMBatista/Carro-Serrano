@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://dlf65a553hjc5"
+path="res://.godot/imported/novinha.dialogue-5db779784682b1fad7583d268a5569ee.tres"
+
+[deps]
+
+source_file="res://dialogue/novinha.dialogue"
+dest_files=["res://.godot/imported/novinha.dialogue-5db779784682b1fad7583d268a5569ee.tres"]
+
+[params]
+
+defaults=true

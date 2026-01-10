@@ -1181,12 +1181,21 @@ curve = SubResource("Curve3D_n8t7m")
 [node name="edge_C" parent="terrain_1/Terrain/Node3D/RoadManager/Road_001/RP_028" index="2"]
 curve = SubResource("Curve3D_agode")
 
-[node name="PathMesh3D" parent="terrain_1/Terrain" index="2" node_paths=PackedStringArray("path_3d")]
-path_3d = NodePath("Path3D")
+[node name="PathMesh3D" parent="terrain_1/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
 mesh = ExtResource("3_c1pb6")
 surface_0/tile_rotation = Vector3(-0.6981317, -1.5707964, 0)
 surface_0/triangle_count = 703936
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.59399, 22.582533, 254.71701)
+script = null
 
 [node name="Path3D" parent="terrain_1/Terrain/PathMesh3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.4247284, -1.43857, 7.0921936)
@@ -1666,6 +1675,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1.0000541, 0, 0, 509.22595)
 [node name="RP_032" parent="terrain_2/Terrain/Node3D/RoadManager/Road_001" index="40"]
 transform = Transform3D(0.25136515, 0.35149294, 0.9018141, -0.017368447, 0.93321764, -0.3588919, -0.9677369, 0.074549824, 0.24068353, 1.3396049, 246.64803, 853.88513)
 
+[node name="PathMesh3D" parent="terrain_2/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
 [node name="CarFollower" type="Node3D" parent="."]
 transform = Transform3D(-0.115325324, 0.0414615, 0.9923406, 0, 0.9989787, -0.041741267, -0.9932213, -0.004814195, -0.11522307, -2.8559113, -0.23949385, 0.2235527)
 script = ExtResource("3_pu3yx")
@@ -1681,6 +1702,54 @@ transform = Transform3D(-1.00563, 0, 0, 0, 1, 0, 0, 0, -1.0048895, 0.67458725, 0
 
 [node name="RP_030" parent="terrain_3/Terrain/Node3D/RoadManager/Road_001" index="19"]
 transform = Transform3D(-0.29530925, 0.30280924, 0.9061456, -0.0024217265, 0.94820434, -0.3176534, -0.955399, -0.096000366, -0.27928025, 1.5618694, 246.686, 858.01)
+
+[node name="PathMesh3D" parent="terrain_3/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D2" parent="terrain_3/Terrain" index="3"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D4" parent="terrain_3/Terrain" index="4"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D5" parent="terrain_3/Terrain" index="5"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
 
 [editable path="terrain_1"]
 [editable path="terrain_2"]
