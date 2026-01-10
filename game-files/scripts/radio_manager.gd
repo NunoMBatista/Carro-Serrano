@@ -18,7 +18,7 @@ const STATIC_MAX_DURATION := 1.2  # maximum static duration in seconds
 
 # Base tracks (mood music)
 const BASE_TRACK_HAPPY = "res://assets/audio/base_tracks/happy_song.mp3"
-const BASE_TRACK_NEUTRAL = "res://assets/audio/base_tracks/neutral_song.wav"
+const BASE_TRACK_NEUTRAL = "res://assets/audio/base_tracks/neutral_song.mp3"
 const BASE_TRACK_SAD = "res://assets/audio/base_tracks/sad_song.mp3"
 
 # Empathy thresholds for mood music
@@ -42,27 +42,27 @@ func _ready() -> void:
 	_audio_player.bus = "Master"
 	add_child(_audio_player)
 	_audio_player.finished.connect(_on_song_finished)
-	
+
 	_static_player = AudioStreamPlayer.new()
 	_static_player.bus = "Master"
 	_static_player.stream = load(STATIC_PATH)
 	add_child(_static_player)
-	
+
 	_base_player = AudioStreamPlayer.new()
 	_base_player.bus = "Master"
 	add_child(_base_player)
 	_base_player.finished.connect(_on_base_track_finished)
-	
+
 	_static_timer = Timer.new()
 	_static_timer.one_shot = true
 	_static_timer.timeout.connect(_on_static_finished)
 	add_child(_static_timer)
-	
+
 	_update_volume()
-	
+
 	# Connect to dialogue signals after tree is ready
 	call_deferred("_connect_dialogue_signals")
-	
+
 	# Start base track if radio is off
 	_update_base_track()
 
@@ -111,7 +111,7 @@ func _play_with_static() -> void:
 	_stop_all()
 	_stop_base_track()
 	_is_playing_static = true
-	
+
 	# Play static from random position for random duration
 	var static_stream: AudioStream = _static_player.stream
 	if static_stream == null:
@@ -119,11 +119,11 @@ func _play_with_static() -> void:
 		_is_playing_static = false
 		_play_current_song_immediate()
 		return
-	
+
 	var static_length: float = static_stream.get_length()
 	var static_duration := randf_range(STATIC_MIN_DURATION, STATIC_MAX_DURATION)
 	var start_pos := randf_range(0.0, max(0.0, static_length - static_duration))
-	
+
 	_static_player.play(start_pos)
 	_static_timer.start(static_duration)
 
@@ -137,19 +137,19 @@ func _play_current_song_immediate() -> void:
 	if _dialogue_active:
 		_update_base_track()
 		return
-	
+
 	var stream = load(SONGS[current_song_idx])
 	if stream == null:
 		push_warning("RadioManager: Song not found at " + SONGS[current_song_idx])
 		return
-	
+
 	_audio_player.stream = stream
-	
+
 	# Calculate where the song "would be" if it had been playing since game start
 	var song_duration: float = stream.get_length()
 	var game_time := Time.get_ticks_msec() / 1000.0  # seconds since game start
 	var start_position := fmod(game_time, song_duration)
-	
+
 	_audio_player.play(start_position)
 
 func _stop_all() -> void:
@@ -194,20 +194,20 @@ func _update_base_track() -> void:
 	if not _should_play_base_track():
 		_stop_base_track()
 		return
-	
+
 	var target_track := _get_target_base_track()
-	
+
 	# If already playing the correct track, do nothing
 	if _current_base_track == target_track and _base_player.playing:
 		return
-	
+
 	# Switch to new track
 	_current_base_track = target_track
 	var stream = load(target_track)
 	if stream == null:
 		push_warning("RadioManager: Base track not found at " + target_track)
 		return
-	
+
 	_base_player.stream = stream
 	_base_player.play()
 
@@ -232,7 +232,7 @@ func _on_dialogue_started() -> void:
 func _on_dialogue_ended() -> void:
 	print("RadioManager: Dialogue ended, radio is_on=", is_on)
 	_dialogue_active = false
-	
+
 	if is_on:
 		# Crossfade: fade out base track, fade in radio
 		_crossfade_to_radio()
@@ -248,26 +248,26 @@ func _crossfade_to_radio() -> void:
 		push_warning("RadioManager: Song not found at " + SONGS[current_song_idx])
 		_stop_base_track()
 		return
-	
+
 	_audio_player.stream = stream
-	
+
 	# Calculate where the song "would be" if it had been playing since game start
 	var song_duration: float = stream.get_length()
 	var game_time := Time.get_ticks_msec() / 1000.0
 	var start_position := fmod(game_time, song_duration)
-	
+
 	_audio_player.volume_db = -80.0  # Start silent
 	_audio_player.play(start_position)
-	
+
 	# Create tween for crossfade
 	var tween := create_tween()
 	tween.set_parallel(true)
-	
+
 	# Fade out base track
 	tween.tween_property(_base_player, "volume_db", -80.0, FADE_DURATION)
 	# Fade in radio
 	tween.tween_property(_audio_player, "volume_db", linear_to_db(volume), FADE_DURATION)
-	
+
 	# When done, stop base track
 	tween.set_parallel(false)
 	tween.tween_callback(_stop_base_track)
