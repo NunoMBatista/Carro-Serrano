@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dfmyjabbccxsr"]
+[gd_scene load_steps=25 format=3 uid="uid://dfmyjabbccxsr"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_emikk"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_ea0xb"]
@@ -32,6 +32,20 @@ _data = {
 "tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 }
 point_count = 34
+
+[sub_resource type="Curve3D" id="Curve3D_80jls"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 18.257187, 23.40819, -0.21046448, 0, 0, 0, 0, 0, 0, 18.079826, 23.474676, -5.6327667, 0, 0, 0, 0, 0, 0, 19.708344, 23.565022, -9.658424, 0, 0, 0, 0, 0, 0, 21.056877, 23.47434, -15.324989, 0, 0, 0, 0, 0, 0, 20.70803, 23.511936, -19.576942, 0, 0, 0, 0, 0, 0, 17.773628, 23.91423, -20.628036, 0, 0, 0, 0, 0, 0, 13.542992, 24.023336, -21.30954, 0, 0, 0, 0, 0, 0, 11.071907, 23.94638, -20.202675, 0, 0, 0, 0, 0, 0, 7.4184265, 23.673964, -16.982727, 0, 0, 0, 0, 0, 0, 6.162567, 24.234713, -14.207283, 0, 0, 0, 0, 0, 0, 5.495575, 24.383202, -10.841606, 0, 0, 0, 0, 0, 0, 4.656502, 24.977406, -6.6075897, 0, 0, 0, 0, 0, 0, 3.2236633, 27.394316, 7.950531, 0, 0, 0, 0, 0, 0, 2.569481, 31.747345, 34.56534, 0, 0, 0, 0, 0, 0, 2.0241318, 34.56369, 49.8674, 0, 0, 0, 0, 0, 0, 1.5734177, 36.18762, 59.564743, 0, 0, 0, 0, 0, 0, 0.9842987, 37.464912, 67.19214, 0, 0, 0, 0, 0, 0, -0.41789246, 39.08918, 75.15311, 0, 0, 0, 0, 0, 0, -2.960228, 39.68252, 80.41637, 0, 0, 0, 0, 0, 0, -7.225128, 39.99424, 82.57214, 0, 0, 0, 0, 0, 0, -14.841, 39.55642, 85.5255, 0, 0, 0, 0, 0, 0, -21.600918, 39.338863, 87.580185, 0, 0, 0, 0, 0, 0, -28.089493, 38.962395, 88.82988, 0, 0, 0, 0, 0, 0, -34.626213, 39.079086, 88.40486, 0, 0, 0, 0, 0, 0, -40.232338, 39.179165, 87.39261, 0, 0, 0, 0, 0, 0, -53.15487, 40.138474, 85.07866),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 26
+
+[sub_resource type="Curve3D" id="Curve3D_chyr8"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 74.33818, 27.905624, 85.41087, 0, 0, 0, 0, 0, 0, 73.54973, 29.785334, 95.889084, 0, 0, 0, 0, 0, 0, 73.287094, 31.058525, 102.77791, 0, 0, 0, 0, 0, 0, 73.287094, 31.058525, 102.77791, 0, 0, 0, 0, 0, 0, 73.287094, 31.058525, 102.77791, 0, 0, 0, 0, 0, 0, 73.287094, 31.058525, 102.77791, 0, 0, 0, 0, 0, 0, 73.287094, 31.058525, 102.77791, 0, 0, 0, 0, 0, 0, 72.607285, 33.65562, 117.06577, 0, 0, 0, 0, 0, 0, 72.607285, 33.65562, 117.06577, 0, 0, 0, 0, 0, 0, 72.607285, 33.65562, 117.06577, 0, 0, 0, 0, 0, 0, 72.09158, 36.24769, 132.59229, 0, 0, 0, 0, 0, 0, 71.4918, 39.29033, 148.78333, 0, 0, 0, 0, 0, 0, 70.69511, 41.246433, 159.19249, 0, 0, 0, 0, 0, 0, 69.546135, 42.793503, 166.6648, 0, 0, 0, 0, 0, 0, 68.1537, 43.271523, 169.74586, 0, 0, 0, 0, 0, 0, 64.37343, 43.284325, 171.55019, 0, 0, 0, 0, 0, 0, 55.22386, 43.178165, 174.69185, 0, 0, 0, 0, 0, 0, 50.48965, 43.06173, 176.076, 0, 0, 0, 0, 0, 0, 45.448925, 42.937748, 177.23686),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 19
 
 [sub_resource type="GDScript" id="GDScript_f2hg1"]
 
@@ -464,6 +478,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.59399, 22.76306, 254.7170
 [node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2559204, 0.31819725, 0.5363312)
 curve = SubResource("Curve3D_f02o3")
+
+[node name="PathMesh3D2" type="PathMesh3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.91411, 3.8353996, 92.38124)
+
+[node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D2"]
+curve = SubResource("Curve3D_80jls")
+
+[node name="PathMesh3D3" type="PathMesh3D" parent="Terrain" node_paths=PackedStringArray("path_3d")]
+path_3d = NodePath("Path3D")
+mesh = ExtResource("16_80jls")
+surface_0/tile_rotation = Vector3(0, 0, 0)
+surface_0/tile_rotation_order = 2
+surface_0/distribution = 0
+surface_0/alignment = 0
+surface_0/warp_along_curve = true
+surface_0/sample_cubic = false
+surface_0/tilt = true
+surface_0/offset = Vector2(0, 0)
+surface_0/triangle_count = 1355857
+
+[node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D3"]
+curve = SubResource("Curve3D_chyr8")
 
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("18_hxmah")
