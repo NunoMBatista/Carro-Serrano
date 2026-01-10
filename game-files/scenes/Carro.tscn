@@ -178,7 +178,7 @@ transform = Transform3D(0.1999954, 4.1129183e-11, 0.001357856, -0.00067498366, 0
 render_priority = 50
 
 [node name="BottleManager" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.060412645, 0, -0.056674615)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09818146, -0.027704746, -0.23047413)
 script = ExtResource("13_et1co")
 car_node_path = NodePath("../PassengerSeat")
 passenger_seat_offset = Vector3(0, 0, 0)
@@ -186,7 +186,7 @@ bottle_radius = 0.025
 bottle_height = 0.075
 
 [node name="PassengerSeat" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2939654, -0.11936002, -0.114489526)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1526756, -0.054124687, -0.2727952)
 
 [node name="WindowMarker" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5718069, 0, 0)

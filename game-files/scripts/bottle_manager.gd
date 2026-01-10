@@ -15,6 +15,9 @@ var bottle: Bottle = null
 var car_node: Node3D = null
 var camera: Camera3D = null
 var is_hovering_bottle: bool = false
+var hover_check_frame_count: int = 0
+var hover_state_buffer: Array[bool] = [false, false, false]  # Buffer to debounce hover state
+var hover_buffer_index: int = 0
 
 func _ready() -> void:
 	# Get car reference
@@ -36,33 +39,40 @@ func _unhandled_input(event: InputEvent) -> void:
 			spawn_bottle()
 		get_viewport().set_input_as_handled()
 
-	# Handle mouse clicks for dragging
-	if event is InputEventMouseButton:
+	# Handle mouse clicks
+	if event is InputEventMouseButton and event.pressed:
 		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				# Try to pick up bottle
+			# Check if we're already dragging
+			if bottle and is_instance_valid(bottle) and bottle.is_dragging:
+				# Second click while dragging = THROW and remove permanently
+				throw_bottle()
+				# Remove bottle permanently after throwing (wait longer so we can see it)
+				await get_tree().create_timer(2.0).timeout
+				if bottle and is_instance_valid(bottle):
+					bottle.queue_free()
+					bottle = null
+				_set_crosshair_dragging(false)
+				get_viewport().set_input_as_handled()
+			else:
+				# First click = try to pick up bottle
 				var did_pickup = attempt_pickup()
 				if did_pickup:
 					get_viewport().set_input_as_handled()
-			else:
-				# Release bottle
-				if bottle and is_instance_valid(bottle) and bottle.is_dragging:
-					bottle.end_drag()
-					_set_crosshair_dragging(false)
-					get_viewport().set_input_as_handled()
 
-		# Handle right-click to throw bottle while dragging
-		if event.button_index == MOUSE_BUTTON_RIGHT:
-			if event.pressed and bottle and is_instance_valid(bottle) and bottle.is_dragging:
-				throw_bottle()
+		# Handle right-click to return bottle to dashboard while dragging
+		elif event.button_index == MOUSE_BUTTON_RIGHT:
+			if bottle and is_instance_valid(bottle) and bottle.is_dragging:
+				# Return to dashboard (just end drag with no velocity)
+				bottle.end_drag()
+				_set_crosshair_dragging(false)
 				get_viewport().set_input_as_handled()
 
 		# Handle scroll wheel to adjust distance while dragging
-		if bottle and is_instance_valid(bottle) and bottle.is_dragging:
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP and event.pressed:
+		elif bottle and is_instance_valid(bottle) and bottle.is_dragging:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				bottle.adjust_drag_distance(0.2)  # Push further
 				get_viewport().set_input_as_handled()
-			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN and event.pressed:
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 				bottle.adjust_drag_distance(-0.2)  # Bring closer
 				get_viewport().set_input_as_handled()
 
@@ -73,8 +83,11 @@ func _process(_delta: float) -> void:
 		var camera_forward = -camera.global_transform.basis.z
 		bottle.update_drag_position(camera_pos, camera_forward)
 
-	# Update hover state (check if mouse is over bottle)
-	_update_hover_state()
+	# Update hover state (check if mouse is over bottle) - only every 10 frames to reduce flickering
+	hover_check_frame_count += 1
+	if hover_check_frame_count >= 10:
+		hover_check_frame_count = 0
+		_update_hover_state()
 
 func spawn_bottle() -> void:
 	# Create new bottle instance
@@ -83,35 +96,25 @@ func spawn_bottle() -> void:
 	# Setup bottle appearance BEFORE adding to tree
 	bottle.setup_as_cylinder(bottle_radius, bottle_height, bottle_color)
 
-	# Calculate spawn position
-	var spawn_pos: Vector3
-	if car_node:
-		# Get car's global position and apply offset in car's local space
-		var car_basis = car_node.global_transform.basis
-		spawn_pos = car_node.global_position + car_basis * passenger_seat_offset
-	else:
-		# Fallback: spawn at manager position
-		spawn_pos = global_position + passenger_seat_offset
-
-	# Set position BEFORE adding to tree
-	bottle.global_position = spawn_pos
-
-	# Set car reference for physics
+	# Set car reference
 	bottle.car_body = car_node
 
-	# Add bottle to the root of the scene
+	# Always add bottle to scene root (not as child of car to avoid collision issues)
 	get_tree().root.add_child(bottle)
 
-	# Force the RigidBody3D to wake up and register with physics
-	bottle.sleeping = false
-	bottle.freeze = false
-	bottle.linear_velocity = Vector3(0, -0.1, 0)  # Give it a tiny downward velocity to force activation
+	# IMPORTANT: Set position AFTER adding to tree
+	bottle.global_transform = global_transform
 
-	# Wait for physics to fully register
-	await get_tree().physics_frame
-	await get_tree().physics_frame
+	# Calculate local offset from car for tracking
+	if car_node:
+		var car_transform_inv = car_node.global_transform.affine_inverse()
+		var local_offset = car_transform_inv * global_position
+		bottle.set_dashboard_position(local_offset, Vector3.ZERO)
+	else:
+		# Fallback: use position as-is
+		bottle.set_dashboard_position(global_position, Vector3.ZERO)
 
-	print("Bottle spawned at passenger seat! Gravity: ", bottle.gravity_scale, " Sleeping: ", bottle.sleeping, " Pos: ", bottle.global_position)
+	print("Bottle spawned! Global pos: ", bottle.global_position, " Manager pos: ", global_position)
 
 func throw_bottle() -> void:
 	"""Throw the bottle in the direction of camera forward with force"""
@@ -121,14 +124,14 @@ func throw_bottle() -> void:
 	# Calculate throw direction (camera forward)
 	var throw_direction = -camera.global_transform.basis.z
 
-	# Throw strength based on distance from camera (further = faster throw)
-	var throw_strength = 8.0 + (bottle.drag_distance * 2.0)
+	# Throw strength based on distance from camera (further = faster throw) - REDUCED
+	var throw_strength = 4.0 + (bottle.drag_distance * 1.0)
 
 	# Calculate throw velocity
 	var throw_velocity = throw_direction * throw_strength
 
-	# Add slight upward component for arc
-	throw_velocity.y += 2.0
+	# Add slight upward component for arc - REDUCED
+	throw_velocity.y += 1.0
 
 	print("Bottle thrown with velocity: ", throw_velocity)
 
@@ -213,10 +216,20 @@ func _update_hover_state() -> void:
 	if result and result.has("collider") and is_instance_valid(result.collider):
 		hovering = (result.collider == bottle)
 
-	# Update hover state if changed
-	if hovering != is_hovering_bottle:
-		is_hovering_bottle = hovering
-		_set_crosshair_hover(is_hovering_bottle)
+	# Add to buffer for debouncing
+	hover_state_buffer[hover_buffer_index] = hovering
+	hover_buffer_index = (hover_buffer_index + 1) % 3
+
+	# Only change hover state if all 3 buffer values agree
+	var all_hovering = hover_state_buffer[0] and hover_state_buffer[1] and hover_state_buffer[2]
+	var all_not_hovering = not hover_state_buffer[0] and not hover_state_buffer[1] and not hover_state_buffer[2]
+
+	if all_hovering and not is_hovering_bottle:
+		is_hovering_bottle = true
+		_set_crosshair_hover(true)
+	elif all_not_hovering and is_hovering_bottle:
+		is_hovering_bottle = false
+		_set_crosshair_hover(false)
 
 func _set_crosshair_hover(enabled: bool) -> void:
 	"""Update crosshair to show hover state (open hand)"""

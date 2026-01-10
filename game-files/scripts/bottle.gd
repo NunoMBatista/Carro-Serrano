@@ -11,89 +11,79 @@ var collision_shape: CollisionShape3D = null
 
 ## Drag state
 var is_dragging: bool = false
-var drag_offset: Vector3 = Vector3.ZERO
 var drag_distance: float = 1.0  # Distance from camera during drag
 const MIN_DRAG_DISTANCE: float = 0.3
 const MAX_DRAG_DISTANCE: float = 5.0
 
-## Car reference for physics
+## Static dashboard state
+var is_static_on_dashboard: bool = true
+var dashboard_local_position: Vector3 = Vector3.ZERO  # Position relative to car (local)
+var dashboard_local_rotation: Vector3 = Vector3.ZERO  # Rotation relative to car (local)
+
+## Car reference
 var car_body: Node3D = null
 
 ## Physics settings
-@export var drag_smoothing: float = 15.0  # How smoothly bottle follows drag
 @export var max_velocity: float = 8.0
 @export var max_angular_velocity: float = 10.0
 
 var camera: Camera3D = null
-var last_car_position: Vector3 = Vector3.ZERO
-var car_velocity: Vector3 = Vector3.ZERO
+var scene_root: Node = null
 
 func _ready() -> void:
 	# Find camera
 	camera = get_viewport().get_camera_3d()
+	scene_root = get_tree().root
 
-	# Initialize car tracking
-	if car_body:
-		last_car_position = car_body.global_position
+	# Start as static on dashboard (kinematic, frozen)
+	if is_static_on_dashboard:
+		freeze = true
+		freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
+		gravity_scale = 0.0
+		sleeping = false
+		can_sleep = false
 
-	# Debug output
 	print("=== Bottle _ready called ===")
-	print("  gravity_scale: ", gravity_scale)
-	print("  freeze: ", freeze)
-	print("  sleeping: ", sleeping)
-	print("  can_sleep: ", can_sleep)
-	print("  mass: ", mass)
-	print("  linear_velocity: ", linear_velocity)
-	print("  global_position: ", global_position)
-	print("  is_inside_tree: ", is_inside_tree())
-	print("  collision_layer: ", collision_layer)
-	print("  collision_mask: ", collision_mask)
+	print("  is_static_on_dashboard: ", is_static_on_dashboard)
+	print("  parent: ", get_parent().name if get_parent() else "none")
+	print("  position (local): ", position)
+	print("  position (global): ", global_position)
 
-func _physics_process(delta: float) -> void:
-	# Debug first few frames
-	if Engine.get_physics_frames() % 60 == 0:  # Every 60 physics frames
-		print("Bottle physics - pos: ", global_position, " vel: ", linear_velocity, " sleeping: ", sleeping)
+func _process(_delta: float) -> void:
+	# If static on dashboard, update position to follow car
+	if is_static_on_dashboard and car_body and not is_dragging:
+		# Calculate global position from car's transform and local offset
+		var car_transform = car_body.global_transform
+		global_position = car_transform.origin + car_transform.basis * dashboard_local_position
+		global_rotation = car_body.global_rotation + dashboard_local_rotation
 
-	# Track car movement to handle physics relative to car
-	# IMPORTANT: Always track, even while dragging, so we have accurate velocity on release
-	if car_body:
-		var current_car_pos = car_body.global_position
-		car_velocity = (current_car_pos - last_car_position) / delta if delta > 0 else Vector3.ZERO
-		last_car_position = current_car_pos
+func _physics_process(_delta: float) -> void:
+	# Debug periodically
+	if Engine.get_physics_frames() % 120 == 0:
+		print("Bottle - static: ", is_static_on_dashboard, " dragging: ", is_dragging, " freeze: ", freeze)
 
-		# Apply small random forces to simulate car movement jitter (only when not dragging)
-		if not is_dragging and randf() < 0.01:
-			var jitter = Vector3(
-				randf_range(-0.5, 0.5),
-				randf_range(-0.2, 0.2),
-				randf_range(-0.5, 0.5)
-			)
-			apply_central_impulse(jitter)
+	# Only apply velocity clamping when physics is active (not dragging, not static)
+	if not is_dragging and not is_static_on_dashboard:
+		if linear_velocity.length() > max_velocity:
+			linear_velocity = linear_velocity.normalized() * max_velocity
 
-	# Clamp velocity relative to car
-	var relative_velocity = linear_velocity - car_velocity
-	if relative_velocity.length() > max_velocity:
-		linear_velocity = car_velocity + relative_velocity.normalized() * max_velocity
+		if angular_velocity.length() > max_angular_velocity:
+			angular_velocity = angular_velocity.normalized() * max_angular_velocity
 
-	if angular_velocity.length() > max_angular_velocity:
-		angular_velocity = angular_velocity.normalized() * max_angular_velocity
-
-func start_drag(camera_position: Vector3, ray_hit_point: Vector3) -> void:
+func start_drag(camera_position: Vector3, _ray_hit_point: Vector3) -> void:
 	is_dragging = true
+	is_static_on_dashboard = false
 
 	# Calculate drag distance (keep bottle at same distance from camera)
 	drag_distance = camera_position.distance_to(global_position)
 
-	# Don't use offset - just position directly where we want
-	drag_offset = Vector3.ZERO
-
-	# Use freeze mode to completely disable physics
+	# Use freeze mode to completely disable physics while dragging
 	freeze = true
 	freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
 
 	print("=== DRAG STARTED ===")
 	print("  Position: ", global_position)
-	print("  Freeze: ", freeze)
+	print("  Parent: ", get_parent().name)
 
 	# Visual feedback
 	if visual_node:
@@ -106,7 +96,6 @@ func update_drag_position(camera_position: Vector3, camera_forward: Vector3) -> 
 	if is_dragging:
 		# Calculate target position in front of camera
 		var target_pos = camera_position + camera_forward * drag_distance
-
 		# Directly set position (kinematic mode)
 		global_position = target_pos
 
@@ -119,28 +108,33 @@ func adjust_drag_distance(delta: float) -> void:
 func end_drag(throw_velocity: Vector3 = Vector3.ZERO) -> void:
 	if is_dragging:
 		print("=== DRAG ENDING ===")
-		print("  Position before: ", global_position)
-		print("  Car velocity: ", car_velocity)
+		print("  Throw velocity: ", throw_velocity)
 
 		is_dragging = false
 
-		# Unfreeze FIRST, THEN set velocities
-		freeze = false
+		# Check if this is a throw (has velocity) or just a release
+		if throw_velocity.length() > 0:
+			# This is a throw - enable physics and apply velocity
+			freeze = false
+			is_static_on_dashboard = false
 
-		# Force all velocities to zero immediately
-		linear_velocity = Vector3.ZERO
-		angular_velocity = Vector3.ZERO
+			# Force all velocities to zero immediately
+			linear_velocity = Vector3.ZERO
+			angular_velocity = Vector3.ZERO
 
-		# Restore physics properties
-		gravity_scale = 1.0
-		linear_damp = 3.0
-		angular_damp = 4.0
+			# Restore physics properties
+			gravity_scale = 1.0
+			linear_damp = 3.0
+			angular_damp = 4.0
 
-		# Call deferred to ensure it happens after physics update
-		call_deferred("_set_release_velocity", throw_velocity)
+			# Call deferred to ensure it happens after physics update
+			call_deferred("_set_release_velocity", throw_velocity)
 
-		print("=== DRAG ENDED ===")
-		print("  Position after: ", global_position)
+			print("=== BOTTLE THROWN - Physics enabled ===")
+		else:
+			# Just released (right-click) - return to dashboard position
+			return_to_dashboard()
+			print("=== BOTTLE RETURNED TO DASHBOARD ===")
 
 		# Restore visual state
 		if visual_node:
@@ -148,31 +142,11 @@ func end_drag(throw_velocity: Vector3 = Vector3.ZERO) -> void:
 
 		drag_ended.emit()
 
-func _set_release_velocity(throw_velocity: Vector3 = Vector3.ZERO) -> void:
+func _set_release_velocity(throw_velocity: Vector3) -> void:
 	"""Called deferred after unfreezing to set proper velocity"""
-	# Zero everything first
-	linear_velocity = Vector3.ZERO
-	angular_velocity = Vector3.ZERO
-
-	# If we have a throw velocity, use it
-	if throw_velocity.length() > 0:
-		linear_velocity = throw_velocity
-		print("=== THROW VELOCITY SET (deferred) ===")
-		print("  Throw velocity: ", throw_velocity)
-	else:
-		# Otherwise set to car velocity if car exists
-		# Clamp to reasonable values to prevent shooting off
-		if car_body:
-			var clamped_velocity = car_velocity
-			# Clamp each component to max 2.0 units/sec
-			clamped_velocity.x = clamp(clamped_velocity.x, -2.0, 2.0)
-			clamped_velocity.y = clamp(clamped_velocity.y, -2.0, 2.0)
-			clamped_velocity.z = clamp(clamped_velocity.z, -2.0, 2.0)
-			linear_velocity = clamped_velocity
-
-		print("=== VELOCITY SET (deferred) ===")
-		print("  Car velocity raw: ", car_velocity)
-		print("  Linear velocity (clamped): ", linear_velocity)
+	linear_velocity = throw_velocity
+	print("=== THROW VELOCITY SET (deferred) ===")
+	print("  Throw velocity: ", throw_velocity)
 
 ## Setup function to create a simple cylinder bottle
 func setup_as_cylinder(radius: float, height: float, color: Color) -> void:
@@ -180,9 +154,9 @@ func setup_as_cylinder(radius: float, height: float, color: Color) -> void:
 	gravity_scale = 1.0
 	linear_damp = 3.0
 	angular_damp = 4.0
-	mass = 2.0  # Increased mass to prevent phasing through car
+	mass = 2.0
 	collision_layer = 1
-	collision_mask = 0b11111111111111111111  # Collide with all layers (first 20 layers)
+	collision_mask = 0b11111111111111111111  # Collide with all layers
 	contact_monitor = true
 	max_contacts_reported = 8
 	continuous_cd = true
@@ -220,33 +194,39 @@ func setup_as_cylinder(radius: float, height: float, color: Color) -> void:
 	collision_shape.shape = shape
 	add_child(collision_shape)
 
-	# Force physics to activate immediately
-	apply_central_impulse(Vector3(0, 0.001, 0))  # Tiny impulse to wake it up
-
 	print("=== Bottle setup_as_cylinder complete ===")
-	print("  gravity_scale: ", gravity_scale)
-	print("  mass: ", mass)
-	print("  sleeping: ", sleeping)
-	print("  freeze: ", freeze)
-	print("  collision_shape added: ", collision_shape != null)
-	print("  visual_node added: ", visual_node != null)
 
-## Get state for persistence
-func get_save_data() -> Dictionary:
-	return {
-		"position": global_position,
-		"rotation": rotation,
-		"linear_velocity": linear_velocity,
-		"angular_velocity": angular_velocity
-	}
+func set_dashboard_position(local_pos: Vector3, local_rot: Vector3) -> void:
+	"""Set the dashboard position (local to car)"""
+	dashboard_local_position = local_pos
+	dashboard_local_rotation = local_rot
+	position = local_pos
+	rotation = local_rot
+	print("=== Dashboard position set ===")
+	print("  Local position: ", dashboard_local_position)
+	print("  Local rotation: ", dashboard_local_rotation)
 
-## Restore state
-func load_save_data(data: Dictionary) -> void:
-	if data.has("position"):
-		global_position = data["position"]
-	if data.has("rotation"):
-		rotation = data["rotation"]
-	if data.has("linear_velocity"):
-		linear_velocity = data["linear_velocity"]
-	if data.has("angular_velocity"):
-		angular_velocity = data["angular_velocity"]
+func return_to_dashboard() -> void:
+	"""Return bottle to its original dashboard position (static on dashboard)"""
+	if not car_body:
+		print("ERROR: No car_body reference!")
+		return
+
+	is_static_on_dashboard = true
+
+	# Freeze in kinematic mode
+	freeze = true
+	freeze_mode = RigidBody3D.FREEZE_MODE_KINEMATIC
+	gravity_scale = 0.0
+
+	# Reset velocities
+	linear_velocity = Vector3.ZERO
+	angular_velocity = Vector3.ZERO
+
+	# Position will be updated in _process to follow car
+	var car_transform = car_body.global_transform
+	global_position = car_transform.origin + car_transform.basis * dashboard_local_position
+	global_rotation = car_body.global_rotation + dashboard_local_rotation
+
+	print("=== Bottle returned to dashboard ===")
+	print("  Global position: ", global_position)
