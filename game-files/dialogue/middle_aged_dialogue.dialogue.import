@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bbyhdjm5lw276"
+path="res://.godot/imported/middle_aged_dialogue.dialogue-9ec4f2a82beb783e9b7bfaa2694f5d93.tres"
+
+[deps]
+
+source_file="res://dialogue/middle_aged_dialogue.dialogue"
+dest_files=["res://.godot/imported/middle_aged_dialogue.dialogue-9ec4f2a82beb783e9b7bfaa2694f5d93.tres"]
+
+[params]
+
+defaults=true

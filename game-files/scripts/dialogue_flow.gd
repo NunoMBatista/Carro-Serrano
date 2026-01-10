@@ -11,6 +11,8 @@ signal branch_changed(new_branch: String)
 @export var empathy_gain: int = 5
 ## Empathy lost per step in bad branch
 @export var empathy_loss: int = 10
+## Coefficient for empathy changes (multiplier for middle_aged dialogue)
+@export var empathy_coefficient: float = 1.0
 
 ## Current empathy (0-100)
 var empathy: int = 50:
@@ -24,6 +26,9 @@ var empathy: int = 50:
 var current_branch: String = "good"
 var _active: bool = false
 var _debug_label: Label
+
+## Counter for positive choices (used in middle_aged dialogue)
+var n_positive_choices: int = 0
 
 ## Public property to check if dialogue is active
 var is_dialogue_active: bool = false:
@@ -80,6 +85,9 @@ func run_dialogue(dialogue_resource: DialogueResource, start_title: String = "st
 		return
 	_active = true
 	# Don't change mouse mode - keep camera active during dialogue
+
+	# Reset positive choice counter
+	n_positive_choices = 0
 
 	# Determine starting branch based on empathy
 	current_branch = "good" if empathy >= empathy_threshold else "bad"

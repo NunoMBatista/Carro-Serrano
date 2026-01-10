@@ -19,6 +19,7 @@ func start_new_game() -> void:
 
 const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
 const DRUNK_DIALOGUE = preload("res://dialogue/drunk_dialogue.dialogue")
+#const DRUNK_DIALOGUE = preload("res://dialogue/middle_aged_dialogue.dialogue")
 
 # Optional: A helper function if you want to print logic
 func change_empathy(amount: int):

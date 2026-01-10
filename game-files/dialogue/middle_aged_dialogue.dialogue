@@ -1,0 +1,322 @@
+~ start
+
+**The well groomed man sits facing you and combs his hair**
+MiddleAged: Thanks man, old looking car, smells like it too
+MiddleAged: Maybe my cologne can mask this god awful smell? It better, i mean, it's Christian Dior... Just search for the most expensive one and you'll find it.
+MiddleAged: Bought it when me and my girfriend went to dubai this summer, now that's a city i can live in. That's the lifestyle i want, not this hillbilly bullshit where nothing happens and no-one understands what is a stock or a bitcoin.
+**The man sits for a moment and then rolls his eyes**
+**He start smoking his eletronic cigarete and turns the AC up**
+MiddleAged: Well, enough yapping, I can tell you won't even understand... you are going up the mountain, right?
+
+- Dubai sounds impressive. I guess someone like you handles can easily search for other types of wheather.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step1_negative
+
+- Yes I am... never got to see Dubai, probably for the best though.
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+		=> step1_positive
+	else
+		=> step1_negative
+
+- You're paying for the seat coverings if you keep smoking that wanna-be cigarete in here. Why are you really heading up to the summit anyways?
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step1_positive
+
+- I don't care about your cologne. Get out.
+	MiddleAged: Fine! Whatever!
+	=> END
+
+# ===== STEP 1 NEGATIVE =====
+~ step1_negative
+
+**The man smirks, leaning back and blowing a cloud of vapor onto the windshield.**
+MiddleAged: Finally, someone who speaks the language. I could buy this whole mountain if I wanted to, would turn it into a paradise resort, I'm talking Paddle fields, Golf Clubs ... You know, things for the elite
+MiddleAged: My girlfriend—well, she wanted to move there, to be closer to family. Whatever that means. I am always telling her, 'Babe, the winters there are cold as shit'. Why would anyone build a house there? And it's true you know, i spent my whole childhood repenting this place.
+MiddleAged: I don't need this negativity. I'm fueled by success.
+
+- Why waste time thinking about some 'hillbilly' childhood
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step2_negative
+
+- You're talking about success like it's a race. What happens when you reach the finish line and all it matters are the people from your past
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step2_positive
+
+- You can fill your life with projects and golf clubs, but i bet you know it won't make you whole. What are you actually running from?
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step2_positive
+
+# ===== STEP 1 POSITIVE =====
+~ step1_positive
+
+MiddleAged: Fine, fine. God, everyone is so sensitive up here. It's just... I've had a day
+**The man rolls his eyes again and takes a final puff before throwing the electronic cigarette out the window. He looks out at the cruel uncaring void of the fog.**
+MiddleAged: It's crazy how even with all this fog, if you focus just enough, you start to see the outline of some stars far away. You ever look at them and feel like they're tiny holes sucking up all the oxygen?
+MiddleAged: Don't answer, I guess you are from here, and people from this fucking place never think like that, I bet you think it's sooooo good to be surrounded by this nature, by this cold and this whole bunch of nothing
+MiddleAged: My girlfriend—well, she wanted to move here, to be closer to family. Whatever that means. I am always telling her, 'Babe, the winters there are cold as shit'. Why would anyone build a house there? And it's true you know, i spent my whole childhood repenting this place.
+
+- Why waste time thinking about some 'hillbilly' childhood
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step2_negative
+
+- You're talking about success like it's a race. What happens when you reach the finish line and all it matters are the people from your past
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step2_positive
+
+- You can fill your life with projects and golf clubs, but i bet you know it won't make you whole. What are you actually running from?
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step2_positive
+
+# ===== STEP 2 NEGATIVE =====
+~ step2_negative
+
+**The man starts fiddling with his gold watch strap. He rolls up his sleeves and turns the AC back to a colder temperature. His movements becoming increasingly agitated.**
+MiddleAged: Exactly i mean, look at me. I am the epitomy of succes, of the "American Dream" daily living the freedom i always dreamt of...or I would have, if I'd stayed in the city. Instead, I'm back here because of a "family emergency."
+**The man suddenly stops all the frenetic movement**
+**His posture slumps just a fraction.**
+MiddleAged: My mother... she finally did it. She died. And you know what she left me? The reminder not to wind up as she was, an unskilled, imcompetent and miserable fraction of a human.
+MiddleAged: Its funny...i stopped at a gas station before entering the funeral and the guy working there gave me a free donut because I 'looked like I needed it.' Funny, right? A stranger shows more grace in thirty seconds than my mom managed in twenty years. He didn't even know me, i was her goddam son
+
+- Life's a bitch and then you die
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step3_negative
+
+- A free donut is a free donut. Better than nothing.
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+		=> step3_positive
+	else
+		=> step3_negative
+
+- Maybe admitting that it hurts isn't as dificult as you make it out to be
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step3_positive
+
+- Life's a bitch and you keep living
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step3_positive
+
+# ===== STEP 2 POSITIVE =====
+~ step2_positive
+
+**He exhales through his nose and smirks, the rest of his face isn't giving much hapiness though.**
+MiddleAged: ...I got a call yesterday after leaving work. From my mother's lawyer. She died.
+**He stares at the dashboard, fingers tapping once, then stopping.**
+MiddleAged: She spent her whole life trying to prove she mattered.
+MiddleAged: Always busy. Always tired. Always disappointed.
+MiddleAged: And somehow I was the proof she'd failed.
+MiddleAged: She was the biggest asshole I knew.
+MiddleAged: I stopped at a gas station on the way up here.
+MiddleAged: Guy behind the counter gave me a free donut. Said I "looked like I needed it."
+MiddleAged: Thirty seconds. That's all it took.
+MiddleAged: More kindness than she managed in twenty years. The guy at the gas station didn't even know me...i was her goddam son
+
+- Life's a bitch and then you die
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step3_negative
+
+- A free donut is a free donut. Better than nothing.
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+		=> step3_positive
+	else
+		=> step3_negative
+
+- Maybe admitting that it hurts isn't as dificult as you make it out to be
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step3_positive
+
+- Life's a bitch and you keep living
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step3_positive
+
+# ===== STEP 3 NEGATIVE =====
+~ step3_negative
+
+**His smirk is bigger then in the beggining of the conversation, his eyes light up**
+MiddleAged: Amen...you know... i hate it when people fucking say that they want peace and quite.. what does that ever accomplish? All i see is vein excuses to live a sub-human life yo know, like sheep in a herd. All that people make it out to be important is just fuel for drama, more unimportant nonsense to keep us busy until we're dead.
+MiddleAged: I'm better focusing on the path ahead
+
+- At least you have your money. That's more than most people get as a parting gift.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step4_negative
+
+- You can't keep doing shitty things and then feeling bad about yourself like that makes it okay
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+		=> step4_positive
+	else
+		=> step4_negative
+
+- It takes a long time to realize how truly miserable you are, but it takes even longer to see it doesn't have to be that way.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step4_positive
+
+- Have you thought that maybe it's not the drugs, the corruptness of society or even your childhood. It's just... you.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step4_positive
+
+# ===== STEP 3 POSITIVE =====
+~ step3_positive
+
+**He finally stops fidgeting with the watch.**
+MiddleAged: Sitting in that funeral service today, looking at her... Even after lying to myself, lying to the ones i love the leak inside me didn't stop...
+MiddleAged: I'm just a pit that good things fall into. I wanted to show her how good i am doing when she saw me again. The funny thing is... when i finally saw her, in the casket, i realized that i'm not. I'm just some other version of her, fueled by the same bitterness.
+MiddleAged: A cancer, spread through generations.
+
+- At least you have your money. That's more than most people get as a parting gift.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step4_negative
+
+- You can't keep doing shitty things and then feeling bad about yourself like that makes it okay
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+		=> step4_positive
+	else
+		=> step4_negative
+
+- It takes a long time to realize how truly miserable you are, but it takes even longer to see it doesn't have to be that way.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step4_positive
+
+- Have you thought that maybe it's not the drugs, the corruptness of society or even your childhood. It's just... you.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step4_positive
+
+# ===== STEP 4 NEGATIVE =====
+~ step4_negative
+
+**He laughs louder than necessary.**
+MiddleAged: Yeah. Exactly.
+MiddleAged: Everyone loves pretending life's some deep emotional journey with a clear purpose.
+MiddleAged: It's not. It's a transaction. You work. You conquer. You level up.
+MiddleAged: When people start talking about "healing" or "taking care of yourself,"... all i see is code for giving up.
+**He leans forward slightly**
+MiddleAged: Peace and quiet is what parasites say when they're afraid to compete.
+**He pauses**
+MiddleAged: My mother spent her whole life waiting for something to mean something.
+MiddleAged: Look how that turned out.
+**He looks out at the road again, jaw tight.**
+MiddleAged: I'm better off focusing on what's ahead.
+MiddleAged: No looking back.
+MiddleAged: No excuses.
+
+- Humans don't need meaning. They just need something to distract them long enough.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> choose_ending
+
+- No one's coming to fix this for you. Maybe you need to stop running and not let it make you who you are
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+- It's hard to realize you're the piece that doesn't quite fit anymore, but that doesn't mean you're a lost cause.
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+- Can't you see that depending on someone else to complete you is not a real thing.
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+# ===== STEP 4 POSITIVE =====
+~ step4_positive
+
+**The man doesn't answer right away.**
+**He continues to his finger against the edge of the watch, much slower now.**
+**A quiet breath.**
+MiddleAged: It's not the drugs.
+MiddleAged: Not the city.
+MiddleAged: Not even her.
+MiddleAged: It's jus... me.
+**He seems almost out of breath**
+**pauses for a bit, starts speaking slower**
+MiddleAged: If it's me, how the fuck can i outrun it.
+MiddleAged: I realized that, looking at her cold body, surrounded by people that i dont even know anymore...
+MiddleAged: I am never getting the relationship my young self would have given anything for. I don't know... i guess... some stupid part of me was still holding on to that chance.
+MiddleAged: That part doesn't have anywhere to go now.
+
+- Humans don't need meaning. They just need something to distract them long enough.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> choose_ending
+
+- No one's coming to fix this for you. Maybe you need to stop running and not let it make you who you are
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+- It's hard to realize you're the piece that doesn't quite fit anymore, but that doesn't mean you're a lost cause.
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+- Can't you see that depending on someone else to complete you is not a real thing.
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+# ===== CHOOSE ENDING =====
+~ choose_ending
+
+if DialogueFlow.n_positive_choices >= 3
+	=> ending_positive
+else
+	=> ending_negative
+
+# ===== ENDING POSITIVE =====
+~ ending_positive
+
+**The man doesn't laugh this time.**
+**He leans back into the seat. The fog outside swallows the headlights for a moment.**
+MiddleAged: Yeah…
+**A long silence.**
+MiddleAged: I think I spent my whole life believing that if I slowed down, everything I was running from would catch up and kill me.
+**He looks at the watch. Doesn't adjust it. Just looks.**
+MiddleAged: Turns out it already did.
+**A breath. Steadier now.**
+MiddleAged: And I'm still here.
+**Another pause.**
+MiddleAged: I'm afraid if I let myself be happy, I'll forget why I was sad.
+MiddleAged: I don't even know what "taking care of myself" is supposed to look like.
+MiddleAged: Maybe it's jus...not letting my brain punish myself forever for something I never got.
+**he takes his out of his watch and grabs his phone**
+MiddleAged: Maybe i'll call my girl...
+MiddleAged: Tell her to come spend some days here with me, i heard there's some beautiful views this time of here that i never got to see...
+=> END
+
+# ===== ENDING NEGATIVE =====
+~ ending_negative
+
+**He lets out a short, thin laugh.**
+MiddleAged: Yeah.
+MiddleAged: Exactly.
+MiddleAged: You can't keep doing shitty things and then feel bad about yourself like that makes it okay.
+**A scoff.**
+MiddleAged: What, I sit with it?
+MiddleAged: Let it hurt?
+**His jaw tightens.**
+MiddleAged: That's how you erase her.
+MiddleAged: Or turn into her.
+MiddleAged: Or prove she was right about me all along.
+MiddleAged: That's on me.
+**He adjusts the watch. Tightens it.**
+MiddleAged: Why even try.
+MiddleAged: I guess this is the best way i know how take care of myself.
+**He opens the dor while the car is still driving**
+MiddleAged: Maybe just need to get out of this fucking place
+=> END
