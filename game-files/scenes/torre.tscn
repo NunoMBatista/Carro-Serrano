@@ -1,11 +1,11 @@
-[gd_scene load_steps=36 format=3 uid="uid://c0pdyu0v2ae3b"]
+[gd_scene load_steps=39 format=3 uid="uid://c0pdyu0v2ae3b"]
 
 [ext_resource type="CompositorEffect" uid="uid://cil7asi5ishrm" path="res://NewCloudsGD.tres" id="1_th5b8"]
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_xf7u0"]
 [ext_resource type="Resource" uid="uid://dstyegoambfu1" path="res://torre_data/data.hterrain" id="2_yp8l3"]
 [ext_resource type="Script" uid="uid://dxqdn5ho6vkac" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_vc61h"]
 [ext_resource type="Texture2D" uid="uid://d02y0r658ygci" path="res://slot0_albedo_bump.png" id="4_ei2t2"]
-[ext_resource type="Texture2D" uid="uid://ctd71rwtgcc68" path="res://slot1_albedo_bump.png" id="5_ge27s"]
+[ext_resource type="Texture2D" uid="uid://42clyokl46g5" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Color.jpg" id="6_0ma4t"]
 [ext_resource type="Texture2D" uid="uid://cjldu14358x1c" path="res://slot2_albedo_bump.png" id="6_q363w"]
 [ext_resource type="Texture2D" uid="uid://c0dvf3kijk5iu" path="res://slot3_albedo_bump.png" id="7_8ee8r"]
 [ext_resource type="Texture2D" uid="uid://cpswgs5bhdugh" path="res://slot0_normal_roughness.png" id="8_2j81h"]
@@ -16,7 +16,9 @@
 [ext_resource type="Script" uid="uid://bfmdcbmgrleml" path="res://addons/road-generator/nodes/road_container.gd" id="13_ge27s"]
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="14_q363w"]
 [ext_resource type="PackedScene" uid="uid://tg1nfd4eajp6" path="res://assets/roundabout.glb" id="15_ge27s"]
+[ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="15_mg1dj"]
 [ext_resource type="PackedScene" uid="uid://c71vwi82qu3k5" path="res://scenes/house_1.tscn" id="16_8ee8r"]
+[ext_resource type="Material" uid="uid://bplwcmn50e6km" path="res://assets/raw_textures/Rock028_1K-JPG/parking_lot.tres" id="17_0ma4t"]
 [ext_resource type="PackedScene" uid="uid://dw7wi85d1qrva" path="res://scenes/house_2.tscn" id="17_2j81h"]
 [ext_resource type="PackedScene" uid="uid://dhomypn0xefw7" path="res://scenes/house_3.tscn" id="18_2j81h"]
 [ext_resource type="PackedScene" uid="uid://deq3i7d44rt0b" path="res://scenes/parking_slot.tscn" id="19_bwf7j"]
@@ -26,6 +28,9 @@
 [ext_resource type="PackedScene" uid="uid://cwwb56f2l1fn6" path="res://shed.tscn" id="24_fvriv"]
 [ext_resource type="PackedScene" uid="uid://b2v7njerlot0t" path="res://assets/ski_gongola_and_lift_station_detailed_drafts.glb" id="25_6ekmd"]
 [ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="26_jwbu7"]
+[ext_resource type="PackedScene" uid="uid://w53pa5aphifw" path="res://assets/house_1.glb" id="27_imeql"]
+[ext_resource type="PackedScene" uid="uid://dyu43knp3o5c7" path="res://house_2.tscn" id="28_p10q8"]
+[ext_resource type="PackedScene" uid="uid://bman7pxxghc5i" path="res://balls.tscn" id="30_0ma4t"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_dy7xw"]
 rayleigh_color = Color(0.62352943, 0.39607844, 0.7019608, 1)
@@ -50,21 +55,12 @@ compositor_effects = Array[CompositorEffect]([ExtResource("1_th5b8")])
 [sub_resource type="Resource" id="Resource_6ekmd"]
 script = ExtResource("3_vc61h")
 mode = 0
-textures = [[ExtResource("4_ei2t2"), ExtResource("5_ge27s"), ExtResource("6_q363w"), ExtResource("7_8ee8r")], [ExtResource("8_2j81h"), ExtResource("9_bwf7j"), ExtResource("10_dy7xw"), ExtResource("11_kw4hc")]]
+textures = [[ExtResource("4_ei2t2"), ExtResource("6_0ma4t"), ExtResource("6_q363w"), ExtResource("7_8ee8r")], [ExtResource("8_2j81h"), ExtResource("9_bwf7j"), ExtResource("10_dy7xw"), ExtResource("11_kw4hc")]]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2j81h"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwf7j"]
 albedo_color = Color(0.15294118, 1, 1, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_dy7xw"]
-radius = 15.0
-height = 15.0
-rings = 18
-is_hemisphere = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kw4hc"]
-albedo_color = Color(0.48376602, 0.48376566, 1.92523e-07, 1)
 
 [node name="Node3D" type="Node3D"]
 
@@ -103,6 +99,7 @@ metadata/_custom_type_script = "uid://dfqfqlcyc24yo"
 
 [node name="Road_001" type="Node3D" parent="HTerrain/RoadManager"]
 script = ExtResource("13_ge27s")
+material_resource = ExtResource("15_mg1dj")
 use_lowpoly_preview = true
 edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
 edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
@@ -207,9 +204,14 @@ prior_mag = 62.145157
 next_mag = 62.145157
 next_pt_init = NodePath("../RP_010")
 
-[node name="Road_002" type="Node3D" parent="HTerrain/RoadManager"]
+[node name="RoadManager2" type="Node3D" parent="HTerrain"]
+script = ExtResource("12_ei2t2")
+metadata/_custom_type_script = "uid://dfqfqlcyc24yo"
+
+[node name="Road_002" type="Node3D" parent="HTerrain/RoadManager2"]
 transform = Transform3D(0.9787459, 0, -0.20507684, 0, 1, 0, 0.20507684, 0, 0.9787459, 132.10526, 0, -104.12161)
 script = ExtResource("13_ge27s")
+material_resource = ExtResource("17_0ma4t")
 use_lowpoly_preview = true
 edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
 edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
@@ -218,57 +220,49 @@ edge_rp_locals = Array[NodePath]([NodePath("RP_001"), NodePath("RP_002")])
 edge_rp_local_dirs = Array[int]([0, 1])
 metadata/_custom_type_script = "uid://bfmdcbmgrleml"
 
-[node name="RP_001" type="Node3D" parent="HTerrain/RoadManager/Road_002"]
-transform = Transform3D(-0.9820734, 0.00045836825, -0.1884982, 0, 0.999997, 0.0024316777, 0.18849877, 0.002388086, -0.9820705, 441.9198, 215.31, 367.9926)
+[node name="RP_001" type="Node3D" parent="HTerrain/RoadManager2/Road_002"]
+transform = Transform3D(0.24166071, -0.0022165873, 0.97035825, 0, 0.9999974, 0.0022842921, -0.9703608, -0.00055202364, 0.24166007, 522.3128, 215.31, 717.9287)
 script = ExtResource("14_q363w")
-traffic_dir = Array[int]([2, 2, 2, 2, 2, 1, 1, 1, 1, 1])
-lanes = Array[int]([2, 3, 3, 3, 4, 4, 3, 3, 3, 2])
-next_mag = 51.404842
+traffic_dir = Array[int]([2, 2, 2, 2, 1, 1, 1, 1])
+lanes = Array[int]([2, 3, 3, 4, 4, 3, 3, 2])
+next_mag = 54.72155
 prior_pt_init = NodePath("../RP_002")
 
-[node name="RP_002" type="Node3D" parent="HTerrain/RoadManager/Road_002"]
-transform = Transform3D(-0.9820735, 0.0009401549, -0.18849663, 0, 0.99998754, 0.004987585, 0.18849903, 0.0048981747, -0.9820611, 461.29926, 215.31, 468.95895)
+[node name="RP_002" type="Node3D" parent="HTerrain/RoadManager2/Road_002"]
+transform = Transform3D(0.24166003, -0.004539184, 0.9703505, 0, 0.999989, 0.0046778307, -0.970361, -0.0011304445, 0.24165736, 426.51654, 215.31, 692.36597)
 script = ExtResource("14_q363w")
-traffic_dir = Array[int]([2, 2, 2, 2, 2, 1, 1, 1, 1, 1])
-lanes = Array[int]([2, 3, 3, 3, 4, 4, 3, 3, 3, 2])
-prior_mag = 51.404842
-next_mag = 51.404842
+traffic_dir = Array[int]([2, 2, 2, 2, 1, 1, 1, 1])
+lanes = Array[int]([2, 3, 3, 4, 4, 3, 3, 2])
+prior_mag = 54.72155
+next_mag = 54.72155
 next_pt_init = NodePath("../RP_001")
 
 [node name="big_house" parent="." instance=ExtResource("15_ge27s")]
 transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 549.39465, 208.60593, 565.0161)
 
-[node name="Sketchfab_Scene" parent="big_house" instance=ExtResource("16_8ee8r")]
-transform = Transform3D(-0.070461795, 0, -1.9987583, 0, 2, 0, 1.9987583, 0, -0.070461795, -45.715317, 6.529602, 12.054459)
-
 [node name="Sketchfab_Scene2" parent="big_house" instance=ExtResource("16_8ee8r")]
-transform = Transform3D(-0.9542874, -0.009955859, -1.7576236, -0.052272424, 1.9992442, 0.01705639, 1.7568741, 0.05407595, -0.9541867, -44.716064, 6.9210052, 0.020950317)
+transform = Transform3D(-0.38171494, 0.006768739, -1.9632248, -0.052272424, 1.9992442, 0.017056394, 1.9625401, 0.054566573, -0.38139367, -60.73825, 6.9210052, 0.020950317)
 
 [node name="house_2" parent="." instance=ExtResource("17_2j81h")]
-transform = Transform3D(-0.49962875, 0, -0.01926376, 0, 0.5, 0, 0.01926376, 0, -0.49962875, 689.56714, 215.0849, 548.6847)
+transform = Transform3D(-0.49962875, 0, -0.01926376, 0, 0.5, 0, 0.01926376, 0, -0.49962875, 344.48746, 215.0849, 761.043)
 
 [node name="house_3" parent="." instance=ExtResource("18_2j81h")]
-transform = Transform3D(2.0445726, 0, 3.437982, 0, 3.133907, 0, -3.437982, 0, 2.0445726, 439.834, 215.66718, 482.56168)
+transform = Transform3D(3.9905457, 0, 0.2748466, 0, 1.8777753, 0, -0.2748466, 0, 3.9905457, 305.31104, 215.66718, 573.3838)
 
 [node name="GNR" type="Node3D" parent="."]
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="GNR"]
-transform = Transform3D(30, 0, 0, 0, 12.336, 0, 0, 0, 30, 532, 226.839, 720)
+transform = Transform3D(30, 0, 0, 0, 12.336, 0, 0, 0, 30, 377.78482, 226.839, 704.6393)
 sides = 25
 material = SubResource("StandardMaterial3D_2j81h")
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="GNR"]
-transform = Transform3D(30, 0, 0, 0, 12.121764, 0, 0, 0, 30, 532, 251.593, 720)
+transform = Transform3D(30, 0, 0, 0, 12.121764, 0, 0, 0, 30, 377.78482, 251.593, 704.6393)
 sides = 25
 material = SubResource("StandardMaterial3D_bwf7j")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="GNR"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 532, 263.676, 720)
-mesh = SubResource("SphereMesh_dy7xw")
-material = SubResource("StandardMaterial3D_kw4hc")
-
 [node name="Label3D" type="Label3D" parent="GNR"]
-transform = Transform3D(-2.3081794, 0, -0.08641288, 0, 2.3000374, 0, 0.18133362, 0, -1.0999418, 530.95276, 252.83325, 704.8584)
+transform = Transform3D(-2.3081794, 0, -0.08641288, 0, 2.3000374, 0, 0.18133362, 0, -1.0999418, 376.73758, 227.31787, 689.4977)
 modulate = Color(0, 0, 0, 1)
 outline_modulate = Color(1, 1, 1, 1)
 text = "GNR"
@@ -279,22 +273,17 @@ outline_size = 20
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 575.15796, 153.4526, 192.60202)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="GNR2"]
-transform = Transform3D(30, 0, 0, 0, 8.786309, 0, 0, 0, 30, 17.891846, 70.087875, 529.96265)
+transform = Transform3D(30, 0, 0, 0, 16.196884, 0, 0, 0, 30, -118.607086, 70.087875, 599.4663)
 sides = 25
 material = SubResource("StandardMaterial3D_2j81h")
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="GNR2"]
-transform = Transform3D(30, 0, 0, 0, 8.764603, 0, 0, 0, 30, 17.891846, 87.64818, 529.96265)
+transform = Transform3D(30, 0, 0, 0, 17.417034, 0, 0, 0, 30, -118.607086, 103.34146, 599.4663)
 sides = 25
 material = SubResource("StandardMaterial3D_bwf7j")
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="GNR2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17.891846, 96.461914, 529.96265)
-mesh = SubResource("SphereMesh_dy7xw")
-material = SubResource("StandardMaterial3D_kw4hc")
-
 [node name="Label3D" type="Label3D" parent="GNR2"]
-transform = Transform3D(-2.3081794, 0, -0.08641288, 0, 2.3000374, 0, 0.18133362, 0, -1.0999418, 16.844604, 90.58458, 514.82104)
+transform = Transform3D(-2.3081794, 0, -0.08641288, 0, 2.3000374, 0, 0.18133362, 0, -1.0999418, -119.65433, 72.69551, 583.3323)
 modulate = Color(0, 0, 0, 1)
 outline_modulate = Color(1, 1, 1, 1)
 text = "GNR"
@@ -305,55 +294,55 @@ outline_size = 20
 transform = Transform3D(0.9777796, 0, -0.20963562, 0, 1, 0, 0.20963562, 0, 0.9777796, 130.20062, 0, -91.56253)
 
 [node name="Sketchfab_Scene" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 463.51227, 215.59589, 414.59277)
+transform = Transform3D(0.028703958, 0, -0.008722577, 0, 0.03, 0, 0.008722577, 0, 0.028703958, 490.48993, 215.59589, 686.03925)
 
 [node name="Sketchfab_Scene2" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 461.73422, 215.49567, 405.2103)
+transform = Transform3D(0.028703958, 0, -0.008722577, 0, 0.03, 0, 0.008722577, 0, 0.028703958, 481.35742, 215.49567, 683.24805)
 
 [node name="Sketchfab_Scene3" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 460.2576, 215.59589, 395.5837)
+transform = Transform3D(0.028703958, 0, -0.008722577, 0, 0.03, 0, 0.008722577, 0, 0.028703958, 472.14935, 215.59589, 680.0766)
 
 [node name="Sketchfab_Scene4" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 458.4796, 215.49567, 386.2012)
+transform = Transform3D(0.028703958, 0, -0.008722577, 0, 0.03, 0, 0.008722577, 0, 0.028703958, 463.0169, 215.49567, 677.2852)
 
 [node name="Sketchfab_Scene5" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 470.8469, 215.59589, 451.2776)
+transform = Transform3D(0.028703958, 0, -0.008722577, 0, 0.03, 0, 0.008722577, 0, 0.028703958, 526.37506, 215.59589, 696.6142)
 
 [node name="Sketchfab_Scene6" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 469.0689, 215.49567, 441.8951)
+transform = Transform3D(0.028703958, 0, -0.008722577, 0, 0.03, 0, 0.008722577, 0, 0.028703958, 517.24274, 215.49567, 693.82306)
 
 [node name="Sketchfab_Scene7" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 467.5922, 215.59589, 432.26852)
+transform = Transform3D(0.028703958, 0, -0.008722577, 0, 0.03, 0, 0.008722577, 0, 0.028703958, 508.03436, 215.59589, 690.6514)
 
 [node name="Sketchfab_Scene8" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(0.005633268, 0, -0.029466366, 0, 0.03, 0, 0.029466366, 0, 0.005633268, 465.8142, 215.49567, 422.886)
+transform = Transform3D(0.028703958, 0, -0.008722577, 0, 0.03, 0, 0.008722577, 0, 0.028703958, 498.90198, 215.49567, 687.8601)
 
 [node name="Sketchfab_Scene9" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 442.8926, 215.59589, 395.33008)
+transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 463.84583, 215.59589, 695.3298)
 
 [node name="Sketchfab_Scene10" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 444.75406, 215.49567, 404.69635)
+transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 473.00256, 215.49567, 698.03955)
 
 [node name="Sketchfab_Scene11" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 446.31638, 215.59589, 414.3094)
+transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 482.2387, 215.59589, 701.1291)
 
 [node name="Sketchfab_Scene12" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 448.17783, 215.49567, 423.67575)
+transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 491.39563, 215.49567, 703.839)
 
 [node name="Sketchfab_Scene13" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 435.23172, 215.59589, 358.712)
+transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 427.86798, 215.59589, 685.07477)
 
 [node name="Sketchfab_Scene14" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 437.0932, 215.49567, 368.07828)
+transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 437.0249, 215.49567, 687.7846)
 
 [node name="Sketchfab_Scene15" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 438.6555, 215.59589, 377.69138)
+transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 446.2611, 215.59589, 690.874)
 
 [node name="Sketchfab_Scene16" parent="Parking" instance=ExtResource("19_bwf7j")]
-transform = Transform3D(-0.005895328, 0, 0.029415052, 0, 0.029999997, 0, -0.029415052, 0, -0.005895328, 440.51697, 215.49567, 387.05768)
+transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 455.41803, 215.49567, 693.584)
 
 [node name="castelo" parent="." instance=ExtResource("20_dy7xw")]
-transform = Transform3D(0.005098224, 0, -0.008602797, 0, 0.006301972, 0, 0.008602797, 0, 0.005098224, 445.9457, 220.15643, 689.9212)
+transform = Transform3D(-0.00010576425, 0, -0.00999944, 0, 0.006301971, 0, 0.00999944, 0, -0.00010576425, 406.62616, 220.15643, 554.22125)
 
 [node name="SunshineCloudsDriverGD" type="Node" parent="." node_paths=PackedStringArray("tracked_directional_lights")]
 script = ExtResource("22_sqaxk")
@@ -373,13 +362,34 @@ modulate = Color(0.24705882, 0.39215687, 0.3137255, 1)
 text = "1900m"
 
 [node name="shed_1" parent="." instance=ExtResource("24_fvriv")]
-transform = Transform3D(-2.4468687, 0, -1.7357516, 0, 3, 0, 1.7357516, 0, -2.4468687, 585.28156, 216.06532, 314.24298)
+transform = Transform3D(-2.9726539, 0, -0.40413773, 0, 3, 0, 0.40413773, 0, -2.9726539, 457.67603, 216.06532, 337.01154)
 
 [node name="shed_2" parent="." instance=ExtResource("24_fvriv")]
-transform = Transform3D(1.1551051, 0, 10.268943, 0, 3, 0, -4.7155356, 0, 2.515453, 384.2396, 216.06532, 430.97028)
+transform = Transform3D(0.1530906, 0, 10.567286, 0, 3, 0, -4.852536, 0, 0.33338273, 370.12906, 216.06532, 358.38232)
 
 [node name="ski" parent="." instance=ExtResource("25_6ekmd")]
 transform = Transform3D(-1.0871427, 0, 0.88211155, 0, 1.4, 0, -0.88211155, 0, -1.0871427, 284.23376, 215.46513, 337.49155)
 
 [node name="pelourinho" parent="." instance=ExtResource("26_jwbu7")]
 transform = Transform3D(-1.1648507, 0, -6.9023995, 0, 5.2142677, 0, 6.9023995, 0, -1.1648507, 552.35956, 225.27496, 561.58026)
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("27_imeql")]
+transform = Transform3D(0.34876233, 0, -3.9847674, 0, 2.0190501, 0, 3.9847674, 0, 0.34876233, 362.77942, 216.75076, 619.9924)
+
+[node name="Sketchfab_Scene2" parent="." instance=ExtResource("27_imeql")]
+transform = Transform3D(-0.090749145, 0, -3.9989712, 0, 2.0190501, 0, 3.9989712, 0, -0.090749145, 362.75732, 216.62645, 502.7119)
+
+[node name="Sketchfab_Scene3" parent="." instance=ExtResource("28_p10q8")]
+transform = Transform3D(-0.0137616955, 0, -0.4968141, 0, 0.3714953, 0, 0.43166566, 0, -0.015838657, 365.93353, 214.70015, 413.56866)
+
+[node name="shed_4" parent="." instance=ExtResource("24_fvriv")]
+transform = Transform3D(0.07942061, 0, 2.998948, 0, 3, 0, -2.998948, 0, 0.07942061, 300.1438, 216.06532, 457.92984)
+
+[node name="house_4" parent="." instance=ExtResource("17_2j81h")]
+transform = Transform3D(-0.49214274, 0, -0.026749782, 0, 0.5, 0, 0.018975127, 0, -0.69378775, 688.3332, 215.0849, 582.3478)
+
+[node name="balls" parent="." instance=ExtResource("30_0ma4t")]
+transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 377.53168, 272.00293, 705.0375)
+
+[node name="balls2" parent="." instance=ExtResource("30_0ma4t")]
+transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 457.31665, 270.9851, 792.0458)

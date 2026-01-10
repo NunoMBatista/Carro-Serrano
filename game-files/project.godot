@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Carro Serrano"
-run/main_scene="uid://c4a6bxjt84we0"
+run/main_scene="uid://f262srybfbm8"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
