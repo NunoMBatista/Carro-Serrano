@@ -15,10 +15,17 @@ extends Node3D
 @export var transition_distance := 10.0
 @export var loop_to_first_terrain := true  # When true, loops back to first terrain after last one
 
+# Torre teleport settings
+@export_node_path("Node3D") var torre_road_container_path = NodePath("")
+@export_node_path("Node3D") var torre_start_road_point_path = NodePath("")
+@export_node_path("Node3D") var torre_stop_road_point_path = NodePath("")  # Stop when reaching this point
+
 var cur_speed := 0.0
 var _force_start_rp: Node3D = null
+var _stop_at_road_point: Node3D = null  # If set, car will stop when reaching this point
+var _should_stop := false  # Flag to indicate car should stop
 
-const MAX_SPEED := 30
+const MAX_SPEED := 100
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0
@@ -76,7 +83,12 @@ func _process(delta: float) -> void:
 	if _route.is_empty():
 		return
 
-	_update_speed(delta)
+	# Handle input for torre teleport
+	if Input.is_action_just_pressed("teleport_to_torre"):  # F key
+		teleport_to_torre()
+
+	if not _should_stop:
+		_update_speed(delta)
 	_advance_along_route(delta)
 	_apply_transform(delta)
 
@@ -221,11 +233,37 @@ func _advance_along_route(delta: float) -> void:
 	if _route.is_empty():
 		return
 
+	# Bounds check for current segment index
+	if _current_seg_idx < 0 or _current_seg_idx >= _route.size():
+		_current_seg_idx = 0
+		return
+
+	# Check if we've reached the stop point
+	if _stop_at_road_point != null and not _should_stop:
+		var info: Dictionary = _route[_current_seg_idx]
+		var seg = info["seg"]
+		var from_start: bool = info["from_start"]
+		var current_end_point = seg.end_point if from_start else seg.start_point
+
+		# Check if we're approaching the stop point
+		if current_end_point == _stop_at_road_point:
+			var seg_len = max(seg.curve.get_baked_length(), 0.001)
+			# If we're near the end of this segment, start stopping
+			if _distance_on_seg >= seg_len * 0.9:
+				_should_stop = true
+				cur_speed = 0.0
+				print("DEBUG: Reached stop point, stopping car")
+
 	var travel_sign := -1.0 if invert_travel else 1.0
 	var signed_move := cur_speed * delta * travel_sign
 	var remaining := signed_move
 
 	while remaining != 0.0:
+		# Safety check inside loop
+		if _current_seg_idx < 0 or _current_seg_idx >= _route.size():
+			_current_seg_idx = 0
+			break
+
 		var info: Dictionary = _route[_current_seg_idx]
 		var seg = info["seg"]
 		var seg_len = max(seg.curve.get_baked_length(), 0.001)
@@ -281,6 +319,14 @@ func _advance_along_route(delta: float) -> void:
 			continue
 
 func _apply_transform(delta: float) -> void:
+	if _route.is_empty():
+		return
+
+	# Bounds check
+	if _current_seg_idx < 0 or _current_seg_idx >= _route.size():
+		_current_seg_idx = 0
+		return
+
 	var info: Dictionary = _route[_current_seg_idx]
 	var seg = info["seg"]
 	var seg_len = max(seg.curve.get_baked_length(), 0.001)
@@ -527,3 +573,58 @@ func _update_speed(delta: float) -> void:
 		cur_speed -= brake_power * delta
 		if cur_speed <= FULLSTOP_SPEED:
 			cur_speed = MIN_SPEED
+
+## Teleport the car to torre.tscn road and follow until stop point
+func teleport_to_torre() -> void:
+	if torre_road_container_path == NodePath("") or torre_start_road_point_path == NodePath(""):
+		push_warning("Torre road container or start point not configured")
+		return
+
+	var torre_container = get_node_or_null(torre_road_container_path)
+	var torre_start_rp = get_node_or_null(torre_start_road_point_path)
+
+	if torre_container == null:
+		push_warning("Torre road container not found at path: ", torre_road_container_path)
+		return
+
+	if torre_start_rp == null:
+		push_warning("Torre start road point not found at path: ", torre_start_road_point_path)
+		return
+
+	# Verify container has required methods
+	if not torre_container.has_method("is_road_container"):
+		push_warning("Torre container does not have required road container methods")
+		return
+
+	# Set stop point if configured
+	_stop_at_road_point = null
+	_should_stop = false
+	if torre_stop_road_point_path != NodePath(""):
+		_stop_at_road_point = get_node_or_null(torre_stop_road_point_path)
+		if _stop_at_road_point == null:
+			push_warning("Torre stop road point not found at path: ", torre_stop_road_point_path)
+
+	# Switch to torre road
+	_container = torre_container
+	_force_start_rp = torre_start_rp
+
+	# Build route with error handling
+	_route = _build_route(_container)
+
+	if _route.is_empty():
+		push_warning("Failed to build route for torre road - check that road points are connected")
+		# Restore previous state to avoid breaking the car
+		_container = _first_container if _first_container else _find_container()
+		if _container:
+			_force_start_rp = null
+			_route = _build_route(_container)
+			_current_seg_idx = 0
+			_distance_on_seg = 0.0
+		return
+
+	_current_seg_idx = 0
+	_distance_on_seg = 0.0
+	cur_speed = 0.0  # Start from stopped
+	_apply_transform(0.0)
+
+	print("DEBUG: Teleported to torre road, will stop at: ", _stop_at_road_point.name if _stop_at_road_point else "end of route")
