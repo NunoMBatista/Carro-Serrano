@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://c0pdyu0v2ae3b"]
+[gd_scene load_steps=48 format=3 uid="uid://c0pdyu0v2ae3b"]
 
 [ext_resource type="CompositorEffect" uid="uid://cil7asi5ishrm" path="res://NewCloudsGD.tres" id="1_th5b8"]
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_xf7u0"]
@@ -22,15 +22,16 @@
 [ext_resource type="PackedScene" uid="uid://dw7wi85d1qrva" path="res://scenes/house_2.tscn" id="17_2j81h"]
 [ext_resource type="PackedScene" uid="uid://dhomypn0xefw7" path="res://scenes/house_3.tscn" id="18_2j81h"]
 [ext_resource type="PackedScene" uid="uid://deq3i7d44rt0b" path="res://scenes/parking_slot.tscn" id="19_bwf7j"]
-[ext_resource type="PackedScene" path="res://castelo.tscn" id="20_dy7xw"]
+[ext_resource type="PackedScene" uid="uid://cqxwr5nb0gl44" path="res://castelo.tscn" id="20_dy7xw"]
 [ext_resource type="Script" uid="uid://djusduuxf0voj" path="res://addons/SunshineClouds2/SunshineCloudsDriver.gd" id="22_sqaxk"]
 [ext_resource type="PackedScene" uid="uid://c026r7n2c1ebg" path="res://sign.tscn" id="23_sqaxk"]
 [ext_resource type="PackedScene" uid="uid://cwwb56f2l1fn6" path="res://shed.tscn" id="24_fvriv"]
 [ext_resource type="PackedScene" uid="uid://b2v7njerlot0t" path="res://assets/ski_gongola_and_lift_station_detailed_drafts.glb" id="25_6ekmd"]
-[ext_resource type="PackedScene" path="res://pelourinho.tscn" id="26_jwbu7"]
+[ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="26_jwbu7"]
 [ext_resource type="PackedScene" uid="uid://w53pa5aphifw" path="res://assets/house_1.glb" id="27_imeql"]
 [ext_resource type="PackedScene" uid="uid://dyu43knp3o5c7" path="res://house_2.tscn" id="28_p10q8"]
 [ext_resource type="PackedScene" uid="uid://bman7pxxghc5i" path="res://balls.tscn" id="30_0ma4t"]
+[ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Roughness.jpg" id="32_smhdv"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_dy7xw"]
 rayleigh_color = Color(0.62352943, 0.39607844, 0.7019608, 1)
@@ -61,6 +62,30 @@ textures = [[ExtResource("4_ei2t2"), ExtResource("6_0ma4t"), ExtResource("6_q363
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bwf7j"]
 albedo_color = Color(0.15294118, 1, 1, 1)
+
+[sub_resource type="FogMaterial" id="FogMaterial_0ma4t"]
+density = 4.8335
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lb1r7"]
+albedo_texture = ExtResource("32_smhdv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yiq4s"]
+albedo_texture = ExtResource("32_smhdv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai0x2"]
+albedo_texture = ExtResource("32_smhdv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yuoiy"]
+albedo_texture = ExtResource("32_smhdv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wbbvk"]
+albedo_texture = ExtResource("32_smhdv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k6l0d"]
+albedo_texture = ExtResource("32_smhdv")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0ugl"]
+albedo_texture = ExtResource("32_smhdv")
 
 [node name="Node3D" type="Node3D"]
 
@@ -196,7 +221,7 @@ prior_pt_init = NodePath("../RP_011")
 next_pt_init = NodePath("../RP_009")
 
 [node name="RP_011" type="Node3D" parent="HTerrain/RoadManager/Road_001"]
-transform = Transform3D(0.5427406, -0.0027917302, 0.83989596, 0, 0.999994, 0.0033238842, -0.8399008, -0.0018040052, 0.5427375, 582.8196, 215.31, 455.754)
+transform = Transform3D(0.63761777, -0.0025605634, 0.7703491, -1.1844317e-10, 0.9999939, 0.0033238835, -0.77035373, -0.0021193651, 0.637614, 556.0918, 215.07796, 465.66708)
 script = ExtResource("14_q363w")
 traffic_dir = Array[int]([2, 2, 1, 1])
 lanes = Array[int]([2, 4, 4, 2])
@@ -278,7 +303,7 @@ sides = 25
 material = SubResource("StandardMaterial3D_2j81h")
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="GNR2"]
-transform = Transform3D(30, 0, 0, 0, 17.417034, 0, 0, 0, 30, -118.607086, 110.62717, 599.4663)
+transform = Transform3D(30, 0, 0, 0, 9.824952, 0, 0, 0, 30, -118.607086, 101.79056, 599.4663)
 height = 3.1669922
 sides = 25
 material = SubResource("StandardMaterial3D_bwf7j")
@@ -387,10 +412,58 @@ transform = Transform3D(-0.49214274, 0, -0.026749782, 0, 0.5, 0, 0.018975127, 0,
 transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 377.53168, 272.00293, 705.0375)
 
 [node name="balls2" parent="." instance=ExtResource("30_0ma4t")]
-transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 457.31665, 296.0933, 792.0458)
+transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 456.92252, 279.05695, 791.41174)
 
 [node name="castelo" parent="." instance=ExtResource("20_dy7xw")]
-transform = Transform3D(-0.05, 0, 0, 0, -0.05, 0, 0, 0, -0.05, -256.2226, 358.0626, 691.7465)
+transform = Transform3D(-0.0011756078, 0, -0.007858472, 0, 0.0071702823, 0, 0.009410225, 0, -0.0009817493, 401.90073, 230.92995, 554.65424)
 
-[node name="Sketchfab_Scene4" parent="." instance=ExtResource("26_jwbu7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 475.84622, 406.3183, 226.1033)
+[node name="tunelFim" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 9.80181, 0, 0, 0, 1, 48.687088, 350.64056, 98.306404)
+
+[node name="FogVolume" type="FogVolume" parent="tunelFim"]
+transform = Transform3D(3.8877194, 0, -9.911334, 0, 0.8218242, 0, -6.8530893, 0, -5.6226435, -38.906414, -30.401207, -82.27463)
+size = Vector3(1.9852295, 2, 2)
+material = SubResource("FogMaterial_0ma4t")
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="tunelFim"]
+transform = Transform3D(0.6268622, 0, 0.77913016, 0, 0.25683552, 0, -0.77913016, 0, 0.6268622, -33.162075, -30.77163, -70.677795)
+height = 1.9077148
+material = SubResource("StandardMaterial3D_lb1r7")
+
+[node name="CSGCylinder3D2" type="CSGCylinder3D" parent="tunelFim"]
+transform = Transform3D(0.6268622, 0, 0.77913016, 0, 0.24964307, 0, -0.77913016, 0, 0.6268622, -24.803045, -30.768322, -80.82085)
+height = 1.9077148
+material = SubResource("StandardMaterial3D_yiq4s")
+
+[node name="CSGCylinder3D3" type="CSGCylinder3D" parent="tunelFim"]
+transform = Transform3D(-0.00017483906, -2.0846112, 0.7883558, 0.11097401, -0.008357854, -1.6451521e-10, 0.00021730844, 2.5909736, 0.63428485, -30.737818, -30.493069, -73.49929)
+height = 1.9077148
+material = SubResource("StandardMaterial3D_ai0x2")
+
+[node name="CSGCylinder3D4" type="CSGCylinder3D" parent="tunelFim"]
+transform = Transform3D(0.0055595553, -0.2137377, 0.67188084, 0.11571002, 0.026134014, -3.2717803e-10, -0.006910001, 0.26565564, 0.540573, -24.86033, -30.497202, -80.6952)
+height = 1.9077148
+material = SubResource("StandardMaterial3D_yuoiy")
+
+[node name="CSGCylinder3D5" type="CSGCylinder3D" parent="tunelFim"]
+transform = Transform3D(-0.0032848036, -0.21414596, 0.6718808, 0.115931064, -0.01544098, -1.6358902e-10, 0.004082698, 0.26616308, 0.54057294, -32.971764, -30.516842, -70.79398)
+height = 1.9077148
+material = SubResource("StandardMaterial3D_wbbvk")
+
+[node name="CSGCylinder3D7" type="CSGCylinder3D" parent="tunelFim"]
+transform = Transform3D(0.0054640286, -0.07169643, 0.67188054, 0.10819391, 0.009214332, 2.4069327e-09, -0.0067912666, 0.08911184, 0.5405728, -24.59368, -30.525425, -81.02662)
+height = 1.9077148
+material = SubResource("StandardMaterial3D_k6l0d")
+
+[node name="CSGCylinder3D8" type="CSGCylinder3D" parent="tunelFim"]
+transform = Transform3D(-0.006437646, -0.07160607, 0.67188054, 0.10805755, -0.010856186, 0, 0.008001382, 0.08899953, 0.5405728, -33.241726, -30.536926, -70.45844)
+height = 1.9077148
+material = SubResource("StandardMaterial3D_m0ugl")
+
+[node name="CSGCylinder3D6" type="CSGCylinder3D" parent="tunelFim"]
+transform = Transform3D(-0.00017483906, -2.0846112, 0.7883558, 0.11097401, -0.008357854, -1.6451521e-10, 0.00021730844, 2.5909736, 0.63428485, -27.086283, -30.480831, -78.06668)
+height = 1.9077148
+material = SubResource("StandardMaterial3D_ai0x2")
+
+[node name="pelourinho" parent="." instance=ExtResource("26_jwbu7")]
+transform = Transform3D(0.35949814, 0, 2.9868088, 0, 2.9999995, 0, -3.8208883, 0, 0.28102174, 550.4306, 225.7619, 559.9767)
