@@ -436,27 +436,31 @@ func process(delta: float, viewer_pos: Vector3):
 		terrain.get_internal_transform_unscaled()
 	var local_viewer_pos := terrain_transform_without_map_scale.affine_inverse() * viewer_pos
 
-	var viewer_cx = local_viewer_pos.x / CHUNK_SIZE
-	var viewer_cz = local_viewer_pos.z / CHUNK_SIZE
+	# Compute viewer chunk indices as ints
+	var viewer_cx: int = int(floor(local_viewer_pos.x / CHUNK_SIZE))
+	var viewer_cz: int = int(floor(local_viewer_pos.z / CHUNK_SIZE))
 
-	var cr = int(view_distance) / CHUNK_SIZE + 1
+	var cr := int(view_distance) / CHUNK_SIZE + 1
 
-	var cmin_x = viewer_cx - cr
-	var cmin_z = viewer_cz - cr
-	var cmax_x = viewer_cx + cr
-	var cmax_z = viewer_cz + cr
+	var cmin_x := viewer_cx - cr
+	var cmin_z := viewer_cz - cr
+	var cmax_x := viewer_cx + cr
+	var cmax_z := viewer_cz + cr
 
-	var map_res = terrain.get_data().get_resolution()
-	var map_scale = terrain.map_scale
+	var map_res: int = terrain.get_data().get_resolution()
+	var map_scale: Vector3 = terrain.map_scale
 
-	var terrain_size_x = map_res * map_scale.x
-	var terrain_size_z = map_res * map_scale.z
+	var terrain_size_x: float = float(map_res) * map_scale.x
+	var terrain_size_z: float = float(map_res) * map_scale.z
 
-	var terrain_chunks_x = terrain_size_x / CHUNK_SIZE
-	var terrain_chunks_z = terrain_size_z / CHUNK_SIZE
+	# Number of chunks along X/Z. Use ints and clamp both min and max
+	var terrain_chunks_x: int = int(floor(terrain_size_x / CHUNK_SIZE))
+	var terrain_chunks_z: int = int(floor(terrain_size_z / CHUNK_SIZE))
 
 	cmin_x = clampi(cmin_x, 0, terrain_chunks_x)
 	cmin_z = clampi(cmin_z, 0, terrain_chunks_z)
+	cmax_x = clampi(cmax_x, 0, terrain_chunks_x)
+	cmax_z = clampi(cmax_z, 0, terrain_chunks_z)
 
 	if DEBUG and visible:
 		_debug_cubes.clear()
