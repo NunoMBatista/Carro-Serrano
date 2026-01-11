@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://42clyokl46g5" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Color.jpg" id="6_0ma4t"]
 [ext_resource type="Texture2D" uid="uid://cjldu14358x1c" path="res://slot2_albedo_bump.png" id="6_q363w"]
 [ext_resource type="Texture2D" uid="uid://c0dvf3kijk5iu" path="res://slot3_albedo_bump.png" id="7_8ee8r"]
-[ext_resource type="Texture2D" uid="uid://cpswgs5bhdugh" path="res://slot0_normal_roughness.png" id="8_2j81h"]
+[ext_resource type="Texture2D" uid="uid://b5ippueoo28ys" path="res://slot0_normal_roughness.png" id="8_2j81h"]
 [ext_resource type="Texture2D" uid="uid://bun3jsfvila76" path="res://slot1_normal_roughness.png" id="9_bwf7j"]
 [ext_resource type="Texture2D" uid="uid://d4yvfdl6cvv0" path="res://slot2_normal_roughness.png" id="10_dy7xw"]
 [ext_resource type="Texture2D" uid="uid://cdjf3tow43kga" path="res://slot3_normal_roughness.png" id="11_kw4hc"]
@@ -22,12 +22,12 @@
 [ext_resource type="PackedScene" uid="uid://dw7wi85d1qrva" path="res://scenes/house_2.tscn" id="17_2j81h"]
 [ext_resource type="PackedScene" uid="uid://dhomypn0xefw7" path="res://scenes/house_3.tscn" id="18_2j81h"]
 [ext_resource type="PackedScene" uid="uid://deq3i7d44rt0b" path="res://scenes/parking_slot.tscn" id="19_bwf7j"]
-[ext_resource type="PackedScene" uid="uid://cqxwr5nb0gl44" path="res://castelo.tscn" id="20_dy7xw"]
+[ext_resource type="PackedScene" path="res://castelo.tscn" id="20_dy7xw"]
 [ext_resource type="Script" uid="uid://djusduuxf0voj" path="res://addons/SunshineClouds2/SunshineCloudsDriver.gd" id="22_sqaxk"]
 [ext_resource type="PackedScene" uid="uid://c026r7n2c1ebg" path="res://sign.tscn" id="23_sqaxk"]
 [ext_resource type="PackedScene" uid="uid://cwwb56f2l1fn6" path="res://shed.tscn" id="24_fvriv"]
 [ext_resource type="PackedScene" uid="uid://b2v7njerlot0t" path="res://assets/ski_gongola_and_lift_station_detailed_drafts.glb" id="25_6ekmd"]
-[ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="26_jwbu7"]
+[ext_resource type="PackedScene" path="res://pelourinho.tscn" id="26_jwbu7"]
 [ext_resource type="PackedScene" uid="uid://w53pa5aphifw" path="res://assets/house_1.glb" id="27_imeql"]
 [ext_resource type="PackedScene" uid="uid://dyu43knp3o5c7" path="res://house_2.tscn" id="28_p10q8"]
 [ext_resource type="PackedScene" uid="uid://bman7pxxghc5i" path="res://balls.tscn" id="30_0ma4t"]
@@ -278,7 +278,8 @@ sides = 25
 material = SubResource("StandardMaterial3D_2j81h")
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="GNR2"]
-transform = Transform3D(30, 0, 0, 0, 17.417034, 0, 0, 0, 30, -118.607086, 103.34146, 599.4663)
+transform = Transform3D(30, 0, 0, 0, 17.417034, 0, 0, 0, 30, -118.607086, 110.62717, 599.4663)
+height = 3.1669922
 sides = 25
 material = SubResource("StandardMaterial3D_bwf7j")
 
@@ -341,9 +342,6 @@ transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.0084
 [node name="Sketchfab_Scene16" parent="Parking" instance=ExtResource("19_bwf7j")]
 transform = Transform3D(-0.028780455, 0, 0.008466732, 0, 0.029999997, 0, -0.008466732, 0, -0.028780455, 455.41803, 215.49567, 693.584)
 
-[node name="castelo" parent="." instance=ExtResource("20_dy7xw")]
-transform = Transform3D(-0.00010576425, 0, -0.00999944, 0, 0.006301971, 0, 0.00999944, 0, -0.00010576425, 406.62616, 220.15643, 554.22125)
-
 [node name="SunshineCloudsDriverGD" type="Node" parent="." node_paths=PackedStringArray("tracked_directional_lights")]
 script = ExtResource("22_sqaxk")
 update_continuously = true
@@ -370,9 +368,6 @@ transform = Transform3D(0.1530906, 0, 10.567286, 0, 3, 0, -4.852536, 0, 0.333382
 [node name="ski" parent="." instance=ExtResource("25_6ekmd")]
 transform = Transform3D(-1.0871427, 0, 0.88211155, 0, 1.4, 0, -0.88211155, 0, -1.0871427, 284.23376, 215.46513, 337.49155)
 
-[node name="pelourinho" parent="." instance=ExtResource("26_jwbu7")]
-transform = Transform3D(-1.1648507, 0, -6.9023995, 0, 5.2142677, 0, 6.9023995, 0, -1.1648507, 552.35956, 225.27496, 561.58026)
-
 [node name="Sketchfab_Scene" parent="." instance=ExtResource("27_imeql")]
 transform = Transform3D(0.34876233, 0, -3.9847674, 0, 2.0190501, 0, 3.9847674, 0, 0.34876233, 362.77942, 216.75076, 619.9924)
 
@@ -392,4 +387,10 @@ transform = Transform3D(-0.49214274, 0, -0.026749782, 0, 0.5, 0, 0.018975127, 0,
 transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 377.53168, 272.00293, 705.0375)
 
 [node name="balls2" parent="." instance=ExtResource("30_0ma4t")]
-transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 457.31665, 270.9851, 792.0458)
+transform = Transform3D(18, 0, 0, 0, 18, 0, 0, 0, 18, 457.31665, 296.0933, 792.0458)
+
+[node name="castelo" parent="." instance=ExtResource("20_dy7xw")]
+transform = Transform3D(-0.05, 0, 0, 0, -0.05, 0, 0, 0, -0.05, -256.2226, 358.0626, 691.7465)
+
+[node name="Sketchfab_Scene4" parent="." instance=ExtResource("26_jwbu7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 475.84622, 406.3183, 226.1033)
