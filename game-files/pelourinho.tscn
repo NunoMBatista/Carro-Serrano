@@ -1,5 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bmtrrsd84gcrh"]
-
-[ext_resource type="PackedScene" uid="uid://cnv57vlc2mdq0" path="res://assets/exterior_pile_monument.glb" id="1_ln2w3"]
-
-[node name="Sketchfab_Scene" instance=ExtResource("1_ln2w3")]

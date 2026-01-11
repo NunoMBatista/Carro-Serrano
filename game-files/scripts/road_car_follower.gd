@@ -13,11 +13,12 @@ extends Node3D
 @export var loop_route := true
 @export_node_path("Node3D") var loop_road_point_path = NodePath("")
 @export var transition_distance := 10.0
+@export var loop_to_first_terrain := true  # When true, loops back to first terrain after last one
 
 var cur_speed := 0.0
 var _force_start_rp: Node3D = null
 
-const MAX_SPEED := 20
+const MAX_SPEED := 200
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0
@@ -29,6 +30,8 @@ var _current_seg_idx := 0
 var _distance_on_seg := 0.0
 var _container: Node
 var _smoothed_basis: Basis
+var _first_container: Node = null  # Store the first container for looping
+var _first_start_rp: Node3D = null  # Store the first starting roadpoint
 
 func _ready() -> void:
 	_container = _find_container()
@@ -40,6 +43,15 @@ func _ready() -> void:
 	if _route.is_empty():
 		call_deferred("_retry_build_route")
 		return
+
+	# Store the first container and starting point for looping
+	if _first_container == null:
+		_first_container = _container
+		if not _route.is_empty():
+			var first_info = _route[0]
+			var first_seg = first_info["seg"]
+			var first_from_start = first_info["from_start"]
+			_first_start_rp = first_seg.start_point if first_from_start else first_seg.end_point
 
 	_current_seg_idx = 0
 	_distance_on_seg = 0.0
@@ -227,18 +239,31 @@ func _advance_along_route(delta: float) -> void:
 			remaining = _distance_on_seg - seg_len
 
 			if _current_seg_idx == _route.size() - 1:
+				print("DEBUG: Reached end of route, attempting transition...")
 				if _try_transition_to_next_road():
+					print("DEBUG: Transition successful!")
 					return
 
 				if loop_route and loop_road_point_path != NodePath(""):
+					print("DEBUG: Attempting loop to specific point...")
 					if _try_loop_to_specific_point():
+						print("DEBUG: Loop successful!")
 						return
 
-				if not loop_route:
-					cur_speed = 0.0
-					remaining = 0.0
-					_distance_on_seg = seg_len
-					break
+				# Try to loop back to the first terrain
+				if loop_to_first_terrain and _first_container != null and _first_start_rp != null:
+					print("DEBUG: Attempting to loop back to first terrain...")
+					if _try_loop_to_first_terrain():
+						print("DEBUG: Looped back to first terrain successfully!")
+						return
+
+				# If we reach here and no transition happened, stop the car
+				# instead of looping back (which causes U-turn)
+				print("DEBUG: No transition found, stopping car to prevent U-turn")
+				cur_speed = 0.0
+				remaining = 0.0
+				_distance_on_seg = seg_len
+				break
 
 			_current_seg_idx = (_current_seg_idx + 1) % _route.size()
 			_distance_on_seg = 0.0
@@ -352,6 +377,7 @@ func _find_container_for_rp(rp: Node) -> Node:
 
 func _try_transition_to_next_road() -> bool:
 	if _route.is_empty():
+		print("DEBUG: Route is empty, cannot transition")
 		return false
 
 	var last_info = _route.back()
@@ -360,11 +386,31 @@ func _try_transition_to_next_road() -> bool:
 	var end_point = last_seg.end_point if last_from_start else last_seg.start_point
 	var end_pos = end_point.global_position
 
+	# Calculate the current travel direction to find a roadpoint that continues forward
+	var seg_len = max(last_seg.curve.get_baked_length(), 0.001)
+	var sample_dist = min(1.0, seg_len * 0.1)  # Sample 10% back from end or 1.0m
+	var distance_on_curve: float
+	if last_from_start:
+		distance_on_curve = seg_len - sample_dist
+	else:
+		distance_on_curve = sample_dist
+
+	var prev_pos_local = last_seg.curve.sample_baked(distance_on_curve)
+	var prev_pos = last_seg.to_global(prev_pos_local)
+	var travel_direction = (end_pos - prev_pos).normalized()
+
+	print("DEBUG: Current end position: ", end_pos)
+	print("DEBUG: Travel direction: ", travel_direction)
+	print("DEBUG: Transition distance threshold: ", transition_distance)
+
 	var containers = _find_all_road_containers(get_tree().current_scene)
+	print("DEBUG: Found ", containers.size(), " road containers total")
 
 	var best_container = null
 	var best_rp = null
+	var best_next_rp = null
 	var min_dist = transition_distance * transition_distance
+	var best_score = -999.0  # Combined score: distance + direction alignment
 
 	for cont in containers:
 		if cont == _container:
@@ -373,18 +419,43 @@ func _try_transition_to_next_road() -> bool:
 			continue
 
 		var rps = cont.get_roadpoints()
+		print("DEBUG: Checking container with ", rps.size(), " roadpoints")
 		for rp in rps:
 			var d = rp.global_position.distance_squared_to(end_pos)
-			if d < min_dist:
-				min_dist = d
-				best_container = cont
-				best_rp = rp
+			var actual_dist = sqrt(d)
 
-	if best_container:
+			if d < min_dist:
+				# Check the direction from this roadpoint to its next point
+				var next_rp = _peek_next_rp(rp, null)
+				if next_rp != null:
+					var forward_dir = (next_rp.global_position - rp.global_position).normalized()
+					var direction_alignment = travel_direction.dot(forward_dir)
+
+					# Score combines closeness and forward alignment
+					# Prefer roadpoints that continue in the same direction
+					var score = direction_alignment - (actual_dist / transition_distance) * 0.5
+
+					print("DEBUG: Roadpoint at distance ", actual_dist, " alignment: ", direction_alignment, " score: ", score)
+
+					if score > best_score:
+						print("DEBUG: New best roadpoint! Score: ", score)
+						min_dist = d
+						best_container = cont
+						best_rp = rp
+						best_next_rp = next_rp
+						best_score = score
+				else:
+					print("DEBUG: Roadpoint at distance ", actual_dist, " has no next point, skipping")
+			elif actual_dist < transition_distance * 2:
+				print("DEBUG: Nearby roadpoint at distance: ", actual_dist, " (too far, threshold is ", transition_distance, ")")
+
+	if best_container and best_rp:
+		print("DEBUG: Transitioning to new container, closest distance: ", sqrt(min_dist), " score: ", best_score)
 		_container = best_container
 		_force_start_rp = best_rp
 		_route = _build_route(_container)
 		if _route.is_empty():
+			print("DEBUG: New route is empty, transition failed")
 			return false
 
 		_current_seg_idx = 0
@@ -392,7 +463,45 @@ func _try_transition_to_next_road() -> bool:
 		_apply_transform(0.0) # Snap to new road start
 		return true
 
+	print("DEBUG: No suitable container found for transition")
 	return false
+
+func _peek_next_rp(current: Node3D, prev: Node3D) -> Node3D:
+	# Same as _next_rp but doesn't modify state - just peeks at what's next
+	var rp_next: NodePath = current.next_pt_init
+	var next_rp: Node3D = null
+	if rp_next != NodePath(""):
+		next_rp = current.get_node_or_null(rp_next)
+	if next_rp == null or next_rp == prev:
+		var rp_prior: NodePath = current.prior_pt_init
+		if rp_prior != NodePath(""):
+			next_rp = current.get_node_or_null(rp_prior)
+			if next_rp == prev:
+				next_rp = null
+	return next_rp
+
+func _try_loop_to_first_terrain() -> bool:
+	if _first_container == null or _first_start_rp == null:
+		print("DEBUG: First container or start point not available")
+		return false
+
+	if not _first_container.is_inside_tree() or not _first_start_rp.is_inside_tree():
+		print("DEBUG: First container or start point no longer in tree")
+		return false
+
+	print("DEBUG: Looping back to first terrain")
+	_container = _first_container
+	_force_start_rp = _first_start_rp
+	_route = _build_route(_container)
+
+	if _route.is_empty():
+		print("DEBUG: Failed to build route from first terrain")
+		return false
+
+	_current_seg_idx = 0
+	_distance_on_seg = 0.0
+	_apply_transform(0.0)
+	return true
 
 func _find_all_road_containers(root: Node) -> Array:
 	var result = []
