@@ -31,7 +31,7 @@ var _can_leave_car := false  # True when stopped at torre stop point
 var _in_walking_mode := false  # True when player has left the car
 var _player_controller: CharacterBody3D = null
 
-const MAX_SPEED := 300
+const MAX_SPEED := 30
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dfmyjabbccxsr"]
+[gd_scene load_steps=27 format=3 uid="uid://dfmyjabbccxsr"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_emikk"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_ea0xb"]
@@ -11,8 +11,10 @@
 [ext_resource type="Texture2D" uid="uid://bfjdw1dfung0v" path="res://models/Terrain/terrain_1_slot1_normal_roughness.png" id="9_cn3mn"]
 [ext_resource type="Texture2D" uid="uid://c2kvrt11cv3gt" path="res://models/Terrain/terrain_1_slot2_normal_roughness.png" id="10_rl75s"]
 [ext_resource type="Texture2D" uid="uid://dw2c4287fd37h" path="res://models/Terrain/terrain_1_slot3_normal_roughness.png" id="11_1bgq0"]
+[ext_resource type="Script" uid="uid://dn62ydkjikyjj" path="res://addons/zylann.hterrain/hterrain_detail_layer.gd" id="12_geru1"]
 [ext_resource type="Script" uid="uid://dfqfqlcyc24yo" path="res://addons/road-generator/nodes/road_manager.gd" id="12_l21ki"]
 [ext_resource type="Script" uid="uid://bfmdcbmgrleml" path="res://addons/road-generator/nodes/road_container.gd" id="13_jpiyq"]
+[ext_resource type="Texture2D" uid="uid://1wwv8cgl6e3n" path="res://assets/grass.png" id="13_xasde"]
 [ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="14_80jls"]
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="14_eg15q"]
 [ext_resource type="ArrayMesh" uid="uid://begsy3jdebk7w" path="res://assets/Untitled_Plane_001.res" id="16_80jls"]
@@ -75,6 +77,16 @@ shader_params/u_globalmap_blend_distance = null
 shader_params/u_colormap_opacity_per_texture = null
 metadata/_custom_type_script = "uid://dhyysmj0yhprb"
 
+[node name="HTerrainDetailLayer" type="Node3D" parent="Terrain/HTerrain"]
+script = ExtResource("12_geru1")
+texture = ExtResource("13_xasde")
+shader_params/u_globalmap_tint_bottom = 0.45600002166
+shader_params/u_globalmap_tint_top = 0.1550000073625
+shader_params/u_bottom_ao = 0.5050000239875
+shader_params/u_instance_scale = null
+shader_params/u_roughness = null
+metadata/_custom_type_script = "uid://dn62ydkjikyjj"
+
 [node name="Node3D" type="Node3D" parent="Terrain"]
 
 [node name="RoadManager" type="Node3D" parent="Terrain/Node3D"]
@@ -88,11 +100,11 @@ density = 20.0
 use_lowpoly_preview = true
 physics_material = SubResource("PhysicsMaterial_chyr8")
 override_collision_layers = true
-edge_containers = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
-edge_rp_targets = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
-edge_rp_target_dirs = Array[int]([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_016"), NodePath("RP_016"), NodePath("RP_020"), NodePath("RP_020"), NodePath("RP_022"), NodePath("RP_022"), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("RP_045"), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("RP_029"), NodePath("RP_029"), NodePath("RP_034"), NodePath("RP_034"), NodePath("RP_041"), NodePath("RP_041"), NodePath("RP_032")])
-edge_rp_local_dirs = Array[int]([0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1])
+edge_containers = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
+edge_rp_targets = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
+edge_rp_target_dirs = Array[int]([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
+edge_rp_locals = Array[NodePath]([NodePath("RP_016"), NodePath("RP_016"), NodePath("RP_020"), NodePath("RP_020"), NodePath("RP_022"), NodePath("RP_022"), NodePath("RP_045"), NodePath("RP_029"), NodePath("RP_029"), NodePath("RP_034"), NodePath("RP_034"), NodePath("RP_041"), NodePath("RP_041"), NodePath("RP_032")])
+edge_rp_local_dirs = Array[int]([0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1])
 
 [node name="RP_001" type="Node3D" parent="Terrain/Node3D/RoadManager/Road_001"]
 transform = Transform3D(0.9994019, 0.00048610245, -0.034576587, 0, 0.9999012, 0.014057328, 0.034580003, -0.014048921, 0.99930316, 619.8481, 110.33729, 1236.2212)
@@ -380,7 +392,7 @@ surface_0/warp_along_curve = true
 surface_0/sample_cubic = false
 surface_0/tilt = true
 surface_0/offset = Vector2(0, 0)
-surface_0/triangle_count = 332896
+surface_0/triangle_count = 68128
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 125.59399, 22.80735, 254.71701)
 
 [node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D"]
@@ -398,7 +410,7 @@ surface_0/warp_along_curve = true
 surface_0/sample_cubic = false
 surface_0/tilt = true
 surface_0/offset = Vector2(0, 0)
-surface_0/triangle_count = 291284
+surface_0/triangle_count = 59612
 
 [node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D2"]
 curve = SubResource("Curve3D_80jls")
@@ -414,7 +426,7 @@ surface_0/warp_along_curve = true
 surface_0/sample_cubic = false
 surface_0/tilt = true
 surface_0/offset = Vector2(0, 0)
-surface_0/triangle_count = 343299
+surface_0/triangle_count = 70257
 
 [node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D3"]
 curve = SubResource("Curve3D_chyr8")
