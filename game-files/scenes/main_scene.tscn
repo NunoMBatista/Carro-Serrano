@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://c5hksj70ixl23" path="res://scenes/terrain_3.tscn" id="7_c16ls"]
 [ext_resource type="CompositorEffect" uid="uid://cil7asi5ishrm" path="res://NewCloudsGD.tres" id="8_3mjum"]
 [ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="8_18nlu"]
-[ext_resource type="PackedScene" uid="uid://bexb2q8hssgok" path="res://scenes/terrain_11.tscn" id="8_c1pb6"]
+[ext_resource type="PackedScene" uid="uid://cujc86dyvi6l6" path="res://scenes/terrain_11.tscn" id="8_c1pb6"]
 [ext_resource type="Script" uid="uid://byn3gfaemrrwf" path="res://scripts/fog_controller.gd" id="9_fog"]
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="9_p27gv"]
-[ext_resource type="Resource" path="res://torre_data/data.hterrain" id="10_cn4eu"]
+[ext_resource type="Resource" uid="uid://dstyegoambfu1" path="res://torre_data/data.hterrain" id="10_cn4eu"]
 [ext_resource type="Script" uid="uid://dxqdn5ho6vkac" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="11_0wyf6"]
 [ext_resource type="Texture2D" uid="uid://d02y0r658ygci" path="res://slot0_albedo_bump.png" id="12_xp01v"]
 [ext_resource type="Texture2D" uid="uid://42clyokl46g5" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Color.jpg" id="13_jix7a"]
@@ -1269,7 +1269,6 @@ curve = SubResource("Curve3D_umxdp")
 curve = SubResource("Curve3D_qjyrl")
 
 [node name="PathMesh3D" parent="terrain_11/Terrain" index="2"]
-surface_0/triangle_count = 144062
 visibility_range_end = 150.0
 
 [node name="GameManager" type="Node3D" parent="."]
@@ -1278,26 +1277,16 @@ script = ExtResource("8_18nlu")
 [node name="terrain_2" parent="." instance=ExtResource("2_7ykc4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1.0000541, 0, 0, 509.22595)
 
-[node name="Road_001" parent="terrain_2/Terrain/Node3D/RoadManager" index="0"]
-edge_containers = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
-edge_rp_targets = Array[NodePath]([NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("")])
-edge_rp_target_dirs = Array[int]([-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_016"), NodePath("RP_016"), NodePath("RP_020"), NodePath("RP_020"), NodePath("RP_022"), NodePath("RP_022"), NodePath("RP_045"), NodePath("RP_029"), NodePath("RP_029"), NodePath("RP_034"), NodePath("RP_034"), NodePath("RP_041"), NodePath("RP_041"), NodePath("RP_032")])
-edge_rp_local_dirs = Array[int]([0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1])
-
 [node name="RP_032" parent="terrain_2/Terrain/Node3D/RoadManager/Road_001" index="28"]
 transform = Transform3D(0.25136515, 0.35149294, 0.9018141, -0.017368447, 0.93321764, -0.3588919, -0.9677369, 0.074549824, 0.24068353, 1.3396049, 246.64803, 853.88513)
 
 [node name="PathMesh3D" parent="terrain_2/Terrain" index="2"]
-surface_0/triangle_count = 68128
 visibility_range_end = 130.0
 
 [node name="PathMesh3D2" parent="terrain_2/Terrain" index="3"]
-surface_0/triangle_count = 59612
 visibility_range_end = 70.0
 
 [node name="PathMesh3D3" parent="terrain_2/Terrain" index="4"]
-surface_0/triangle_count = 70257
 visibility_range_end = 70.0
 
 [node name="CarFollower" type="Node3D" parent="."]
@@ -1319,27 +1308,16 @@ transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, -0.0001258850
 [node name="terrain_3" parent="." instance=ExtResource("7_c16ls")]
 transform = Transform3D(-1.00563, 0, 0, 0, 1, 0, 0, 0, -1.0048895, 0.67458725, 0.026493073, 510.85474)
 
-[node name="Road_001" parent="terrain_3/Terrain/Node3D/RoadManager" index="0"]
-edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
-edge_rp_target_dirs = Array[int]([-1, -1])
-edge_rp_locals = Array[NodePath]([NodePath("RP_030"), NodePath("RP_045")])
-edge_rp_local_dirs = Array[int]([1, 0])
-
 [node name="PathMesh3D" parent="terrain_3/Terrain" index="2"]
-surface_0/triangle_count = 100063
 visibility_range_end = 100.0
 
 [node name="PathMesh3D2" parent="terrain_3/Terrain" index="3"]
-surface_0/triangle_count = 13483
 visibility_range_end = 50.0
 
 [node name="PathMesh3D4" parent="terrain_3/Terrain" index="4"]
-surface_0/triangle_count = 70966
 visibility_range_end = 100.0
 
 [node name="PathMesh3D5" parent="terrain_3/Terrain" index="5"]
-surface_0/triangle_count = 10645
 visibility_range_end = 40.0
 
 [node name="terrain_4" parent="." instance=ExtResource("8_c1pb6")]

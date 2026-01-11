@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coicfqoi4spg0"
-path.s3tc="res://.godot/imported/icon_grass.svg-6a20eb11bc23d46b8a4c0f365f95554b.s3tc.ctex"
+uid="uid://1wwv8cgl6e3n"
+path.s3tc="res://.godot/imported/grass.png-a207bda4a53e32c7645a41ec6d1c234e.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://addons/zylann.hterrain/tools/icons/icon_grass.svg"
-dest_files=["res://.godot/imported/icon_grass.svg-6a20eb11bc23d46b8a4c0f365f95554b.s3tc.ctex"]
+source_file="res://assets/grass.png"
+dest_files=["res://.godot/imported/grass.png-a207bda4a53e32c7645a41ec6d1c234e.s3tc.ctex"]
 
 [params]
 
@@ -39,6 +39,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=0
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false
