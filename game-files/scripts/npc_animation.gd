@@ -2,7 +2,10 @@ extends Node3D
 
 @export var speed_threshold: float = 4.0
 @export var walk_speed: float = 1.2  # Speed when walking to car
-@export var stop_distance: float = 0.1                                                    # How close to get to the window
+@export var stop_distance: float = 0.1
+@export var is_active: bool = false
+@export var hitchhiker_id: int  = 0
+
 
 var car_inside: Node3D = null
 var car_inside_area2: Node3D = null
