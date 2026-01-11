@@ -15,6 +15,7 @@ script = ExtResource("1_4flbx")
 
 [node name="Camera3D" type="Camera3D" parent="TwistPivot/PitchPivot"]
 current = true
+far = 200.0
 
 [node name="RayCast3D" type="RayCast3D" parent="TwistPivot/PitchPivot/Camera3D"]
 target_position = Vector3(0, 0, -200)
