@@ -20,12 +20,18 @@ extends Node3D
 @export_node_path("Node3D") var torre_start_road_point_path = NodePath("")
 @export_node_path("Node3D") var torre_stop_road_point_path = NodePath("")  # Stop when reaching this point
 
+# Player controller for walking
+@export_node_path("CharacterBody3D") var player_controller_path = NodePath("")
+
 var cur_speed := 0.0
 var _force_start_rp: Node3D = null
 var _stop_at_road_point: Node3D = null  # If set, car will stop when reaching this point
 var _should_stop := false  # Flag to indicate car should stop
+var _can_leave_car := false  # True when stopped at torre stop point
+var _in_walking_mode := false  # True when player has left the car
+var _player_controller: CharacterBody3D = null
 
-const MAX_SPEED := 100
+const MAX_SPEED := 300
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0
@@ -80,6 +86,15 @@ func _retry_build_route() -> void:
 	_apply_transform(0.0)
 
 func _process(delta: float) -> void:
+	# Handle leaving car with L key
+	if Input.is_action_just_pressed("toggle_headlights") and _can_leave_car and not _in_walking_mode:  # L key
+		leave_car()
+		return
+
+	# Don't process car movement when in walking mode
+	if _in_walking_mode:
+		return
+
 	if _route.is_empty():
 		return
 
@@ -252,7 +267,8 @@ func _advance_along_route(delta: float) -> void:
 			if _distance_on_seg >= seg_len * 0.9:
 				_should_stop = true
 				cur_speed = 0.0
-				print("DEBUG: Reached stop point, stopping car")
+				_can_leave_car = true
+				print("DEBUG: Reached stop point, stopping car. Press L to leave car.")
 
 	var travel_sign := -1.0 if invert_travel else 1.0
 	var signed_move := cur_speed * delta * travel_sign
@@ -628,3 +644,33 @@ func teleport_to_torre() -> void:
 	_apply_transform(0.0)
 
 	print("DEBUG: Teleported to torre road, will stop at: ", _stop_at_road_point.name if _stop_at_road_point else "end of route")
+
+## Leave the car and switch to walking mode
+func leave_car() -> void:
+	if not _can_leave_car:
+		print("DEBUG: Cannot leave car - not stopped at destination")
+		return
+
+	# Get or find player controller
+	if player_controller_path != NodePath(""):
+		_player_controller = get_node_or_null(player_controller_path)
+
+	if _player_controller == null:
+		# Try to find it in the scene
+		_player_controller = get_tree().current_scene.find_child("PlayerController", true, false)
+
+	if _player_controller == null:
+		push_warning("Player controller not found. Set player_controller_path or add PlayerController to scene")
+		return
+
+	# Position player at car's location
+	var exit_offset = Vector3(2, 0, 0)  # Exit to the right side of the car
+	var exit_position = global_transform.origin + global_transform.basis.x * exit_offset.x
+	_player_controller.global_position = exit_position
+
+	# Activate player controller
+	if _player_controller.has_method("activate"):
+		_player_controller.activate()
+
+	_in_walking_mode = true
+	print("DEBUG: Left car, walking mode activated. Use WASD to move, mouse to look around.")

@@ -17,6 +17,10 @@ func interact() -> void:
 	if _view_open:
 		return
 
+	# Check if player is in walking mode - if so, disable glovebox
+	if _is_in_walking_mode():
+		return
+
 	_view_open = true
 	_audio_player.play()
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -57,6 +61,24 @@ func _set_player_raycast_enabled(enabled: bool) -> void:
 			rc = null
 	if rc and rc is RayCast3D:
 		rc.enabled = enabled
+
+
+func _is_in_walking_mode() -> bool:
+	"""Check if the player has left the car and is walking"""
+	var scene = get_tree().get_current_scene()
+	if not scene:
+		return false
+
+	# Find the CarFollower node
+	var car_follower = _find_node(scene, "CarFollower")
+	if not car_follower:
+		return false
+
+	# Check if it has the _in_walking_mode variable
+	if car_follower.get("_in_walking_mode"):
+		return true
+
+	return false
 
 
 func _find_node(root: Node, name: String) -> Node:
