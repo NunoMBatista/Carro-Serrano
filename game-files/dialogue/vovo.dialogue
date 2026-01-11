@@ -1,0 +1,181 @@
+~ start
+
+**They slowly reach for the handle and open the door.. yet again, the frosty breeze makes its way in.**
+**...**
+**It's a man.**
+** He is old, rough and trimmed silver hair, seemingly unbothered by the biting cold.**
+**He sits and one by one puts his stiff legs into the car, shutting the door with just enough force.**
+Vovo: Deepest thanks, truly... these old knees of mine really started winning the argument halfway up the trail... there really is no point arguing with them, these days.
+Vovo: Used to tell 'em 'just one more mile' and they'd listen.
+Vovo: Now?... Now they just start screaming back at me until I'm forced to listen to them instead!
+**The old man looks cheerful. Despite his complaint, there is a light smile on his face.**
+**He looks around attentively at each corner of the car... then, locks his gaze on you.**
+Vovo: You've got a heavy grip on that steering wheel, son... and an even heavier look behind those eyes.
+Vovo: Whatever you're carrying up this mountain... it looks like it weighs more than this car.
+
+- I guess I've had a lot on my mind lately. It's been a long road. #positive
+	do DialogueFlow.choice("positive")
+	=> step1_good
+
+- I'm just focused. It has been a long road and I don't want to make any wrong turns. #negative
+	do DialogueFlow.choice("negative")
+	=> step1_bad
+
+- Don't talk much, it's distracting and i'm trying not to go the wrong way. #negative
+	do DialogueFlow.choice("negative")
+	=> step1_bad
+
+- Actually, I have changed my mind. I cannot take you with me, please get out.
+	Vovo: I... I see...
+	**The old man slowly climbs out of the car, left alone on the roadside.**
+	=> END
+
+# ===== STEP 1 GOOD BRANCH =====
+~ step1_good
+
+**The man now looks through the windshield, into the misty road.**
+**He sighs.. his joyful tone is now just a little more wistful.**
+Vovo: I suppose it has been.
+Vovo: But, you know.. sometimes it's not that the road is long.
+Vovo: Maybe it feels long because you're tired of carrying so much luggage with you.. it adds up over time.
+
+- Well, I guess you're right, but how would you know? #positive
+	do DialogueFlow.choice("positive")
+	=> step2_good
+
+- Whatever man, if you say so. #negative
+	do DialogueFlow.choice("negative")
+	=> step2_bad
+
+- I didn't pick you up for a therapy session, did I? Get out of my car.
+	Vovo: I understand...
+	**The old man slowly climbs out of the car, left alone on the roadside.**
+	=> END
+
+# ===== STEP 1 BAD BRANCH =====
+~ step1_bad
+
+**The man now looks through the windshield, into the misty road.**
+**He keeps his joyful tone.**
+Vovo: I hear you, son.. sometimes the engine is too loud for talk anyway.
+Vovo: ...
+Vovo: But I wouldn't worry too much about going the wrong way.. there are always routes you can pick that get you back on track.
+Vovo: And luckily.. I happen to know them all!
+**He now keeps a proud smile on his face.**
+Vovo: Feel free to ask if you need any help.. after all, the best travelers sometimes need someone to hold the map.
+Vovo: And I feel.. I feel you might need someone to do that for you, don't you?
+
+- Well, I guess you're right, but how would you know? #positive
+	do DialogueFlow.choice("positive")
+	=> step2_good
+
+- Whatever man, if you say so. #negative
+	do DialogueFlow.choice("negative")
+	=> step2_bad
+
+- I didn't pick you up for a therapy session, did I? Get out of my car.
+	Vovo: I understand...
+	**The old man slowly climbs out of the car, left alone on the roadside.**
+	=> END
+
+# ===== STEP 2 GOOD BRANCH =====
+~ step2_good
+
+**He lets out a giggle.**
+Vovo: Well, let's just say.. I've always been a man who took pride in his own two legs.
+Vovo: For as long as I can remember, I've walked these trails back and forth.. never needing a soul to help me along the way.
+Vovo: But time..
+**His bright voice now becomes more grim.**
+Vovo: oh..
+Vovo: .. time weighs.
+Vovo: And yet.. I stubbornly kept my ways, tackling this climb alone.
+Vovo: But then comes the day you can no longer hold that weight.
+Vovo: And you.. you look like you can no longer hold it by yourself.
+
+- I'm too close to the summit now. It's a bit late in the climb to start looking for a hand to hold, don't you think? #positive
+	do DialogueFlow.choice("positive")
+	=> step3_good
+
+- Thank you for sharing that. I'm glad you overcame that stubborness of yours in time. #positive
+	do DialogueFlow.choice("positive")
+	=> step3_good
+
+- It's too late for me. There's nothing you can do. I'm almost at the peak, anyway. #negative
+	do DialogueFlow.choice("negative")
+	=> step3_bad
+
+- Stop being so pityful, it's annoying. I'm just gonna leave you here, get out.
+	Vovo: I... I see...
+	**The old man slowly climbs out of the car, left alone on the roadside.**
+	=> END
+
+# ===== STEP 2 BAD BRANCH =====
+~ step2_bad
+
+**His bright voice now becomes more grim.**
+Vovo: Well, you don't have to be such a tough nut to crack, do you?
+Vovo: But who am I to judge.. I used to have that stubborness with me too up until recently. Took me a while.. but I eventually gave in.
+Vovo: ...
+Vovo: You see.. I've walked these tracks for as long as I can remember.. and I took pride.. so much pride in my ability to climb this whole thing.. and fast!
+Vovo: Faster than anyone!
+**His bright voice now becomes more grim.**
+Vovo: But time.. is weighing too much.
+Vovo: And you.. whatever it is that you're carrying with you.. looks just as heavy.
+
+- I'm too close to the summit now. It's a bit late in the climb to start looking for a hand to hold, don't you think? #positive
+	do DialogueFlow.choice("positive")
+	=> step3_good
+
+- Thank you for sharing that. I'm glad you overcame that stubborness of yours in time. #positive
+	do DialogueFlow.choice("positive")
+	=> step3_good
+
+- It's too late for me. There's nothing you can do. I'm almost at the peak, anyway. #negative
+	do DialogueFlow.choice("negative")
+	=> step3_bad
+
+- Stop being so pityful, it's annoying. I'm just gonna leave you here, get out.
+	Vovo: I... I see....
+	**The old man slowly climbs out of the car, left alone on the roadside.**
+	=> END
+
+# ===== STEP 3 GOOD BRANCH (ENDING) =====
+~ step3_good
+
+**He calmly laughs.**
+Vovo: Ahah.. it's never too late, my friend.
+Vovo: You have this stubborn old soul sitting next you.. who finally became a little less stubborn.. and asked for help for the first time...
+Vovo: Today!
+Vovo: For the first time.. i'm not climbing alone.. and asked for help.
+Vovo: And now.. how I wish I had done that sooner..
+Vovo: ..
+Vovo: Oh!
+Vovo: Wait, stop.. we're here! You can drop me off here.
+Vovo: Thank you traveler, for your help!
+Vovo: Be on your way now.. and don't forget...
+Vovo: There's no shame in catching a ride when the road gets long.
+**Just as slowly as he got in, the man left the car.**
+**This time, he closes it firmly.**
+
+do DialogueFlow.empathy += 20
+=> END
+
+# ===== STEP 3 BAD BRANCH (ENDING) =====
+~ step3_bad
+
+**His look becomes gloomier.**
+**His voice, more somber.**
+Vovo: There really is nothing I can do, son.
+Vovo: Only you can..
+Vovo: But you always can.
+Vovo: ..
+Vovo: Oh!
+Vovo: Wait, stop.. we're here! You can drop me off here.
+Vovo: Thank you traveler, for your help!
+Vovo: Be on your way now.. and don't forget...
+Vovo: There's no shame in catching a ride when the road gets long.
+**Just as slowly as he got in, the man left the car.**
+**This time, he closes it firmly.**
+
+do DialogueFlow.empathy -= 10
+=> END
