@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://ctj32hvgtv3j3"]
+
+[ext_resource type="PackedScene" uid="uid://chq2u3neobn0s" path="res://assets/payphone/payphone_v3.glb" id="1_yina6"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_yina6")]

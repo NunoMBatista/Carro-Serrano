@@ -35,6 +35,8 @@ func _ready() -> void:
 		_camera_base_y = camera.position.y
 	# Don't capture mouse yet - wait until player is activated
 	set_physics_process(false)
+	# Add to player group for detection by invisible walls and other systems
+	add_to_group("player")
 
 func activate() -> void:
 	is_active = true
