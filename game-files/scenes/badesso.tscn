@@ -1,11 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://b3ydf00hu4hpv"]
 
 [ext_resource type="Script" uid="uid://c7uj2tw7vr772" path="res://scripts/glovebox_item.gd" id="1_badesso_script"]
-[ext_resource type="Texture2D" uid="uid://c3dfxdlrh8032" path="res://assets/widgets/badesso.png" id="2_badesso_texture"]
+[ext_resource type="Texture2D" uid="uid://d3nm6e4ynmrps" path="res://scenes/chain.png" id="2_u5j86"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u5j86"]
-radius = 24.0
-height = 82.0
+radius = 53.0
+height = 286.0
 
 [node name="Badesso" type="RigidBody2D"]
 linear_damp = 2.0
@@ -13,9 +13,11 @@ angular_damp = 3.0
 script = ExtResource("1_badesso_script")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(9.536743e-07, 0)
-scale = Vector2(0.16666666, 0.16666666)
-texture = ExtResource("2_badesso_texture")
+position = Vector2(4.7683716e-07, 2)
+scale = Vector2(0.425, 0.425)
+texture = ExtResource("2_u5j86")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 2)
+scale = Vector2(0.565, 0.565)
 shape = SubResource("CapsuleShape2D_u5j86")

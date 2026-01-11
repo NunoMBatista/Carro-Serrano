@@ -83,10 +83,11 @@ func _ready() -> void:
 	#_create_placeholder_rectangle(Vector2(1600, 1200), Vector2(100, 60), Color(0.8, 0.3, 0.3), "placeholder_red")
 	#_create_placeholder_rectangle(Vector2(1200, 1200), Vector2(80, 80), Color(0.3, 0.8, 0.3), "placeholder_green")
 
-	# Add lebron item
+	# Add lebron item - spawn position: x=horizontal (left-right), y=vertical (top-bottom)
+	# Example positions: Vector2(1000, 800) = left side, Vector2(2500, 1500) = right side
 	_create_lebron_item(Vector2(2000, 1200))
 
-	# Add badesso item
+	# Add badesso item - adjust Vector2(x, y) to change spawn position
 	_create_badesso_item(Vector2(2400, 1200))
 
 	# Load saved positions from session state
