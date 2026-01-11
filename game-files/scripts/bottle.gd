@@ -35,6 +35,28 @@ func _ready() -> void:
 	camera = get_viewport().get_camera_3d()
 	scene_root = get_tree().root
 
+	# Find visual node (the 3D model) and collision shape
+	visual_node = get_node_or_null("BottleModel")
+	collision_shape = get_node_or_null("CollisionShape3D")
+
+	# Setup physics properties
+	gravity_scale = 1.0
+	linear_damp = 3.0
+	angular_damp = 4.0
+	mass = 2.0
+	collision_layer = 1
+	collision_mask = 0b11111111111111111111
+	contact_monitor = true
+	max_contacts_reported = 8
+	continuous_cd = true
+	sleeping = false
+	can_sleep = false
+
+	# Physics material
+	physics_material_override = PhysicsMaterial.new()
+	physics_material_override.bounce = 0.1
+	physics_material_override.friction = 0.8
+
 	# Start as static on dashboard (kinematic, frozen)
 	if is_static_on_dashboard:
 		freeze = true
@@ -48,6 +70,8 @@ func _ready() -> void:
 	print("  parent: ", get_parent().name if get_parent() else "none")
 	print("  position (local): ", position)
 	print("  position (global): ", global_position)
+	print("  visual_node: ", visual_node)
+	print("  collision_shape: ", collision_shape)
 
 func _process(_delta: float) -> void:
 	# If static on dashboard, update position to follow car
@@ -148,53 +172,11 @@ func _set_release_velocity(throw_velocity: Vector3) -> void:
 	print("=== THROW VELOCITY SET (deferred) ===")
 	print("  Throw velocity: ", throw_velocity)
 
-## Setup function to create a simple cylinder bottle
+## Setup function to create a simple cylinder bottle (deprecated - now using bottle.tscn)
 func setup_as_cylinder(radius: float, height: float, color: Color) -> void:
-	# Ensure physics properties are set
-	gravity_scale = 1.0
-	linear_damp = 3.0
-	angular_damp = 4.0
-	mass = 2.0
-	collision_layer = 1
-	collision_mask = 0b11111111111111111111  # Collide with all layers
-	contact_monitor = true
-	max_contacts_reported = 8
-	continuous_cd = true
-	freeze = false
-	sleeping = false
-	can_sleep = false
-
-	# Physics material for better collision
-	physics_material_override = PhysicsMaterial.new()
-	physics_material_override.bounce = 0.1
-	physics_material_override.friction = 0.8
-
-	# Create visual mesh
-	var mesh_instance = MeshInstance3D.new()
-	var cylinder_mesh = CylinderMesh.new()
-	cylinder_mesh.top_radius = radius
-	cylinder_mesh.bottom_radius = radius
-	cylinder_mesh.height = height
-
-	var material = StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = 0.3
-	material.metallic = 0.1
-
-	cylinder_mesh.material = material
-	mesh_instance.mesh = cylinder_mesh
-	add_child(mesh_instance)
-	visual_node = mesh_instance
-
-	# Create collision shape
-	collision_shape = CollisionShape3D.new()
-	var shape = CylinderShape3D.new()
-	shape.radius = radius
-	shape.height = height
-	collision_shape.shape = shape
-	add_child(collision_shape)
-
-	print("=== Bottle setup_as_cylinder complete ===")
+	# This function is no longer needed since we use bottle.tscn with the wine_bottle model
+	# But keeping it for backwards compatibility
+	print("=== setup_as_cylinder called but not needed (using bottle.tscn model) ===")
 
 func set_dashboard_position(local_pos: Vector3, local_rot: Vector3) -> void:
 	"""Set the dashboard position (local to car)"""

@@ -10,7 +10,7 @@ class_name BottleManager
 @export var bottle_height: float = 0.2
 @export var bottle_color: Color = Color(0.3, 0.6, 0.2, 0.7)  # Green transparent glass
 
-var bottle_scene: PackedScene = null
+var bottle_scene: PackedScene = preload("res://scenes/bottle.tscn")
 var bottle: Bottle = null
 var car_node: Node3D = null
 var camera: Camera3D = null
@@ -90,17 +90,29 @@ func _process(_delta: float) -> void:
 		_update_hover_state()
 
 func spawn_bottle() -> void:
-	# Create new bottle instance
-	bottle = Bottle.new()
+	# Create new bottle instance from scene
+	if not bottle_scene:
+		push_error("Bottle scene not loaded!")
+		return
 
-	# Setup bottle appearance BEFORE adding to tree
-	bottle.setup_as_cylinder(bottle_radius, bottle_height, bottle_color)
+	var bottle_instance = bottle_scene.instantiate()
+
+	# Find the RigidBody3D with Bottle script in the scene
+	bottle = bottle_instance as Bottle
+	if not bottle:
+		# Try to find it as a child
+		bottle = bottle_instance.find_child("*", true, false) as Bottle
+
+	if not bottle:
+		push_error("Could not find Bottle script in bottle.tscn!")
+		bottle_instance.queue_free()
+		return
 
 	# Set car reference
 	bottle.car_body = car_node
 
 	# Always add bottle to scene root (not as child of car to avoid collision issues)
-	get_tree().root.add_child(bottle)
+	get_tree().root.add_child(bottle_instance)
 
 	# IMPORTANT: Set position AFTER adding to tree
 	bottle.global_transform = global_transform

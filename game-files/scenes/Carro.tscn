@@ -118,6 +118,7 @@ mesh = ExtResource("3_d4lra")
 
 [node name="Hitchhiker1_BallMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.24984592, 0.0009482687, -0.008724541, -0.00087262964, 0.24998896, 0.0021816338, 0.008732432, -0.0021498362, 0.24983819, 0, 0, 0)
+visible = false
 layers = 2
 material_override = SubResource("StandardMaterial3D_rjt4w")
 cast_shadow = 0
@@ -135,7 +136,6 @@ skeleton = NodePath("../Car_BallMesh")
 
 [node name="Hitchhiker3_BallMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.24984592, 0.0009482687, -0.008724541, -0.00087262964, 0.24998896, 0.0021816338, 0.008732432, -0.0021498362, 0.24983819, 0, 0, 0)
-visible = false
 layers = 2
 material_override = SubResource("StandardMaterial3D_et1co")
 cast_shadow = 0
@@ -178,7 +178,7 @@ transform = Transform3D(0.1999954, 4.1129183e-11, 0.001357856, -0.00067498366, 0
 render_priority = 50
 
 [node name="BottleManager" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.09818146, -0.027704746, -0.23047413)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12327107, -0.052949972, -0.396908)
 script = ExtResource("13_et1co")
 car_node_path = NodePath("../PassengerSeat")
 passenger_seat_offset = Vector3(0, 0, 0)
