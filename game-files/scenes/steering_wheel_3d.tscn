@@ -1,15 +1,10 @@
-[gd_scene load_steps=3 format=4 uid="uid://dap8q7r6s5t4u"]
+[gd_scene load_steps=3 format=3 uid="uid://dap8q7r6s5t4u"]
 
-[ext_resource type="Script" path="res://scripts/steering_wheel_3d.gd" id="1_steering3d"]
+[ext_resource type="Script" uid="uid://c7qiq6ly5xlb7" path="res://scripts/steering_wheel_3d.gd" id="1_steering3d"]
 [ext_resource type="Texture2D" uid="uid://bwlljk0jkjvch" path="res://assets/car_steering_wheel.png" id="2_wheel3d"]
 
 [node name="SteeringWheel3D" type="Sprite3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 1.2)
-billboard = 0
-texture = ExtResource("2_wheel3d")
 pixel_size = 0.001
+texture = ExtResource("2_wheel3d")
 script = ExtResource("1_steering3d")
-rotation_multiplier = 500.0
-smoothing = 0.05
-max_rotation_degrees = 180.0
-center_spring = 0.02

@@ -901,6 +901,11 @@ metadata/_custom_type_script = "uid://dhyysmj0yhprb"
 [node name="_Node3D_35778" type="Node3D" parent="Terrain/HTerrain"]
 script = ExtResource("12_v0lsb")
 texture = ExtResource("13_m0c5p")
+shader_params/u_globalmap_tint_bottom = null
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+shader_params/u_instance_scale = null
+shader_params/u_roughness = null
 metadata/_editor_icon = ExtResource("14_j3yf3")
 
 [node name="Node3D" type="Node3D" parent="Terrain"]

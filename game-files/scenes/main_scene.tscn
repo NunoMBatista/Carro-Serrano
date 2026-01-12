@@ -24,7 +24,6 @@
 [ext_resource type="Script" uid="uid://bfmdcbmgrleml" path="res://addons/road-generator/nodes/road_container.gd" id="21_ruju6"]
 [ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="22_5nybl"]
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="23_cq0lk"]
-[ext_resource type="Material" uid="uid://bplwcmn50e6km" path="res://assets/raw_textures/Rock028_1K-JPG/parking_lot.tres" id="24_j2yw6"]
 [ext_resource type="PackedScene" uid="uid://tg1nfd4eajp6" path="res://assets/roundabout.glb" id="25_8pjrr"]
 [ext_resource type="PackedScene" uid="uid://c71vwi82qu3k5" path="res://scenes/house_1.tscn" id="26_0xxsb"]
 [ext_resource type="PackedScene" uid="uid://dw7wi85d1qrva" path="res://scenes/house_2.tscn" id="27_wqttf"]
@@ -41,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Roughness.jpg" id="38_llmay"]
 [ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="39_ihyyi"]
 [ext_resource type="PackedScene" uid="uid://c44qbvkxhw5bk" path="res://scenes/InvisibleWall.tscn" id="41_0wyf6"]
+[ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="42_0wyf6"]
 [ext_resource type="PackedScene" uid="uid://ctj32hvgtv3j3" path="res://scenes/payphone.tscn" id="42_xp01v"]
 
 [sub_resource type="Sky" id="Sky_7ykc4"]
@@ -1293,7 +1293,7 @@ visibility_range_end = 70.0
 transform = Transform3D(-0.115325324, 0.0414615, 0.9923406, 0, 0.9989787, -0.041741267, -0.9932213, -0.004814195, -0.11522307, -2.8559113, -0.23949385, 0.2235527)
 script = ExtResource("3_pu3yx")
 road_container_path = NodePath("../terrain_1/Terrain/Node3D/RoadManager/Road_001")
-start_road_point_path = NodePath("../terrain_1/Terrain/Node3D/RoadManager/Road_001/RP_039")
+start_road_point_path = NodePath("../terrain_11/Terrain/Node3D/RoadManager/Road_001/RP_042")
 loop_road_point_path = NodePath("../terrain_11/Terrain/Node3D/RoadManager/Road_001")
 torre_road_container_path = NodePath("../torre/HTerrain/RoadManager/Road_001")
 torre_start_road_point_path = NodePath("../torre/HTerrain/RoadManager/Road_001/RP_001")
@@ -1474,7 +1474,7 @@ metadata/_custom_type_script = "uid://dfqfqlcyc24yo"
 [node name="Road_002" type="Node3D" parent="torre/HTerrain/RoadManager2"]
 transform = Transform3D(0.9787459, 0, -0.20507684, 0, 1, 0, 0.20507684, 0, 0.9787459, 132.10526, 0, -104.12161)
 script = ExtResource("21_ruju6")
-material_resource = ExtResource("24_j2yw6")
+material_resource = ExtResource("22_5nybl")
 use_lowpoly_preview = true
 edge_containers = Array[NodePath]([NodePath(""), NodePath("")])
 edge_rp_targets = Array[NodePath]([NodePath(""), NodePath("")])
@@ -1714,6 +1714,24 @@ transform = Transform3D(0.275, 0, 0, 0, 0.275, 0, 0, 0, 0.275, 953.94025, 41.281
 
 [node name="Pay_low_lambert1_0" parent="pingasphone/Sketchfab_model/adfb5838ee604f5c855e3404b1eb3025_fbx/RootNode/Pay_low" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 233.776, 74.05553, -878.53894)
+
+[node name="Hitchhikers" type="Node3D" parent="."]
+
+[node name="Novinha" parent="Hitchhikers" instance=ExtResource("42_0wyf6")]
+transform = Transform3D(-0.8968033, 0, 0.44242948, 0, 1, 0, -0.44242948, 0, -0.8968033, 95.191635, 23.907164, 340.47208)
+hitchhiker_id = 1
+
+[node name="Vovo" parent="Hitchhikers" instance=ExtResource("42_0wyf6")]
+transform = Transform3D(-0.38944548, 0, 0.92104954, 0, 1, 0, -0.92104954, 0, -0.38944548, 94.76414, 26.124155, 69.23917)
+hitchhiker_id = 2
+
+[node name="Fent" parent="Hitchhikers" instance=ExtResource("42_0wyf6")]
+transform = Transform3D(0.14055568, 0, 0.9900192, 0, 1, 0, -0.9901264, 0, 0.14055566, 30.05267, 42.91684, 328.24838)
+hitchhiker_id = 3
+
+[node name="Middle2" parent="Hitchhikers" instance=ExtResource("42_0wyf6")]
+transform = Transform3D(-0.9056946, 0, 0.4239308, 0, 1, 0, -0.4239308, 0, -0.9056946, 94.65001, 23.909266, 172.9865)
+hitchhiker_id = 4
 
 [editable path="terrain_11"]
 [editable path="terrain_2"]

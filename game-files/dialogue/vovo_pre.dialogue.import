@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bj1srar1yf26t"
+path="res://.godot/imported/vovo_pre.dialogue-e50b3acc7118dd274f493f5d42aa8516.tres"
+
+[deps]
+
+source_file="res://dialogue/vovo_pre.dialogue"
+dest_files=["res://.godot/imported/vovo_pre.dialogue-e50b3acc7118dd274f493f5d42aa8516.tres"]
+
+[params]
+
+defaults=true

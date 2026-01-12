@@ -24,12 +24,12 @@ Whatever you’re carrying up this mountain.. it looks like it weighs more than 
 }
 
 **CHOICE:**
-    1. I guess I've had a lot on my mind lately. It's been a long road.
-        - This is marked as positive. The protagonist recognizes not everything is going well and is a little open about it
-    2. I'm just focused. It has been a long road and I don't want to make any wrong turns.
-        - This is marked as negative, it's dismissive but not rude or insulting
-    3. Don't talk much, it's distracting and i'm trying not to go the wrong way.
-        -This is marked as more negative, it's not only dismissive but rude towards someone who is clearly being sympathetic
+	1. I guess I've had a lot on my mind lately. It's been a long road.
+		- This is marked as positive. The protagonist recognizes not everything is going well and is a little open about it
+	2. I'm just focused. It has been a long road and I don't want to make any wrong turns.
+		- This is marked as negative, it's dismissive but not rude or insulting
+	3. Don't talk much, it's distracting and i'm trying not to go the wrong way.
+		-This is marked as more negative, it's not only dismissive but rude towards someone who is clearly being sympathetic
     4. Actually, I have changed my mind. I cannot take you with me, please get out. *kicks him out*
         -This is VERY negative. The old man is physically incapable of doing the trail alone, and you knowingly leave him in the side of the road.
 
@@ -70,13 +70,13 @@ I feel you might need someone to do that for you, don't you?"
 
 --
 **CHOICE:**
-    1. Well, I guess you're right... but how would you know?
-        -This is positive. Agrees that the oldman is right is might try helping you. You seem open to that
-    2. Whatever man, if you say so.
-        -This is negative. You still dismiss the subject don't listen.
-    3. I didn't pick you up for a therapy session, did I? Get out of my car. *kicks him out*
-        -This is VERY negative. The old man is physically incapable of doing the trail alone, and you knowingly leave him in the side of the road.
-        
+	1. Well, I guess you're right... but how would you know?
+		-This is positive. Agrees that the oldman is right is might try helping you. You seem open to that
+	2. Whatever man, if you say so.
+		-This is negative. You still dismiss the subject don't listen.
+	3. I didn't pick you up for a therapy session, did I? Get out of my car. *kicks him out*
+		-This is VERY negative. The old man is physically incapable of doing the trail alone, and you knowingly leave him in the side of the road.
+		
 --
 ## Positive Path 2 (How would you know?)
 *He lets out a giggle*
@@ -118,13 +118,13 @@ Looks just as heavy.
 
 --
 **CHOICE:**
-    1. I’m too close to the summit now. It’s a bit late in the climb to start looking for a hand to hold, don't you think?.
+	1. I’m too close to the summit now. It’s a bit late in the climb to start looking for a hand to hold, don't you think?.
         -Positive. Challenges what the man is saying, but in a engaging way, shows interest
-    2. Thank you for sharing that. I'm glad you overcame that stubborness of yours in time.
-        -This is positive. 
-    3. It's too late for me. There's nothing you can do. I'm almost at the peak, anyway.
+	2. Thank you for sharing that. I'm glad you overcame that stubborness of yours in time.
+		-This is positive. 
+	3. It's too late for me. There's nothing you can do. I'm almost at the peak, anyway.
         -Negative. Refusal.
-    4. Stop being so pityful, it's annoying. I'm just gonna leave you here, get out. *kicks him out*
+	4. Stop being so pityful, it's annoying. I'm just gonna leave you here, get out. *kicks him out*
         -This is VERY negative. The old man is physically incapable of doing the trail alone, and you knowingly leave him in the side of the road.
         
 --

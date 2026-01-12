@@ -223,10 +223,12 @@ bind/64/bone = -1
 bind/64/pose = Transform3D(-8.382814, -0.021083033, 0.4774719, 0.47774568, -0.15781663, 8.381307, -0.012072496, 8.3948765, 0.15876083, -1.7347955, -1.7410754, -0.029764505)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_8v6sq"]
-radius = 15.305
+height = 7.8374023
+radius = 11.744141
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_23bb0"]
-radius = 8.536
+height = 8.140137
+radius = 8.453613
 
 [node name="npc_2" type="Node3D"]
 script = ExtResource("1_23bb0")
@@ -704,11 +706,13 @@ autoplay = "Wave"
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2399988, 0)
 shape = SubResource("CylinderShape3D_8v6sq")
 
 [node name="Area3D2" type="Area3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3508155, 0)
 shape = SubResource("CylinderShape3D_23bb0")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

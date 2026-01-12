@@ -1,5 +1,8 @@
 extends Node3D
 
+# Signal emitted when car starts a new lap
+signal lap_started(lap_number: int)
+
 @export_node_path("Node3D") var road_container_path
 @export_node_path("Node3D") var start_road_point_path
 @export var forward_sample_distance := 1.5
@@ -30,12 +33,13 @@ var _should_stop := false  # Flag to indicate car should stop
 var _can_leave_car := false  # True when stopped at torre stop point
 var _in_walking_mode := false  # True when player has left the car
 var _player_controller: CharacterBody3D = null
+var _dialogue_active := false  # True when dialogue is active, disables player input
 
-const MAX_SPEED := 30
+const MAX_SPEED := 140
 const ACCEL_STRENGTH := 3.5
-const BRAKE_STRENGTH := 6.0
+const BRAKE_STRENGTH := 50
 const MIN_SPEED := 0.0
-const FULLSTOP_SPEED := 0.5
+const FULLSTOP_SPEED := 6
 
 # Ordered list of dictionaries: {seg: RoadSegment, from_start: bool}
 var _route: Array = []
@@ -45,6 +49,7 @@ var _container: Node
 var _smoothed_basis: Basis
 var _first_container: Node = null  # Store the first container for looping
 var _first_start_rp: Node3D = null  # Store the first starting roadpoint
+var _current_lap: int = 1  # Track current lap number
 
 func _ready() -> void:
 	_container = _find_container()
@@ -563,6 +568,12 @@ func _try_loop_to_first_terrain() -> bool:
 	_current_seg_idx = 0
 	_distance_on_seg = 0.0
 	_apply_transform(0.0)
+	
+	# Increment lap counter and emit signal
+	_current_lap += 1
+	lap_started.emit(_current_lap)
+	print("Started lap ", _current_lap)
+	
 	return true
 
 func _find_all_road_containers(root: Node) -> Array:
@@ -581,7 +592,10 @@ func _find_all_road_containers(root: Node) -> Array:
 	return result
 
 func _update_speed(delta: float) -> void:
-	if not Input.is_action_pressed("Brakes"):
+	# Simulate brake input during dialogue
+	var braking = Input.is_action_pressed("Brakes") or _dialogue_active
+	
+	if not braking:
 		var diff := MAX_SPEED - cur_speed
 		cur_speed += diff * (1.0 - exp(-ACCEL_STRENGTH * delta))
 	else:
@@ -646,6 +660,17 @@ func teleport_to_torre() -> void:
 	print("DEBUG: Teleported to torre road, will stop at: ", _stop_at_road_point.name if _stop_at_road_point else "end of route")
 
 ## Leave the car and switch to walking mode
+## Stop car for dialogue and disable player input
+func start_dialogue() -> void:
+	_dialogue_active = true
+	cur_speed = 0.0
+	print("Car stopped for dialogue - input disabled")
+
+## Resume car control after dialogue ends
+func end_dialogue() -> void:
+	_dialogue_active = false
+	print("Car control resumed - input enabled")
+
 func leave_car() -> void:
 	if not _can_leave_car:
 		print("DEBUG: Cannot leave car - not stopped at destination")

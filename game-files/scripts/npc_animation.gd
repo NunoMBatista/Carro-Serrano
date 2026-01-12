@@ -1,18 +1,27 @@
 extends Node3D
 
-@export var speed_threshold: float = 4.0
+# Signal emitted when NPC reaches car window and is facing player
+signal reached_player(npc: Node3D)
+# Signal emitted when player passes by without picking up the hitchhiker
+signal player_passed_by(npc: Node3D)
+
+@export var speed_threshold: float = 0.1
 @export var walk_speed: float = 1.2  # Speed when walking to car
 @export var stop_distance: float = 0.1
 @export var is_active: bool = false
 @export var hitchhiker_id: int  = 0
+@export var interacting: bool = false
 
 
 var car_inside: Node3D = null
+var car_follower: Node3D = null  # Reference to CarFollower script
 var car_inside_area2: Node3D = null
 var next_animation: String = ""
 var sequence_triggered: bool = false
 var walking_to_car: bool = false
 var window_target: Node3D = null  # Reference to car window position
+var facing_player: bool = false
+var player_interacted: bool = false  # Track if player picked up this hitchhiker
 
 func _ready():
 	_fix_walk_animation()
@@ -21,7 +30,7 @@ func _ready():
 
 func _fix_walk_animation():
 	var animation_name = "walk"
-	var y_translation_offset = 11.3*2  # How many units to offset
+	var y_translation_offset = 6  # How many units to offset
 	var fix_rotation = Vector3(0, 0, 0)  # Rotation fix if needed
 	
 	var anim_player = $AnimationPlayer
@@ -92,6 +101,11 @@ func _on_area_3d_body_entered(body):
 func _on_area_3d_body_exited(body):
 	if body == car_inside:
 		car_inside = null
+		# If player didn't interact with this hitchhiker, emit passed_by signal
+		# This happens whether the car slowed down or just drove past at full speed
+		if not player_interacted:
+			player_passed_by.emit(self)
+			print("Player passed by hitchhiker ID ", hitchhiker_id, " without picking them up")
 		# print("Car left big area")
 
 # Triggered when car enters Area3D2 (velocity check area)
@@ -99,18 +113,24 @@ func _on_area_3d_2_body_entered(body):
 	# Filter out terrain and only detect the car
 	if body is RigidBody3D and (body.name == "Carro" or "car" in body.name.to_lower()):
 		car_inside_area2 = body
+		# Get the CarFollower parent node which has the actual speed
+		car_follower = body.get_parent()
 		# print("Car entered velocity check area")
 
 # Triggered when car exits Area3D2
 func _on_area_3d_2_body_exited(body):
 	if body is RigidBody3D and (body.name == "Carro" or "car" in body.name.to_lower()):
 		car_inside_area2 = null
+		car_follower = null
 		# print("Car left velocity check area")
 
 func _physics_process(delta):
 	# Check for velocity trigger
-	if car_inside_area2 and not sequence_triggered:
-		var current_speed = car_inside_area2.linear_velocity.length()
+	if car_follower and not sequence_triggered:
+		# Access cur_speed from the CarFollower script
+		var current_speed = 0.0
+		if "cur_speed" in car_follower:
+			current_speed = car_follower.cur_speed
 		if current_speed <= speed_threshold:
 			start_sequence()
 			sequence_triggered = true
@@ -145,8 +165,11 @@ func _physics_process(delta):
 					player_pos.y = current_pos.y
 					look_at(player_pos, Vector3.UP)
 					print("NPC facing Player")
+					facing_player = true
 					# Rotate 180º around Y axis to compensate for model orientation
 					rotate_y(deg_to_rad(180))
+					# Emit signal to notify game manager
+					reached_player.emit(self)
 				else:
 					print("WARNING: Player node not found in car")
 			print("NPC reached car window")

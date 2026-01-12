@@ -2,7 +2,7 @@ extends Node
 ## Dialogue Flow autoload. Manages empathy-based branching system.
 
 signal dialogue_started
-signal dialogue_ended
+signal dialogue_ended(resource: Resource)
 signal branch_changed(new_branch: String)
 
 ## Empathy threshold for neutral choices (>= goes good, < goes bad)
@@ -26,6 +26,9 @@ var empathy: int = 50:
 var current_branch: String = "good"
 var _active: bool = false
 var _debug_label: Label
+
+## Stores the last choice made (for pre-dialogue branching)
+var last_choice: String = ""
 
 ## Counter for positive choices (used in middle_aged dialogue)
 var n_positive_choices: int = 0
@@ -101,6 +104,9 @@ func run_dialogue(dialogue_resource: DialogueResource, start_title: String = "st
 
 ## Called from dialogue files: do DialogueFlow.choice("positive")
 func choice(alignment: String) -> void:
+	# Store the last choice
+	last_choice = alignment.to_lower()
+	
 	var old_branch = current_branch
 
 	match alignment.to_lower():
@@ -142,10 +148,12 @@ func is_bad() -> bool:
 	return current_branch == "bad"
 
 func _on_dialogue_ended(_resource) -> void:
+	print("DEBUG DialogueFlow: _on_dialogue_ended called, _active=", _active)
 	if _active:
 		_active = false
 		# Don't change mouse mode - camera stays active
 		var logger = get_node_or_null("/root/PlaytestLogger")
 		if logger:
 			logger.log_event("dialogue_end", "branch:%s empathy:%d" % [current_branch, empathy])
-		dialogue_ended.emit()
+		print("DEBUG DialogueFlow: Emitting dialogue_ended signal with resource: ", _resource)
+		dialogue_ended.emit(_resource)

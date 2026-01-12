@@ -136,6 +136,7 @@ skeleton = NodePath("../Car_BallMesh")
 
 [node name="Hitchhiker3_BallMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.24984592, 0.0009482687, -0.008724541, -0.00087262964, 0.24998896, 0.0021816338, 0.008732432, -0.0021498362, 0.24983819, 0, 0, 0)
+visible = false
 layers = 2
 material_override = SubResource("StandardMaterial3D_et1co")
 cast_shadow = 0

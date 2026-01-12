@@ -1,0 +1,29 @@
+~ start
+
+???: Ho there, son! Forgive me... I used to be the sort of man who'd walk this twice over just to prove I could, but the mountain gets steeper every year. I'm heading up, if you're going that way I wold appreciate the lift!
+
+- Yeah sure, you can come.
+	do DialogueFlow.choice("positive")
+	=> END
+
+- No, my car is already full
+	???: Oh, that's too bad..
+	=> END
+
+- How far up are we talking?
+	do DialogueFlow.choice("negative")
+	=> step1_bad
+
+~ step1_bad
+
+???: Penhas da Saúde, not a long way from here!
+
+- I think that's ok, you can come.
+	do DialogueFlow.choice("positive")
+	=> END
+
+- I'm sorry that's a considerable detour for me, I cannot take you there.
+	do DialogueFlow.choice("negative")
+	???: Oh, that's too bad..
+	=> END
+
