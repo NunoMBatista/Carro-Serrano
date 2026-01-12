@@ -29,6 +29,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var camera_pivot = $CameraPivot
 @onready var camera = $CameraPivot/Camera3D
 @onready var head_position = $CameraPivot
+@onready var crosshair = $Control/CrossHair
 
 func _ready() -> void:
 	if camera:
@@ -37,6 +38,12 @@ func _ready() -> void:
 	set_physics_process(false)
 	# Add to player group for detection by invisible walls and other systems
 	add_to_group("player")
+	# Hide and disable the free-roam crosshair until walking mode is active
+	if crosshair:
+		crosshair.visible = false
+		crosshair.set_process(false)
+		crosshair.set_process_input(false)
+		crosshair.set_process_unhandled_input(false)
 
 func activate() -> void:
 	is_active = true
@@ -44,11 +51,21 @@ func activate() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if camera:
 		camera.current = true
+	if crosshair:
+		crosshair.visible = true
+		crosshair.set_process(true)
+		crosshair.set_process_input(true)
+		crosshair.set_process_unhandled_input(true)
 	print("Player controller activated")
 
 func deactivate() -> void:
 	is_active = false
 	set_physics_process(false)
+	if crosshair:
+		crosshair.visible = false
+		crosshair.set_process(false)
+		crosshair.set_process_input(false)
+		crosshair.set_process_unhandled_input(false)
 	print("Player controller deactivated")
 
 func _physics_process(delta: float) -> void:

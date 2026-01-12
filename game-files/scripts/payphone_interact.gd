@@ -1,0 +1,97 @@
+extends StaticBody3D
+## Clickable payphone that shows a yes/no confirmation dialog
+
+var _dialog_open: bool = false
+var _current_dialog: ConfirmationDialog = null
+
+func interact() -> void:
+	if _dialog_open:
+		return
+	_dialog_open = true
+
+	# Show cursor and disable player raycast while dialog is open
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	_set_player_raycast_enabled(false)
+
+	# Build a confirmation dialog with Yes/No options
+	_current_dialog = ConfirmationDialog.new()
+	var dlg := _current_dialog
+	dlg.title = "Call for help"
+	dlg.dialog_text = "Call for help?"
+	# Customize buttons to Yes/No
+	dlg.get_ok_button().text = "Yes"
+	var no_btn := dlg.add_button("No", true)
+
+	# Connect signals
+	dlg.confirmed.connect(_on_dialog_confirmed)
+	no_btn.pressed.connect(_on_dialog_cancelled)
+	dlg.canceled.connect(_on_dialog_cancelled)
+
+	# Add to tree and popup centered
+	get_tree().root.add_child(dlg)
+	dlg.popup_centered()
+
+
+func _on_dialog_confirmed() -> void:
+	# TODO: implement actual help-call behavior here if needed
+	_close_dialog()
+
+
+func _on_dialog_cancelled() -> void:
+	_close_dialog()
+
+
+func _close_dialog() -> void:
+	_dialog_open = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	_set_player_raycast_enabled(true)
+	if _current_dialog and is_instance_valid(_current_dialog):
+		_current_dialog.hide()
+		_current_dialog.queue_free()
+	_current_dialog = null
+
+
+func _set_player_raycast_enabled(enabled: bool) -> void:
+	var scene = get_tree().get_current_scene()
+	if not scene:
+		return
+	var cross = _get_active_crosshair(scene)
+	if not cross:
+		return
+	var rc = null
+	if cross.has_method("get"):
+		rc = cross.get("raycast")
+	if rc and rc is NodePath:
+		if cross.has_node(rc):
+			rc = cross.get_node(rc)
+		else:
+			rc = null
+	if rc and rc is RayCast3D:
+		rc.enabled = enabled
+
+
+func _get_active_crosshair(root: Node) -> Node:
+	# Prefer the walking player controller crosshair when present,
+	# otherwise fall back to the in-car Player crosshair.
+	var player_controller = _find_node(root, "PlayerController")
+	if player_controller and player_controller.has_node("Control/CrossHair"):
+		return player_controller.get_node("Control/CrossHair")
+
+	var player = _find_node(root, "Player")
+	if player and player.has_node("Control/CrossHair"):
+		return player.get_node("Control/CrossHair")
+
+	return null
+
+
+func _find_node(root: Node, name: String) -> Node:
+	if not root:
+		return null
+	if str(root.name) == name:
+		return root
+	for child in root.get_children():
+		if child and child is Node:
+			var res = _find_node(child, name)
+			if res:
+				return res
+	return null

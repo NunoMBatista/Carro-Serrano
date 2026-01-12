@@ -31,7 +31,7 @@ var _can_leave_car := false  # True when stopped at torre stop point
 var _in_walking_mode := false  # True when player has left the car
 var _player_controller: CharacterBody3D = null
 
-const MAX_SPEED := 30
+const MAX_SPEED := 300
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 6.0
 const MIN_SPEED := 0.0
@@ -673,4 +673,16 @@ func leave_car() -> void:
 		_player_controller.activate()
 
 	_in_walking_mode = true
+	_disable_car_crosshair()
 	print("DEBUG: Left car, walking mode activated. Use WASD to move, mouse to look around.")
+
+
+func _disable_car_crosshair() -> void:
+	var carro = get_node_or_null("Carro")
+	if carro and carro.has_node("Player/Control/CrossHair"):
+		var crosshair = carro.get_node("Player/Control/CrossHair")
+		# Stop processing input/logic and hide the UI
+		crosshair.set_process(false)
+		crosshair.set_process_input(false)
+		crosshair.set_process_unhandled_input(false)
+		crosshair.visible = false

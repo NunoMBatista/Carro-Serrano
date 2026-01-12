@@ -37,11 +37,11 @@
 [ext_resource type="PackedScene" uid="uid://w53pa5aphifw" path="res://assets/house_1.glb" id="34_1sx6m"]
 [ext_resource type="PackedScene" uid="uid://dyu43knp3o5c7" path="res://house_2.tscn" id="35_0uct7"]
 [ext_resource type="PackedScene" uid="uid://bman7pxxghc5i" path="res://balls.tscn" id="36_1a541"]
-[ext_resource type="PackedScene" uid="uid://cqxwr5nb0gl44" path="res://castelo.tscn" id="37_gwxm2"]
+[ext_resource type="PackedScene" path="res://castelo.tscn" id="37_gwxm2"]
 [ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Roughness.jpg" id="38_llmay"]
-[ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="39_ihyyi"]
+[ext_resource type="PackedScene" path="res://pelourinho.tscn" id="39_ihyyi"]
 [ext_resource type="PackedScene" uid="uid://c44qbvkxhw5bk" path="res://scenes/InvisibleWall.tscn" id="41_0wyf6"]
-[ext_resource type="PackedScene" uid="uid://ctj32hvgtv3j3" path="res://scenes/payphone.tscn" id="42_xp01v"]
+[ext_resource type="PackedScene" uid="uid://dv3yrerb34qis" path="res://scenes/payphone2.tscn" id="42_xp01v"]
 
 [sub_resource type="Sky" id="Sky_7ykc4"]
 
@@ -926,6 +926,13 @@ shadow_blur = 10.0
 
 [node name="terrain_11" parent="." instance=ExtResource("8_c1pb6")]
 
+[node name="_Node3D_35778" parent="terrain_11/Terrain/HTerrain" index="0"]
+shader_params/u_globalmap_tint_bottom = null
+shader_params/u_globalmap_tint_top = null
+shader_params/u_bottom_ao = null
+shader_params/u_instance_scale = null
+shader_params/u_roughness = null
+
 [node name="edge_R" parent="terrain_11/Terrain/Node3D/RoadManager/Road_001/RP_001" index="0"]
 curve = SubResource("Curve3D_0wyf6")
 
@@ -1520,7 +1527,7 @@ sides = 25
 material = SubResource("StandardMaterial3D_2j81h")
 
 [node name="CSGCylinder3D2" type="CSGCylinder3D" parent="torre/GNR"]
-transform = Transform3D(30, 0, 0, 0, 12.121764, 0, 0, 0, 30, 377.78482, 251.593, 704.6393)
+transform = Transform3D(30.000002, 0, 0, 0, 12.598749, 0, 0, 0, 30.000002, 377.78467, 251.593, 704.6393)
 sides = 25
 material = SubResource("StandardMaterial3D_bwf7j")
 
@@ -1709,14 +1716,15 @@ transform = Transform3D(0.35949814, 0, 2.9868088, 0, 2.9999995, 0, -3.8208883, 0
 [node name="InvisibleWall" parent="torre" instance=ExtResource("41_0wyf6")]
 transform = Transform3D(-0.47779095, 0, 4.96205, 0, 4.985, 0, -4.96205, 0, -0.47779095, 526.7102, 219.98808, 468.21594)
 
-[node name="pingasphone" parent="." instance=ExtResource("42_xp01v")]
-transform = Transform3D(0.275, 0, 0, 0, 0.275, 0, 0, 0, 0.275, 953.94025, 41.281536, 177.51727)
+[node name="Node3D" type="Node3D" parent="torre"]
+transform = Transform3D(-0.024938187, 0, 0.999689, 0, 1, 0, -0.999689, 0, -0.024938187, 425.28784, 220.39638, 513.46564)
 
-[node name="Pay_low_lambert1_0" parent="pingasphone/Sketchfab_model/adfb5838ee604f5c855e3404b1eb3025_fbx/RootNode/Pay_low" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 233.776, 74.05553, -878.53894)
+[node name="Sketchfab_Scene4" parent="torre/Node3D" instance=ExtResource("42_xp01v")]
+transform = Transform3D(0.08078024, 0, 1.3969839e-09, 0, 0.06549287, 0, -2.3283064e-10, 0, 0.099490896, 0, -5.370056, 0)
+collision_layer = 3
+collision_mask = 1
 
 [editable path="terrain_11"]
 [editable path="terrain_2"]
 [editable path="terrain_3"]
 [editable path="torre/InvisibleWall"]
-[editable path="pingasphone"]
