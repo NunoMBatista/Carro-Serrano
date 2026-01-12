@@ -22,11 +22,19 @@ var walking_to_car: bool = false
 var window_target: Node3D = null  # Reference to car window position
 var facing_player: bool = false
 var player_interacted: bool = false  # Track if player picked up this hitchhiker
+var audio_player: AudioStreamPlayer3D = null  # Reference to audio player
 
 func _ready():
 	_fix_walk_animation()
 	$AnimationPlayer.animation_finished.connect(_on_animation_finished)
 	$AnimationPlayer.play("Wave")
+	
+	# Get reference to audio player
+	audio_player = get_node_or_null("AudioStreamPlayer3D")
+	if audio_player:
+		print("NPC audio player initialized")
+	else:
+		print("WARNING: AudioStreamPlayer3D not found in NPC")
 
 func _fix_walk_animation():
 	var animation_name = "walk"
@@ -96,6 +104,11 @@ func _on_area_3d_body_entered(body):
 			var anim = $AnimationPlayer.get_animation(current_anim_name)
 			if anim:
 				anim.loop_mode = Animation.LOOP_NONE
+		
+		# Start playing audio on loop when car enters
+		if audio_player and not audio_player.playing:
+			audio_player.play()
+			print("NPC audio started playing")
 		# print("car entered big area")
 # Triggered if the car leaves the radius without meeting the criteria
 func _on_area_3d_body_exited(body):
@@ -106,6 +119,11 @@ func _on_area_3d_body_exited(body):
 		if not player_interacted:
 			player_passed_by.emit(self)
 			print("Player passed by hitchhiker ID ", hitchhiker_id, " without picking them up")
+		
+		# Stop audio when car leaves
+		if audio_player and audio_player.playing:
+			audio_player.stop()
+			print("NPC audio stopped")
 		# print("Car left big area")
 
 # Triggered when car enters Area3D2 (velocity check area)
