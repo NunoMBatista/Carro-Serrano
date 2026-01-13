@@ -309,6 +309,13 @@ func _advance_along_route(delta: float) -> void:
 						print("DEBUG: Loop successful!")
 						return
 
+				# Check if we should teleport to torre after hitchhiker 4
+				var game_manager = get_node_or_null("../GameManager")
+				if game_manager and game_manager.has_method("should_teleport_to_torre") and game_manager.should_teleport_to_torre():
+					print("DEBUG: Hitchhiker 4 completed - teleporting to torre instead of looping")
+					teleport_to_torre()
+					return
+
 				# Try to loop back to the first terrain
 				if loop_to_first_terrain and _first_container != null and _first_start_rp != null:
 					print("DEBUG: Attempting to loop back to first terrain...")

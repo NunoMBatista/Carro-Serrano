@@ -16,6 +16,7 @@ var current_hitchhiker_id: int = 0  # Store ID for generic handlers
 var next_hitchhiker_to_enable: int = 2  # Next hitchhiker in sequence
 var enable_next_hitchhiker_on_next_lap: bool = false  # Flag to enable on next lap
 var in_dialogue: bool = false  # Track if currently in any dialogue
+var hitchhiker_4_completed: bool = false  # Flag to trigger torre teleport after hitchhiker 4
 
 ## Call this when starting a new game/playthrough to reset session state
 func start_new_game() -> void:
@@ -123,9 +124,14 @@ func _on_player_passed_by_hitchhiker(npc: Node3D) -> void:
 	# Disable hitchhiker since player passed by
 	disable_hitchhiker(hitchhiker_id)
 	
-	# Set flag to enable next hitchhiker on next lap
-	enable_next_hitchhiker_on_next_lap = true
-	print("Next hitchhiker will be enabled on next lap")
+	# Check if this was hitchhiker 4
+	if hitchhiker_id == 4:
+		hitchhiker_4_completed = true
+		print("Player passed by hitchhiker 4 - will teleport to torre on next loop")
+	else:
+		# Set flag to enable next hitchhiker on next lap
+		enable_next_hitchhiker_on_next_lap = true
+		print("Next hitchhiker will be enabled on next lap")
 	
 	# You can add additional logic here, such as:
 	# - Tracking skipped hitchhikers
@@ -276,9 +282,14 @@ func _on_pre_dialogue_ended(_resource: Resource) -> void:
 		# Clear dialogue flag
 		in_dialogue = false
 		
-		# Set flag to enable next hitchhiker on next lap
-		enable_next_hitchhiker_on_next_lap = true
-		print("Next hitchhiker will be enabled on next lap")
+		# Check if this was hitchhiker 4
+		if current_hitchhiker_id == 4:
+			hitchhiker_4_completed = true
+			print("Player rejected hitchhiker 4 - will teleport to torre on next loop")
+		else:
+			# Set flag to enable next hitchhiker on next lap
+			enable_next_hitchhiker_on_next_lap = true
+			print("Next hitchhiker will be enabled on next lap")
 		
 		# Reset interaction
 		current_hitchhiker = null
@@ -293,9 +304,14 @@ func _on_main_dialogue_ended(_resource: Resource) -> void:
 	# Clear dialogue flag
 	in_dialogue = false
 	
-	# Set flag to enable next hitchhiker on the next lap
-	enable_next_hitchhiker_on_next_lap = true
-	print("Main dialogue ended - next hitchhiker will be enabled on next lap")
+	# Check if this was hitchhiker 4
+	if current_hitchhiker_id == 4:
+		hitchhiker_4_completed = true
+		print("Hitchhiker 4 dialogue ended - will teleport to torre on next loop")
+	else:
+		# Set flag to enable next hitchhiker on the next lap
+		enable_next_hitchhiker_on_next_lap = true
+		print("Main dialogue ended - next hitchhiker will be enabled on next lap")
 	
 	# Resume car movement and reset
 	reset_hitchhiker_interaction()
@@ -390,6 +406,10 @@ func enable_only_hitchhiker(hitchhiker_id: int):
 	disable_all_hitchhikers()
 	enable_hitchhiker(hitchhiker_id)
 	print("Only hitchhiker ", hitchhiker_id, " is now enabled")
+
+## Check if hitchhiker 4 has completed (for CarFollower to check before looping)
+func should_teleport_to_torre() -> bool:
+	return hitchhiker_4_completed
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
