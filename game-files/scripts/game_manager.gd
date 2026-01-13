@@ -35,17 +35,17 @@ func _ready():
 	if not hitchhikers_node:
 		print("WARNING: Hitchhikers node not found!")
 		return
-	
+
 	car_node = get_node_or_null("../Carro")
 	if not car_node:
 		print("WARNING: Car node not found!")
-	
+
 	# Connect to car follower's lap signal
 	var car_follower = get_node_or_null("../CarFollower")
 	if car_follower and car_follower.has_signal("lap_started"):
 		car_follower.lap_started.connect(_on_lap_started)
 		print("Connected to car lap_started signal")
-	
+
 	# Connect to all hitchhiker signals
 	for child in hitchhikers_node.get_children():
 		if child.has_signal("reached_player"):
@@ -53,15 +53,15 @@ func _ready():
 			print("Connected to hitchhiker: ", child.name)
 		else:
 			print("WARNING: Child '", child.name, "' does not have reached_player signal")
-		
+
 		if child.has_signal("player_passed_by"):
 			child.player_passed_by.connect(_on_player_passed_by_hitchhiker)
 			print("Connected to player_passed_by for: ", child.name)
-	
+
 	# Start with all hitchhikers disabled except hitchhiker 1
 	disable_all_hitchhikers()
 	enable_hitchhiker(1)
-	
+
 	print("GameManager initialized - connected to ", hitchhikers_node.get_child_count(), " hitchhikers")
 
 
@@ -98,19 +98,19 @@ func _on_hitchhiker_reached_player(npc: Node3D) -> void:
 	if not npc.visible or (npc.has_method("is_enabled") and not npc.is_enabled()):
 		print("Hitchhiker is disabled, ignoring: ", npc.name)
 		return
-	
+
 	# Only interact if we're not already in a dialogue
 	if current_hitchhiker != null:
 		print("Already in dialogue, ignoring hitchhiker: ", npc.name)
 		return
-	
+
 	print("Hitchhiker reached player: ", npc.name)
 	current_hitchhiker = npc
-	
+
 	# Mark that player is interacting with this hitchhiker
 	if "player_interacted" in npc:
 		npc.player_interacted = true
-	
+
 	handle_hitchhiker_interaction(npc)
 
 # Signal handler called when player passes by a hitchhiker without picking them up
@@ -118,12 +118,12 @@ func _on_player_passed_by_hitchhiker(npc: Node3D) -> void:
 	var hitchhiker_id = 0
 	if "hitchhiker_id" in npc:
 		hitchhiker_id = npc.hitchhiker_id
-	
+
 	print("Player passed by hitchhiker ID ", hitchhiker_id, " without picking them up")
-	
+
 	# Disable hitchhiker since player passed by
 	disable_hitchhiker(hitchhiker_id)
-	
+
 	# Check if this was hitchhiker 4
 	if hitchhiker_id == 4:
 		hitchhiker_4_completed = true
@@ -132,7 +132,7 @@ func _on_player_passed_by_hitchhiker(npc: Node3D) -> void:
 		# Set flag to enable next hitchhiker on next lap
 		enable_next_hitchhiker_on_next_lap = true
 		print("Next hitchhiker will be enabled on next lap")
-	
+
 	# You can add additional logic here, such as:
 	# - Tracking skipped hitchhikers
 	# - Achievements
@@ -142,12 +142,12 @@ func _on_player_passed_by_hitchhiker(npc: Node3D) -> void:
 # Signal handler called when car starts a new lap
 func _on_lap_started(lap_number: int) -> void:
 	print("Car started lap ", lap_number)
-	
+
 	# Check if we should enable the next hitchhiker
 	# Only enable if not currently in dialogue (prevents enabling during multi-lap dialogues)
 	if enable_next_hitchhiker_on_next_lap and not in_dialogue:
 		enable_next_hitchhiker_on_next_lap = false
-		
+
 		# Enable the next hitchhiker in sequence
 		if next_hitchhiker_to_enable <= 4:
 			enable_hitchhiker(next_hitchhiker_to_enable)
@@ -157,7 +157,7 @@ func _on_lap_started(lap_number: int) -> void:
 			print("All hitchhikers have been encountered")
 	elif enable_next_hitchhiker_on_next_lap and in_dialogue:
 		print("Waiting for dialogue to end before enabling next hitchhiker")
-	
+
 	# You can add logic here, such as:
 	# - Reset hitchhiker availability
 	# - Enable/disable certain hitchhikers based on lap number
@@ -178,12 +178,12 @@ func handle_hitchhiker_interaction(hitchhiker: Node3D):
 			print("DEBUG: CarFollower exists but missing method")
 		else:
 			print("DEBUG: CarFollower is null")
-	
+
 	# Get the hitchhiker ID
 	var hitchhiker_id = 0
 	if "hitchhiker_id" in hitchhiker:
 		hitchhiker_id = hitchhiker.hitchhiker_id
-	
+
 	# Start dialogue based on hitchhiker ID
 	start_dialogue_for_hitchhiker(hitchhiker_id)
 
@@ -191,7 +191,7 @@ func start_dialogue_for_hitchhiker(hitchhiker_id: int):
 	print("Starting dialogue for hitchhiker ID: ", hitchhiker_id)
 	current_hitchhiker_id = hitchhiker_id  # Store for generic handlers
 	in_dialogue = true  # Mark that dialogue is active
-	
+
 	match hitchhiker_id:
 		1:  # Novinha - Two stage dialogue
 			# Connect to generic pre-dialogue ended signal
@@ -236,32 +236,32 @@ func _on_pre_dialogue_ended(_resource: Resource) -> void:
 	if DialogueFlow.dialogue_ended.is_connected(_on_pre_dialogue_ended):
 		DialogueFlow.dialogue_ended.disconnect(_on_pre_dialogue_ended)
 		print("DEBUG: Disconnected signal")
-	
+
 	# Resume car movement after pre-dialogue
 	var road_follower = get_node_or_null("../CarFollower")
 	if road_follower and road_follower.has_method("end_dialogue"):
 		road_follower.end_dialogue()
 		print("DEBUG: Car movement resumed")
-	
+
 	# Check player's choice
 	var player_choice = DialogueFlow.last_choice
 	print("DEBUG: Player choice: ", player_choice)
-	
+
 	if player_choice == "positive":
 		# Player accepted - run main dialogue for this hitchhiker
 		print("Player accepted hitchhiker ID ", current_hitchhiker_id, " - starting main dialogue")
-		
+
 		# Disable hitchhiker since they're now in the car
 		disable_hitchhiker(current_hitchhiker_id)
-		
+
 		# Stop car again for main dialogue
 		# Connect to main dialogue ended signal
 		if not DialogueFlow.dialogue_ended.is_connected(_on_main_dialogue_ended):
 			DialogueFlow.dialogue_ended.connect(_on_main_dialogue_ended)
-		
+
 		# Show ball mesh for this hitchhiker
 		show_hitchhiker_ball_mesh(current_hitchhiker_id)
-		
+
 		# Run appropriate main dialogue based on ID
 		match current_hitchhiker_id:
 			1:
@@ -275,13 +275,13 @@ func _on_pre_dialogue_ended(_resource: Resource) -> void:
 	else:
 		# Player rejected - treat as passed by
 		print("Player rejected hitchhiker ID ", current_hitchhiker_id, " - continuing journey")
-		
+
 		# Disable hitchhiker since player rejected
 		disable_hitchhiker(current_hitchhiker_id)
-		
+
 		# Clear dialogue flag
 		in_dialogue = false
-		
+
 		# Check if this was hitchhiker 4
 		if current_hitchhiker_id == 4:
 			hitchhiker_4_completed = true
@@ -290,7 +290,7 @@ func _on_pre_dialogue_ended(_resource: Resource) -> void:
 			# Set flag to enable next hitchhiker on next lap
 			enable_next_hitchhiker_on_next_lap = true
 			print("Next hitchhiker will be enabled on next lap")
-		
+
 		# Reset interaction
 		current_hitchhiker = null
 		current_hitchhiker_id = 0
@@ -300,10 +300,13 @@ func _on_main_dialogue_ended(_resource: Resource) -> void:
 	# Disconnect the signal
 	if DialogueFlow.dialogue_ended.is_connected(_on_main_dialogue_ended):
 		DialogueFlow.dialogue_ended.disconnect(_on_main_dialogue_ended)
-	
+
 	# Clear dialogue flag
 	in_dialogue = false
-	
+
+	# Add items to glovebox or spawn bottle based on which hitchhiker dialogue ended
+	_handle_dialogue_rewards()
+
 	# Check if this was hitchhiker 4
 	if current_hitchhiker_id == 4:
 		hitchhiker_4_completed = true
@@ -312,19 +315,50 @@ func _on_main_dialogue_ended(_resource: Resource) -> void:
 		# Set flag to enable next hitchhiker on the next lap
 		enable_next_hitchhiker_on_next_lap = true
 		print("Main dialogue ended - next hitchhiker will be enabled on next lap")
-	
+
 	# Resume car movement and reset
 	reset_hitchhiker_interaction()
+
+func _handle_dialogue_rewards() -> void:
+	"""Handle spawning items based on which hitchhiker dialogue ended"""
+	var glovebox_state = get_node_or_null("/root/GloveboxState")
+
+	match current_hitchhiker_id:
+		1:  # Novinha - spawn badesso in glovebox
+			if glovebox_state:
+				glovebox_state.add_item_to_spawn("badesso")
+				print("Novinha dialogue ended - badesso will appear in glovebox")
+		2:  # Vovo - spawn benga in glovebox
+			if glovebox_state:
+				glovebox_state.add_item_to_spawn("benga")
+				print("Vovo dialogue ended - benga will appear in glovebox")
+		3:  # Drunk/Fent - spawn bottle on car (like pressing B)
+			_spawn_bottle_on_car()
+			print("Drunk dialogue ended - bottle spawned on car")
+		4:  # Middle-aged - spawn lebron (donut) in glovebox
+			if glovebox_state:
+				glovebox_state.add_item_to_spawn("lebron")
+				print("Middle-aged dialogue ended - lebron (donut) will appear in glovebox")
+
+func _spawn_bottle_on_car() -> void:
+	"""Spawn a bottle on the car dashboard (like pressing B key)"""
+	# Find the bottle manager in the scene
+	var bottle_manager = get_tree().root.find_child("BottleManager", true, false)
+	if bottle_manager and bottle_manager.has_method("spawn_bottle"):
+		bottle_manager.spawn_bottle()
+		print("Bottle spawned via BottleManager")
+	else:
+		print("WARNING: BottleManager not found or missing spawn_bottle method")
 
 func reset_hitchhiker_interaction():
 	# Hide ball mesh
 	hide_hitchhiker_ball_mesh(current_hitchhiker_id)
-	
+
 	# Re-enable car control
 	var road_follower = get_node_or_null("../CarFollower")
 	if road_follower and road_follower.has_method("end_dialogue"):
 		road_follower.end_dialogue()
-	
+
 	# Allow interaction with next hitchhiker
 	current_hitchhiker = null
 	current_hitchhiker_id = 0
@@ -335,7 +369,7 @@ func show_hitchhiker_ball_mesh(hitchhiker_id: int):
 	if not carro_node:
 		print("WARNING: Carro node not found!")
 		return
-	
+
 	var mesh_name = "Hitchhiker" + str(hitchhiker_id) + "_BallMesh"
 	var mesh_node = carro_node.get_node_or_null(mesh_name)
 	if mesh_node:
@@ -348,7 +382,7 @@ func hide_hitchhiker_ball_mesh(hitchhiker_id: int):
 	var carro_node = get_node_or_null("../CarFollower/Carro")
 	if not carro_node:
 		return
-	
+
 	var mesh_name = "Hitchhiker" + str(hitchhiker_id) + "_BallMesh"
 	var mesh_node = carro_node.get_node_or_null(mesh_name)
 	if mesh_node:
@@ -360,7 +394,7 @@ func enable_hitchhiker(hitchhiker_id: int):
 	if not hitchhikers_node:
 		print("WARNING: Hitchhikers node not found!")
 		return
-	
+
 	for child in hitchhikers_node.get_children():
 		if "hitchhiker_id" in child and child.hitchhiker_id == hitchhiker_id:
 			child.visible = true
@@ -372,7 +406,7 @@ func enable_hitchhiker(hitchhiker_id: int):
 					area_child.monitorable = true
 			print("Enabled hitchhiker ID: ", hitchhiker_id, " (", child.name, ")")
 			return
-	
+
 	print("WARNING: Hitchhiker with ID ", hitchhiker_id, " not found!")
 
 # Disable a specific hitchhiker by ID (1-4)
@@ -380,7 +414,7 @@ func disable_hitchhiker(hitchhiker_id: int):
 	if not hitchhikers_node:
 		print("WARNING: Hitchhikers node not found!")
 		return
-	
+
 	for child in hitchhikers_node.get_children():
 		if "hitchhiker_id" in child and child.hitchhiker_id == hitchhiker_id:
 			child.visible = false
@@ -392,7 +426,7 @@ func disable_hitchhiker(hitchhiker_id: int):
 					area_child.monitorable = false
 			print("Disabled hitchhiker ID: ", hitchhiker_id, " (", child.name, ")")
 			return
-	
+
 	print("WARNING: Hitchhiker with ID ", hitchhiker_id, " not found!")
 
 # Disable all hitchhikers

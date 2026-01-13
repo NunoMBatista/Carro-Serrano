@@ -79,19 +79,8 @@ func _ready() -> void:
 	# Create physics boundary from polygon
 	_create_polygon_boundary()
 
-	# Create example physics items
-	#_create_placeholder_rectangle(Vector2(1600, 1200), Vector2(100, 60), Color(0.8, 0.3, 0.3), "placeholder_red")
-	#_create_placeholder_rectangle(Vector2(1200, 1200), Vector2(80, 80), Color(0.3, 0.8, 0.3), "placeholder_green")
-
-	# Add lebron item - spawn position: x=horizontal (left-right), y=vertical (top-bottom)
-	# Example positions: Vector2(1000, 800) = left side, Vector2(2500, 1500) = right side
-	_create_lebron_item(Vector2(2000, 1200))
-
-	# Add badesso item - adjust Vector2(x, y) to change spawn position
-	_create_badesso_item(Vector2(2400, 1200))
-
-	# Add benga item - adjust Vector2(x, y) to change spawn position
-	_create_benga_item(Vector2(1800, 1200))
+	# Spawn items based on dialogue completion status
+	_spawn_items_from_state()
 
 	# Load saved positions from session state
 	if has_node("/root/GloveboxState"):
@@ -289,6 +278,31 @@ func _create_badesso_item(pos: Vector2) -> void:
 		print("Badesso item created at position: ", pos)
 	else:
 		push_error("Failed to load badesso.tscn")
+
+func _spawn_items_from_state() -> void:
+	"""Spawn items in the glovebox based on GloveboxState tracking"""
+	if not has_node("/root/GloveboxState"):
+		return
+
+	var glovebox_state = get_node("/root/GloveboxState")
+	var items_to_spawn = glovebox_state.get_items_to_spawn()
+
+	for item_name in items_to_spawn:
+		# Check if this item was already spawned (exists in saved state)
+		if glovebox_state.has_state_for(item_name):
+			# Item already exists, skip spawning (position will be loaded from saved state)
+			continue
+
+		# Spawn new item at default position
+		match item_name:
+			"badesso":
+				_create_badesso_item(Vector2(2400, 1200))
+			"lebron":
+				_create_lebron_item(Vector2(2000, 1200))
+			"benga":
+				_create_benga_item(Vector2(1800, 1200))
+			_:
+				print("Warning: Unknown item to spawn: ", item_name)
 
 func _create_benga_item(pos: Vector2) -> void:
 	"""Creates the benga sprite item from scene"""
