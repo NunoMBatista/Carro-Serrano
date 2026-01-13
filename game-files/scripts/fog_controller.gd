@@ -7,8 +7,8 @@ extends Node
 @export var directional_light_path: NodePath
 
 ## Fog density range (Environment.volumetric_fog_density)
-@export var min_density: float = 0.02   # lightest fog
-@export var max_density: float = 0.18   # densest fog
+@export var min_density: float = 0.08   # lightest fog
+@export var max_density: float = 0.2   # densest fog
 
 ## Optional light volumetric contribution (DirectionalLight3D.light_volumetric_fog_energy)
 ## Leave both at 0 to keep lights unchanged.
