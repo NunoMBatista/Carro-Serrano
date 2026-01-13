@@ -133,11 +133,9 @@ MiddleAged: Well... I bet you have some half-assed philosophical theory for that
 	=> step3_negative
 
 - A free donut is a free donut. Better than nothing.
-	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
-		do DialogueFlow.n_positive_choices += 1
-		=> step3_positive
-	else
-		=> step3_negative
+	do DialogueFlow.empathy -= 1 * DialogueFlow.empathy_coefficient
+	=> step3_negative
+
 
 - Maybe admitting that it hurts isn't as difficult as you make it out to be
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
@@ -153,7 +151,7 @@ MiddleAged: Well... I bet you have some half-assed philosophical theory for that
 ~ step3_negative
 
 **His smirk is bigger then in the beggining of the conversation, his eyes light up**
-MiddleAged: Amen... you know... I hate it when people fucking say that all that matters are the "simple things"... what does that ever accomplish?
+MiddleAged: Amen... you know something else... I hate it when people fucking say that all that matters are the "simple things"... what does that ever accomplish?
 MiddleAged: All I see are vain excuses to live like sheep in a herd. All that people make it out to be important is just fuel for drama, more unimportant nonsense to keep them busy until they're dead.
 MiddleAged: I've always been better at focusing on the path ahead
 
