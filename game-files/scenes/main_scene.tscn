@@ -52,9 +52,9 @@
 [ext_resource type="Texture2D" uid="uid://box4jqnentf1d" path="res://assets/traffic_signs/image-removebg-preview1.png" id="50_ruju6"]
 [ext_resource type="Texture2D" uid="uid://cquqc5v7gv4sx" path="res://assets/traffic_signs/reflectorized-roadway-safety-notice-sign-boards-686-removebg-preview.png" id="51_5nybl"]
 [ext_resource type="Texture2D" uid="uid://dm8yn2qlocs2s" path="res://assets/traffic_signs/image-removebg-preview.png" id="52_cq0lk"]
-[ext_resource type="Script" uid="uid://cay2642mv7eay" path="res://scripts/road_interact.gd" id="52_j2yw6"]
+[ext_resource type="Script" path="res://scripts/road_interact.gd" id="52_j2yw6"]
 [ext_resource type="PackedScene" uid="uid://l2loc6c8jgfe" path="res://assets/the_sun.glb" id="53_5nybl"]
-[ext_resource type="PackedScene" uid="uid://bx8k7oam3pqrs" path="res://scenes/title_screen.tscn" id="54_title"]
+[ext_resource type="PackedScene" path="res://scenes/title_screen.tscn" id="54_title"]
 
 [sub_resource type="Sky" id="Sky_7ykc4"]
 
