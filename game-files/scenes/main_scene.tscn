@@ -52,7 +52,7 @@
 [ext_resource type="Texture2D" uid="uid://box4jqnentf1d" path="res://assets/traffic_signs/image-removebg-preview1.png" id="50_ruju6"]
 [ext_resource type="Texture2D" uid="uid://cquqc5v7gv4sx" path="res://assets/traffic_signs/reflectorized-roadway-safety-notice-sign-boards-686-removebg-preview.png" id="51_5nybl"]
 [ext_resource type="Texture2D" uid="uid://dm8yn2qlocs2s" path="res://assets/traffic_signs/image-removebg-preview.png" id="52_cq0lk"]
-[ext_resource type="Script" uid="uid://cay2642mv7eay" path="res://scripts/road_interact.gd" id="52_j2yw6"]
+[ext_resource type="Script" path="res://scripts/road_interact.gd" id="52_j2yw6"]
 [ext_resource type="PackedScene" uid="uid://l2loc6c8jgfe" path="res://assets/the_sun.glb" id="53_5nybl"]
 [ext_resource type="PackedScene" path="res://scenes/title_screen.tscn" id="54_title"]
 
@@ -1286,18 +1286,6 @@ curve = SubResource("Curve3D_ufg4r")
 [node name="edge_C" parent="terrain_11/Terrain/Node3D/RoadManager/Road_001/RP_028" index="2"]
 curve = SubResource("Curve3D_l33ch")
 
-[node name="PathMesh3D" parent="terrain_11/Terrain" index="2"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-script = null
-
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("8_18nlu")
 
@@ -1319,7 +1307,7 @@ torre_stop_road_point_path = NodePath("../torre/HTerrain/RoadManager/Road_001/RP
 player_controller_path = NodePath("../PlayerController")
 
 [node name="Carro" parent="CarFollower" instance=ExtResource("4_gubc5")]
-transform = Transform3D(1.0000002, 0, 0, 0, 1.0000002, 0, 0, 0, 1, -0.00012588501, 0.58342606, -0.009887695)
+transform = Transform3D(1.0000002, 0, 0, 0, 0.99619496, 0.08715574, 0, -0.08715576, 0.9961947, -0.00012588501, 0.58342606, -0.009887695)
 
 [node name="PlayerController" parent="." instance=ExtResource("5_player")]
 
