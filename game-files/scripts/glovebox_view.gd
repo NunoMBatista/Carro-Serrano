@@ -90,6 +90,9 @@ func _ready() -> void:
 	# Add badesso item - adjust Vector2(x, y) to change spawn position
 	_create_badesso_item(Vector2(2400, 1200))
 
+	# Add benga item - adjust Vector2(x, y) to change spawn position
+	_create_benga_item(Vector2(1800, 1200))
+
 	# Load saved positions from session state
 	if has_node("/root/GloveboxState"):
 		get_node("/root/GloveboxState").load_all_items(_physics_items)
@@ -286,6 +289,25 @@ func _create_badesso_item(pos: Vector2) -> void:
 		print("Badesso item created at position: ", pos)
 	else:
 		push_error("Failed to load badesso.tscn")
+
+func _create_benga_item(pos: Vector2) -> void:
+	"""Creates the benga sprite item from scene"""
+	var benga_scene = load("res://scenes/benga.tscn")
+	if benga_scene:
+		var item = benga_scene.instantiate()
+		item.name = "benga"
+		item.position = pos
+
+		# Set physics material
+		var physics_material = PhysicsMaterial.new()
+		physics_material.bounce = 0.4
+		physics_material.friction = 0.5
+		item.physics_material_override = physics_material
+
+		add_item(item)
+		print("Benga item created at position: ", pos)
+	else:
+		push_error("Failed to load benga.tscn")
 
 func _on_item_clicked() -> void:
 	_simulate_crosshair_click()

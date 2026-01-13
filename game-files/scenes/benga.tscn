@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8fgh12mn5pqr"]
+
+[ext_resource type="Script" uid="uid://c7uj2tw7vr772" path="res://scripts/glovebox_item.gd" id="1_benga_script"]
+[ext_resource type="Texture2D" uid="uid://ctolxkugmjngi" path="res://assets/raw_textures/benga.png" id="2_oqptk"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_benga"]
+radius = 53.0
+height = 382.3009
+
+[node name="Benga" type="RigidBody2D"]
+linear_damp = 2.0
+angular_damp = 3.0
+script = ExtResource("1_benga_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-3, -6)
+scale = Vector2(0.95027786, 0.95027786)
+texture = ExtResource("2_oqptk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-7.000001, -9.000001)
+scale = Vector2(0.565, 0.565)
+shape = SubResource("CapsuleShape2D_benga")
