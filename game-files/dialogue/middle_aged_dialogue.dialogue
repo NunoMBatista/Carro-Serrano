@@ -8,18 +8,12 @@ MiddleAged: Bought it when me and her went to Dubai this summer, now that's a ci
 **He start smoking his eletronic cigarete and turns the AC up**
 MiddleAged: Well, enough yapping, I can tell you won't even understand... You're going up the mountain right?
 
-- Dubai sounds impressive. I guess someone like you can easily choose where to live.
+- Yes, I am... Dubai sounds impressive. I guess someone like you can easily choose where to live.
 	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
 	=> step1_negative
 
-- Yes, I am... Never got to see Dubai, probably for the best though.
-	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
-		do DialogueFlow.n_positive_choices += 1
-		=> step1_positive
-	else
-		=> step1_negative
 
-- You're paying for the seat coverings if you keep smoking that wannabe cigarete in here. Why are you really heading up to the summit anyway?
+- Yes, I am... You're paying for the seat coverings if you keep smoking that wannabe cigarete in here. Why are you really heading up to the summit anyway?
 	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step1_positive
