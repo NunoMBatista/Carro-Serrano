@@ -128,7 +128,7 @@ func _process(delta: float) -> void:
 		_update_speed(delta)
 	_advance_along_route(delta)
 	_apply_transform(delta)
-	
+
 	# Handle audio based on velocity and braking
 	_update_audio(delta)
 
@@ -944,7 +944,7 @@ func _setup_idle_audio() -> void:
 	_idle_audio = AudioStreamPlayer.new()
 	_idle_audio.name = "IdleAudio"
 	add_child(_idle_audio)
-	
+
 	# Load the idle audio file
 	var audio_path = "res://assets/audio/sfx/car_idle.mp3"
 	var audio_stream = load(audio_path)
@@ -963,7 +963,7 @@ func _setup_driving_audio() -> void:
 	_driving_audio = AudioStreamPlayer.new()
 	_driving_audio.name = "DrivingAudio"
 	add_child(_driving_audio)
-	
+
 	# Load the driving audio file
 	var audio_path = "res://assets/audio/sfx/car_driving.mp3"
 	var audio_stream = load(audio_path)
@@ -981,7 +981,7 @@ func _setup_driving_audio() -> void:
 func _update_audio(delta: float) -> void:
 	if _idle_audio == null or _driving_audio == null:
 		return
-	
+
 	# Check if car is idle (velocity < 0.1)
 	if cur_speed < 0.1:
 		# Play idle sound, stop driving sound
@@ -991,14 +991,14 @@ func _update_audio(delta: float) -> void:
 				_idle_audio.volume_db = -80.0  # Start at near silence
 				_idle_audio.play()
 				_idle_fading_in = true
-		
+
 		# Handle fade-in for idle audio
 		if _idle_fading_in:
 			if _idle_audio.volume_db < _idle_max_volume:
 				_idle_audio.volume_db = min(_idle_audio.volume_db + (_idle_fade_in_speed * 10.0 * delta), _idle_max_volume)
 			else:
 				_idle_fading_in = false
-		
+
 		if _driving_audio.playing:
 			_driving_audio.stop()
 	else:
@@ -1008,19 +1008,19 @@ func _update_audio(delta: float) -> void:
 			_idle_fading_in = false
 			if _idle_audio.playing:
 				_idle_audio.stop()
-		
+
 		# Check if braking
 		var braking = Input.is_action_pressed("Brakes") or _dialogue_active
-		
+
 		if not _driving_audio.playing:
 			_driving_audio.play()
 			_driving_audio.volume_db = 0.0  # Start at 100% volume
-		
+
 		if braking:
 			# Gradually decrease volume when braking
 			if not _is_braking:
 				_is_braking = true
-			
+
 			# Decrease volume (convert from dB)
 			# 0 dB = 100%, -80 dB = near silence
 			var target_volume = -20.0  # Target lower volume when braking
@@ -1029,7 +1029,7 @@ func _update_audio(delta: float) -> void:
 			# Not braking - play at 100% volume
 			if _is_braking:
 				_is_braking = false
-			
+
 			# Gradually restore to 100% volume
 			if _driving_audio.volume_db < 0.0:
 				_driving_audio.volume_db = min(_driving_audio.volume_db + (_volume_fade_speed * 10.0 * delta), 0.0)

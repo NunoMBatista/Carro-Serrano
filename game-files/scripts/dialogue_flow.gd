@@ -13,10 +13,10 @@ signal empathy_changed(new_empathy: int)
 ## Empathy lost per step in bad branch
 @export var empathy_loss: int = 10
 ## Coefficient for empathy changes (multiplier for middle_aged dialogue)
-@export var empathy_coefficient: float = 1.0
+@export var empathy_coefficient: float = 5
 
 ## Current empathy (0-100)
-var empathy: int = 50:
+var empathy: int = 71:
 	set(v):
 		var old_empathy = empathy
 		empathy = clampi(v, 0, 100)

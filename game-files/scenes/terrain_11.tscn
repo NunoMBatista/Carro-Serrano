@@ -860,17 +860,6 @@ albedo_texture = ExtResource("19_otj5b")
 [sub_resource type="FogMaterial" id="FogMaterial_iwidk"]
 density = 4.8335
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hgkgj"]
-
-[sub_resource type="Sky" id="Sky_e3k6c"]
-sky_material = SubResource("ProceduralSkyMaterial_hgkgj")
-
-[sub_resource type="Environment" id="Environment_kqhsf"]
-background_mode = 2
-sky = SubResource("Sky_e3k6c")
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0
-
 [node name="terrain_1" type="Node3D"]
 
 [node name="Terrain" type="Node3D" parent="."]
@@ -1980,6 +1969,3 @@ material = SubResource("StandardMaterial3D_rf5yl")
 transform = Transform3D(-6.5730023, 0, 1.4901161e-08, 0, 0.42936167, 0, 1.8626451e-08, 0, 5.8698306, -26.39666, -27.272814, -42.95572)
 size = Vector3(1.9852295, 2, 2)
 material = SubResource("FogMaterial_iwidk")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_kqhsf")
