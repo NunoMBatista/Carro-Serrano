@@ -47,6 +47,8 @@ var _container: Node
 var _smoothed_basis: Basis
 var _first_container: Node = null  # Store the first container for looping
 var _first_start_rp: Node3D = null  # Store the first starting roadpoint
+var _global_env_resource: Environment = null
+var _global_compositor
 
 func _ready() -> void:
 	_container = _find_container()
@@ -533,6 +535,8 @@ func _peek_next_rp(current: Node3D, prev: Node3D) -> Node3D:
 	var next_rp: Node3D = null
 	if rp_next != NodePath(""):
 		next_rp = current.get_node_or_null(rp_next)
+		# Ensure initial lighting/environment use the global (non-torre) setup
+		_set_torre_environment(false)
 	if next_rp == null or next_rp == prev:
 		var rp_prior: NodePath = current.prior_pt_init
 		if rp_prior != NodePath(""):
@@ -643,6 +647,8 @@ func teleport_to_torre() -> void:
 	_apply_transform(0.0)
 
 	print("DEBUG: Teleported to torre road, will stop at: ", _stop_at_road_point.name if _stop_at_road_point else "end of route")
+	# Switch lighting, environment and clouds to torre setup
+	_set_torre_environment(true)
 
 ## Leave the car and switch to walking mode
 func leave_car() -> void:
@@ -796,3 +802,45 @@ func _close_leave_car_prompt() -> void:
 		_leave_dialog.hide()
 		_leave_dialog.queue_free()
 	_leave_dialog = null
+
+func _set_torre_environment(active: bool) -> void:
+	# When active is true, switch lighting, environment and clouds to the torre setup.
+	# We keep using the root WorldEnvironment node, but swap its Environment/Compositor
+	# to match torre's settings. When false, restore the original global setup.
+	var root = get_tree().get_current_scene()
+	if root == null:
+		return
+
+	var global_env_node = root.get_node_or_null("WorldEnvironment")
+	if global_env_node and _global_env_resource == null and global_env_node is WorldEnvironment:
+		_global_env_resource = (global_env_node as WorldEnvironment).environment
+		_global_compositor = (global_env_node as WorldEnvironment).compositor
+
+	var torre = root.get_node_or_null("torre")
+	if torre == null:
+		return
+
+	var torre_light = torre.get_node_or_null("DirectionalLight3D")
+	var global_light = root.get_node_or_null("DirectionalLight3D")
+	if global_light:
+		global_light.visible = not active
+	if torre_light:
+		torre_light.visible = active
+
+	var torre_env_node = torre.get_node_or_null("WorldEnvironment")
+	if global_env_node and global_env_node is WorldEnvironment:
+		if active:
+			# Use torre's environment and compositor on the global WorldEnvironment
+			if torre_env_node and torre_env_node is WorldEnvironment:
+				(global_env_node as WorldEnvironment).environment = (torre_env_node as WorldEnvironment).environment
+				(global_env_node as WorldEnvironment).compositor = (torre_env_node as WorldEnvironment).compositor
+		else:
+			# Restore original global environment and compositor
+			(global_env_node as WorldEnvironment).environment = _global_env_resource
+			(global_env_node as WorldEnvironment).compositor = _global_compositor
+
+	# Toggle SunshineClouds only in the final scene
+	var clouds = torre.get_node_or_null("SunshineCloudsDriverGD")
+	if clouds:
+		clouds.set("update_continuously", active)
+		clouds.set_process(active)

@@ -1,6 +1,8 @@
 extends StaticBody3D
 ## Clickable payphone that shows a yes/no confirmation dialog
 
+const INTERACT_MAX_DISTANCE := 5.0
+
 var _dialog_open: bool = false
 var _current_dialog: ConfirmationDialog = null
 var _used: bool = false
@@ -10,6 +12,12 @@ func interact() -> void:
 		return
 	if _dialog_open:
 		return
+	# Only allow interaction when player is close enough
+	var scene = get_tree().get_current_scene()
+	if scene:
+		var player_pos = _get_player_position(scene)
+		if global_position.distance_to(player_pos) > INTERACT_MAX_DISTANCE:
+			return
 	_dialog_open = true
 
 	# Show cursor and disable player raycast while dialog is open
@@ -110,6 +118,19 @@ func _get_active_crosshair(root: Node) -> Node:
 		return player.get_node("Control/CrossHair")
 
 	return null
+
+
+func _get_player_position(root: Node) -> Vector3:
+	# Prefer the walking player controller when present, otherwise fall back to in-car Player
+	var player_controller = _find_node(root, "PlayerController")
+	if player_controller and player_controller is Node3D:
+		return (player_controller as Node3D).global_position
+
+	var player = _find_node(root, "Player")
+	if player and player is Node3D:
+		return (player as Node3D).global_position
+
+	return global_position
 
 
 func _find_node(root: Node, name: String) -> Node:

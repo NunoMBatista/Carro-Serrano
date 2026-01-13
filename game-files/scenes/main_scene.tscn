@@ -1,4 +1,4 @@
-[gd_scene load_steps=185 format=3 uid="uid://f262srybfbm8"]
+[gd_scene load_steps=186 format=3 uid="uid://f262srybfbm8"]
 
 [ext_resource type="PackedScene" uid="uid://dfmyjabbccxsr" path="res://scenes/terrain_2.tscn" id="2_7ykc4"]
 [ext_resource type="Script" uid="uid://dl7l87n055idr" path="res://scripts/road_car_follower.gd" id="3_pu3yx"]
@@ -52,6 +52,7 @@
 [ext_resource type="Texture2D" uid="uid://box4jqnentf1d" path="res://assets/traffic_signs/image-removebg-preview1.png" id="50_ruju6"]
 [ext_resource type="Texture2D" uid="uid://cquqc5v7gv4sx" path="res://assets/traffic_signs/reflectorized-roadway-safety-notice-sign-boards-686-removebg-preview.png" id="51_5nybl"]
 [ext_resource type="Texture2D" uid="uid://dm8yn2qlocs2s" path="res://assets/traffic_signs/image-removebg-preview.png" id="52_cq0lk"]
+[ext_resource type="PackedScene" uid="uid://l2loc6c8jgfe" path="res://assets/the_sun.glb" id="53_5nybl"]
 
 [sub_resource type="Sky" id="Sky_7ykc4"]
 
@@ -1825,6 +1826,10 @@ transform = Transform3D(-0.78422624, 0.027409311, -0.6198693, 0.031453267, 0.999
 [node name="Sprite3D2" type="Sprite3D" parent="torre/sign_tunel"]
 transform = Transform3D(1.086998, 0, 1.0336516, 0, 1.5, 0, -1.0336516, 0, 1.086998, 479.0454, 223.88744, 325.122)
 texture = ExtResource("52_cq0lk")
+
+[node name="sun" parent="torre" instance=ExtResource("53_5nybl")]
+transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 1016.56274, 1197.537, 2102.0027)
+visible = false
 
 [editable path="terrain_11"]
 [editable path="terrain_2"]
