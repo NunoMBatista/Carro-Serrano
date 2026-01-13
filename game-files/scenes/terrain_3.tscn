@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://c5hksj70ixl23"]
+[gd_scene load_steps=37 format=3 uid="uid://c5hksj70ixl23"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_07emt"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_owkif"]
@@ -82,17 +82,6 @@ albedo_texture = ExtResource("18_07emt")
 
 [sub_resource type="FogMaterial" id="FogMaterial_07emt"]
 density = 4.8335
-
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_owkif"]
-
-[sub_resource type="Sky" id="Sky_ecna2"]
-sky_material = SubResource("ProceduralSkyMaterial_owkif")
-
-[sub_resource type="Environment" id="Environment_6w70u"]
-background_mode = 2
-sky = SubResource("Sky_ecna2")
-volumetric_fog_enabled = true
-volumetric_fog_density = 0.0
 
 [node name="Node3D" type="Node3D"]
 
@@ -463,6 +452,3 @@ material = SubResource("StandardMaterial3D_4si6q")
 transform = Transform3D(-2.1411867, 0, 0, 0, 0.42936182, 0, 0, 0, 4.897965, -26.39666, -27.272827, -44.449924)
 size = Vector3(1.9852295, 2, 2)
 material = SubResource("FogMaterial_07emt")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_6w70u")
