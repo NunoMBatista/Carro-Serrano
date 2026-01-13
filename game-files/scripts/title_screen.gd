@@ -130,6 +130,13 @@ func _complete_transition() -> void:
 	# Reset cursor shape to default
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)
 
+	# Tell GameManager to start the game (enable hitchhikers, etc.)
+	if GameManager and GameManager.has_method("start_game"):
+		GameManager.start_game()
+		print("GameManager.start_game() called")
+	else:
+		print("WARNING: GameManager not found or doesn't have start_game() method")
+
 	# Remove the title screen
 	queue_free()
 

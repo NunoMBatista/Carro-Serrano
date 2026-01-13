@@ -18,15 +18,30 @@ var enable_next_hitchhiker_on_next_lap: bool = false  # Flag to enable on next l
 var in_dialogue: bool = false  # Track if currently in any dialogue
 var hitchhiker_4_completed: bool = false  # Flag to trigger torre teleport after hitchhiker 4
 
+# Game start state
+var game_started: bool = false  # Flag to track if player has taken the wheel
+
 # Payphone choice state
 var payphone_used: bool = false
 var payphone_choice_yes: bool = false
+
+## Call this when the player takes the wheel to actually start the game
+func start_game() -> void:
+	if game_started:
+		return  # Already started
+
+	game_started = true
+	print("Game started! Enabling first hitchhiker...")
+
+	# Now enable the first hitchhiker
+	enable_hitchhiker(1)
 
 ## Call this when starting a new game/playthrough to reset session state
 func start_new_game() -> void:
 	empathy_score = 0
 	payphone_used = false
 	payphone_choice_yes = false
+	game_started = false
 
 	# Reset glovebox state for new playthrough
 	if has_node("/root/GloveboxState"):
@@ -64,11 +79,11 @@ func _ready():
 			child.player_passed_by.connect(_on_player_passed_by_hitchhiker)
 			print("Connected to player_passed_by for: ", child.name)
 
-	# Start with all hitchhikers disabled except hitchhiker 1
+	# Start with all hitchhikers disabled - wait for game to start
 	disable_all_hitchhikers()
-	enable_hitchhiker(1)
 
 	print("GameManager initialized - connected to ", hitchhikers_node.get_child_count(), " hitchhikers")
+	print("Waiting for player to take the wheel before enabling hitchhikers...")
 
 func on_payphone_choice(chose_yes: bool) -> void:
 	# Record the player's choice at the torre payphone
