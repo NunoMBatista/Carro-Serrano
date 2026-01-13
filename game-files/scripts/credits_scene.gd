@@ -44,7 +44,20 @@ Miguel Martins
 
 
 Original Soundtrack
-Susana Sousa
+Susana Canelo
+
+
+Playtesters
+Catarina Silva
+Mário Bento
+Miguel Cabral Pinto
+João Nave
+Miguel Gonçalves
+João Albano
+
+
+Special Thanks To Our Professors
+Licínio Roque and Luís Pereira
 
 
 
