@@ -1,0 +1,28 @@
+~ start
+
+**You approach the weathered payphone.**
+**The cold metal receiver hangs on its hook, waiting.**
+**Call for help?**
+
+- Yes
+	=> call_yes
+
+- No
+	=> call_no
+
+~ call_yes
+
+**You lift the receiver.**
+**Your fingers dial the emergency number.**
+**The line rings once... twice...**
+**Someone answers.**
+
+=> END
+
+~ call_no
+
+**You stare at the payphone for a moment.**
+**Then turn away.**
+**The mountain's silence returns.**
+
+=> END

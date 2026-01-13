@@ -1,0 +1,27 @@
+~ start
+
+**You approach your car.**
+**The familiar vehicle sits quietly in the mountain fog.**
+
+=> check_payphone
+
+~ check_payphone
+
+if GameManager.payphone_choice_yes == true:
+	=> already_called
+else:
+	=> do_what
+
+~ already_called
+
+**You already called for help.**
+**Now you need to wait by the road.**
+
+=> END
+
+~ do_what
+
+**You open the door and sit in the driver's seat.**
+**The familiar smell of the interior surrounds you.**
+
+=> END
