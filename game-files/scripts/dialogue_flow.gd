@@ -16,7 +16,7 @@ signal empathy_changed(new_empathy: int)
 @export var empathy_coefficient: float = 5
 
 ## Current empathy (0-100)
-var empathy: int = 71:
+var empathy: int = 50:
 	set(v):
 		var old_empathy = empathy
 		empathy = clampi(v, 0, 100)
