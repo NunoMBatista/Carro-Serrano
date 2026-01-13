@@ -127,4 +127,4 @@ ui_shift={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogue/testdialogue.dialogue", "res://dialogue/prototype.dialogue", "res://dialogue/test_branch.dialogue", "res://dialogue/drunk_dialogue.dialogue", "res://dialogue/middle_aged_dialogue.dialogue", "res://dialogue/novinha.dialogue", "res://dialogue/vovo.dialogue", "res://dialogue/vovo_pre.dialogue", "res://dialogue/car_dialogue.dialogue", "res://dialogue/payphone_dialogue.dialogue", "res://dialogue/leave_car_dialogue.dialogue", "res://dialogue/car_breakdown_dialogue.dialogue")
+locale/translations_pot_files=PackedStringArray("res://dialogue/testdialogue.dialogue", "res://dialogue/prototype.dialogue", "res://dialogue/test_branch.dialogue", "res://dialogue/drunk_dialogue.dialogue", "res://dialogue/middle_aged_dialogue.dialogue", "res://dialogue/novinha.dialogue", "res://dialogue/vovo.dialogue", "res://dialogue/vovo_pre.dialogue", "res://dialogue/car_dialogue.dialogue", "res://dialogue/payphone_dialogue.dialogue", "res://dialogue/leave_car_dialogue.dialogue", "res://dialogue/car_breakdown_dialogue.dialogue", "res://dialogue/middle_aged_dialogue_pre.dialogue")

@@ -1,0 +1,29 @@
+~ start
+
+???: Hey man, you going up the mountain? I got shit service here and need to make some calls.
+
+- Yeah you can come.
+	do DialogueFlow.choice("positive")
+	=> END
+
+- No, i don't want anyone else here with me.
+	???: Ok man.
+	=> END
+
+- Where do i leave you then?
+	do DialogueFlow.choice("negative")
+	=> step1_bad
+
+~ step1_bad
+
+???: I get out as soon as i get service, i'll call a cab after so i don't freeze to death, nothing to worry.
+
+- I think that's ok, you can come.
+	do DialogueFlow.choice("positive")
+	=> END
+
+- I'm sorry but i really don't think you'll get service, and if can't find a cab then that's on me for leaving you stranded.
+	do DialogueFlow.choice("negative")
+	???: Damn ok
+	=> END
+
