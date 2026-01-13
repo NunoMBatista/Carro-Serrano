@@ -1,7 +1,7 @@
 extends Node3D
 
 ## Enable/disable dialogue debug overlay (top-right corner)
-@export var debug_dialogue: bool = true
+@export var debug_dialogue: bool = false
 
 # This is the variable you want to change
 @onready var empathy_score: int = 0
@@ -430,14 +430,14 @@ func show_hitchhiker_ball_mesh(hitchhiker_id: int):
 	if mesh_node:
 		# Set transparency to 1.0 (fully transparent) before making visible
 		mesh_node.transparency = 1.0
-		
+
 		# Make the mesh visible
 		mesh_node.visible = true
-		
+
 		# Fade transparency from 1.0 (transparent) to 0.0 (opaque)
 		var tween = create_tween()
 		tween.tween_property(mesh_node, "transparency", 0.0, 0.8)
-		
+
 		print("Showing ball mesh with fade-in: ", mesh_name)
 	else:
 		print("WARNING: Ball mesh not found: ", mesh_name)
