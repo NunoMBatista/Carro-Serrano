@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dk5ajaeu7opmo"
+path="res://.godot/imported/Cobarde, Feliz Natal.mp3-df89414003d9a35eb1881bb3be1c5c36.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/radio/Cobarde, Feliz Natal.mp3"
+dest_files=["res://.godot/imported/Cobarde, Feliz Natal.mp3-df89414003d9a35eb1881bb3be1c5c36.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

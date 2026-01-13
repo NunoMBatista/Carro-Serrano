@@ -4,11 +4,11 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_vplca"]
 
-[node name="Node3D" type="Node3D"]
+[node name="Node3D3" type="Node3D"]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_vplca")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
-visibility_range_end_margin = 100.0
+visibility_range_end = 100.0
 mesh = ExtResource("1_avsvi")
