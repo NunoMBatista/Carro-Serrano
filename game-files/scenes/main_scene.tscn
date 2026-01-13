@@ -1,4 +1,4 @@
-[gd_scene load_steps=189 format=3 uid="uid://f262srybfbm8"]
+[gd_scene load_steps=188 format=3 uid="uid://f262srybfbm8"]
 
 [ext_resource type="PackedScene" uid="uid://dfmyjabbccxsr" path="res://scenes/terrain_2.tscn" id="2_7ykc4"]
 [ext_resource type="Script" uid="uid://dl7l87n055idr" path="res://scripts/road_car_follower.gd" id="3_pu3yx"]
@@ -918,8 +918,6 @@ albedo_texture = ExtResource("38_llmay")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0ugl"]
 albedo_texture = ExtResource("38_llmay")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_mrvy2"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_carro_exterior"]
 size = Vector3(12, 6, 20)
 
@@ -1708,28 +1706,19 @@ transform = Transform3D(2.3016982, 0, -1.7617553, 0, 2.8985505, 0, 1.7617553, 0,
 
 [node name="carro_mod_25d" parent="torre/carro_exterior" instance=ExtResource("43_jix7a")]
 transform = Transform3D(1, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1, 1.8827515, 0, 0.16748047)
-visible = false
 
 [node name="CarroInteract" type="StaticBody3D" parent="torre/carro_exterior"]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("44_carro_interact")
 
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="torre/carro_exterior/CarroInteract"]
-transform = Transform3D(2.4250002, 0, -1.4305115e-06, 0, 2.425, 0, 1.4305115e-06, 0, 2.4250002, 4.397339, 1.3569794, 0.15368652)
-shape = SubResource("BoxShape3D_mrvy2")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="torre/carro_exterior/CarroInteract"]
-transform = Transform3D(2.425, 0, -1.4159143e-06, 0, 2.425, 0, 1.4159143e-06, 0, 2.425, 2.1516113, 1.3569794, 0.20593262)
-shape = SubResource("BoxShape3D_mrvy2")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="torre/carro_exterior/CarroInteract"]
 transform = Transform3D(-0.017261736, 0, 0.3240421, 0, 0.72, 0, -0.2243369, 0, -0.024933621, 2.0725098, 1.1181107, -0.030700684)
 shape = SubResource("BoxShape3D_carro_exterior")
 
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="torre/carro_exterior/CarroInteract"]
-transform = Transform3D(2.4250002, 0, -1.3113022e-06, 0, 2.425, 0, 1.3113022e-06, 0, 2.4250002, -0.10357666, 1.3569794, 0.19830322)
-shape = SubResource("BoxShape3D_mrvy2")
+[node name="InvisibleWall" parent="torre/carro_exterior/CarroInteract" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(0.755, 0, -4.7002516e-07, 0, 0.73, 0, 1.2857572e-07, 0, 2.76, 2.6449585, 1.262001, 0.019897461)
+dialogue_text = ""
 
 [node name="arrow" type="Node3D" parent="torre"]
 transform = Transform3D(0.10444423, 0, 2.8966687, 0, 2.8985507, 0, -2.8966687, 0, 0.10444423, 425.27148, 226.16774, 513.4664)
