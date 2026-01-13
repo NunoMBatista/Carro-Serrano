@@ -1,0 +1,16 @@
+~ start
+
+**You reach the end of the road.**
+**You leave yourself no choice.**
+
+- DO IT
+	=> do_it
+
+- DO IT
+	=> do_it
+
+~ do_it
+
+**...**
+
+=> END

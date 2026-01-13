@@ -3,6 +3,9 @@ extends Node3D
 # Signal emitted when car starts a new lap
 signal lap_started(lap_number: int)
 
+const LEAVE_CAR_DIALOGUE = preload("res://dialogue/leave_car_dialogue.dialogue")
+const CAR_BREAKDOWN_DIALOGUE = preload("res://dialogue/car_breakdown_dialogue.dialogue")
+
 @export_node_path("Node3D") var road_container_path
 @export_node_path("Node3D") var start_road_point_path
 @export var forward_sample_distance := 1.5
@@ -32,7 +35,8 @@ var _stop_at_road_point: Node3D = null  # If set, car will stop when reaching th
 var _should_stop := false  # Flag to indicate car should stop
 var _can_leave_car := false  # True when stopped at torre stop point
 var _leave_prompt_shown := false
-var _leave_dialog: ConfirmationDialog = null
+var _leave_dialogue_active := false
+var _leave_last_title := ""
 var _in_walking_mode := false  # True when player has left the car
 var _player_controller: CharacterBody3D = null
 var _dialogue_active := false  # True when dialogue is active, disables player input
@@ -668,6 +672,10 @@ func teleport_to_torre() -> void:
 	_apply_transform(0.0)
 
 	print("DEBUG: Teleported to torre road, will stop at: ", _stop_at_road_point.name if _stop_at_road_point else "end of route")
+
+	# Stop radio and start empathy-based base track
+	RadioManager.switch_to_base_track()
+
 	# Switch lighting, environment and clouds to torre setup
 	_set_torre_environment(true)
 
@@ -779,61 +787,97 @@ func return_to_car_from_torre() -> void:
 
 func _show_leave_car_prompt() -> void:
 	_leave_prompt_shown = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	_leave_dialog = ConfirmationDialog.new()
-	var dlg := _leave_dialog
-	dlg.title = ""
 
-	# Check empathy score to decide which message to show
-	var gm = get_tree().get_current_scene().get_node_or_null("GameManager")
+	# Check empathy to determine which ending path
+	# Use DialogueFlow.empathy (the actual empathy system used during gameplay)
+	var df = get_node_or_null("/root/DialogueFlow")
 	var empathy := 0
-	if gm:
-		empathy = gm.empathy_score
+	if df:
+		empathy = df.empathy
 
-	if empathy < 0:
-		# Low-empathy path: player cannot leave the car
-		dlg.dialog_text = "You left yourself no choice"
-		dlg.get_ok_button().text = "DO IT"
-		var cancel_btn_low := dlg.get_cancel_button()
-		if cancel_btn_low:
-			cancel_btn_low.visible = false
+	print("DEBUG: Torre ending - empathy score is: ", empathy)
 
-		# Clicking DO IT just closes the dialog; player stays in the car
-		dlg.confirmed.connect(_on_leave_car_dialog_closed)
-		dlg.canceled.connect(_on_leave_car_dialog_closed)
+	if empathy > 70:
+		# Good empathy: Show car breakdown message, then allow player to leave car
+		print("DEBUG: Triggering GOOD empathy ending (empathy > 70)")
+		_show_good_empathy_breakdown()
 	else:
-		# Normal path: allow leaving the car
-		dlg.dialog_text = "You make you own fate"
-		dlg.get_ok_button().text = "I know"
-		var second_btn := dlg.add_button("I guess", true)
-		var cancel_btn := dlg.get_cancel_button()
-		if cancel_btn:
-			cancel_btn.visible = false
-
-		dlg.confirmed.connect(_on_leave_car_choice)
-		second_btn.pressed.connect(_on_leave_car_choice)
-		dlg.canceled.connect(_on_leave_car_dialog_closed)
-
-	get_tree().root.add_child(dlg)
-	dlg.popup_centered()
+		# Bad empathy (<=70): Show "do it" dialogue that leads to hard cut ending
+		print("DEBUG: Triggering BAD empathy ending (empathy <= 70)")
+		_show_bad_empathy_ending()
 
 
-func _on_leave_car_choice() -> void:
-	_close_leave_car_prompt()
-	leave_car()
+func _on_leave_car_passed_title(title: String) -> void:
+	_leave_last_title = title
 
 
-func _on_leave_car_dialog_closed() -> void:
-	_close_leave_car_prompt()
-	# Player chose to dismiss the prompt (e.g. via ESC); keep them in the car.
+func _show_bad_empathy_ending() -> void:
+	_leave_dialogue_active = true
+	_leave_last_title = ""
+
+	DialogueManager.passed_title.connect(_on_bad_ending_passed_title)
+	DialogueManager.dialogue_ended.connect(_on_bad_ending_dialogue_ended)
+	DialogueManager.show_example_dialogue_balloon(LEAVE_CAR_DIALOGUE, "start")
 
 
-func _close_leave_car_prompt() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	if _leave_dialog and is_instance_valid(_leave_dialog):
-		_leave_dialog.hide()
-		_leave_dialog.queue_free()
-	_leave_dialog = null
+func _on_bad_ending_passed_title(title: String) -> void:
+	_leave_last_title = title
+
+
+func _on_bad_ending_dialogue_ended(_resource: DialogueResource) -> void:
+	DialogueManager.passed_title.disconnect(_on_bad_ending_passed_title)
+	DialogueManager.dialogue_ended.disconnect(_on_bad_ending_dialogue_ended)
+	_leave_dialogue_active = false
+
+	# Player chose "DO IT" - hard cut to black and credits
+	if _leave_last_title == "do_it":
+		_trigger_hard_cut_credits()
+
+
+func _show_good_empathy_breakdown() -> void:
+	_leave_dialogue_active = true
+	_leave_last_title = ""
+
+	DialogueManager.passed_title.connect(_on_breakdown_passed_title)
+	DialogueManager.dialogue_ended.connect(_on_breakdown_dialogue_ended)
+	DialogueManager.show_example_dialogue_balloon(CAR_BREAKDOWN_DIALOGUE, "start")
+
+
+func _on_breakdown_passed_title(title: String) -> void:
+	_leave_last_title = title
+
+
+func _on_breakdown_dialogue_ended(_resource: DialogueResource) -> void:
+	DialogueManager.passed_title.disconnect(_on_breakdown_passed_title)
+	DialogueManager.dialogue_ended.disconnect(_on_breakdown_dialogue_ended)
+	_leave_dialogue_active = false
+
+	# Player chose to leave - allow them to exit the car
+	if _leave_last_title == "leave":
+		leave_car()
+
+
+func _trigger_hard_cut_credits() -> void:
+	print("DEBUG: _trigger_hard_cut_credits called (road_car_follower)")
+	# Hard cut: immediately stop music and cut to black, then show credits
+	RadioManager._stop_all()
+	RadioManager._stop_base_track()
+	print("DEBUG: Music stopped")
+
+	# Load credits scene with hard cut mode
+	var credits_scene = load("res://scenes/credits.tscn")
+	print("DEBUG: Credits scene loaded: ", credits_scene != null)
+	if credits_scene:
+		var credits = credits_scene.instantiate()
+		print("DEBUG: Credits instantiated: ", credits != null)
+		if credits.has_method("set_hard_cut_mode"):
+			credits.set_hard_cut_mode(true)
+			print("DEBUG: Hard cut mode set")
+		print("DEBUG: Adding credits to tree...")
+		get_tree().root.add_child(credits)
+		print("DEBUG: Credits added to tree")
+	else:
+		print("ERROR: Failed to load credits scene!")
 
 func _set_torre_environment(active: bool) -> void:
 	# When active is true, switch lighting, environment and clouds to the torre setup.

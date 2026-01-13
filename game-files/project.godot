@@ -41,6 +41,16 @@ import/blender/enabled=false
 
 [input]
 
+ui_accept={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194309,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
+ui_select={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
 ui_left={
 "deadzone": 0.5,
 "events": [Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":13,"pressure":0.0,"pressed":false,"script":null)
@@ -77,16 +87,6 @@ dev_spawn_ball={
 Brakes={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null)
-]
-}
-ui_accept={
-"deadzone": 0.5,
-"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194309,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
-]
-}
-ui_select={
-"deadzone": 0.5,
-"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
 ]
 }
 move_up={
@@ -127,4 +127,4 @@ ui_shift={
 
 [internationalization]
 
-locale/translations_pot_files=PackedStringArray("res://dialogue/testdialogue.dialogue", "res://dialogue/prototype.dialogue", "res://dialogue/test_branch.dialogue", "res://dialogue/drunk_dialogue.dialogue", "res://dialogue/middle_aged_dialogue.dialogue", "res://dialogue/novinha.dialogue", "res://dialogue/vovo.dialogue", "res://dialogue/vovo_pre.dialogue")
+locale/translations_pot_files=PackedStringArray("res://dialogue/testdialogue.dialogue", "res://dialogue/prototype.dialogue", "res://dialogue/test_branch.dialogue", "res://dialogue/drunk_dialogue.dialogue", "res://dialogue/middle_aged_dialogue.dialogue", "res://dialogue/novinha.dialogue", "res://dialogue/vovo.dialogue", "res://dialogue/vovo_pre.dialogue", "res://dialogue/car_dialogue.dialogue", "res://dialogue/payphone_dialogue.dialogue", "res://dialogue/leave_car_dialogue.dialogue", "res://dialogue/car_breakdown_dialogue.dialogue")

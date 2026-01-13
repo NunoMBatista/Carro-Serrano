@@ -79,20 +79,31 @@ func on_payphone_choice(chose_yes: bool) -> void:
 	if not root:
 		return
 
-	# Reveal the payphone arrow (arrow2) in the torre
-	var arrow2 = root.get_node_or_null("torre/arrow2")
-	if arrow2:
-		arrow2.visible = true
-
 	# Hide the initial torre arrow once the payphone has been used
 	var arrow = root.get_node_or_null("torre/arrow")
 	if arrow:
 		arrow.visible = false
 
-	# Enable interaction collider for the parked car in the torre
-	var carro_interact = root.get_node_or_null("torre/carro_exterior/CarroInteract")
-	if carro_interact and carro_interact is StaticBody3D:
-		carro_interact.collision_layer = 2
+	if chose_yes:
+		# Called for help - show arrow to road interaction (arrow3)
+		var arrow3 = root.get_node_or_null("torre/arrow3")
+		if arrow3:
+			arrow3.visible = true
+
+		# Enable road interaction collider
+		var road_interact = root.get_node_or_null("torre/RoadInteract")
+		if road_interact and road_interact is StaticBody3D:
+			road_interact.collision_layer = 2
+	else:
+		# Didn't call for help - show arrow to car (arrow2)
+		var arrow2 = root.get_node_or_null("torre/arrow2")
+		if arrow2:
+			arrow2.visible = true
+
+		# Enable interaction collider for the parked car in the torre
+		var carro_interact = root.get_node_or_null("torre/carro_exterior/CarroInteract")
+		if carro_interact and carro_interact is StaticBody3D:
+			carro_interact.collision_layer = 2
 
 const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
 

@@ -194,3 +194,6 @@ func set_lift_mode() -> void:
 	current_index = 0
 	if not textures_default.is_empty():
 		crosshair_texture.texture = textures_default[0]
+
+	# Make lift mode cursor bigger
+	crosshair_texture.scale = Vector2(1.5, 1.5)

@@ -1,120 +1,50 @@
 extends StaticBody3D
-## Clickable payphone that shows a yes/no confirmation dialog
+## Clickable payphone that shows a dialogue using the dialogue system
 
-const INTERACT_MAX_DISTANCE := 5.0
+const PAYPHONE_DIALOGUE = preload("res://dialogue/payphone_dialogue.dialogue")
 
-var _dialog_open: bool = false
-var _current_dialog: ConfirmationDialog = null
 var _used: bool = false
-var _dialog_theme: Theme = null
-
-func _ready() -> void:
-	# Create theme with dialogue font
-	_dialog_theme = Theme.new()
-	var font = load("res://fonts/SpecialElite-Regular.ttf")
-	if font:
-		_dialog_theme.set_font("font", "Label", font)
-		_dialog_theme.set_font("font", "Button", font)
-		_dialog_theme.set_font_size("font_size", "Label", 20)
-		_dialog_theme.set_font_size("font_size", "Button", 18)
+var _dialogue_active: bool = false
+var _last_title: String = ""
 
 func interact() -> void:
 	if _used:
 		return
-	if _dialog_open:
+	if _dialogue_active:
 		return
-	# Only allow interaction when player is close enough
-	var scene = get_tree().get_current_scene()
-	if scene:
-		var player_pos = _get_player_position(scene)
-		if global_position.distance_to(player_pos) > INTERACT_MAX_DISTANCE:
-			return
-	_dialog_open = true
 
-	# Show cursor and disable player raycast while dialog is open
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	_set_player_raycast_enabled(false)
-
-	# Build a confirmation dialog with Yes/No options
-	_current_dialog = ConfirmationDialog.new()
-	var dlg := _current_dialog
-	dlg.theme = _dialog_theme
-	dlg.title = ""
-	dlg.dialog_text = "Call for help?"
-	# Customize buttons to Yes/No
-	dlg.get_ok_button().text = "Yes"
-	var no_btn := dlg.add_button("No", true)
-	var cancel_btn := dlg.get_cancel_button()
-	if cancel_btn:
-		cancel_btn.visible = false
-
-	# Connect signals
-	dlg.confirmed.connect(_on_dialog_confirmed)
-	no_btn.pressed.connect(_on_dialog_cancelled)
-	dlg.canceled.connect(_on_dialog_cancelled)
-
-	# Wrap in CanvasLayer with high layer number to appear above cursor
-	var canvas_layer = CanvasLayer.new()
-	canvas_layer.layer = 110  # Higher than cursor layer (102)
-	get_tree().root.add_child(canvas_layer)
-	canvas_layer.add_child(dlg)
-	dlg.popup_centered()
-
-
-func _on_dialog_confirmed() -> void:
-	_notify_choice(true)
-	_close_dialog()
-
-
-func _on_dialog_cancelled() -> void:
-	_notify_choice(false)
-	_close_dialog()
-
-
-func _close_dialog() -> void:
+	_dialogue_active = true
 	_used = true
+
 	# Disable this payphone's collision so it cannot be interacted again
-	if self is CollisionObject3D:
-		collision_layer = 0
+	collision_layer = 0
 
-	# Reset crosshair click state so it doesn't stay "closed"
-	var scene = get_tree().get_current_scene()
-	if scene:
-		var cross = _get_active_crosshair(scene)
-		if cross and cross.has_method("set"):
-			cross.set("space_held", false)
+	# Disable player movement during dialogue
+	_set_player_active(false)
 
-	_dialog_open = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	_set_player_raycast_enabled(true)
-	if _current_dialog and is_instance_valid(_current_dialog):
-		_current_dialog.hide()
-		# Also free the parent CanvasLayer
-		var parent = _current_dialog.get_parent()
-		if parent and parent is CanvasLayer:
-			parent.queue_free()
-		else:
-			_current_dialog.queue_free()
-	_current_dialog = null
+	# Start the payphone dialogue
+	DialogueManager.passed_title.connect(_on_passed_title)
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+	DialogueManager.show_example_dialogue_balloon(PAYPHONE_DIALOGUE, "start")
 
 
-func _set_player_raycast_enabled(enabled: bool) -> void:
-	var scene = get_tree().get_current_scene()
-	if not scene:
-		return
-	var cross = _get_active_crosshair(scene)
-	if not cross:
-		return
-	var rc = null
-	if cross.has_method("get"):
-		rc = cross.get("raycast")
-	if rc and rc is NodePath:
-		if cross.has_node(rc):
-			rc = cross.get_node(rc)
-		else:
-			rc = null
-	if rc and rc is RayCast3D:
-		rc.enabled = enabled
+func _on_passed_title(title: String) -> void:
+	_last_title = title
+
+
+func _on_dialogue_ended(resource: DialogueResource) -> void:
+	DialogueManager.passed_title.disconnect(_on_passed_title)
+	DialogueManager.dialogue_ended.disconnect(_on_dialogue_ended)
+	_dialogue_active = false
+
+	# Re-enable player movement
+	_set_player_active(true)
+
+	# Determine which choice was made based on the last title
+	var chose_yes = (_last_title == "call_yes")
+
+	# Notify GameManager of the choice
+	_notify_choice(chose_yes)
 
 
 func _notify_choice(chose_yes: bool) -> void:
@@ -126,31 +56,13 @@ func _notify_choice(chose_yes: bool) -> void:
 		gm.on_payphone_choice(chose_yes)
 
 
-func _get_active_crosshair(root: Node) -> Node:
-	# Prefer the walking player controller crosshair when present,
-	# otherwise fall back to the in-car Player crosshair.
-	var player_controller = _find_node(root, "PlayerController")
-	if player_controller and player_controller.has_node("Control/CrossHair"):
-		return player_controller.get_node("Control/CrossHair")
-
-	var player = _find_node(root, "Player")
-	if player and player.has_node("Control/CrossHair"):
-		return player.get_node("Control/CrossHair")
-
-	return null
-
-
-func _get_player_position(root: Node) -> Vector3:
-	# Prefer the walking player controller when present, otherwise fall back to in-car Player
-	var player_controller = _find_node(root, "PlayerController")
-	if player_controller and player_controller is Node3D:
-		return (player_controller as Node3D).global_position
-
-	var player = _find_node(root, "Player")
-	if player and player is Node3D:
-		return (player as Node3D).global_position
-
-	return global_position
+func _set_player_active(active: bool) -> void:
+	var scene = get_tree().get_current_scene()
+	if not scene:
+		return
+	var player = _find_node(scene, "PlayerController")
+	if player and player.has_method("set_physics_process"):
+		player.set_physics_process(active)
 
 
 func _find_node(root: Node, name: String) -> Node:

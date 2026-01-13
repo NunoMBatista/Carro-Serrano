@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://bvqxy8k3l5m8o"
+path="res://.godot/imported/leave_car_dialogue.dialogue-5c57cae0ab95953f49135ebc79bf4e33.tres"
+
+[deps]
+
+source_file="res://dialogue/leave_car_dialogue.dialogue"
+dest_files=["res://.godot/imported/leave_car_dialogue.dialogue-5c57cae0ab95953f49135ebc79bf4e33.tres"]
+
+[params]
+
+defaults=true

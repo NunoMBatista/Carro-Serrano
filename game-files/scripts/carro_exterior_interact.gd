@@ -1,21 +1,14 @@
 extends StaticBody3D
+## Clickable car that shows dialogues using the dialogue system
 
-var _dialog_open: bool = false
-var _current_dialog: ConfirmationDialog = null
-var _dialog_theme: Theme = null
+const CAR_DIALOGUE = preload("res://dialogue/car_dialogue.dialogue")
+const DO_IT_DIALOGUE = preload("res://dialogue/leave_car_dialogue.dialogue")
 
-func _ready() -> void:
-	# Create theme with dialogue font
-	_dialog_theme = Theme.new()
-	var font = load("res://fonts/SpecialElite-Regular.ttf")
-	if font:
-		_dialog_theme.set_font("font", "Label", font)
-		_dialog_theme.set_font("font", "Button", font)
-		_dialog_theme.set_font_size("font_size", "Label", 20)
-		_dialog_theme.set_font_size("font_size", "Button", 18)
+var _dialogue_active: bool = false
+var _last_title: String = ""
 
 func interact() -> void:
-	if _dialog_open:
+	if _dialogue_active:
 		return
 
 	var gm = _get_game_manager()
@@ -26,136 +19,85 @@ func interact() -> void:
 	if not gm.payphone_used:
 		return
 
-	_dialog_open = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	_set_player_raycast_enabled(false)
+	_dialogue_active = true
 
-	if gm.payphone_choice_yes:
-		_show_broke_down_dialog()
+	# Disable player movement during dialogue
+	_set_player_active(false)
+
+	# Start the car dialogue
+	DialogueManager.passed_title.connect(_on_passed_title)
+	DialogueManager.dialogue_ended.connect(_on_dialogue_ended)
+	DialogueManager.show_example_dialogue_balloon(CAR_DIALOGUE, "start")
+
+
+func _on_passed_title(title: String) -> void:
+	_last_title = title
+
+
+func _on_dialogue_ended(_resource: DialogueResource) -> void:
+	DialogueManager.passed_title.disconnect(_on_passed_title)
+	DialogueManager.dialogue_ended.disconnect(_on_dialogue_ended)
+	_dialogue_active = false
+
+	# Re-enable player movement
+	_set_player_active(true)
+
+	# Handle different endings based on the last title
+	if _last_title == "already_called":
+		# Player already called for help, guide them to the road
+		# The road interaction will be visible and active
+		pass
+	elif _last_title == "do_what":
+		# Player didn't call for help - return to car, then show do_it dialogue
+		_return_player_to_car()
+		# Wait for camera transition
+		await get_tree().create_timer(1.0).timeout
+		# Show the do_it dialogue
+		_show_do_it_dialogue()
+
+
+func _show_do_it_dialogue() -> void:
+	_dialogue_active = true
+	DialogueManager.passed_title.connect(_on_do_it_passed_title)
+	DialogueManager.dialogue_ended.connect(_on_do_it_dialogue_ended)
+	DialogueManager.show_example_dialogue_balloon(DO_IT_DIALOGUE, "start")
+
+
+func _on_do_it_passed_title(title: String) -> void:
+	_last_title = title
+
+
+func _on_do_it_dialogue_ended(_resource: DialogueResource) -> void:
+	DialogueManager.passed_title.disconnect(_on_do_it_passed_title)
+	DialogueManager.dialogue_ended.disconnect(_on_do_it_dialogue_ended)
+	_dialogue_active = false
+
+	# Player chose "DO IT" - trigger hard cut to black and credits
+	if _last_title == "do_it":
+		_trigger_hard_cut_credits()
+
+
+func _trigger_hard_cut_credits() -> void:
+	print("DEBUG: _trigger_hard_cut_credits called")
+	# Hard cut: immediately stop music and cut to black, then show credits
+	RadioManager._stop_all()
+	RadioManager._stop_base_track()
+	print("DEBUG: Music stopped")
+
+	# Load credits scene with hard cut mode
+	var credits_scene = load("res://scenes/credits.tscn")
+	print("DEBUG: Credits scene loaded: ", credits_scene != null)
+	if credits_scene:
+		var credits = credits_scene.instantiate()
+		print("DEBUG: Credits instantiated: ", credits != null)
+		if credits.has_method("set_hard_cut_mode"):
+			credits.set_hard_cut_mode(true)
+			print("DEBUG: Hard cut mode set")
+		print("DEBUG: Adding credits to tree...")
+		get_tree().root.add_child(credits)
+		print("DEBUG: Credits added to tree")
 	else:
-		_show_do_what_dialog()
-
-
-func _show_broke_down_dialog() -> void:
-	_current_dialog = ConfirmationDialog.new()
-	var dlg := _current_dialog
-	dlg.theme = _dialog_theme
-	dlg.title = ""
-	dlg.dialog_text = "Car broke down."
-	dlg.get_ok_button().text = "Ask for lift"
-	var second_btn := dlg.add_button("Ask for lift", true)
-	var cancel_btn := dlg.get_cancel_button()
-	if cancel_btn:
-		cancel_btn.visible = false
-
-	dlg.confirmed.connect(_on_broke_down_confirmed)
-	second_btn.pressed.connect(_on_broke_down_confirmed)
-
-	# Wrap in CanvasLayer with high layer number to appear above cursor
-	var canvas_layer = CanvasLayer.new()
-	canvas_layer.layer = 110  # Higher than cursor layer (102)
-	get_tree().root.add_child(canvas_layer)
-	canvas_layer.add_child(dlg)
-	dlg.popup_centered()
-
-
-func _show_do_what_dialog() -> void:
-	_current_dialog = ConfirmationDialog.new()
-	var dlg := _current_dialog
-	dlg.theme = _dialog_theme
-	dlg.title = ""
-	dlg.dialog_text = "Do what you came here to do."
-	dlg.get_ok_button().text = "Yes"
-	var second_btn := dlg.add_button("yes", true)
-	var cancel_btn := dlg.get_cancel_button()
-	if cancel_btn:
-		cancel_btn.visible = false
-
-	dlg.confirmed.connect(_on_return_to_car)
-	second_btn.pressed.connect(_on_return_to_car)
-	# No cancel option: only the two yes-style choices
-
-	# Wrap in CanvasLayer with high layer number to appear above cursor
-	var canvas_layer = CanvasLayer.new()
-	canvas_layer.layer = 110  # Higher than cursor layer (102)
-	get_tree().root.add_child(canvas_layer)
-	canvas_layer.add_child(dlg)
-	dlg.popup_centered()
-
-
-func _on_broke_down_confirmed() -> void:
-	# Placeholder: extend with actual outcome later if needed
-	_close_dialog()
-	# Switch crosshair into non-interactive lift mode
-	var crosshair = _get_active_crosshair(get_tree().get_current_scene())
-	if crosshair and crosshair.has_method("set_lift_mode"):
-		crosshair.set_lift_mode()
-
-
-func _on_return_to_car() -> void:
-	_return_player_to_car()
-	_close_dialog()
-	_show_are_you_sure_dialog()
-
-
-func _on_dialog_canceled_generic() -> void:
-	_close_dialog()
-
-
-func _show_are_you_sure_dialog() -> void:
-	_dialog_open = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	_set_player_raycast_enabled(false)
-
-	_current_dialog = ConfirmationDialog.new()
-	var dlg := _current_dialog
-	dlg.theme = _dialog_theme
-	dlg.title = ""
-	dlg.dialog_text = "Are you sure"
-	dlg.get_ok_button().text = "Yes"
-	var cancel_btn := dlg.get_cancel_button()
-	if cancel_btn:
-		cancel_btn.visible = false
-
-	dlg.confirmed.connect(_on_are_you_sure_confirmed)
-	dlg.canceled.connect(_on_are_you_sure_closed)
-
-	# Wrap in CanvasLayer with high layer number to appear above cursor
-	var canvas_layer = CanvasLayer.new()
-	canvas_layer.layer = 110  # Higher than cursor layer (102)
-	get_tree().root.add_child(canvas_layer)
-	canvas_layer.add_child(dlg)
-	dlg.popup_centered()
-
-
-func _on_are_you_sure_confirmed() -> void:
-	_close_dialog()
-
-
-func _on_are_you_sure_closed() -> void:
-	_close_dialog()
-
-
-func _close_dialog() -> void:
-	# Reset crosshair click state so it doesn't stay "closed" after dialogs
-	var scene = get_tree().get_current_scene()
-	if scene:
-		var cross = _get_active_crosshair(scene)
-		if cross and cross.has_method("set"):
-			cross.set("space_held", false)
-
-	_dialog_open = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	_set_player_raycast_enabled(true)
-	if _current_dialog and is_instance_valid(_current_dialog):
-		_current_dialog.hide()
-		# Also free the parent CanvasLayer
-		var parent = _current_dialog.get_parent()
-		if parent and parent is CanvasLayer:
-			parent.queue_free()
-		else:
-			_current_dialog.queue_free()
-	_current_dialog = null
+		print("ERROR: Failed to load credits scene!")
 
 
 func _get_game_manager():
@@ -175,25 +117,6 @@ func _return_player_to_car() -> void:
 		follower.return_to_car_from_torre()
 
 
-func _set_player_raycast_enabled(enabled: bool) -> void:
-	var scene = get_tree().get_current_scene()
-	if not scene:
-		return
-	var cross = _get_active_crosshair(scene)
-	if not cross:
-		return
-	var rc = null
-	if cross.has_method("get"):
-		rc = cross.get("raycast")
-	if rc and rc is NodePath:
-		if cross.has_node(rc):
-			rc = cross.get_node(rc)
-		else:
-			rc = null
-	if rc and rc is RayCast3D:
-		rc.enabled = enabled
-
-
 func _get_active_crosshair(root: Node) -> Node:
 	var player_controller = _find_node(root, "PlayerController")
 	if player_controller and player_controller.has_node("Control/CrossHair"):
@@ -204,6 +127,15 @@ func _get_active_crosshair(root: Node) -> Node:
 		return player.get_node("Control/CrossHair")
 
 	return null
+
+
+func _set_player_active(active: bool) -> void:
+	var scene = get_tree().get_current_scene()
+	if not scene:
+		return
+	var player = _find_node(scene, "PlayerController")
+	if player and player.has_method("set_physics_process"):
+		player.set_physics_process(active)
 
 
 func _find_node(root: Node, name: String) -> Node:

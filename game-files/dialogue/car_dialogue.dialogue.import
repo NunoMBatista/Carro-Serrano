@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c7pol3hjq4ab"
+path="res://.godot/imported/car_dialogue.dialogue-ab7b153c64d03360720f3a3d7901bb86.tres"
+
+[deps]
+
+source_file="res://dialogue/car_dialogue.dialogue"
+dest_files=["res://.godot/imported/car_dialogue.dialogue-ab7b153c64d03360720f3a3d7901bb86.tres"]
+
+[params]
+
+defaults=true

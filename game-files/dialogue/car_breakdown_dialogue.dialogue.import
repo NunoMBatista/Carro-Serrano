@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://cqvpidyr5x2am"
+path="res://.godot/imported/car_breakdown_dialogue.dialogue-4829ca1ff1486ad1ba928acbfbe6848c.tres"
+
+[deps]
+
+source_file="res://dialogue/car_breakdown_dialogue.dialogue"
+dest_files=["res://.godot/imported/car_breakdown_dialogue.dialogue-4829ca1ff1486ad1ba928acbfbe6848c.tres"]
+
+[params]
+
+defaults=true

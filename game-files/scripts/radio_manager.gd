@@ -30,6 +30,7 @@ var current_song_idx: int = 0
 var volume: float = 0.5  # 0.0 to 1.0
 var _is_playing_static: bool = false
 var _dialogue_active: bool = false
+var radio_disabled: bool = false  # When true, radio cannot be turned on (torre scene)
 
 var _audio_player: AudioStreamPlayer      # Radio songs
 var _static_player: AudioStreamPlayer     # Radio static
@@ -95,6 +96,11 @@ func _update_volume() -> void:
 	_base_player.volume_db = linear_to_db(volume)
 
 func toggle_power() -> void:
+	# Don't allow turning on radio if disabled (torre scene)
+	if radio_disabled and not is_on:
+		print("RadioManager: Radio is disabled in this scene")
+		return
+
 	is_on = not is_on
 	print("RadioManager: toggle_power called, is_on=", is_on, " _dialogue_active=", _dialogue_active)
 	if is_on:
@@ -291,3 +297,31 @@ func _crossfade_to_radio() -> void:
 	tween.set_parallel(false)
 	tween.tween_callback(_stop_base_track)
 	print("RadioManager: Crossfade tween started, will play song: ", SONGS[current_song_idx])
+
+
+func fade_out(duration: float = 2.0) -> void:
+	"""Fade out all audio over the specified duration"""
+	var tween = create_tween()
+	tween.set_parallel(true)
+
+	# Fade out all audio players
+	if _audio_player.playing:
+		tween.tween_property(_audio_player, "volume_db", -80.0, duration)
+	if _static_player.playing:
+		tween.tween_property(_static_player, "volume_db", -80.0, duration)
+	if _base_player.playing:
+		tween.tween_property(_base_player, "volume_db", -80.0, duration)
+
+	# Stop all players after fade completes
+	tween.set_parallel(false)
+	tween.tween_callback(_stop_all)
+
+
+func switch_to_base_track() -> void:
+	"""Turn off radio and switch to empathy-based base track (for torre scene)"""
+	radio_disabled = true  # Disable radio in torre scene
+	if is_on:
+		is_on = false
+		_stop_all()
+	_update_base_track()
+	print("RadioManager: Switched to base track mode, radio disabled")

@@ -1,0 +1,17 @@
+~ start
+
+**You try to start the engine.**
+**It sputters weakly, refusing to turn over.**
+**The car won't start.**
+**You're stranded here.**
+**You should leave the car.**
+
+- Leave
+	=> leave
+
+~ leave
+
+**You step out into the cold mountain air.**
+**The fog surrounds you.**
+
+=> END

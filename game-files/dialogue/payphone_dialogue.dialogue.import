@@ -1,0 +1,16 @@
+[remap]
+
+importer="dialogue_manager"
+importer_version=15
+type="Resource"
+uid="uid://c5xk80a02abc1"
+path="res://.godot/imported/payphone_dialogue.dialogue-f183bca9d5ddd636806aa93149b846fb.tres"
+
+[deps]
+
+source_file="res://dialogue/payphone_dialogue.dialogue"
+dest_files=["res://.godot/imported/payphone_dialogue.dialogue-f183bca9d5ddd636806aa93149b846fb.tres"]
+
+[params]
+
+defaults=true
