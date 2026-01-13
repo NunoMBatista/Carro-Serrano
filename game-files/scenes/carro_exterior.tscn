@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://ud35hc748mcu"]
+
+[ext_resource type="PackedScene" uid="uid://d0pnunrspdug1" path="res://assets/carro_mod_25d.glb" id="1_7i6jy"]
+
+[node name="carro_mod_25d" instance=ExtResource("1_7i6jy")]

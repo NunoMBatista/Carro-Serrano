@@ -61,6 +61,8 @@ func activate() -> void:
 func deactivate() -> void:
 	is_active = false
 	set_physics_process(false)
+	if camera:
+		camera.current = false
 	if crosshair:
 		crosshair.visible = false
 		crosshair.set_process(false)

@@ -3,8 +3,11 @@ extends StaticBody3D
 
 var _dialog_open: bool = false
 var _current_dialog: ConfirmationDialog = null
+var _used: bool = false
 
 func interact() -> void:
+	if _used:
+		return
 	if _dialog_open:
 		return
 	_dialog_open = true
@@ -16,11 +19,14 @@ func interact() -> void:
 	# Build a confirmation dialog with Yes/No options
 	_current_dialog = ConfirmationDialog.new()
 	var dlg := _current_dialog
-	dlg.title = "Call for help"
+	dlg.title = ""
 	dlg.dialog_text = "Call for help?"
 	# Customize buttons to Yes/No
 	dlg.get_ok_button().text = "Yes"
 	var no_btn := dlg.add_button("No", true)
+	var cancel_btn := dlg.get_cancel_button()
+	if cancel_btn:
+		cancel_btn.visible = false
 
 	# Connect signals
 	dlg.confirmed.connect(_on_dialog_confirmed)
@@ -33,15 +39,28 @@ func interact() -> void:
 
 
 func _on_dialog_confirmed() -> void:
-	# TODO: implement actual help-call behavior here if needed
+	_notify_choice(true)
 	_close_dialog()
 
 
 func _on_dialog_cancelled() -> void:
+	_notify_choice(false)
 	_close_dialog()
 
 
 func _close_dialog() -> void:
+	_used = true
+	# Disable this payphone's collision so it cannot be interacted again
+	if self is CollisionObject3D:
+		collision_layer = 0
+
+	# Reset crosshair click state so it doesn't stay "closed"
+	var scene = get_tree().get_current_scene()
+	if scene:
+		var cross = _get_active_crosshair(scene)
+		if cross and cross.has_method("set"):
+			cross.set("space_held", false)
+
 	_dialog_open = false
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_set_player_raycast_enabled(true)
@@ -68,6 +87,15 @@ func _set_player_raycast_enabled(enabled: bool) -> void:
 			rc = null
 	if rc and rc is RayCast3D:
 		rc.enabled = enabled
+
+
+func _notify_choice(chose_yes: bool) -> void:
+	var scene = get_tree().get_current_scene()
+	if not scene:
+		return
+	var gm = scene.get_node_or_null("GameManager")
+	if gm and gm.has_method("on_payphone_choice"):
+		gm.on_payphone_choice(chose_yes)
 
 
 func _get_active_crosshair(root: Node) -> Node:
