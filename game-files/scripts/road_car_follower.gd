@@ -59,6 +59,16 @@ var _current_lap: int = 1  # Track current lap number
 var _global_env_resource: Environment = null
 var _global_compositor
 
+# Audio
+var _idle_audio: AudioStreamPlayer = null
+var _is_idle: bool = false
+var _idle_fading_in: bool = false
+var _driving_audio: AudioStreamPlayer = null
+var _is_braking: bool = false
+var _volume_fade_speed: float = 2.0  # Volume decrease per second when braking
+var _idle_fade_in_speed: float = 14.0  # Volume increase per second for idle fade-in
+var _idle_max_volume: float = -8.0  # Maximum volume for idle sound (lower than driving)
+
 func _ready() -> void:
 	_container = _find_container()
 	if _container == null:
@@ -82,6 +92,10 @@ func _ready() -> void:
 	_current_seg_idx = 0
 	_distance_on_seg = 0.0
 	_apply_transform(0.0)
+
+	# Setup audio
+	_setup_idle_audio()
+	_setup_driving_audio()
 
 func _retry_build_route() -> void:
 	if _container == null:
@@ -114,6 +128,9 @@ func _process(delta: float) -> void:
 		_update_speed(delta)
 	_advance_along_route(delta)
 	_apply_transform(delta)
+	
+	# Handle audio based on velocity and braking
+	_update_audio(delta)
 
 func _find_container() -> Node:
 	if road_container_path != NodePath(""):
@@ -920,3 +937,99 @@ func _set_torre_environment(active: bool) -> void:
 	if clouds:
 		clouds.set("update_continuously", active)
 		clouds.set_process(active)
+
+## Setup the idle audio player
+func _setup_idle_audio() -> void:
+	# Create AudioStreamPlayer if it doesn't exist
+	_idle_audio = AudioStreamPlayer.new()
+	_idle_audio.name = "IdleAudio"
+	add_child(_idle_audio)
+	
+	# Load the idle audio file
+	var audio_path = "res://assets/audio/sfx/car_idle.mp3"
+	var audio_stream = load(audio_path)
+	if audio_stream:
+		_idle_audio.stream = audio_stream
+		_idle_audio.bus = "Master"
+		# Loop the idle sound
+		if audio_stream is AudioStreamMP3:
+			audio_stream.loop = true
+	else:
+		push_warning("Failed to load idle audio: ", audio_path)
+
+## Setup the driving audio player
+func _setup_driving_audio() -> void:
+	# Create AudioStreamPlayer if it doesn't exist
+	_driving_audio = AudioStreamPlayer.new()
+	_driving_audio.name = "DrivingAudio"
+	add_child(_driving_audio)
+	
+	# Load the driving audio file
+	var audio_path = "res://assets/audio/sfx/car_driving.mp3"
+	var audio_stream = load(audio_path)
+	if audio_stream:
+		_driving_audio.stream = audio_stream
+		_driving_audio.bus = "Master"
+		_driving_audio.volume_db = 0.0  # 100% volume = 0 dB
+		# Loop the driving sound
+		if audio_stream is AudioStreamMP3:
+			audio_stream.loop = true
+	else:
+		push_warning("Failed to load driving audio: ", audio_path)
+
+## Update audio based on car velocity and braking state
+func _update_audio(delta: float) -> void:
+	if _idle_audio == null or _driving_audio == null:
+		return
+	
+	# Check if car is idle (velocity < 0.1)
+	if cur_speed < 0.1:
+		# Play idle sound, stop driving sound
+		if not _is_idle:
+			_is_idle = true
+			if not _idle_audio.playing:
+				_idle_audio.volume_db = -80.0  # Start at near silence
+				_idle_audio.play()
+				_idle_fading_in = true
+		
+		# Handle fade-in for idle audio
+		if _idle_fading_in:
+			if _idle_audio.volume_db < _idle_max_volume:
+				_idle_audio.volume_db = min(_idle_audio.volume_db + (_idle_fade_in_speed * 10.0 * delta), _idle_max_volume)
+			else:
+				_idle_fading_in = false
+		
+		if _driving_audio.playing:
+			_driving_audio.stop()
+	else:
+		# Car is moving - stop idle sound
+		if _is_idle:
+			_is_idle = false
+			_idle_fading_in = false
+			if _idle_audio.playing:
+				_idle_audio.stop()
+		
+		# Check if braking
+		var braking = Input.is_action_pressed("Brakes") or _dialogue_active
+		
+		if not _driving_audio.playing:
+			_driving_audio.play()
+			_driving_audio.volume_db = 0.0  # Start at 100% volume
+		
+		if braking:
+			# Gradually decrease volume when braking
+			if not _is_braking:
+				_is_braking = true
+			
+			# Decrease volume (convert from dB)
+			# 0 dB = 100%, -80 dB = near silence
+			var target_volume = -20.0  # Target lower volume when braking
+			_driving_audio.volume_db = max(_driving_audio.volume_db - (_volume_fade_speed * 10.0 * delta), target_volume)
+		else:
+			# Not braking - play at 100% volume
+			if _is_braking:
+				_is_braking = false
+			
+			# Gradually restore to 100% volume
+			if _driving_audio.volume_db < 0.0:
+				_driving_audio.volume_db = min(_driving_audio.volume_db + (_volume_fade_speed * 10.0 * delta), 0.0)
