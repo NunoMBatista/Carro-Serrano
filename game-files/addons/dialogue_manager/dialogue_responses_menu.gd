@@ -62,6 +62,9 @@ var responses: Array = []:
 
 
 var _selected_index: int = 0
+var _selection_enabled: bool = false
+var _selection_delay_timer: float = 0.0
+const SELECTION_DELAY: float = 1.0  # 1 second delay before choices can be selected
 
 
 func _ready() -> void:
@@ -76,6 +79,8 @@ func _ready() -> void:
 			var items = get_menu_items()
 			print("[RESPONSES_MENU] Menu items count: ", items.size())
 			_selected_index = 0
+			_selection_enabled = false
+			_selection_delay_timer = 0.0
 			_update_selection()
 			grab_focus()
 			print("[RESPONSES_MENU] Grabbed focus on container, selected index 0")
@@ -87,6 +92,19 @@ func _ready() -> void:
 
 	if is_instance_valid(response_template):
 		response_template.hide()
+
+
+func _process(delta: float) -> void:
+	if not visible:
+		return
+
+	# Count down the selection delay timer
+	if not _selection_enabled:
+		_selection_delay_timer += delta
+		if _selection_delay_timer >= SELECTION_DELAY:
+			_selection_enabled = true
+			print("[RESPONSES_MENU] Selection now enabled after delay")
+			_update_selection()  # Update to show choices are now selectable
 
 
 func _input(event: InputEvent) -> void:
@@ -107,30 +125,36 @@ func _input(event: InputEvent) -> void:
 
 		# Check for down arrow (keycode 4194322)
 		if event.keycode == KEY_DOWN or event.keycode == 4194322:
-			print("[RESPONSES_MENU] Down arrow pressed, current index: ", _selected_index)
-			_selected_index = (_selected_index + 1) % items.size()
-			_update_selection()
-			get_viewport().set_input_as_handled()
-			print("[RESPONSES_MENU] New index: ", _selected_index)
+			if _selection_enabled:
+				print("[RESPONSES_MENU] Down arrow pressed, current index: ", _selected_index)
+				_selected_index = (_selected_index + 1) % items.size()
+				_update_selection()
+				get_viewport().set_input_as_handled()
+				print("[RESPONSES_MENU] New index: ", _selected_index)
 		# Check for up arrow (keycode 4194320)
 		elif event.keycode == KEY_UP or event.keycode == 4194320:
-			print("[RESPONSES_MENU] Up arrow pressed, current index: ", _selected_index)
-			_selected_index = (_selected_index - 1 + items.size()) % items.size()
-			_update_selection()
-			get_viewport().set_input_as_handled()
-			print("[RESPONSES_MENU] New index: ", _selected_index)
+			if _selection_enabled:
+				print("[RESPONSES_MENU] Up arrow pressed, current index: ", _selected_index)
+				_selected_index = (_selected_index - 1 + items.size()) % items.size()
+				_update_selection()
+				get_viewport().set_input_as_handled()
+				print("[RESPONSES_MENU] New index: ", _selected_index)
 		# Check for Enter (keycode 4194309)
 		elif event.keycode == KEY_ENTER or event.keycode == 4194309:
-			print("[RESPONSES_MENU] Accept pressed on index: ", _selected_index)
-			var item: Control = items[_selected_index]
-			if item.has_meta("response") and not ("Disallowed" in item.name):
+			if _selection_enabled:
+				print("[RESPONSES_MENU] Accept pressed on index: ", _selected_index)
+				var item: Control = items[_selected_index]
+				if item.has_meta("response") and not ("Disallowed" in item.name):
+					get_viewport().set_input_as_handled()
+					DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
+					var logger = get_node_or_null("/root/PlaytestLogger")
+					if logger:
+						logger.log_action("dialogue_choice", item.get_meta("response").text)
+					response_selected.emit(item.get_meta("response"))
+					print("[RESPONSES_MENU] Response selected and emitted")
+			else:
+				print("[RESPONSES_MENU] Selection blocked - still in delay period")
 				get_viewport().set_input_as_handled()
-				DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
-				var logger = get_node_or_null("/root/PlaytestLogger")
-				if logger:
-					logger.log_action("dialogue_choice", item.get_meta("response").text)
-				response_selected.emit(item.get_meta("response"))
-				print("[RESPONSES_MENU] Response selected and emitted")
 
 
 func _update_selection() -> void:
@@ -138,18 +162,26 @@ func _update_selection() -> void:
 	for i in items.size():
 		var item: Control = items[i]
 		if i == _selected_index:
-			# Highlight selected item - bright yellow
+			# Highlight selected item - bright yellow if enabled, grey if disabled
+			var color = Color(1.0, 1.0, 0.3) if _selection_enabled else Color(0.5, 0.5, 0.5)
 			if item is RichTextLabel:
-				item.add_theme_color_override("default_color", Color(1.0, 1.0, 0.3))
+				item.add_theme_color_override("default_color", color)
 			else:
-				item.add_theme_color_override("font_color", Color(1.0, 1.0, 0.3))
+				item.add_theme_color_override("font_color", color)
 			print("[RESPONSES_MENU] Highlighted item ", i, ": ", item.name)
 		else:
-			# Normal color - original beige
+			# Normal color - original beige if enabled, grey if disabled
+			var color = Color(0.5, 0.5, 0.5) if not _selection_enabled else Color.WHITE
 			if item is RichTextLabel:
-				item.remove_theme_color_override("default_color")
+				if not _selection_enabled:
+					item.add_theme_color_override("default_color", color)
+				else:
+					item.remove_theme_color_override("default_color")
 			else:
-				item.remove_theme_color_override("font_color")
+				if not _selection_enabled:
+					item.add_theme_color_override("font_color", color)
+				else:
+					item.remove_theme_color_override("font_color")
 
 
 ## Get the selectable items in the menu.

@@ -4,6 +4,7 @@ extends Node
 signal dialogue_started
 signal dialogue_ended(resource: Resource)
 signal branch_changed(new_branch: String)
+signal empathy_changed(new_empathy: int)
 
 ## Empathy threshold for neutral choices (>= goes good, < goes bad)
 @export var empathy_threshold: int = 50
@@ -17,10 +18,14 @@ signal branch_changed(new_branch: String)
 ## Current empathy (0-100)
 var empathy: int = 50:
 	set(v):
+		var old_empathy = empathy
 		empathy = clampi(v, 0, 100)
 		var logger = get_node_or_null("/root/PlaytestLogger")
 		if logger:
 			logger.current_empathy = empathy
+		# Emit signal only if empathy actually changed
+		if old_empathy != empathy:
+			empathy_changed.emit(empathy)
 
 ## Current branch: "good" or "bad"
 var current_branch: String = "good"
@@ -106,7 +111,7 @@ func run_dialogue(dialogue_resource: DialogueResource, start_title: String = "st
 func choice(alignment: String) -> void:
 	# Store the last choice
 	last_choice = alignment.to_lower()
-	
+
 	var old_branch = current_branch
 
 	match alignment.to_lower():

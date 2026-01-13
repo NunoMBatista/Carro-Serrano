@@ -37,7 +37,7 @@ var _in_walking_mode := false  # True when player has left the car
 var _player_controller: CharacterBody3D = null
 var _dialogue_active := false  # True when dialogue is active, disables player input
 
-const MAX_SPEED := 300
+const MAX_SPEED := 30
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 50
 const MIN_SPEED := 0.0
@@ -578,12 +578,12 @@ func _try_loop_to_first_terrain() -> bool:
 	_current_seg_idx = 0
 	_distance_on_seg = 0.0
 	_apply_transform(0.0)
-	
+
 	# Increment lap counter and emit signal
 	_current_lap += 1
 	lap_started.emit(_current_lap)
 	print("Started lap ", _current_lap)
-	
+
 	return true
 
 func _find_all_road_containers(root: Node) -> Array:
@@ -604,7 +604,7 @@ func _find_all_road_containers(root: Node) -> Array:
 func _update_speed(delta: float) -> void:
 	# Simulate brake input during dialogue
 	var braking = Input.is_action_pressed("Brakes") or _dialogue_active
-	
+
 	if not braking:
 		var diff := MAX_SPEED - cur_speed
 		cur_speed += diff * (1.0 - exp(-ACCEL_STRENGTH * delta))

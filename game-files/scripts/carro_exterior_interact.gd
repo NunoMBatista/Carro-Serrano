@@ -2,6 +2,17 @@ extends StaticBody3D
 
 var _dialog_open: bool = false
 var _current_dialog: ConfirmationDialog = null
+var _dialog_theme: Theme = null
+
+func _ready() -> void:
+	# Create theme with dialogue font
+	_dialog_theme = Theme.new()
+	var font = load("res://fonts/SpecialElite-Regular.ttf")
+	if font:
+		_dialog_theme.set_font("font", "Label", font)
+		_dialog_theme.set_font("font", "Button", font)
+		_dialog_theme.set_font_size("font_size", "Label", 20)
+		_dialog_theme.set_font_size("font_size", "Button", 18)
 
 func interact() -> void:
 	if _dialog_open:
@@ -28,6 +39,7 @@ func interact() -> void:
 func _show_broke_down_dialog() -> void:
 	_current_dialog = ConfirmationDialog.new()
 	var dlg := _current_dialog
+	dlg.theme = _dialog_theme
 	dlg.title = ""
 	dlg.dialog_text = "Car broke down."
 	dlg.get_ok_button().text = "Ask for lift"
@@ -39,17 +51,22 @@ func _show_broke_down_dialog() -> void:
 	dlg.confirmed.connect(_on_broke_down_confirmed)
 	second_btn.pressed.connect(_on_broke_down_confirmed)
 
-	get_tree().root.add_child(dlg)
+	# Wrap in CanvasLayer with high layer number to appear above cursor
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 110  # Higher than cursor layer (102)
+	get_tree().root.add_child(canvas_layer)
+	canvas_layer.add_child(dlg)
 	dlg.popup_centered()
 
 
 func _show_do_what_dialog() -> void:
 	_current_dialog = ConfirmationDialog.new()
 	var dlg := _current_dialog
+	dlg.theme = _dialog_theme
 	dlg.title = ""
 	dlg.dialog_text = "Do what you came here to do."
 	dlg.get_ok_button().text = "Yes"
-	var second_btn := dlg.add_button("yes", true)
+	var second_btn := dlg.add_button("yes", true)
 	var cancel_btn := dlg.get_cancel_button()
 	if cancel_btn:
 		cancel_btn.visible = false
@@ -58,7 +75,11 @@ func _show_do_what_dialog() -> void:
 	second_btn.pressed.connect(_on_return_to_car)
 	# No cancel option: only the two yes-style choices
 
-	get_tree().root.add_child(dlg)
+	# Wrap in CanvasLayer with high layer number to appear above cursor
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 110  # Higher than cursor layer (102)
+	get_tree().root.add_child(canvas_layer)
+	canvas_layer.add_child(dlg)
 	dlg.popup_centered()
 
 
@@ -88,6 +109,7 @@ func _show_are_you_sure_dialog() -> void:
 
 	_current_dialog = ConfirmationDialog.new()
 	var dlg := _current_dialog
+	dlg.theme = _dialog_theme
 	dlg.title = ""
 	dlg.dialog_text = "Are you sure"
 	dlg.get_ok_button().text = "Yes"
@@ -98,7 +120,11 @@ func _show_are_you_sure_dialog() -> void:
 	dlg.confirmed.connect(_on_are_you_sure_confirmed)
 	dlg.canceled.connect(_on_are_you_sure_closed)
 
-	get_tree().root.add_child(dlg)
+	# Wrap in CanvasLayer with high layer number to appear above cursor
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 110  # Higher than cursor layer (102)
+	get_tree().root.add_child(canvas_layer)
+	canvas_layer.add_child(dlg)
 	dlg.popup_centered()
 
 
@@ -123,7 +149,12 @@ func _close_dialog() -> void:
 	_set_player_raycast_enabled(true)
 	if _current_dialog and is_instance_valid(_current_dialog):
 		_current_dialog.hide()
-		_current_dialog.queue_free()
+		# Also free the parent CanvasLayer
+		var parent = _current_dialog.get_parent()
+		if parent and parent is CanvasLayer:
+			parent.queue_free()
+		else:
+			_current_dialog.queue_free()
 	_current_dialog = null
 
 

@@ -13,15 +13,15 @@ Vovo: Now?... Now they just start screaming back at me until I'm forced to liste
 Vovo: You've got a heavy grip on that steering wheel, son... and an even heavier look behind those eyes.
 Vovo: Whatever you're carrying up this mountain... it looks like it weighs more than this car.
 
-- I guess I've had a lot on my mind lately. It's been a long road. #positive
+- I guess I've had a lot on my mind lately. It's been a long road.
 	do DialogueFlow.choice("positive")
 	=> step1_good
 
-- I'm just focused. It has been a long road and I don't want to make any wrong turns. #negative
+- I'm just focused. It has been a long road and I don't want to make any wrong turns.
 	do DialogueFlow.choice("negative")
 	=> step1_bad
 
-- Don't talk much, it's distracting and i'm trying not to go the wrong way. #negative
+- Don't talk much, it's distracting and i'm trying not to go the wrong way.
 	do DialogueFlow.choice("negative")
 	=> step1_bad
 
@@ -39,11 +39,11 @@ Vovo: I suppose it has been.
 Vovo: But, you know.. sometimes it's not that the road is long.
 Vovo: Maybe it feels long because you're tired of carrying so much luggage with you.. it adds up over time.
 
-- Well, I guess you're right, but how would you know? #positive
+- Well, I guess you're right, but how would you know?
 	do DialogueFlow.choice("positive")
 	=> step2_good
 
-- Whatever man, if you say so. #negative
+- Whatever man, if you say so.
 	do DialogueFlow.choice("negative")
 	=> step2_bad
 
@@ -65,11 +65,11 @@ Vovo: And luckily.. I happen to know them all!
 Vovo: Feel free to ask if you need any help.. after all, the best travelers sometimes need someone to hold the map.
 Vovo: And I feel.. I feel you might need someone to do that for you, don't you?
 
-- Well, I guess you're right, but how would you know? #positive
+- Well, I guess you're right, but how would you know?
 	do DialogueFlow.choice("positive")
 	=> step2_good
 
-- Whatever man, if you say so. #negative
+- Whatever man, if you say so.
 	do DialogueFlow.choice("negative")
 	=> step2_bad
 
@@ -92,15 +92,15 @@ Vovo: And yet.. I stubbornly kept my ways, tackling this climb alone.
 Vovo: But then comes the day you can no longer hold that weight.
 Vovo: And you.. you look like you can no longer hold it by yourself.
 
-- I'm too close to the summit now. It's a bit late in the climb to start looking for a hand to hold, don't you think? #positive
+- I'm too close to the summit now. It's a bit late in the climb to start looking for a hand to hold, don't you think?
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
-- Thank you for sharing that. I'm glad you overcame that stubborness of yours in time. #positive
+- Thank you for sharing that. I'm glad you overcame that stubborness of yours in time.
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
-- It's too late for me. There's nothing you can do. I'm almost at the peak, anyway. #negative
+- It's too late for me. There's nothing you can do. I'm almost at the peak, anyway.
 	do DialogueFlow.choice("negative")
 	=> step3_bad
 
@@ -122,15 +122,15 @@ Vovo: Faster than anyone!
 Vovo: But time.. is weighing too much.
 Vovo: And you.. whatever it is that you're carrying with you.. looks just as heavy.
 
-- I'm too close to the summit now. It's a bit late in the climb to start looking for a hand to hold, don't you think? #positive
+- I'm too close to the summit now. It's a bit late in the climb to start looking for a hand to hold, don't you think?
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
-- Thank you for sharing that. I'm glad you overcame that stubborness of yours in time. #positive
+- Thank you for sharing that. I'm glad you overcame that stubborness of yours in time.
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
-- It's too late for me. There's nothing you can do. I'm almost at the peak, anyway. #negative
+- It's too late for me. There's nothing you can do. I'm almost at the peak, anyway.
 	do DialogueFlow.choice("negative")
 	=> step3_bad
 

@@ -288,12 +288,8 @@ func _spawn_items_from_state() -> void:
 	var items_to_spawn = glovebox_state.get_items_to_spawn()
 
 	for item_name in items_to_spawn:
-		# Check if this item was already spawned (exists in saved state)
-		if glovebox_state.has_state_for(item_name):
-			# Item already exists, skip spawning (position will be loaded from saved state)
-			continue
-
-		# Spawn new item at default position
+		# Always spawn items that are marked to spawn
+		# Their saved positions will be loaded after spawning
 		match item_name:
 			"badesso":
 				_create_badesso_item(Vector2(2400, 1200))

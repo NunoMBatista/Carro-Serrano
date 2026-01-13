@@ -920,7 +920,7 @@ albedo_texture = ExtResource("38_llmay")
 albedo_texture = ExtResource("38_llmay")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_carro_exterior"]
-size = Vector3(8, 4, 16)
+size = Vector3(12, 6, 20)
 
 [node name="Node3D" type="Node3D"]
 

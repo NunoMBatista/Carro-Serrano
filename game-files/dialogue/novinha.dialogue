@@ -16,11 +16,11 @@ Novinha: It's as if the mountain herself senses that something terrible is about
 Novinha: Lots of tourists taking the day off to go visit the Towers, I assume you're going there too?
 Novinha: Oh! I'm sorry, I didn't even ask where you were going. I don't want you to make any inconvenient detour, just drop me off where it's most convenient please...
 
-- I'm going to the Towers on the very top. I don't mind the detour, I'd rather know you got home safe. #positive
+- I'm going to the Towers on the very top. I don't mind the detour, I'd rather know you got home safe.
 	do DialogueFlow.choice("positive")
 	=> step1_good
 
-- I'm going to the Towers on the very top. I'll drop you at your exit, I'm not taking any detours. #negative
+- I'm going to the Towers on the very top. I'll drop you at your exit, I'm not taking any detours.
 	do DialogueFlow.choice("negative")
 	=> step1_bad
 
@@ -50,11 +50,11 @@ Novinha: You were really kind to help me. I wish there was something I could hel
 Novinha: I think that in everyone exists a desire to help others... Perhaps in the hopes that they can help us too...
 Novinha: We were not made to live alone.
 
-- Helping makes me feel useful. #positive
+- Helping makes me feel useful.
 	do DialogueFlow.choice("positive")
 	=> step2_good
 
-- Relying on others just makes things harder in the long run. #negative
+- Relying on others just makes things harder in the long run.
 	do DialogueFlow.choice("negative")
 	=> step2_bad
 
@@ -76,11 +76,11 @@ Novinha: You were really kind to help me. I wish there was something I could giv
 Novinha: I guess it's only natural to need outside help sometimes.
 Novinha: We were not made to live alone.
 
-- Helping makes me feel useful. #positive
+- Helping makes me feel useful.
 	do DialogueFlow.choice("positive")
 	=> step2_good
 
-- Relying on others just makes things harder in the long run. #negative
+- Relying on others just makes things harder in the long run.
 	do DialogueFlow.choice("negative")
 	=> step2_bad
 
@@ -109,11 +109,11 @@ Novinha: ...
 Novinha: That's my place. You can stop right here, if you don't mind...
 Novinha: Thank you again for the help. It was really nice talking to you.
 
-- I'm glad I could help. I think I needed it too. #positive
+- I'm glad I could help. I think I needed it too.
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
-- You don't owe me anything... #negative
+- You don't owe me anything...
 	do DialogueFlow.choice("negative")
 	=> step3_bad
 
@@ -137,11 +137,11 @@ Novinha: ...
 Novinha: That's my place. You can stop right here, if you don't mind...
 Novinha: Thank you again for the help. I hope I did not sound too weird.
 
-- I'm glad I could help. I think I needed it too. #positive
+- I'm glad I could help. I think I needed it too.
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
-- You don't owe me anything... #negative
+- You don't owe me anything...
 	do DialogueFlow.choice("negative")
 	=> step3_bad
 

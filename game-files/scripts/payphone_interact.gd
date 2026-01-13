@@ -6,6 +6,17 @@ const INTERACT_MAX_DISTANCE := 5.0
 var _dialog_open: bool = false
 var _current_dialog: ConfirmationDialog = null
 var _used: bool = false
+var _dialog_theme: Theme = null
+
+func _ready() -> void:
+	# Create theme with dialogue font
+	_dialog_theme = Theme.new()
+	var font = load("res://fonts/SpecialElite-Regular.ttf")
+	if font:
+		_dialog_theme.set_font("font", "Label", font)
+		_dialog_theme.set_font("font", "Button", font)
+		_dialog_theme.set_font_size("font_size", "Label", 20)
+		_dialog_theme.set_font_size("font_size", "Button", 18)
 
 func interact() -> void:
 	if _used:
@@ -27,6 +38,7 @@ func interact() -> void:
 	# Build a confirmation dialog with Yes/No options
 	_current_dialog = ConfirmationDialog.new()
 	var dlg := _current_dialog
+	dlg.theme = _dialog_theme
 	dlg.title = ""
 	dlg.dialog_text = "Call for help?"
 	# Customize buttons to Yes/No
@@ -41,8 +53,11 @@ func interact() -> void:
 	no_btn.pressed.connect(_on_dialog_cancelled)
 	dlg.canceled.connect(_on_dialog_cancelled)
 
-	# Add to tree and popup centered
-	get_tree().root.add_child(dlg)
+	# Wrap in CanvasLayer with high layer number to appear above cursor
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 110  # Higher than cursor layer (102)
+	get_tree().root.add_child(canvas_layer)
+	canvas_layer.add_child(dlg)
 	dlg.popup_centered()
 
 
@@ -74,7 +89,12 @@ func _close_dialog() -> void:
 	_set_player_raycast_enabled(true)
 	if _current_dialog and is_instance_valid(_current_dialog):
 		_current_dialog.hide()
-		_current_dialog.queue_free()
+		# Also free the parent CanvasLayer
+		var parent = _current_dialog.get_parent()
+		if parent and parent is CanvasLayer:
+			parent.queue_free()
+		else:
+			_current_dialog.queue_free()
 	_current_dialog = null
 
 

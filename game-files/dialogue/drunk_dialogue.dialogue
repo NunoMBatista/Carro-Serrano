@@ -15,11 +15,11 @@ Drunk: I know you have an extra cigarette for me, huh?
 **You also know your name is not "Charlie the Godslayer"...**
 **His air vent fidgeting is getting louder...**
 
-- I don't smoke. Put on your seatbelt and stop messing with my air vent. #positive
+- I don't smoke. Put on your seatbelt and stop messing with my air vent.
 	do DialogueFlow.choice("positive")
 	=> step1_good
 
-- A raccoon working for the government huh? Tell me more. #negative
+- A raccoon working for the government huh? Tell me more.
 	do DialogueFlow.choice("negative")
 	=> step1_bad
 
@@ -45,11 +45,11 @@ Drunk: I'll do it! I'll pull the pin! This is a special thermal detonator unit!
 Drunk: If you are really Charlie, prove you aren't a cop! You know the year I fixed Frank. You were there holding the flashlight!
 Drunk: WHEN WAS IT?
 
-- It was in 1989. #positive
+- It was in 1989.
 	do DialogueFlow.choice("positive")
 	=> step2_good
 
-- It was in 1998. #negative
+- It was in 1998.
 	do DialogueFlow.choice("negative")
 	=> step2_bad
 
@@ -78,11 +78,11 @@ Drunk: STAY BACK! I'll detonate this grenade! I swear to god I'll do it.
 Drunk: Unless... unless you can prove you're really Charlie. The real Charlie was there in the night of the surgery, when I hid the legacy of this world.
 Drunk: If you are him... tell me when this happened. TELL ME!
 
-- It was in 1989. #positive
+- It was in 1989.
 	do DialogueFlow.choice("positive")
 	=> step2_good
 
-- It was in 1998. #negative
+- It was in 1998.
 	do DialogueFlow.choice("negative")
 	=> step2_bad
 
@@ -101,11 +101,11 @@ Drunk: I had to make room, you know? I took some of his insides. Eventually, he 
 Drunk: He's been guarding it ever since. In the backyard.
 Drunk: Do you think he's cold down there? Do you think we should dig him out?
 
-- You're sick. I'm taking you to the hospital. #positive
+- You're sick. I'm taking you to the hospital.
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
-- Don't worry, I know you only did what you thought was right. #negative
+- Don't worry, I know you only did what you thought was right.
 	do DialogueFlow.choice("negative")
 	=> step3_bad
 
@@ -128,11 +128,11 @@ Drunk: It... it was a dud!? They replaced my grenade with...
 Drunk: Is this what Frank felt? He screamed so loud...
 Drunk: It was the only way, right?
 
-- You're bleeding. I'm taking you to the hospital. #positive
+- You're bleeding. I'm taking you to the hospital.
 	do DialogueFlow.choice("positive")
 	=> step3_good
 
-- Don't worry, I know you only did what you thought was right. #negative
+- Don't worry, I know you only did what you thought was right.
 	do DialogueFlow.choice("negative")
 	=> step3_bad
 

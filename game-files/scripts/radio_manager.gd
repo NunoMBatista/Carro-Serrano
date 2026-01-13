@@ -69,14 +69,20 @@ func _ready() -> void:
 func _connect_dialogue_signals() -> void:
 	var df = get_node_or_null("/root/DialogueFlow")
 	if df:
+		print("RadioManager: Connecting to DialogueFlow signals")
 		df.dialogue_started.connect(_on_dialogue_started)
 		df.dialogue_ended.connect(_on_dialogue_ended)
+		print("RadioManager: Connected dialogue_started and dialogue_ended signals")
+		# Also connect to empathy changes to update base track when needed
+		if df.has_signal("empathy_changed"):
+			df.empathy_changed.connect(_on_empathy_changed)
+			print("RadioManager: Connected empathy_changed signal")
 	else:
 		push_warning("RadioManager: DialogueFlow not found, retrying...")
 		get_tree().create_timer(0.1).timeout.connect(_connect_dialogue_signals)
 
-func _process(_delta: float) -> void:
-	# Continuously check if we need to update base track
+func _on_empathy_changed(_new_empathy: int) -> void:
+	# Only update base track when empathy actually changes
 	_update_base_track()
 
 func set_volume(value: float) -> void:
@@ -90,6 +96,7 @@ func _update_volume() -> void:
 
 func toggle_power() -> void:
 	is_on = not is_on
+	print("RadioManager: toggle_power called, is_on=", is_on, " _dialogue_active=", _dialogue_active)
 	if is_on:
 		_stop_base_track()
 		_play_with_static()
@@ -99,15 +106,18 @@ func toggle_power() -> void:
 
 func next_song() -> void:
 	current_song_idx = (current_song_idx + 1) % SONGS.size()
+	print("RadioManager: next_song called, is_on=", is_on, " _dialogue_active=", _dialogue_active)
 	if is_on:
 		_play_with_static()
 
 func prev_song() -> void:
 	current_song_idx = (current_song_idx - 1 + SONGS.size()) % SONGS.size()
+	print("RadioManager: prev_song called, is_on=", is_on, " _dialogue_active=", _dialogue_active)
 	if is_on:
 		_play_with_static()
 
 func _play_with_static() -> void:
+	print("RadioManager: _play_with_static called")
 	_stop_all()
 	_stop_base_track()
 	_is_playing_static = true
@@ -128,13 +138,16 @@ func _play_with_static() -> void:
 	_static_timer.start(static_duration)
 
 func _on_static_finished() -> void:
+	print("RadioManager: _on_static_finished called")
 	_static_player.stop()
 	_is_playing_static = false
 	_play_current_song_immediate()
 
 func _play_current_song_immediate() -> void:
+	print("RadioManager: _play_current_song_immediate called, _dialogue_active=", _dialogue_active)
 	# If dialogue is active, don't play radio, play base track instead
 	if _dialogue_active:
+		print("RadioManager: Dialogue is active, not playing radio")
 		_update_base_track()
 		return
 
@@ -151,6 +164,7 @@ func _play_current_song_immediate() -> void:
 	var start_position := fmod(game_time, song_duration)
 
 	_audio_player.play(start_position)
+	print("RadioManager: Started playing song: ", SONGS[current_song_idx], " at position ", start_position)
 
 func _stop_all() -> void:
 	_audio_player.stop()
@@ -222,26 +236,31 @@ func _on_base_track_finished() -> void:
 		_base_player.play()
 
 func _on_dialogue_started() -> void:
-	print("RadioManager: Dialogue started")
+	print("RadioManager: Dialogue started, setting _dialogue_active=true")
 	_dialogue_active = true
 	# Pause radio and play base track
 	if is_on:
-		_audio_player.stop()
+		print("RadioManager: Radio is on, stopping all audio")
+		_stop_all()
 	_update_base_track()
 
-func _on_dialogue_ended() -> void:
-	print("RadioManager: Dialogue ended, radio is_on=", is_on)
+func _on_dialogue_ended(_resource = null) -> void:
+	print("RadioManager: _on_dialogue_ended CALLED! radio is_on=", is_on, " resource=", _resource, " setting _dialogue_active=false")
 	_dialogue_active = false
 
 	if is_on:
+		print("RadioManager: Radio is on, crossfading to radio")
 		# Crossfade: fade out base track, fade in radio
 		_crossfade_to_radio()
 	else:
+		print("RadioManager: Radio is off, updating base track")
 		_stop_base_track()
+		_update_base_track()
 
 const FADE_DURATION := 1.5  # seconds for crossfade
 
 func _crossfade_to_radio() -> void:
+	print("RadioManager: _crossfade_to_radio called, current_song_idx=", current_song_idx)
 	# Start radio at silent volume
 	var stream = load(SONGS[current_song_idx])
 	if stream == null:
@@ -271,3 +290,4 @@ func _crossfade_to_radio() -> void:
 	# When done, stop base track
 	tween.set_parallel(false)
 	tween.tween_callback(_stop_base_track)
+	print("RadioManager: Crossfade tween started, will play song: ", SONGS[current_song_idx])
