@@ -2,13 +2,14 @@ extends Node
 ## Radio Manager autoload. Persists radio state and audio playback.
 
 const SONGS = [
-	"res://assets/audio/radio/hamsterdance.mp3",
-	"res://assets/audio/radio/Radio Comercial.mp3",
-	"res://assets/audio/radio/The Amazing PINGAS-MAN.mp3",
-	"res://assets/audio/radio/Joe Rogan.mp3",
-	"res://assets/audio/radio/Qubit.mp3",
-	"res://assets/audio/radio/We Are Charlie Kirk.mp3",
 	"res://assets/audio/radio/Alex Jones.mp3",
+	"res://assets/audio/radio/Clair de Lune.mp3",
+	"res://assets/audio/radio/Cobarde, Feliz Natal.mp3",
+	"res://assets/audio/radio/Interlude.mp3",
+	"res://assets/audio/radio/Jesu Bleibet Meine Freude.mp3",
+	"res://assets/audio/radio/Parece Parece.mp3",
+	"res://assets/audio/radio/Radio Comercial.mp3",
+	"res://assets/audio/radio/radio_static.mp3",
 	"res://assets/audio/radio/Tempo Para Cantar.mp3"
 ]
 

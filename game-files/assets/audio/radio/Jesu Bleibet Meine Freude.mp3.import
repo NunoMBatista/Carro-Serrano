@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://tng76mm4tku0"
+path="res://.godot/imported/Jesu Bleibet Meine Freude.mp3-2d9f17ea413d6642fcd8a06490078275.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/radio/Jesu Bleibet Meine Freude.mp3"
+dest_files=["res://.godot/imported/Jesu Bleibet Meine Freude.mp3-2d9f17ea413d6642fcd8a06490078275.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

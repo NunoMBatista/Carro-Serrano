@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://r2ndvjsnu8ge"
+path="res://.godot/imported/Parece Parece.mp3-3e812a902a3f612e59a6210909bb8d0b.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/radio/Parece Parece.mp3"
+dest_files=["res://.godot/imported/Parece Parece.mp3-3e812a902a3f612e59a6210909bb8d0b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
