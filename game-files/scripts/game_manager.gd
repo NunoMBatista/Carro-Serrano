@@ -18,9 +18,15 @@ var enable_next_hitchhiker_on_next_lap: bool = false  # Flag to enable on next l
 var in_dialogue: bool = false  # Track if currently in any dialogue
 var hitchhiker_4_completed: bool = false  # Flag to trigger torre teleport after hitchhiker 4
 
+# Payphone choice state
+var payphone_used: bool = false
+var payphone_choice_yes: bool = false
+
 ## Call this when starting a new game/playthrough to reset session state
 func start_new_game() -> void:
 	empathy_score = 0
+	payphone_used = false
+	payphone_choice_yes = false
 
 	# Reset glovebox state for new playthrough
 	if has_node("/root/GloveboxState"):
@@ -64,6 +70,29 @@ func _ready():
 
 	print("GameManager initialized - connected to ", hitchhikers_node.get_child_count(), " hitchhikers")
 
+func on_payphone_choice(chose_yes: bool) -> void:
+	# Record the player's choice at the torre payphone
+	payphone_used = true
+	payphone_choice_yes = chose_yes
+
+	var root = get_tree().get_current_scene()
+	if not root:
+		return
+
+	# Reveal the payphone arrow (arrow2) in the torre
+	var arrow2 = root.get_node_or_null("torre/arrow2")
+	if arrow2:
+		arrow2.visible = true
+
+	# Hide the initial torre arrow once the payphone has been used
+	var arrow = root.get_node_or_null("torre/arrow")
+	if arrow:
+		arrow.visible = false
+
+	# Enable interaction collider for the parked car in the torre
+	var carro_interact = root.get_node_or_null("torre/carro_exterior/CarroInteract")
+	if carro_interact and carro_interact is StaticBody3D:
+		carro_interact.collision_layer = 2
 
 const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
 

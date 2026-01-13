@@ -17,6 +17,7 @@ var is_colliding_state := false
 var space_held := false
 var _force_colliding := false
 var _force_dragging := false
+var _lift_mode := false
 
 
 func _ready():
@@ -48,6 +49,9 @@ func _ready():
 
 
 func _input(event):
+	if _lift_mode:
+		return
+
 	# Don't handle mouse motion, let it pass to camera
 	if event is InputEventMouseMotion:
 		return
@@ -80,7 +84,9 @@ func _update_crosshair_immediate():  #para ser imediato
 
 
 func _process(delta):
-	var is_currently_colliding = (_force_colliding) or (raycast and raycast.is_colliding()) #se existe e esta a colidir
+	var is_currently_colliding = false
+	if not _lift_mode:
+		is_currently_colliding = (_force_colliding) or (raycast and raycast.is_colliding()) #se existe e esta a colidir
 
 	if is_currently_colliding != is_colliding_state:
 		is_colliding_state = is_currently_colliding
@@ -95,7 +101,7 @@ func _process(delta):
 				crosshair_texture.texture = textures_default[0]
 
 	var textures_array: Array[Texture2D]
-	if is_colliding_state:
+	if is_colliding_state and not _lift_mode:
 		if space_held or _force_dragging:
 			textures_array = textures_close
 		else:
@@ -115,6 +121,9 @@ func _process(delta):
 
 
 func _try_interact():
+	if _lift_mode:
+		return
+
 	if not raycast or not raycast.is_colliding():
 		return
 
@@ -152,3 +161,36 @@ func _is_dialogue_active() -> bool:
 		return true
 
 	return false
+
+
+func set_lift_mode() -> void:
+	_lift_mode = true
+	# Load lift crosshair textures (non-interactive animated cursor)
+	var frames: Array[Texture2D] = []
+	var dir := DirAccess.open("res://assets/lift_crosshair")
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if not dir.current_is_dir() and file_name.ends_with(".png"):
+				var tex = load("res://assets/lift_crosshair/" + file_name)
+				if tex and tex is Texture2D:
+					frames.append(tex)
+			file_name = dir.get_next()
+		dir.list_dir_end()
+
+	frames.sort_custom(func(a, b): return a.resource_path < b.resource_path)
+	if frames.is_empty():
+		return
+
+	textures_default = frames.duplicate()
+	textures_colliding = frames.duplicate()
+	textures_close = frames.duplicate()
+	is_colliding_state = false
+	space_held = false
+	_force_colliding = false
+	_force_dragging = false
+	time_passed = 0.0
+	current_index = 0
+	if not textures_default.is_empty():
+		crosshair_texture.texture = textures_default[0]

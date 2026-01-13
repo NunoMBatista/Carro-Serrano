@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://c18pwj0q56epg"]
+
+[ext_resource type="PackedScene" uid="uid://ckmbcemr4wnfg" path="res://assets/arrow_3d.glb" id="1_umosx"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_umosx")]

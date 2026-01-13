@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://d1xysohvp5ls0"]
+
+[ext_resource type="PackedScene" uid="uid://c384wuxt0lye4" path="res://assets/metal_billboard_advertising_single_sided_free.glb" id="1_c58ef"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_c58ef")]

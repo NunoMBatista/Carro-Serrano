@@ -31,11 +31,13 @@ var _force_start_rp: Node3D = null
 var _stop_at_road_point: Node3D = null  # If set, car will stop when reaching this point
 var _should_stop := false  # Flag to indicate car should stop
 var _can_leave_car := false  # True when stopped at torre stop point
+var _leave_prompt_shown := false
+var _leave_dialog: ConfirmationDialog = null
 var _in_walking_mode := false  # True when player has left the car
 var _player_controller: CharacterBody3D = null
 var _dialogue_active := false  # True when dialogue is active, disables player input
 
-const MAX_SPEED := 30
+const MAX_SPEED := 300
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 50
 const MIN_SPEED := 0.0
@@ -50,6 +52,8 @@ var _smoothed_basis: Basis
 var _first_container: Node = null  # Store the first container for looping
 var _first_start_rp: Node3D = null  # Store the first starting roadpoint
 var _current_lap: int = 1  # Track current lap number
+var _global_env_resource: Environment = null
+var _global_compositor
 
 func _ready() -> void:
 	_container = _find_container()
@@ -91,11 +95,6 @@ func _retry_build_route() -> void:
 	_apply_transform(0.0)
 
 func _process(delta: float) -> void:
-	# Handle leaving car with L key
-	if Input.is_action_just_pressed("toggle_headlights") and _can_leave_car and not _in_walking_mode:  # L key
-		leave_car()
-		return
-
 	# Don't process car movement when in walking mode
 	if _in_walking_mode:
 		return
@@ -274,6 +273,8 @@ func _advance_along_route(delta: float) -> void:
 				cur_speed = 0.0
 				_can_leave_car = true
 				print("DEBUG: Reached stop point, stopping car. Press L to leave car.")
+				if not _leave_prompt_shown:
+					_show_leave_car_prompt()
 
 	var travel_sign := -1.0 if invert_travel else 1.0
 	var signed_move := cur_speed * delta * travel_sign
@@ -546,6 +547,8 @@ func _peek_next_rp(current: Node3D, prev: Node3D) -> Node3D:
 	var next_rp: Node3D = null
 	if rp_next != NodePath(""):
 		next_rp = current.get_node_or_null(rp_next)
+		# Ensure initial lighting/environment use the global (non-torre) setup
+		_set_torre_environment(false)
 	if next_rp == null or next_rp == prev:
 		var rp_prior: NodePath = current.prior_pt_init
 		if rp_prior != NodePath(""):
@@ -665,6 +668,8 @@ func teleport_to_torre() -> void:
 	_apply_transform(0.0)
 
 	print("DEBUG: Teleported to torre road, will stop at: ", _stop_at_road_point.name if _stop_at_road_point else "end of route")
+	# Switch lighting, environment and clouds to torre setup
+	_set_torre_environment(true)
 
 ## Leave the car and switch to walking mode
 ## Stop car for dialogue and disable player input
@@ -705,4 +710,169 @@ func leave_car() -> void:
 		_player_controller.activate()
 
 	_in_walking_mode = true
+	_disable_car_crosshair()
+	_show_torre_parked_car()
 	print("DEBUG: Left car, walking mode activated. Use WASD to move, mouse to look around.")
+
+
+func _show_torre_parked_car() -> void:
+	# Hide the driving car and show the parked torre car model.
+	var carro = get_node_or_null("Carro")
+	if carro:
+		carro.visible = false
+
+	var root = get_tree().get_current_scene()
+	if root and root.has_node("torre/carro_exterior/carro_mod_25d"):
+		var parked_car = root.get_node("torre/carro_exterior/carro_mod_25d")
+		parked_car.visible = true
+
+	# Show the main torre arrow when leaving the car
+	if root and root.has_node("torre/arrow"):
+		var arrow = root.get_node("torre/arrow")
+		arrow.visible = true
+
+
+func _disable_car_crosshair() -> void:
+	var carro = get_node_or_null("Carro")
+	if carro and carro.has_node("Player/Control/CrossHair"):
+		var crosshair = carro.get_node("Player/Control/CrossHair")
+		# Stop processing input/logic and hide the UI
+		crosshair.set_process(false)
+		crosshair.set_process_input(false)
+		crosshair.set_process_unhandled_input(false)
+		crosshair.visible = false
+
+
+func _enable_car_crosshair() -> void:
+	var carro = get_node_or_null("Carro")
+	if carro and carro.has_node("Player/Control/CrossHair"):
+		var crosshair = carro.get_node("Player/Control/CrossHair")
+		crosshair.visible = true
+		crosshair.set_process(true)
+		crosshair.set_process_input(true)
+		crosshair.set_process_unhandled_input(true)
+
+
+func return_to_car_from_torre() -> void:
+	# Show the driving car again and hide the parked torre car
+	var carro = get_node_or_null("Carro")
+	if carro:
+		carro.visible = true
+
+	var root = get_tree().get_current_scene()
+	if root and root.has_node("torre/carro_exterior/carro_mod_25d"):
+		var parked_car = root.get_node("torre/carro_exterior/carro_mod_25d")
+		parked_car.visible = false
+
+	# Deactivate walking controller
+	if player_controller_path != NodePath("") and _player_controller == null:
+		_player_controller = get_node_or_null(player_controller_path)
+	if _player_controller and _player_controller.has_method("deactivate"):
+		_player_controller.deactivate()
+
+	# Re-enable the in-car crosshair and resume car mode
+	_enable_car_crosshair()
+	_in_walking_mode = false
+	_can_leave_car = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+func _show_leave_car_prompt() -> void:
+	_leave_prompt_shown = true
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	_leave_dialog = ConfirmationDialog.new()
+	var dlg := _leave_dialog
+	dlg.title = ""
+
+	# Check empathy score to decide which message to show
+	var gm = get_tree().get_current_scene().get_node_or_null("GameManager")
+	var empathy := 0
+	if gm:
+		empathy = gm.empathy_score
+
+	if empathy < 0:
+		# Low-empathy path: player cannot leave the car
+		dlg.dialog_text = "You left yourself no choice"
+		dlg.get_ok_button().text = "DO IT"
+		var cancel_btn_low := dlg.get_cancel_button()
+		if cancel_btn_low:
+			cancel_btn_low.visible = false
+
+		# Clicking DO IT just closes the dialog; player stays in the car
+		dlg.confirmed.connect(_on_leave_car_dialog_closed)
+		dlg.canceled.connect(_on_leave_car_dialog_closed)
+	else:
+		# Normal path: allow leaving the car
+		dlg.dialog_text = "You make you own fate"
+		dlg.get_ok_button().text = "I know"
+		var second_btn := dlg.add_button("I guess", true)
+		var cancel_btn := dlg.get_cancel_button()
+		if cancel_btn:
+			cancel_btn.visible = false
+
+		dlg.confirmed.connect(_on_leave_car_choice)
+		second_btn.pressed.connect(_on_leave_car_choice)
+		dlg.canceled.connect(_on_leave_car_dialog_closed)
+
+	get_tree().root.add_child(dlg)
+	dlg.popup_centered()
+
+
+func _on_leave_car_choice() -> void:
+	_close_leave_car_prompt()
+	leave_car()
+
+
+func _on_leave_car_dialog_closed() -> void:
+	_close_leave_car_prompt()
+	# Player chose to dismiss the prompt (e.g. via ESC); keep them in the car.
+
+
+func _close_leave_car_prompt() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if _leave_dialog and is_instance_valid(_leave_dialog):
+		_leave_dialog.hide()
+		_leave_dialog.queue_free()
+	_leave_dialog = null
+
+func _set_torre_environment(active: bool) -> void:
+	# When active is true, switch lighting, environment and clouds to the torre setup.
+	# We keep using the root WorldEnvironment node, but swap its Environment/Compositor
+	# to match torre's settings. When false, restore the original global setup.
+	var root = get_tree().get_current_scene()
+	if root == null:
+		return
+
+	var global_env_node = root.get_node_or_null("WorldEnvironment")
+	if global_env_node and _global_env_resource == null and global_env_node is WorldEnvironment:
+		_global_env_resource = (global_env_node as WorldEnvironment).environment
+		_global_compositor = (global_env_node as WorldEnvironment).compositor
+
+	var torre = root.get_node_or_null("torre")
+	if torre == null:
+		return
+
+	var torre_light = torre.get_node_or_null("DirectionalLight3D")
+	var global_light = root.get_node_or_null("DirectionalLight3D")
+	if global_light:
+		global_light.visible = not active
+	if torre_light:
+		torre_light.visible = active
+
+	var torre_env_node = torre.get_node_or_null("WorldEnvironment")
+	if global_env_node and global_env_node is WorldEnvironment:
+		if active:
+			# Use torre's environment and compositor on the global WorldEnvironment
+			if torre_env_node and torre_env_node is WorldEnvironment:
+				(global_env_node as WorldEnvironment).environment = (torre_env_node as WorldEnvironment).environment
+				(global_env_node as WorldEnvironment).compositor = (torre_env_node as WorldEnvironment).compositor
+		else:
+			# Restore original global environment and compositor
+			(global_env_node as WorldEnvironment).environment = _global_env_resource
+			(global_env_node as WorldEnvironment).compositor = _global_compositor
+
+	# Toggle SunshineClouds only in the final scene
+	var clouds = torre.get_node_or_null("SunshineCloudsDriverGD")
+	if clouds:
+		clouds.set("update_continuously", active)
+		clouds.set_process(active)
