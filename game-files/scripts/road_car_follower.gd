@@ -41,9 +41,9 @@ var _in_walking_mode := false  # True when player has left the car
 var _player_controller: CharacterBody3D = null
 var _dialogue_active := false  # True when dialogue is active, disables player input
 
-const MAX_SPEED := 600
+const MAX_SPEED := 130
 const ACCEL_STRENGTH := 3.5
-const BRAKE_STRENGTH := 50
+const BRAKE_STRENGTH := 500
 const MIN_SPEED := 0.0
 const FULLSTOP_SPEED := 6
 

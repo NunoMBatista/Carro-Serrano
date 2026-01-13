@@ -52,14 +52,14 @@ func start_new_game() -> void:
 
 func _ready():
 	# Get references to Hitchhikers node and car
-	hitchhikers_node = get_node_or_null("../Hitchhikers")
+	var root = get_tree().get_current_scene()
+	if root:
+		hitchhikers_node = root.get_node_or_null("Hitchhikers")
+		car_node = root.get_node_or_null("CarFollower/Carro")
 	if not hitchhikers_node:
-		print("WARNING: Hitchhikers node not found!")
-		return
-
-	car_node = get_node_or_null("../Carro")
+		print("ERROR: Hitchhikers node still not found!")
 	if not car_node:
-		print("WARNING: Car node not found!")
+		print("ERROR: Car node still not found!")
 
 	# Connect to car follower's lap signal
 	var car_follower = get_node_or_null("../CarFollower")
@@ -131,7 +131,7 @@ const VOVO_DIALOGUE = preload("res://dialogue/vovo.dialogue")
 const DRUNK_DIALOGUE_PRE = preload("res://dialogue/vovo_pre.dialogue")
 const DRUNK_DIALOGUE = preload("res://dialogue/drunk_dialogue.dialogue")
 
-const MIDDLE_DIALOGUE_PRE = preload("res://dialogue/vovo_pre.dialogue")
+const MIDDLE_DIALOGUE_PRE = preload("res://dialogue/middle_aged_dialogue_pre.dialogue")
 const MIDDLE_DIALOGUE = preload("res://dialogue/middle_aged_dialogue.dialogue")
 
 # Optional: A helper function if you want to print logic
@@ -426,10 +426,19 @@ func show_hitchhiker_ball_mesh(hitchhiker_id: int):
 		return
 
 	var mesh_name = "Hitchhiker" + str(hitchhiker_id) + "_BallMesh"
-	var mesh_node = carro_node.get_node_or_null(mesh_name)
+	var mesh_node = carro_node.get_node_or_null(mesh_name) as MeshInstance3D
 	if mesh_node:
+		# Set transparency to 1.0 (fully transparent) before making visible
+		mesh_node.transparency = 1.0
+		
+		# Make the mesh visible
 		mesh_node.visible = true
-		print("Showing ball mesh: ", mesh_name)
+		
+		# Fade transparency from 1.0 (transparent) to 0.0 (opaque)
+		var tween = create_tween()
+		tween.tween_property(mesh_node, "transparency", 0.0, 0.8)
+		
+		print("Showing ball mesh with fade-in: ", mesh_name)
 	else:
 		print("WARNING: Ball mesh not found: ", mesh_name)
 

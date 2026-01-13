@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c5hksj70ixl23"]
+[gd_scene load_steps=39 format=3 uid="uid://c5hksj70ixl23"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_07emt"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_owkif"]
@@ -18,7 +18,6 @@
 [ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="14_jpn8r"]
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="15_7sdwx"]
 [ext_resource type="ArrayMesh" uid="uid://begsy3jdebk7w" path="res://assets/Untitled_Plane_001.res" id="16_owkif"]
-[ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="17_t3o2f"]
 [ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Roughness.jpg" id="18_07emt"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="18_lb77h"]
 
@@ -281,9 +280,6 @@ surface_0/triangle_count = 10645
 
 [node name="Path3D" type="Path3D" parent="Terrain/PathMesh3D5"]
 curve = SubResource("Curve3D_hki7a")
-
-[node name="GameManager" type="Node3D" parent="."]
-script = ExtResource("17_t3o2f")
 
 [node name="Forest" type="Node3D" parent="."]
 transform = Transform3D(0.9956307, 0, -0.0933785, 0, 1, 0, 0.0933785, 0, 0.9956307, 73.702484, 103.778915, 48.323795)
