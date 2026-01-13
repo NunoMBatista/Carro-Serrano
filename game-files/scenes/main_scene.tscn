@@ -41,11 +41,11 @@
 [ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="39_ihyyi"]
 [ext_resource type="PackedScene" uid="uid://c44qbvkxhw5bk" path="res://scenes/InvisibleWall.tscn" id="41_0wyf6"]
 [ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="42_0wyf6"]
-[ext_resource type="PackedScene" uid="uid://dv3yrerb34qis" path="res://scenes/payphone2.tscn" id="42_xp01v"]
+[ext_resource type="PackedScene" path="res://scenes/payphone2.tscn" id="42_xp01v"]
 [ext_resource type="PackedScene" uid="uid://d0pnunrspdug1" path="res://assets/carro_mod_25d.glb" id="43_jix7a"]
 [ext_resource type="PackedScene" uid="uid://ckmbcemr4wnfg" path="res://assets/arrow_3d.glb" id="43_xp01v"]
-[ext_resource type="Script" uid="uid://dn27dbxwdke51" path="res://scripts/carro_exterior_interact.gd" id="44_carro_interact"]
-[ext_resource type="PackedScene" uid="uid://c18pwj0q56epg" path="res://scenes/arrow.tscn" id="46_beobj"]
+[ext_resource type="Script" path="res://scripts/carro_exterior_interact.gd" id="44_carro_interact"]
+[ext_resource type="PackedScene" path="res://scenes/arrow.tscn" id="46_beobj"]
 [ext_resource type="PackedScene" uid="uid://c384wuxt0lye4" path="res://assets/metal_billboard_advertising_single_sided_free.glb" id="47_267kh"]
 [ext_resource type="PackedScene" uid="uid://dwxiwhs1lcf4l" path="res://assets/old_sign.glb" id="48_86meh"]
 [ext_resource type="Texture2D" uid="uid://bl8i2q3myppwr" path="res://assets/traffic_signs/image.png" id="48_duuju"]
@@ -1707,7 +1707,7 @@ collision_mask = 1
 transform = Transform3D(2.3016982, 0, -1.7617553, 0, 2.8985505, 0, 1.7617553, 0, 2.3016982, 563.626, 214.81303, 469.2877)
 
 [node name="carro_mod_25d" parent="torre/carro_exterior" instance=ExtResource("43_jix7a")]
-transform = Transform3D(1, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1, 1.8937988, 0, 0.17523193)
+transform = Transform3D(1, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1, 1.8827515, 0, 0.16748047)
 visible = false
 
 [node name="CarroInteract" type="StaticBody3D" parent="torre/carro_exterior"]
@@ -1716,8 +1716,12 @@ collision_mask = 2
 script = ExtResource("44_carro_interact")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="torre/carro_exterior/CarroInteract"]
-transform = Transform3D(-0.03989386, 0, 0.5184674, 0, 0.52, 0, -0.5184674, 0, -0.03989386, 0, 0, 0)
+transform = Transform3D(-0.017261736, 0, 0.3240421, 0, 0.72, 0, -0.2243369, 0, -0.024933621, 2.0725098, 1.1181107, -0.030700684)
 shape = SubResource("BoxShape3D_carro_exterior")
+
+[node name="InvisibleWall" parent="torre/carro_exterior/CarroInteract" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(0.755, 0, -4.7002516e-07, 0, 0.73, 0, 1.2857572e-07, 0, 2.76, 2.6449585, 1.262001, 0.019897461)
+dialogue_text = ""
 
 [node name="arrow" type="Node3D" parent="torre"]
 transform = Transform3D(0.10444423, 0, 2.8966687, 0, 2.8985507, 0, -2.8966687, 0, 0.10444423, 425.27148, 226.16774, 513.4664)
@@ -1840,7 +1844,7 @@ transform = Transform3D(-1.5586456, 0, 2.9313858, 0, 3.32, 0, -2.9313858, 0, -1.
 transform = Transform3D(2.9714508, 0, 1.8209074, 0, 3.485, 0, -1.8209074, 0, 2.9714508, 1030.4248, 76.699005, 166.97107)
 
 [node name="InvisibleWall4" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(2.54243, 0, 0.37543336, 0, 2.57, 0, -0.37543336, 0, 2.54243, 1032.3015, 76.7812, 182.79088)
+transform = Transform3D(2.2919197, 0, 1.1627572, 0, 2.57, 0, -1.1627572, 0, 2.2919197, 1032.3015, 77.84879, 182.79088)
 
 [node name="InvisibleWall5" parent="." instance=ExtResource("41_0wyf6")]
 transform = Transform3D(2.6455567, 0, 1.0049528, 0, 2.83, 0, -1.0049528, 0, 2.6455567, 1053.3324, 76.544876, 174.26784)
@@ -1859,3 +1863,4 @@ transform = Transform3D(3.32, 0, 0, 0, 3.32, 0, 0, 0, 3.32, 1077.7452, 78.13745,
 [editable path="terrain_11"]
 [editable path="terrain_2"]
 [editable path="terrain_3"]
+[editable path="torre/Node3D/Sketchfab_Scene4"]

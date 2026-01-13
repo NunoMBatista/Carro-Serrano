@@ -4,6 +4,8 @@
 
 - Yeah sure, you can come.
 	do DialogueFlow.choice("positive")
+	**They slowly reach for the handle and open the door.. yet again, the frosty breeze makes its way in.**
+	**...**
 	=> END
 
 - No, my car is already full
@@ -20,6 +22,8 @@
 
 - I think that's ok, you can come.
 	do DialogueFlow.choice("positive")
+	**They slowly reach for the handle and open the door.. yet again, the frosty breeze makes its way in.**
+	**...**
 	=> END
 
 - I'm sorry that's a considerable detour for me, I cannot take you there.
