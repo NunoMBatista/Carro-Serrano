@@ -734,6 +734,12 @@ func leave_car() -> void:
 	if _player_controller.has_method("activate"):
 		_player_controller.activate()
 
+	# Stop car audio when leaving
+	if _idle_audio and _idle_audio.playing:
+		_idle_audio.stop()
+	if _driving_audio and _driving_audio.playing:
+		_driving_audio.stop()
+
 	_in_walking_mode = true
 	_disable_car_crosshair()
 	_show_torre_parked_car()
