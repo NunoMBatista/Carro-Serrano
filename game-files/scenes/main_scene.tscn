@@ -1706,6 +1706,7 @@ transform = Transform3D(2.3016982, 0, -1.7617553, 0, 2.8985505, 0, 1.7617553, 0,
 
 [node name="carro_mod_25d" parent="torre/carro_exterior" instance=ExtResource("43_jix7a")]
 transform = Transform3D(1, 0, -2.9802322e-08, 0, 1, 0, 2.9802322e-08, 0, 1, 1.8827515, 0, 0.16748047)
+visible = false
 
 [node name="CarroInteract" type="StaticBody3D" parent="torre/carro_exterior"]
 collision_layer = 0
