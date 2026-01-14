@@ -19,7 +19,9 @@ Pretentious Man: Well, enough yapping, I can tell you won't even understand... Y
 	=> step1_positive
 
 - I don't care about your cologne. Get out.
+	do DialogueFlow.stop_car()
 	Pretentious Man: Fine! Whatever!
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 1 NEGATIVE =====
@@ -68,7 +70,9 @@ Pretentious Man: My girlfriend... Well, she wanted to move here, to be closer to
 	=> step2_positive
 
 - Stop the fake bragging and get out of my car.
+	do DialogueFlow.stop_car()
 	Pretentious Man: Fine! Whatever!
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 2 NEGATIVE =====
@@ -301,6 +305,9 @@ Pretentious Man: I guess.. these last years of my life... have just been a prete
 Pretentious Man: Fuck...Maybe I'll call my girl...
 Pretentious Man: Tell her to come spend some days here with me, I heard there's some beautiful views this time of here that I never got to see.
 Pretentious Man: I got service here, thanks for the ride and the chat man.
+do DialogueFlow.stop_car()
+**The car comes to a halt**
+do DialogueFlow.resume_car
 => END
 
 # ===== ENDING NEGATIVE =====
@@ -321,5 +328,9 @@ Pretentious Man: That's on me.
 Pretentious Man: Why even try.
 Pretentious Man: I guess this is the best way I know how to take care of myself. I just have to keep being productive, keep moving, then the lack of oxygen will never fucking catch me.
 **He looks at his phone**
-Pretentious Man: Or maybe i just need to get out of this fucking place... Well, I finally have service, like I said, need to make some calls. Bye.
+Pretentious Man: Or maybe i just need to get out of this fucking place... Well, I finally have service, like I said, need to make some calls.
+do DialogueFlow.stop_car()
+**The car comes to a halt**
+Pretentious Man: Bye.
+do DialogueFlow.resume_car
 => END

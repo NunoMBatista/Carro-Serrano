@@ -535,10 +535,17 @@ func hide_hitchhiker_ball_mesh(hitchhiker_id: int):
 		return
 
 	var mesh_name = "Hitchhiker" + str(hitchhiker_id) + "_BallMesh"
-	var mesh_node = car_node.get_node_or_null(mesh_name)
+	var mesh_node = car_node.get_node_or_null(mesh_name) as MeshInstance3D
 	if mesh_node:
-		mesh_node.visible = false
-		print("Hiding ball mesh: ", mesh_name)
+		# Fade transparency from 0.0 (opaque) to 1.0 (transparent)
+		var tween = create_tween()
+		tween.tween_property(mesh_node, "transparency", 1.0, 0.4)
+		# Hide the mesh after fade completes
+		tween.tween_callback(func(): mesh_node.visible = false)
+		
+		print("Hiding ball mesh with fade-out: ", mesh_name)
+	else:
+		print("WARNING: Ball mesh not found for hiding: ", mesh_name)
 
 # Enable a specific hitchhiker by ID (1-4)
 func enable_hitchhiker(hitchhiker_id: int):

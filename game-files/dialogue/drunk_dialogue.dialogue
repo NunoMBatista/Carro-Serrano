@@ -24,7 +24,9 @@ Drunk Man: I know you have an extra cigarette for me, huh?
 	=> step1_bad
 
 - Get out, I can't deal with this right now.
+	do DialogueFlow.stop_car()
 	Drunk Man: Fine! Your loss, Charlie!
+	do DialogueFlow.stop_car()
 	=> END
 
 # ===== STEP 1 GOOD BRANCH =====
@@ -54,7 +56,9 @@ Drunk Man: WHEN WAS IT?
 	=> step2_bad
 
 - I'm not Charlie and I'm calling the police, get out.
+	do DialogueFlow.stop_car()
 	Drunk Man: TRAITOR!
+	do DialogueFlow.stop_car()
 	=> END
 
 # ===== STEP 1 BAD BRANCH =====
@@ -87,7 +91,9 @@ Drunk Man: If you are him... tell me when this happened. TELL ME!
 	=> step2_bad
 
 - I'm not Charlie and I'm calling the police, get out.
+	do DialogueFlow.resume_car()
 	Drunk Man: THE FEDS GOT TO YOU TOO!
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 2 GOOD BRANCH =====
@@ -110,7 +116,9 @@ Drunk Man: Do you think he's cold down there? Do you think we should dig him out
 	=> step3_bad
 
 - GET OUT!
+	do DialogueFlow.stop_car()
 	Drunk Man: You're just like the rest of them!
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 2 BAD BRANCH =====
@@ -137,7 +145,9 @@ Drunk Man: It was the only way, right?
 	=> step3_bad
 
 - GET OUT!
+	do DialogueFlow.stop_car()
 	Drunk Man: THEY GOT TO YOU!
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 3 GOOD BRANCH (ENDING) =====
@@ -154,7 +164,7 @@ Drunk Man: I won't go back to the white room!
 **He tries to open the door, but the seatbelt restrains him. He struggles against it, panic rising in his eyes.**
 Drunk Man: Let me out! LET ME OUT!
 **He starts banging his head against the window repeatedly.**
-**Eventually, he figures out how to release the seatbelt lock and he leaves the car, stumbling into the night.**
+**Eventually, he figures out how to release the seatbelt lock and he jumps out of the car, stumbling into the night.**
 
 do DialogueFlow.empathy -= 30
 => END
@@ -169,6 +179,10 @@ Drunk Man: We can't stop now. If we stop, Frank's sacrifice means nothing. They 
 Drunk Man: I can feel it, Charlie. You are ready to give your body to our cause. Just like Frank did.
 **He raises his hand, holding a rust-covered spoon. The handle had been filed down into a sharp blade.**
 **He lunges at you with the makeshift weapon.**
+do DialogueFlow.stop_car()
+**The car comes to a halt.**
+**He tears the seatbelt with the spoon and runs away into the night.** 
+do DialogueFlow.resume_car()
 
 
 do DialogueFlow.empathy -= 30

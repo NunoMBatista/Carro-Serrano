@@ -706,13 +706,17 @@ func teleport_to_torre() -> void:
 	_set_torre_environment(true)
 
 ## Leave the car and switch to walking mode
+
 ## Stop car for dialogue and disable player input
+## Call this from dialogues using: do road_car_follower.start_dialogue()
+## Or connect to DialogueManager.dialogue_started signal
 func start_dialogue() -> void:
 	_dialogue_active = true
-	cur_speed = 0.0
 	print("Car stopped for dialogue - input disabled")
 
 ## Resume car control after dialogue ends
+## Call this from dialogues using: do road_car_follower.end_dialogue()
+## Or connect to DialogueManager.dialogue_ended signal
 func end_dialogue() -> void:
 	_dialogue_active = false
 	print("Car control resumed - input enabled")
