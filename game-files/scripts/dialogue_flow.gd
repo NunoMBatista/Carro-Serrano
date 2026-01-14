@@ -39,7 +39,7 @@ var last_choice: String = ""
 var n_positive_choices: int = 0
 
 ## Public property to check if dialogue is active
-var is_dialogue_active: bool = false:
+var is_dialogue_active: bool:
 	get:
 		return _active
 
@@ -92,6 +92,9 @@ func run_dialogue(dialogue_resource: DialogueResource, start_title: String = "st
 	if _active:
 		return
 	_active = true
+	print("[DIALOGUE_FLOW] Dialogue starting - is_dialogue_active now TRUE")
+	var mode_before = DisplayServer.mouse_get_mode()
+	print("[DIALOGUE_FLOW] Mouse mode at dialogue start: ", mode_before)
 	# Don't change mouse mode - keep camera active during dialogue
 
 	# Reset positive choice counter
@@ -156,6 +159,9 @@ func _on_dialogue_ended(_resource) -> void:
 	print("DEBUG DialogueFlow: _on_dialogue_ended called, _active=", _active)
 	if _active:
 		_active = false
+		print("[DIALOGUE_FLOW] Dialogue ending - is_dialogue_active now FALSE")
+		var mode_before = DisplayServer.mouse_get_mode()
+		print("[DIALOGUE_FLOW] Mouse mode at dialogue end: ", mode_before)
 		# Don't change mouse mode - camera stays active
 		var logger = get_node_or_null("/root/PlaytestLogger")
 		if logger:

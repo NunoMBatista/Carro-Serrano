@@ -48,7 +48,7 @@ func _ready() -> void:
 func activate() -> void:
 	is_active = true
 	set_physics_process(true)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 	if camera:
 		camera.current = true
 	if crosshair:
@@ -74,12 +74,21 @@ func _physics_process(delta: float) -> void:
 	if not is_active:
 		return
 
-	# Handle escape to release mouse
+	# Handle escape to release mouse (but not during dialogue)
 	if Input.is_action_just_pressed("ui_cancel"):
-		if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		var dialogue_flow = get_node_or_null("/root/DialogueFlow")
+		if dialogue_flow and dialogue_flow.is_dialogue_active:
+			# Don't toggle mouse mode during dialogue
+			print("[PLAYER] ESC pressed during dialogue - ignoring. is_dialogue_active=", dialogue_flow.is_dialogue_active)
+			pass
+		elif DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED:
+			print("[PLAYER] ESC pressed - changing from CAPTURED to VISIBLE")
+			DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
+			print("[PLAYER] Mouse mode after change: ", DisplayServer.mouse_get_mode())
 		else:
-			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			print("[PLAYER] ESC pressed - changing from ", DisplayServer.mouse_get_mode(), " to CAPTURED")
+			DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
+			print("[PLAYER] Mouse mode after change: ", DisplayServer.mouse_get_mode())
 
 	# Apply gravity
 	if not is_on_floor():
@@ -130,8 +139,8 @@ func _physics_process(delta: float) -> void:
 	camera_pivot.rotate_y(_twist_input)
 	camera.rotate_x(_pitch_input)
 
-	# Clamp pitch
-	camera.rotation.x = clamp(camera.rotation.x, -PI/2 * 0.9, PI/2 * 0.9)
+	# Clamp pitch to realistic human neck limits (~65 degrees up/down)
+	camera.rotation.x = clamp(camera.rotation.x, -PI/2 * 0.72, PI/2 * 0.72)
 
 	_twist_input = 0.0
 	_pitch_input = 0.0
@@ -142,6 +151,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not is_active:
 		return
 
-	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseMotion and DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED:
 		_twist_input = -event.relative.x * mouse_sensitivity
 		_pitch_input = -event.relative.y * mouse_sensitivity

@@ -61,6 +61,8 @@ func _ready() -> void:
 	balloon.hide()
 	# Allow mouse events to pass through to camera
 	balloon.mouse_filter = Control.MOUSE_FILTER_PASS
+	# Force balloon to use default cursor shape to prevent custom cursor showing
+	balloon.mouse_default_cursor_shape = Control.CURSOR_ARROW
 	Engine.get_singleton("DialogueManager").mutated.connect(_on_mutated)
 
 	# If the responses menu doesn't have a next action set, use this one

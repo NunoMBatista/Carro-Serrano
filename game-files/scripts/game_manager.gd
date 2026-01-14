@@ -513,6 +513,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
 			KEY_G:
-				#if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-				#	DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
+				if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED:
+					DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
 				pass

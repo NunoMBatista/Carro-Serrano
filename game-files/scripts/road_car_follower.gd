@@ -805,7 +805,7 @@ func return_to_car_from_torre() -> void:
 	_enable_car_crosshair()
 	_in_walking_mode = false
 	_can_leave_car = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 
 
 func _show_leave_car_prompt() -> void:

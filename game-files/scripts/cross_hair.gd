@@ -157,7 +157,7 @@ func simulate_click(duration: float = 0.12) -> void:
 func _is_dialogue_active() -> bool:
 	# Only block interaction when response choices are showing (cursor is hidden)
 	# During regular dialogue text, cursor is captured and player can interact
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_HIDDEN:
+	if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_HIDDEN:
 		return true
 
 	return false

@@ -92,7 +92,7 @@ func _ready() -> void:
 
 	# Hide crosshair and show/capture mouse
 	_hide_crosshair()
-	Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
 
 	# Setup fade rect to cover entire screen
 	if not fade_rect:
