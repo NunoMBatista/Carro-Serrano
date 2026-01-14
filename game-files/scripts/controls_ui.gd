@@ -47,11 +47,11 @@ func _ready() -> void:
 	_controls_label = Label.new()
 	_controls_label.text = """CONTROLS:
 
-SPACE - Jump / Brake
+SPACE - Jump/Brake
 LEFT MOUSE - Interact (Radio/Glovebox)
 RIGHT MOUSE - Leave Screen
 L - Turn On/Off Lights
-ENTER - Skip Dialogue / Confirm Choice
+ENTER - Skip Dialogue/Confirm Choice
 UP/DOWN ARROWS - Select Dialogue Option"""
 
 	if font:
