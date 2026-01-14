@@ -47,6 +47,22 @@ Original Soundtrack
 Susana Canelo
 
 
+Young Woman Dialogue Writing
+Francisco Lapa Silva
+
+
+Drunk Man Dialogue Writing
+Nuno Batista
+
+
+Pretentious Man Dialogue Writing
+Miguel Castela
+
+
+Old Man Dialogue Writing
+Miguel Martins
+
+
 Playtesters
 Catarina Silva
 Mário Bento
@@ -54,6 +70,7 @@ Miguel Cabral Pinto
 João Nave
 Miguel Gonçalves
 João Albano
+
 
 
 Special Thanks To Our Professors
