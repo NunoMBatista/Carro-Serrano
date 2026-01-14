@@ -26,7 +26,7 @@ Drunk Man: I know you have an extra cigarette for me, huh?
 - Get out, I can't deal with this right now.
 	do DialogueFlow.stop_car()
 	Drunk Man: Fine! Your loss, Charlie!
-	do DialogueFlow.stop_car()
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 1 GOOD BRANCH =====
@@ -58,7 +58,7 @@ Drunk Man: WHEN WAS IT?
 - I'm not Charlie and I'm calling the police, get out.
 	do DialogueFlow.stop_car()
 	Drunk Man: TRAITOR!
-	do DialogueFlow.stop_car()
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 1 BAD BRANCH =====

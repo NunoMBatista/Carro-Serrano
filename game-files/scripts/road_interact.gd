@@ -18,12 +18,33 @@ func interact() -> void:
 	if crosshair and crosshair.has_method("set_lift_mode"):
 		crosshair.set_lift_mode()
 		print("DEBUG: Lift mode activated")
+		# Start moving the exterior car along the torre path
+		var root = get_tree().get_current_scene()
+		if root:
+			var path_follow = root.get_node_or_null("torre/Path3D/PathFollow3D")
+			if path_follow and path_follow.has_method("start_moving"):
+				path_follow.start_moving()
+				print("DEBUG: carro_exterior2 movement started")
 	else:
 		print("DEBUG: WARNING - Crosshair not found or doesn't have set_lift_mode")
 
-	# Wait 4 seconds for the lift mode to be visible
-	print("DEBUG: Waiting 4 seconds before fade...")
-	await get_tree().create_timer(4.0).timeout
+	# Wait for the exterior car to reach the end of the path (or a timeout)
+	var root2 = get_tree().get_current_scene()
+	if root2:
+		var pf = root2.get_node_or_null("torre/Path3D/PathFollow3D")
+		if pf and pf.has_signal("movement_finished"):
+			print("DEBUG: Waiting for carro_exterior2 to finish movement...")
+			var finished := false
+			pf.movement_finished.connect(func(): finished = true)
+			var timer = get_tree().create_timer(25.0)
+			while not finished and timer.time_left > 0.0:
+				await get_tree().process_frame
+			print("DEBUG: Movement finished or timeout reached, starting fade quickly")
+			await get_tree().create_timer(0.2).timeout
+	else:
+		# Fallback: fixed delay if PathFollow not found
+		print("DEBUG: PathFollow3D not found, falling back to fixed wait")
+		await get_tree().create_timer(10.0).timeout
 
 	# Trigger smooth fade to black and credits
 	print("DEBUG: Starting smooth fade credits")

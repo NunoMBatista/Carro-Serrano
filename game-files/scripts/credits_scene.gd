@@ -67,9 +67,11 @@ Playtesters
 Catarina Silva
 Mário Bento
 Miguel Cabral Pinto
-João Nave
 Miguel Gonçalves
-João Albano
+João Nave
+Tiago Silva
+Humberto Batista
+Nuno Castela
 
 
 

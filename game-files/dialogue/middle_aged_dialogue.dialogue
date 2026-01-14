@@ -6,20 +6,19 @@ Pretentious Man: Maybe my cologne can mask this god-awful smell... It better, it
 Pretentious Man: Bought it when me and her went to Dubai this summer, now that's a city I can live in. That's the lifestyle I want, not this hillbilly bullshit where nothing happens and no one understands what a stock or an NFT is.
 **The man rolls his yes as he finished the sentece**
 **He start smoking his eletronic cigarete and turns the AC up**
-Pretentious Man: Well, enough yapping, I can tell you won't even understand... You're going up the mountain right?
+Pretentious Man: Well, enough yapping, I can tell you won't even understand.
 
-- Yes, I am... Dubai sounds impressive. I guess someone like you can easily choose where to live.
+- Dubai sounds impressive. I guess someone like you can choose where to live.
 	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
 	=> step1_negative
 
 
-- Yes, I am... You're paying for the seat coverings if you keep smoking that wannabe cigarete in here. Why are you really heading up to the summit anyway?
+- You're paying for the seat coverings if you keep smoking that wannabe cigarete in here.
 	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step1_positive
 
-- I don't care about your cologne. Get out.
-	do DialogueFlow.stop_car()
+- You think i care about your cologne or Dubai? Get out.
 	Pretentious Man: Fine! Whatever!
 	do DialogueFlow.resume_car()
 	=> END
@@ -36,12 +35,12 @@ Pretentious Man: Don't need this negativity. I'm fueled by success.
 	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
 	=> step2_negative
 
-- You're talking about success like it's a race. What happens when you reach the finish line and all that matters are the people from your past?
+- You're talking about success like it's a race. What happens when you reach the finish line and all that matters are the people you knew?
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step2_positive
 
-- You can fill your life with projects and golf clubs, but I bet you know it won't make you whole. What are you actually running from?
+- You can fill your life with productivity and golf clubs, but I bet you know it won't make you whole. What are you actually running from?
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step2_positive
@@ -53,6 +52,7 @@ Pretentious Man: Fine, fine. God, everyone is so sensitive up here. It's just...
 **The man rolls his eyes again and takes a final puff before throwing the electronic cigarette. He looks out the window.**
 Pretentious Man: I envy the stars you know? They are so consistent, we are born, live shitty lives, and die, and they are always there, shining for like a gazilion years. Being able to see the stars this clear somedays is the only good thing about this shithole.
 Pretentious Man: I can tell you are from here, and all the people I met from this fucking place don't think like that. I bet you think it's sooooo good to be surrounded by this nature, by this cold and this whole bunch of unproductive nothing.
+Pretentious Man: I could buy this whole mountain if I wanted to; would turn it into a goddamn paradise resort, I'm talking Padel fields, Golf Clubs... You know, things for the elite...
 Pretentious Man: My girlfriend... Well, she wanted to move here, to be closer to family. Whatever that means. I am always telling her, 'Babe, the winters there are cold as shit'. Why would anyone build a house there? And it's true, you know, I spent my whole childhood repenting this place.
 
 - Why waste time thinking about some 'hillbilly' childhood?
@@ -64,7 +64,7 @@ Pretentious Man: My girlfriend... Well, she wanted to move here, to be closer to
 	do DialogueFlow.n_positive_choices += 1
 	=> step2_positive
 
-- You can fill your life with projects and golf clubs, but I bet you know it won't make you whole. What are you actually running from?
+- You can fill your life with productivity and golf clubs, but I bet you know it won't make you whole. What are you actually running from?
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step2_positive
@@ -82,7 +82,7 @@ Pretentious Man: My girlfriend... Well, she wanted to move here, to be closer to
 Pretentious Man: Exactly I mean, look at me. I am the epitome of success, of the "American Dream"... living the freedom I always dreamt of. Shit... I'd like to be exercising that freedom right now. Instead, I'm back here because of a "family emergency."
 **The man suddenly stops all the frenetic movement**
 **His posture slumps just a fraction.**
-Pretentious Man: My mother... she finally did it. She died. And you know what she left me? The reminder not to wind up as she was: an unskilled, incompetent and miserable loser.
+Pretentious Man: Yeah... My mother... she finally did it. She died. And you know what she left me? The reminder not to wind up as she was: an unskilled, incompetent and miserable loser.
 Pretentious Man: It's funny...I stopped at a gas station before entering the funeral and the guy working there gave me a free donut because I 'looked like I needed it.' Funny, right? A stranger shows more grace in thirty seconds than my mom managed in twenty years. He didn't even know me, I was her goddamn son.
 
 - Life's a bitch and then you die.
@@ -90,11 +90,8 @@ Pretentious Man: It's funny...I stopped at a gas station before entering the fun
 	=> step3_negative
 
 - A free donut is a free donut. Better than nothing.
-	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
-		do DialogueFlow.n_positive_choices += 1
-		=> step3_positive
-	else
-		=> step3_negative
+	do DialogueFlow.empathy -= 1 * DialogueFlow.empathy_coefficient
+	=> step3_negative
 
 - Maybe admitting that it hurts isn't as difficult as you make it out to be.
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
@@ -120,7 +117,7 @@ Pretentious Man: I can see you don't talk much, well, I'll tell you a story. I c
 
 
 **He exhales through his nose and smirks, the rest of his face isn't showing much hapiness though.**
-Pretentious Man:  I'm only back here because of a "family emergency... I got a call yesterday after leaving work. From my mother's lawyer. She died.
+Pretentious Man:  I'm only back here because of a "family emergency"... I got a call yesterday after leaving work. From my mother's lawyer. She finally did it. She died.
 **He stares at the dashboard, fingers tapping once, then stopping.**
 Pretentious Man: She spent her whole life trying to prove she mattered.
 Pretentious Man: Always busy. Always tired. Always disappointed.
@@ -155,7 +152,7 @@ Pretentious Man: Well... I bet you have some half-assed philosophical theory for
 ~ step3_negative
 
 **His smirk is bigger then in the beggining of the conversation, his eyes light up**
-Pretentious Man: Amen... you know something else... I hate it when people fucking say that all that matters are the "simple things"... what does that ever accomplish?
+Pretentious Man: Amen... you know something else i've been thinking about man?... I hate it when people fucking say that all that matters are the "simple things"... what does that ever accomplish?
 Pretentious Man: All I see are vain excuses to live like sheep in a herd. All that people make it out to be important is just fuel for drama, more unimportant nonsense to keep them busy until they're dead.
 Pretentious Man: I've always been better at focusing on the path ahead
 
@@ -163,12 +160,12 @@ Pretentious Man: I've always been better at focusing on the path ahead
 	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
 	=> step4_negative
 
-- You know, it takes a long time to realize how truly miserable you are, but it takes even longer to see it doesn't have to be that way.
+- It takes a long time to grasp how truly miserable you are, but it takes even longer to realize it doesn't have to be that way. It's up to you.
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step4_positive
 
-- Have you thought that maybe all this hate isn't due to the corruptness of society or even your childhood? It's just you.
+- Have you thought that maybe all this hate isn't about all these external things? It's just you.
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step4_positive
@@ -177,11 +174,12 @@ Pretentious Man: I've always been better at focusing on the path ahead
 ~ step3_positive
 
 **He finally stops fidgeting with the watch.**
+Pretentious Man: There you go with your deep ass theories.
 Pretentious Man: Man... I can see you're trying to get something out of me...
 
 **A moment of silence**
 
-Pretentious Man: I guess I'll never see you again so I'll tell you this
+Pretentious Man: I guess I'll never see you again so I'll tell you this:
 Pretentious Man: Sitting in that funeral service today, looking at her... Even after lying to myself, lying to the ones I love... I can feel it... the leak inside me doesn’t ever stop.
 Pretentious Man: Since I was a child, like they always said, I'm just a pit that good things fall into. I wanted to show her how good I am doing when she saw me again. The funny thing is... when I finally saw her, in the casket, I realized that I'm not doing good. I'm just some other version of her, fueled by the same bitterness.
 Pretentious Man: A cancer, spread through generations.
@@ -190,12 +188,12 @@ Pretentious Man: A cancer, spread through generations.
 	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
 	=> step4_negative
 
-- It takes a long time to realize how truly miserable you are, but it takes even longer to see it doesn't have to be that way.
+- It takes a long time to grasp how truly miserable you are, but it takes even longer to realize it doesn't have to be that way. It's up to you.
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step4_positive
 
-- Have you thought that maybe all this hate isn't due to the corruptness of society or even your childhood? It's just you.
+- Have you thought that maybe all this hate isn't about all these external things? It's just you.
 	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
 	do DialogueFlow.n_positive_choices += 1
 	=> step4_positive
@@ -227,7 +225,7 @@ Pretentious Man: No excuses.
 	do DialogueFlow.n_positive_choices += 1
 	=> choose_ending
 
-- I've recently realized it's hard to realize you're the piece that doesn't quite fit anymore, but that doesn't mean you're a lost cause.
+- I've recently realized it's hard to realize you're the piece that doesn't quite fit anymore, but that doesn't necessarily mean you're a lost cause.
 	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
 		do DialogueFlow.n_positive_choices += 1
 	=> choose_ending
@@ -263,7 +261,7 @@ Pretentious Man: That part doesn't have anywhere to go now.
 	do DialogueFlow.n_positive_choices += 1
 	=> choose_ending
 
-- It's hard to realize you're the piece that doesn't quite fit anymore, but that doesn't mean you're a lost cause.
+- It's hard to realize you're the piece that doesn't quite fit anymore, but that doesn't necessarily mean you're a lost cause.
 	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
 		do DialogueFlow.n_positive_choices += 1
 	=> choose_ending
@@ -300,7 +298,7 @@ Pretentious Man: To be honest... I don't even know what "taking care of myself" 
 **He looks at the dark road and clenches his fist*
 Pretentious Man: Some open wounds can't just fucking heal on their own can't they.**
 Pretentious Man: I mean, why can't I stop my brain from punishing myself forever for something I never got...something I couldn't even control.
-**He takes his out of his watch and grabs his phone**
+**He takes his watch out of his hand and grabs his phone**
 Pretentious Man: I guess.. these last years of my life... have just been a pretext to distract myself, just so I don't realize I have very few fucking hope...
 Pretentious Man: Fuck...Maybe I'll call my girl...
 Pretentious Man: Tell her to come spend some days here with me, I heard there's some beautiful views this time of here that I never got to see.

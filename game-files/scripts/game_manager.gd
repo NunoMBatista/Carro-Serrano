@@ -542,7 +542,7 @@ func hide_hitchhiker_ball_mesh(hitchhiker_id: int):
 		tween.tween_property(mesh_node, "transparency", 1.0, 0.4)
 		# Hide the mesh after fade completes
 		tween.tween_callback(func(): mesh_node.visible = false)
-		
+
 		print("Hiding ball mesh with fade-out: ", mesh_name)
 	else:
 		print("WARNING: Ball mesh not found for hiding: ", mesh_name)
@@ -626,5 +626,4 @@ func _unhandled_input(event: InputEvent) -> void:
 			KEY_G:
 				#if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED:
 				#	DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
-				pass
 				pass

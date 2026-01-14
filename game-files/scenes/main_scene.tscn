@@ -1,15 +1,14 @@
-[gd_scene load_steps=188 format=3 uid="uid://f262srybfbm8"]
+[gd_scene load_steps=189 format=3 uid="uid://f262srybfbm8"]
 
+[ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="1_18nlu"]
 [ext_resource type="PackedScene" uid="uid://dfmyjabbccxsr" path="res://scenes/terrain_2.tscn" id="2_7ykc4"]
 [ext_resource type="Script" uid="uid://dl7l87n055idr" path="res://scripts/road_car_follower.gd" id="3_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://mn4hil24fehx" path="res://scenes/Carro.tscn" id="4_gubc5"]
 [ext_resource type="PackedScene" uid="uid://c8yay001a2b3c" path="res://scenes/PlayerController.tscn" id="5_player"]
+[ext_resource type="PackedScene" uid="uid://cujc86dyvi6l6" path="res://scenes/terrain_11.tscn" id="6_c1pb6"]
 [ext_resource type="PackedScene" uid="uid://c5hksj70ixl23" path="res://scenes/terrain_3.tscn" id="7_c16ls"]
 [ext_resource type="CompositorEffect" uid="uid://cil7asi5ishrm" path="res://NewCloudsGD.tres" id="8_3mjum"]
-[ext_resource type="Script" uid="uid://cj6s6gnlw4ecy" path="res://scripts/game_manager.gd" id="1_18nlu"]
-[ext_resource type="PackedScene" uid="uid://cujc86dyvi6l6" path="res://scenes/terrain_11.tscn" id="6_c1pb6"]
 [ext_resource type="Script" uid="uid://byn3gfaemrrwf" path="res://scripts/fog_controller.gd" id="9_fog"]
-[ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="24_p27gv"]
 [ext_resource type="Resource" uid="uid://dstyegoambfu1" path="res://torre_data/data.hterrain" id="10_cn4eu"]
 [ext_resource type="Script" uid="uid://dxqdn5ho6vkac" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="11_0wyf6"]
 [ext_resource type="Texture2D" uid="uid://d02y0r658ygci" path="res://slot0_albedo_bump.png" id="12_xp01v"]
@@ -24,6 +23,7 @@
 [ext_resource type="Script" uid="uid://bfmdcbmgrleml" path="res://addons/road-generator/nodes/road_container.gd" id="21_ruju6"]
 [ext_resource type="Material" uid="uid://dpashsuk5lr4x" path="res://addons/road-generator/resources/road_texture.material" id="22_5nybl"]
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="23_cq0lk"]
+[ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="24_p27gv"]
 [ext_resource type="PackedScene" uid="uid://tg1nfd4eajp6" path="res://assets/roundabout.glb" id="25_8pjrr"]
 [ext_resource type="PackedScene" uid="uid://c71vwi82qu3k5" path="res://scenes/house_1.tscn" id="26_0xxsb"]
 [ext_resource type="PackedScene" uid="uid://dw7wi85d1qrva" path="res://scenes/house_2.tscn" id="27_wqttf"]
@@ -39,23 +39,22 @@
 [ext_resource type="PackedScene" uid="uid://cqxwr5nb0gl44" path="res://castelo.tscn" id="37_gwxm2"]
 [ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Roughness.jpg" id="38_llmay"]
 [ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="39_ihyyi"]
+[ext_resource type="PackedScene" uid="uid://dv3yrerb34qis" path="res://scenes/payphone2.tscn" id="40_xp01v"]
 [ext_resource type="PackedScene" uid="uid://c44qbvkxhw5bk" path="res://scenes/InvisibleWall.tscn" id="41_0wyf6"]
 [ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="42_0wyf6"]
-[ext_resource type="PackedScene" uid="uid://dv3yrerb34qis" path="res://scenes/payphone2.tscn" id="40_xp01v"]
 [ext_resource type="PackedScene" uid="uid://d0pnunrspdug1" path="res://assets/carro_mod_25d.glb" id="43_jix7a"]
-[ext_resource type="PackedScene" uid="uid://ckmbcemr4wnfg" path="res://assets/arrow_3d.glb" id="45_xp01v"]
 [ext_resource type="Script" uid="uid://dn27dbxwdke51" path="res://scripts/carro_exterior_interact.gd" id="44_carro_interact"]
+[ext_resource type="PackedScene" uid="uid://ckmbcemr4wnfg" path="res://assets/arrow_3d.glb" id="45_xp01v"]
 [ext_resource type="PackedScene" uid="uid://c18pwj0q56epg" path="res://scenes/arrow.tscn" id="46_beobj"]
 [ext_resource type="PackedScene" uid="uid://c384wuxt0lye4" path="res://assets/metal_billboard_advertising_single_sided_free.glb" id="47_267kh"]
 [ext_resource type="PackedScene" uid="uid://dwxiwhs1lcf4l" path="res://assets/old_sign.glb" id="48_86meh"]
 [ext_resource type="Texture2D" uid="uid://bl8i2q3myppwr" path="res://assets/traffic_signs/image.png" id="49_duuju"]
 [ext_resource type="Texture2D" uid="uid://box4jqnentf1d" path="res://assets/traffic_signs/image-removebg-preview1.png" id="50_ruju6"]
-[ext_resource type="Texture2D" uid="uid://cquqc5v7gv4sx" path="res://assets/traffic_signs/reflectorized-roadway-safety-notice-sign-boards-686-removebg-preview.png" id="51_5nybl"]
-[ext_resource type="Texture2D" uid="uid://dm8yn2qlocs2s" path="res://assets/traffic_signs/image-removebg-preview.png" id="52_cq0lk"]
-[ext_resource type="Script" uid="uid://cay2642mv7eay" path="res://scripts/road_interact.gd" id="55_j2yw6"]
 [ext_resource type="PackedScene" uid="uid://l2loc6c8jgfe" path="res://assets/the_sun.glb" id="53_5nybl"]
-[ext_resource type="Script" path="res://scripts/arrow.gd" id="56_arrow"]
-[ext_resource type="PackedScene" uid="uid://bx8k7oam3pqrs" path="res://scenes/title_screen.tscn" id="54_title"]
+[ext_resource type="PackedScene" path="res://scenes/title_screen.tscn" id="54_title"]
+[ext_resource type="Script" uid="uid://cay2642mv7eay" path="res://scripts/road_interact.gd" id="55_j2yw6"]
+[ext_resource type="Script" uid="uid://c2rgp0kd32mfx" path="res://scripts/arrow.gd" id="56_arrow"]
+[ext_resource type="Script" uid="uid://dtibo42op0npj" path="res://scripts/carro_exterior2_mover.gd" id="57_carro2"]
 
 [sub_resource type="Sky" id="Sky_7ykc4"]
 
@@ -861,7 +860,7 @@ _data = {
 }
 point_count = 2
 
-[sub_resource type="Curve3D" id="Curve3D_l33ch"]
+[sub_resource type="Curve3D" id="Curve3D_mrvy2"]
 _data = {
 "points": PackedVector3Array(0, 0, 0, 0, -1.7695097e-08, 0.63999885, 0, 0, 0, -0.30232432, -0.07314475, -0.55932933, -27.773376, 4.432724, 4.569664, 0.3068018, -0.060318947, 1.0960217),
 "tilts": PackedFloat32Array(5.650941e-08, 0.11372412)
@@ -923,6 +922,13 @@ albedo_texture = ExtResource("38_llmay")
 size = Vector3(12, 6, 20)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5x80e"]
+
+[sub_resource type="Curve3D" id="Curve3D_l33ch"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 398.25244, 190.99927, 254.59192, 0, 0, 0, 0, 0, 0, 437.36572, 204.38303, 277.77713, 0, 0, 0, 0, 0, 0, 470.55493, 218.7148, 299.1587, 0, 0, 0, 0, 0, 0, 503.3203, 217.67848, 310.90634, 0, 0, 0, 0, 0, 0, 521.51196, 217.22554, 319.55203, 0, 0, 0, 0, 0, 0, 531.0271, 216.93532, 330.43106, 0, 0, 0, 0, 0, 0, 544.2146, 218.30301, 361.42133, 0, 0, 0, 0, 0, 0, 550.5242, 218.48497, 379.4457, 0, 0, 0, 0, 0, 0, 553.47925, 218.62788, 394.00446, 0, 0, 0, 0, 0, 0, 556.64185, 218.90378, 405.14328, 0, 0, 0, 0, 0, 0, 559.59937, 217.91693, 417.699),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 11
 
 [node name="Node3D" type="Node3D"]
 
@@ -1282,7 +1288,19 @@ curve = SubResource("Curve3D_vowyj")
 curve = SubResource("Curve3D_ufg4r")
 
 [node name="edge_C" parent="terrain_11/Terrain/Node3D/RoadManager/Road_001/RP_028" index="2"]
-curve = SubResource("Curve3D_l33ch")
+curve = SubResource("Curve3D_mrvy2")
+
+[node name="PathMesh3D" parent="terrain_11/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
 
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("1_18nlu")
@@ -1292,6 +1310,42 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1.0000541, 0, 0, 509.22595)
 
 [node name="RP_032" parent="terrain_2/Terrain/Node3D/RoadManager/Road_001" index="28"]
 transform = Transform3D(0.25136515, 0.35149294, 0.9018141, -0.017368447, 0.93321764, -0.3588919, -0.9677369, 0.074549824, 0.24068353, 1.3396049, 246.64803, 853.88513)
+
+[node name="PathMesh3D" parent="terrain_2/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D2" parent="terrain_2/Terrain" index="3"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D3" parent="terrain_2/Terrain" index="4"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
 
 [node name="CarFollower" type="Node3D" parent="."]
 transform = Transform3D(-0.115325324, 0.0414615, 0.9923406, 0, 0.9989787, -0.041741267, -0.9932213, -0.004814195, -0.11522307, -2.8559113, -0.23949385, 0.2235527)
@@ -1311,6 +1365,54 @@ transform = Transform3D(1.0000002, 0, 0, 0, 0.9990485, 0.043619387, 0, -0.043619
 
 [node name="terrain_3" parent="." instance=ExtResource("7_c16ls")]
 transform = Transform3D(-1.00563, 0, 0, 0, 1, 0, 0, 0, -1.0048895, 0.67458725, 0.026493073, 510.85474)
+
+[node name="PathMesh3D" parent="terrain_3/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D2" parent="terrain_3/Terrain" index="3"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D4" parent="terrain_3/Terrain" index="4"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D5" parent="terrain_3/Terrain" index="5"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
 
 [node name="terrain_4" parent="." instance=ExtResource("6_c1pb6")]
 visible = false
@@ -1782,24 +1884,6 @@ transform = Transform3D(-0.78422624, 0.027409311, -0.6198693, 0.031453267, 0.999
 transform = Transform3D(1.086998, 0, 1.0336516, 0, 1.5, 0, -1.0336516, 0, 1.086998, 492.489, 223.88744, 325.122)
 texture = ExtResource("50_ruju6")
 
-[node name="sign_curva" type="Node3D" parent="torre"]
-
-[node name="Sketchfab_Scene" parent="torre/sign_curva" instance=ExtResource("48_86meh")]
-transform = Transform3D(-0.78422624, 0.027409311, -0.6198693, 0.031453267, 0.9994955, 0.004402556, 0.61967725, -0.016044315, -0.78469276, 488.49683, 217.32457, 317.2383)
-
-[node name="Sprite3D2" type="Sprite3D" parent="torre/sign_curva"]
-transform = Transform3D(0.60654277, 0, 0.5963787, 0, 0.68987375, 0, -0.57677555, 0, 0.6271576, 486.03564, 223.88744, 325.122)
-texture = ExtResource("51_5nybl")
-
-[node name="sign_tunel" type="Node3D" parent="torre"]
-
-[node name="Sketchfab_Scene" parent="torre/sign_tunel" instance=ExtResource("48_86meh")]
-transform = Transform3D(-0.78422624, 0.027409311, -0.6198693, 0.031453267, 0.9994955, 0.004402556, 0.61967725, -0.016044315, -0.78469276, 481.5066, 217.32457, 317.2383)
-
-[node name="Sprite3D2" type="Sprite3D" parent="torre/sign_tunel"]
-transform = Transform3D(1.086998, 0, 1.0336516, 0, 1.5, 0, -1.0336516, 0, 1.086998, 479.0454, 223.88744, 325.122)
-texture = ExtResource("52_cq0lk")
-
 [node name="sun" parent="torre" instance=ExtResource("53_5nybl")]
 transform = Transform3D(100, 0, 0, 0, 100, 0, 0, 0, 100, 1016.56274, 1197.537, 2102.0027)
 visible = false
@@ -1819,6 +1903,19 @@ visible = false
 script = ExtResource("56_arrow")
 
 [node name="Sketchfab_Scene" parent="torre/arrow3" instance=ExtResource("46_beobj")]
+
+[node name="Path3D" type="Path3D" parent="torre"]
+curve = SubResource("Curve3D_l33ch")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="torre/Path3D"]
+transform = Transform3D(-0.5099121, -0.24290074, -0.8252098, 7.450526e-09, 0.9592933, -0.28236982, 0.8602183, -0.14398442, -0.4891601, 398.25244, 190.99927, 254.59192)
+script = ExtResource("57_carro2")
+
+[node name="carro_exterior2" type="Node3D" parent="torre"]
+transform = Transform3D(-1.4630659, -0.7015011, 1.6301333, -0.6427432, 2.1787097, 0.3607016, -1.6541823, -0.22609857, -1.5819483, 410.98364, 194.44716, 264.29654)
+
+[node name="carro_mod_25d" parent="torre/carro_exterior2" instance=ExtResource("43_jix7a")]
+transform = Transform3D(0.9672142, 1.4901161e-08, 0.25396055, 2.1979213e-07, 0.9999998, -9.685755e-08, -0.2539606, -2.2351742e-08, 0.9672145, 1.8494263, 0.007598877, -0.043884277)
 
 [node name="Hitchhikers" type="Node3D" parent="."]
 
