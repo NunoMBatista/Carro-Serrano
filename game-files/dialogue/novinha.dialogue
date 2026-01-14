@@ -25,8 +25,10 @@ Young Woman: Oh! I'm sorry, I didn't even ask where you were going. I don't want
 	=> step1_bad
 
 - I'm sorry, I'm getting second thoughts about this. Please leave.
+	do DialogueFlow.stop_car()
 	Young Woman: I... I understand...
 	**She exits the car, disappearing into the fog.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 1 GOOD BRANCH =====
@@ -59,8 +61,10 @@ Young Woman: We were not made to live alone.
 	=> step2_bad
 
 - I don't want to talk about this. Please get out.
+	do DialogueFlow.stop_car()
 	Young Woman: I... I'm sorry...
 	**She exits the car, looking hurt.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 1 BAD BRANCH =====
@@ -85,8 +89,11 @@ Young Woman: We were not made to live alone.
 	=> step2_bad
 
 - I don't want to talk about this. Please get out.
+	do DialogueFlow.stop_car()
 	Young Woman: I... I understand...
 	**She exits the car, disappearing into the fog.**
+	do DialogueFlow.resume_car()
+
 	=> END
 
 # ===== STEP 2 GOOD BRANCH =====
@@ -118,8 +125,10 @@ Young Woman: Thank you again for the help. It was really nice talking to you.
 	=> step3_bad
 
 - Just get out.
+	do DialogueFlow.stop_car()
 	Young Woman: ...Right.
 	**She exits quietly.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 2 BAD BRANCH =====
@@ -135,6 +144,7 @@ Young Woman: Even the things that were never meant to be carried by one person.
 Young Woman: Relying on someone isn't about making things easier. It's about survival.
 Young Woman: ...
 Young Woman: That's my place. You can stop right here, if you don't mind...
+do DialogueFlow.stop_car()
 Young Woman: Thank you again for the help. I hope I did not sound too weird.
 
 - I'm glad I could help. I think I needed it too.
@@ -148,6 +158,7 @@ Young Woman: Thank you again for the help. I hope I did not sound too weird.
 - Just get out.
 	Young Woman: ...Okay.
 	**She exits quietly.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 3 GOOD BRANCH (ENDING) =====
@@ -162,6 +173,7 @@ Young Woman: Maybe that's another reason why we try to help others:
 Young Woman: Even if we don't realise it... We want to make sure that we can still help ourselves.
 **Door closes gently.**
 
+DialogueFlow.resume_car()
 do DialogueFlow.empathy += 20
 => END
 
@@ -174,6 +186,6 @@ Young Woman: ...
 Young Woman: I... I don't think you got it, did you?
 Young Woman: Still... I hope I could be of some comfort...
 **Door closes gently.**
-
+do DialogueFlow.resume_car()
 do DialogueFlow.empathy -= 10
 => END

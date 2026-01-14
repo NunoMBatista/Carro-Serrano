@@ -113,12 +113,8 @@ func _on_area_3d_body_entered(body):
 			var anim = $AnimationPlayer.get_animation(current_anim_name)
 			if anim:
 				anim.loop_mode = Animation.LOOP_NONE
-		
-		# Start playing audio on loop when car enters
-		if audio_player and not audio_player.playing:
-			audio_player.play()
-			print("NPC audio started playing")
 		# print("car entered big area")
+
 # Triggered if the car leaves the radius without meeting the criteria
 func _on_area_3d_body_exited(body):
 	if body == car_inside:
@@ -128,11 +124,6 @@ func _on_area_3d_body_exited(body):
 		if not player_interacted:
 			player_passed_by.emit(self)
 			print("Player passed by hitchhiker ID ", hitchhiker_id, " without picking them up")
-		
-		# Stop audio when car leaves
-		if audio_player and audio_player.playing:
-			audio_player.stop()
-			print("NPC audio stopped")
 		# print("Car left big area")
 
 # Triggered when car enters Area3D2 (velocity check area)
@@ -151,6 +142,23 @@ func _on_area_3d_2_body_exited(body):
 		car_follower = null
 		# print("Car left velocity check area")
 
+# Triggered when car enters Area3D3 (audio trigger area)
+func _on_area_3d_3_body_entered(body):
+	if body.name == "Carro" or body is RigidBody3D:
+		# Start playing audio on loop when car enters Area3D3
+		if audio_player and not audio_player.playing:
+			audio_player.volume_db = -5.0  # Lower max volume
+			audio_player.play()
+			print("NPC audio started playing (Area3D3)")
+
+# Triggered when car exits Area3D3 (audio trigger area)
+func _on_area_3d_3_body_exited(body):
+	if body.name == "Carro" or body is RigidBody3D:
+		# Stop audio when car leaves Area3D3
+		if audio_player and audio_player.playing:
+			audio_player.stop()
+			print("NPC audio stopped (Area3D3)")
+		
 func _physics_process(delta):
 	# Check for velocity trigger
 	if car_follower and not sequence_triggered:
@@ -203,6 +211,11 @@ func _physics_process(delta):
 
 func start_sequence():
 	print("Car detected at low speed within range!")
+	
+	# Stop audio when sequence starts
+	if audio_player and audio_player.playing:
+		audio_player.stop()
+		print("NPC audio stopped (start_sequence)")
 	
 	# Find the WindowMarker child node of the car
 	if car_inside_area2:

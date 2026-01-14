@@ -168,3 +168,73 @@ func _on_dialogue_ended(_resource) -> void:
 			logger.log_event("dialogue_end", "branch:%s empathy:%d" % [current_branch, empathy])
 		print("DEBUG DialogueFlow: Emitting dialogue_ended signal with resource: ", _resource)
 		dialogue_ended.emit(_resource)
+
+## Stop the car for dialogue (call from dialogue files)
+## Usage: do DialogueFlow.stop_car()
+func stop_car() -> void:
+	print("[DialogueFlow] stop_car() called")
+	var car = _get_car()
+	if car:
+		print("[DialogueFlow] Found car: ", car.name, " calling start_dialogue()")
+		if car.has_method("start_dialogue"):
+			car.start_dialogue()
+		else:
+			print("[DialogueFlow] ERROR: Car doesn't have start_dialogue method!")
+	else:
+		print("[DialogueFlow] ERROR: Could not find car in scene!")
+
+## Resume car movement after dialogue (call from dialogue files)
+## Usage: do DialogueFlow.resume_car()
+func resume_car() -> void:
+	print("[DialogueFlow] resume_car() called")
+	var car = _get_car()
+	if car:
+		print("[DialogueFlow] Found car: ", car.name, " calling end_dialogue()")
+		if car.has_method("end_dialogue"):
+			car.end_dialogue()
+		else:
+			print("[DialogueFlow] ERROR: Car doesn't have end_dialogue method!")
+	else:
+		print("[DialogueFlow] ERROR: Could not find car in scene!")
+
+## Helper to find the road_car_follower in the scene
+func _get_car() -> Node:
+	var scene = get_tree().current_scene
+	if not scene:
+		print("[DialogueFlow] No current scene!")
+		return null
+	
+	print("[DialogueFlow] Searching for car in scene: ", scene.name)
+	
+	# Try common paths
+	var car = scene.get_node_or_null("RoadCarFollower")
+	if car:
+		print("[DialogueFlow] Found car at RoadCarFollower")
+		return car
+	
+	car = scene.get_node_or_null("road_car_follower")
+	if car:
+		print("[DialogueFlow] Found car at road_car_follower")
+		return car
+	
+	# Search recursively for any node with the script
+	car = _find_car_recursive(scene)
+	if car:
+		print("[DialogueFlow] Found car recursively: ", car.get_path())
+		return car
+	
+	print("[DialogueFlow] Car not found anywhere in scene tree")
+	return null
+
+## Recursively search for node with road_car_follower script
+func _find_car_recursive(node: Node) -> Node:
+	# Check if this node has the start_dialogue method (indicating it's the car)
+	if node.has_method("start_dialogue") and node.has_method("end_dialogue") and node.has_method("teleport_to_torre"):
+		return node
+	
+	for child in node.get_children():
+		var result = _find_car_recursive(child)
+		if result:
+			return result
+	
+	return null

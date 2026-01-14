@@ -24,8 +24,10 @@ Old Man: Whatever you're carrying up this mountain... it looks like it weighs mo
 	=> step1_bad
 
 - Actually, I have changed my mind. I cannot take you with me, please get out.
+	do DialogueFlow.stop_car()
 	Old Man: I... I see...
 	**The old man slowly climbs out of the car, left alone on the roadside.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 1 GOOD BRANCH =====
@@ -46,8 +48,10 @@ Old Man: Maybe it feels long because you're tired of carrying so much luggage wi
 	=> step2_bad
 
 - I didn't pick you up for a therapy session, did I? Get out of my car.
-	Old Man: I understand...
+	do DialogueFlow.stop_car()
+	Old Man: I... I see...
 	**The old man slowly climbs out of the car, left alone on the roadside.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 1 BAD BRANCH =====
@@ -72,8 +76,10 @@ Old Man: And I feel.. I feel you might need someone to do that for you, don't yo
 	=> step2_bad
 
 - I didn't pick you up for a therapy session, did I? Get out of my car.
-	Old Man: I understand...
+	do DialogueFlow.stop_car()
+	Old Man: I... I see...
 	**The old man slowly climbs out of the car, left alone on the roadside.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 2 GOOD BRANCH =====
@@ -103,8 +109,10 @@ Old Man: And you.. you look like you can no longer hold it by yourself.
 	=> step3_bad
 
 - Stop being so pityful, it's annoying. I'm just gonna leave you here, get out.
+	do DialogueFlow.stop_car()
 	Old Man: I... I see...
 	**The old man slowly climbs out of the car, left alone on the roadside.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 2 BAD BRANCH =====
@@ -133,8 +141,10 @@ Old Man: And you.. whatever it is that you're carrying with you.. looks just as 
 	=> step3_bad
 
 - Stop being so pityful, it's annoying. I'm just gonna leave you here, get out.
-	Old Man: I... I see....
+	do DialogueFlow.stop_car()
+	Old Man: I... I see...
 	**The old man slowly climbs out of the car, left alone on the roadside.**
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 3 GOOD BRANCH (ENDING) =====
@@ -149,11 +159,13 @@ Old Man: And now.. how I wish I had done that sooner..
 Old Man: ..
 Old Man: Oh!
 Old Man: Wait, stop.. we're here! You can drop me off here.
+do DialogueFlow.stop_car()
 Old Man: Thank you traveler, for your help!
 Old Man: Be on your way now.. and don't forget...
 Old Man: There's no shame in catching a ride when the road gets long.
 **Just as slowly as he got in, the man left the car.**
 **This time, he closes it firmly.**
+do DialogueFlow.resume_car
 
 do DialogueFlow.empathy += 20
 => END
@@ -169,11 +181,12 @@ Old Man: But you always can.
 Old Man: ..
 Old Man: Oh!
 Old Man: Wait, stop.. we're here! You can drop me off here.
+do DialogueFlow.stop_car()
 Old Man: Thank you traveler, for your help!
 Old Man: Be on your way now.. and don't forget...
 Old Man: There's no shame in catching a ride when the road gets long.
 **Just as slowly as he got in, the man left the car.**
 **This time, he closes it firmly.**
-
+do DialogueFlow.resume_car()
 do DialogueFlow.empathy -= 10
 => END
