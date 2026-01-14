@@ -135,7 +135,7 @@ func on_payphone_choice(chose_yes: bool) -> void:
 
 const PROTOTYPE_DIALOGUE = preload("res://dialogue/prototype.dialogue")
 
-const NOVINHA_DIALOGUE_PRE = preload("res://dialogue/vovo_pre.dialogue")
+const NOVINHA_DIALOGUE_PRE = preload("res://dialogue/novinha_pre.dialogue")
 const NOVINHA_DIALOGUE = preload("res://dialogue/novinha.dialogue")
 
 const VOVO_DIALOGUE_PRE = preload("res://dialogue/vovo_pre.dialogue")
