@@ -13,6 +13,8 @@
 
 - Come in, then.
 	do DialogueFlow.choice("positive")
+	**The door slowly opens, and the mountain's frost floods the car.**
+	**A small figure sheepishly climbs into the passenger seat, and carefully closes the door.**	
 	=> END
 
 - I can't give you a ride.
