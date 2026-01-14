@@ -22,7 +22,7 @@ var hitchhiker_4_completed: bool = false  # Flag to trigger torre teleport after
 # Store initial positions and rotations of hitchhikers by placement_id
 # Format: { placement_id: { "position": Vector3, "rotation": Vector3 } }
 var hitchhiker_placements: Dictionary = {}
-			
+
 # Game start state
 var game_started: bool = false  # Flag to track if player has taken the wheel
 
@@ -83,7 +83,7 @@ func _ready():
 		if child.has_signal("player_passed_by"):
 			child.player_passed_by.connect(_on_player_passed_by_hitchhiker)
 			print("Connected to player_passed_by for: ", child.name)
-		
+
 		# Store initial position and rotation by placement_id
 		if "placement_id" in child:
 			hitchhiker_placements[child.placement_id] = {
@@ -165,37 +165,37 @@ func find_and_enable_hitchhiker():
 	print("DEBUG SPAWN: find_and_enable_hitchhiker called, next_hitchhiker_to_enable = ", next_hitchhiker_to_enable)
 	print("DEBUG SPAWN: Called from stack trace:")
 	print(get_stack())
-	
+
 	if not hitchhikers_node or not car_node:
 		print("WARNING: Cannot find closest hitchhiker - missing hitchhikers_node or car_node")
 		return
-	
+
 	if next_hitchhiker_to_enable > 4:
 		print("WARNING: All hitchhikers already spawned (next_hitchhiker_to_enable = ", next_hitchhiker_to_enable, ")")
 		return
-	
+
 	var car_pos = car_node.global_position
 	var closest_distance = INF
 	var closest_placement_id = -1
-	
+
 	for child in hitchhikers_node.get_children():
 		if "placement_id" in child:
 			var hitchhiker_pos = child.global_position
 			var distance = car_pos.distance_to(hitchhiker_pos)
-			
+
 			if distance < closest_distance:
 				closest_distance = distance
 				closest_placement_id = child.placement_id
-	
+
 	if closest_placement_id != -1:
 		next_hitchhiker_placement_id = closest_placement_id
 		print("Closest hitchhiker has placement_id: ", closest_placement_id, " at distance: ", closest_distance)
-		
+
 		# Calculate next placement: (placement_id + 2) wrapping around 1-4
 		var next_placement = ((closest_placement_id + 2 - 1) % 4) + 1
 		print("PLACE: current closest placement_id: ", closest_placement_id)
 		print("PLACE: Next hitchhiker will spawn at placement_id: ", next_placement)
-		
+
 		# Enable the next hitchhiker in sequence at the calculated placement
 		enable_hitchhiker_at_placement(next_placement)
 		print("DEBUG SPAWN: Incrementing next_hitchhiker_to_enable from ", next_hitchhiker_to_enable, " to ", next_hitchhiker_to_enable + 1)
@@ -208,7 +208,7 @@ func enable_hitchhiker_at_placement(next_placement: int = -1) -> void:
 	if not hitchhikers_node:
 		print("WARNING: Hitchhikers node not found!")
 		return
-		
+
 	# Change the hitchhiker_id of this NPC
 	var npc_at_placement: Node3D = null
 	for child in hitchhikers_node.get_children():
@@ -343,19 +343,19 @@ func start_dialogue_for_hitchhiker(hitchhiker_id: int):
 		3:  # Drunk/Fent - Direct to main dialogue (no pre-dialogue/choice)
 			print("Hitchhiker 3 - skipping pre-dialogue, going directly to main dialogue")
 			print("DEBUG HH3: current_hitchhiker_id = ", current_hitchhiker_id)
-			
+
 			# Disable hitchhiker since they're auto-accepted into the car
 			disable_hitchhiker(current_hitchhiker_id)
 			print("DEBUG HH3: About to call show_hitchhiker_ball_mesh with ID: ", current_hitchhiker_id)
-			
+
 			# Show ball mesh AFTER disabling
 			show_hitchhiker_ball_mesh(current_hitchhiker_id)
 			print("DEBUG HH3: Finished calling show_hitchhiker_ball_mesh")
-			
+
 			# Connect to main dialogue ended signal
 			if not DialogueFlow.dialogue_ended.is_connected(_on_main_dialogue_ended):
 				DialogueFlow.dialogue_ended.connect(_on_main_dialogue_ended)
-			
+
 			# Start main dialogue directly
 			DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
 		4:  # VOVO - Two stage dialogue
@@ -572,17 +572,17 @@ func disable_hitchhiker(hitchhiker_id: int):
 			var placement = -1
 			if "placement_id" in child:
 				placement = child.placement_id
-			
+
 			# Restore position and rotation from stored placements
 			if placement in hitchhiker_placements:
 				child.global_position = hitchhiker_placements[placement]["position"]
 				child.rotation_degrees = hitchhiker_placements[placement]["rotation"]
 				print("Restored hitchhiker to placement ", placement, " coordinates")
-			
+
 			# Reset NPC state to initial values
 			if child.has_method("reset_to_initial_state"):
 				child.reset_to_initial_state()
-			
+
 			child.visible = false
 			child.process_mode = Node.PROCESS_MODE_DISABLED
 			if hitchhiker_id != 1:
@@ -617,6 +617,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
 			KEY_G:
-				if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED:
-					DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
+				#if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED:
+				#	DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
+				pass
 				pass
