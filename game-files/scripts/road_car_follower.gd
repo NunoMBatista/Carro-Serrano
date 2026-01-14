@@ -40,6 +40,8 @@ var _leave_last_title := ""
 var _in_walking_mode := false  # True when player has left the car
 var _player_controller: CharacterBody3D = null
 var _dialogue_active := false  # True when dialogue is active, disables player input
+var _breakdown_leave_prompt_ui: Control = null  # UI for "Press L to leave car" after breakdown
+var _waiting_for_breakdown_leave := false  # True when waiting for player to press L after breakdown
 
 const MAX_SPEED := 600
 const ACCEL_STRENGTH := 3.5
@@ -118,6 +120,13 @@ func _process(delta: float) -> void:
 		return
 
 	if _route.is_empty():
+		return
+
+	# Handle input for leaving car after breakdown
+	if _waiting_for_breakdown_leave and Input.is_action_just_pressed("toggle_headlights"):  # L key
+		_waiting_for_breakdown_leave = false
+		_hide_breakdown_leave_prompt()
+		leave_car()
 		return
 
 	# Handle input for torre teleport
@@ -875,9 +884,55 @@ func _on_breakdown_dialogue_ended(_resource: DialogueResource) -> void:
 	DialogueManager.dialogue_ended.disconnect(_on_breakdown_dialogue_ended)
 	_leave_dialogue_active = false
 
-	# Player chose to leave - allow them to exit the car
+	# Player chose to leave - show prompt to press L
 	if _leave_last_title == "leave":
-		leave_car()
+		_show_breakdown_leave_prompt()
+
+
+func _show_breakdown_leave_prompt() -> void:
+	if _breakdown_leave_prompt_ui != null:
+		return  # Already showing
+
+	_waiting_for_breakdown_leave = true
+
+	# Create UI similar to invisible wall dialogue
+	_breakdown_leave_prompt_ui = Control.new()
+	_breakdown_leave_prompt_ui.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_breakdown_leave_prompt_ui.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	var canvas = CanvasLayer.new()
+	canvas.layer = 100
+	_breakdown_leave_prompt_ui.add_child(canvas)
+
+	var label = Label.new()
+	label.text = "Press L to leave the car"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.set_anchors_preset(Control.PRESET_CENTER)
+	label.offset_left = -400
+	label.offset_right = 400
+	label.offset_top = -60
+	label.offset_bottom = 60
+
+	# Load custom font (same as invisible wall and dialogue)
+	var font = load("res://fonts/SpecialElite-Regular.ttf")
+	if font:
+		label.add_theme_font_override("font", font)
+
+	# Style the label
+	label.add_theme_font_size_override("font_size", 48)
+	label.add_theme_color_override("font_color", Color.RED)
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 8)
+
+	canvas.add_child(label)
+	get_tree().root.add_child(_breakdown_leave_prompt_ui)
+
+
+func _hide_breakdown_leave_prompt() -> void:
+	if _breakdown_leave_prompt_ui != null:
+		_breakdown_leave_prompt_ui.queue_free()
+		_breakdown_leave_prompt_ui = null
 
 
 func _trigger_hard_cut_credits() -> void:

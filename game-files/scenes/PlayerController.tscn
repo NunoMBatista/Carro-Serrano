@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c8yay001a2b3c"]
+[gd_scene load_steps=8 format=3 uid="uid://c8yay001a2b3c"]
 
 [ext_resource type="Script" path="res://scripts/player_controller.gd" id="1_player"]
 [ext_resource type="Script" path="res://scripts/cross_hair.gd" id="2_crosshair"]
 [ext_resource type="Texture2D" uid="uid://n501qceousrk" path="res://assets/point_1.png" id="3_texture"]
 [ext_resource type="Script" path="res://scripts/texture_rect.gd" id="4_texturerect"]
+[ext_resource type="Script" path="res://scripts/controls_ui.gd" id="5_controls"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
 radius = 0.4
@@ -63,3 +64,13 @@ expand_mode = 1
 stretch_mode = 3
 script = ExtResource("4_texturerect")
 metadata/_edit_use_anchors_ = true
+
+[node name="ControlsUI" type="Control" parent="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("5_controls")
