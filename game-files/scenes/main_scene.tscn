@@ -1,4 +1,4 @@
-[gd_scene load_steps=188 format=3 uid="uid://f262srybfbm8"]
+[gd_scene load_steps=189 format=3 uid="uid://f262srybfbm8"]
 
 [ext_resource type="PackedScene" uid="uid://dfmyjabbccxsr" path="res://scenes/terrain_2.tscn" id="2_7ykc4"]
 [ext_resource type="Script" uid="uid://dl7l87n055idr" path="res://scripts/road_car_follower.gd" id="3_pu3yx"]
@@ -42,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://c44qbvkxhw5bk" path="res://scenes/InvisibleWall.tscn" id="41_0wyf6"]
 [ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="42_0wyf6"]
 [ext_resource type="PackedScene" uid="uid://dv3yrerb34qis" path="res://scenes/payphone2.tscn" id="42_xp01v"]
+[ext_resource type="PackedScene" uid="uid://dv3yrerb34qis" path="res://scenes/payphone2.tscn" id="42_xp01v"]
 [ext_resource type="PackedScene" uid="uid://d0pnunrspdug1" path="res://assets/carro_mod_25d.glb" id="43_jix7a"]
 [ext_resource type="PackedScene" uid="uid://ckmbcemr4wnfg" path="res://assets/arrow_3d.glb" id="43_xp01v"]
 [ext_resource type="Script" uid="uid://dn27dbxwdke51" path="res://scripts/carro_exterior_interact.gd" id="44_carro_interact"]
@@ -52,9 +53,9 @@
 [ext_resource type="Texture2D" uid="uid://box4jqnentf1d" path="res://assets/traffic_signs/image-removebg-preview1.png" id="50_ruju6"]
 [ext_resource type="Texture2D" uid="uid://cquqc5v7gv4sx" path="res://assets/traffic_signs/reflectorized-roadway-safety-notice-sign-boards-686-removebg-preview.png" id="51_5nybl"]
 [ext_resource type="Texture2D" uid="uid://dm8yn2qlocs2s" path="res://assets/traffic_signs/image-removebg-preview.png" id="52_cq0lk"]
-[ext_resource type="Script" path="res://scripts/road_interact.gd" id="52_j2yw6"]
+[ext_resource type="Script" uid="uid://cay2642mv7eay" path="res://scripts/road_interact.gd" id="52_j2yw6"]
 [ext_resource type="PackedScene" uid="uid://l2loc6c8jgfe" path="res://assets/the_sun.glb" id="53_5nybl"]
-[ext_resource type="PackedScene" path="res://scenes/title_screen.tscn" id="54_title"]
+[ext_resource type="PackedScene" uid="uid://bx8k7oam3pqrs" path="res://scenes/title_screen.tscn" id="54_title"]
 
 [sub_resource type="Sky" id="Sky_7ykc4"]
 
@@ -1726,6 +1727,7 @@ dialogue_text = ""
 [node name="arrow" type="Node3D" parent="torre"]
 transform = Transform3D(0.10444423, 0, 2.8966687, 0, 2.8985507, 0, -2.8966687, 0, 0.10444423, 425.27148, 226.16774, 513.4664)
 visible = false
+script = ExtResource("44_8pjrr")
 
 [node name="Sketchfab_Scene" parent="torre/arrow" instance=ExtResource("43_xp01v")]
 transform = Transform3D(0.99928164, 0, 0.03789947, 0, 1, 0, -0.03789947, 0, 0.99928164, 0, 0, 0)
@@ -1733,6 +1735,7 @@ transform = Transform3D(0.99928164, 0, 0.03789947, 0, 1, 0, -0.03789947, 0, 0.99
 [node name="arrow2" type="Node3D" parent="torre"]
 transform = Transform3D(0.9557931, 0, 0.29404032, 0, 1, 0, -0.29404032, 0, 0.9557931, 527.83813, 237.82574, 434.61227)
 visible = false
+script = ExtResource("44_8pjrr")
 
 [node name="Sketchfab_Scene" parent="torre/arrow2" instance=ExtResource("46_beobj")]
 transform = Transform3D(0.6205869, 0, 0.7841378, 0, 1, 0, -0.7841378, 0, 0.6205869, 25.026855, -13.800354, 44.26303)
@@ -1813,6 +1816,7 @@ shape = SubResource("BoxShape3D_5x80e")
 [node name="arrow3" type="Node3D" parent="torre"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 556.29004, 229.98228, 443.00775)
 visible = false
+script = ExtResource("44_8pjrr")
 
 [node name="Sketchfab_Scene" parent="torre/arrow3" instance=ExtResource("46_beobj")]
 

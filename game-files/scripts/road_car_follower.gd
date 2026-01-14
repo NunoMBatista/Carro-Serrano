@@ -734,6 +734,12 @@ func leave_car() -> void:
 	if _player_controller.has_method("activate"):
 		_player_controller.activate()
 
+	# Stop car audio when leaving
+	if _idle_audio and _idle_audio.playing:
+		_idle_audio.stop()
+	if _driving_audio and _driving_audio.playing:
+		_driving_audio.stop()
+
 	_in_walking_mode = true
 	_disable_car_crosshair()
 	_show_torre_parked_car()
@@ -799,7 +805,7 @@ func return_to_car_from_torre() -> void:
 	_enable_car_crosshair()
 	_in_walking_mode = false
 	_can_leave_car = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 
 
 func _show_leave_car_prompt() -> void:

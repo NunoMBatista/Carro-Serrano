@@ -1,7 +1,7 @@
 extends Node3D
 
 ## Enable/disable dialogue debug overlay (top-right corner)
-@export var debug_dialogue: bool = false
+@export var debug_dialogue: bool = true
 
 # This is the variable you want to change
 @onready var empathy_score: int = 0
@@ -330,7 +330,7 @@ func start_dialogue_for_hitchhiker(hitchhiker_id: int):
 			if not DialogueFlow.dialogue_ended.is_connected(_on_pre_dialogue_ended):
 				DialogueFlow.dialogue_ended.connect(_on_pre_dialogue_ended)
 				print("DEBUG: Connected _on_pre_dialogue_ended signal")
-			# Start pre-dialogue (using Vovo's as placeholder until novinha_pre.dialogue is created)
+			# Start pre-dialogue (using Old Man's as placeholder until young woman pre-dialogue is created)
 			# TODO: Replace with NOVINHA_DIALOGUE_PRE when file is created
 			DialogueFlow.run_dialogue(MIDDLE_DIALOGUE_PRE, "start")
 		2:  # NOVINHA - Two stage dialoguerun_dialogue(DRUNK_DIALOGUE
@@ -363,7 +363,7 @@ func start_dialogue_for_hitchhiker(hitchhiker_id: int):
 			if not DialogueFlow.dialogue_ended.is_connected(_on_pre_dialogue_ended):
 				DialogueFlow.dialogue_ended.connect(_on_pre_dialogue_ended)
 				print("DEBUG: Connected _on_pre_dialogue_ended signal")
-			# Start pre-dialogue (using Vovo's as placeholder until middle_pre.dialogue is created)
+			# Start pre-dialogue (using Old Man's as placeholder until pretentious man pre-dialogue is created)
 			# TODO: Replace with MIDDLE_DIALOGUE_PRE when file is created
 			DialogueFlow.run_dialogue(VOVO_DIALOGUE_PRE, "start")
 		_:
@@ -471,14 +471,14 @@ func _handle_dialogue_rewards() -> void:
 		4:  # Vovo - spawn benga in glovebox
 			if glovebox_state:
 				glovebox_state.add_item_to_spawn("benga")
-				print("Vovo dialogue ended - benga will appear in glovebox")
-		3:  # Drunk/Fent - spawn bottle on car (like pressing B)
+				print("Old Man dialogue ended - benga will appear in glovebox")
+		3:  # Drunk Man - spawn bottle on car (like pressing B)
 			_spawn_bottle_on_car()
 			print("Drunk dialogue ended - bottle spawned on car")
 		1:  # Middle-aged - spawn lebron (donut) in glovebox
 			if glovebox_state:
 				glovebox_state.add_item_to_spawn("lebron")
-				print("Middle-aged dialogue ended - lebron (donut) will appear in glovebox")
+				print("Pretentious Man dialogue ended - lebron (donut) will appear in glovebox")
 
 func _spawn_bottle_on_car() -> void:
 	"""Spawn a bottle on the car dashboard (like pressing B key)"""
@@ -617,5 +617,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
 			KEY_G:
-				if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-					pass
+				if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED:
+					DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
+				pass

@@ -16,13 +16,24 @@ var _pitch_pos_base := Vector3.ZERO
 @onready var pitch_pivot = $TwistPivot/PitchPivot
 
 func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 	_pitch_pos_base = pitch_pivot.position
 
 
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_HIDDEN)
+		var dialogue_flow = get_node_or_null("/root/DialogueFlow")
+		var mode_before = DisplayServer.mouse_get_mode()
+		print("[CAMERA] ESC pressed - mouse mode BEFORE: ", mode_before)
+		if dialogue_flow and dialogue_flow.is_dialogue_active:
+			# Don't change mouse mode during dialogue
+			print("[CAMERA] ESC pressed during dialogue - ignoring. is_dialogue_active=", dialogue_flow.is_dialogue_active)
+			pass
+		else:
+			print("[CAMERA] ESC pressed - changing to CAPTURED")
+			DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
+			var mode_after = DisplayServer.mouse_get_mode()
+			print("[CAMERA] Mouse mode AFTER: ", mode_after)
 
 	# Don't use arrow keys for camera movement - they're for dialogue choices
 	# var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -33,9 +44,11 @@ func _process(delta: float) -> void:
 	twist_pivot.rotate_y(twist_input)
 	pitch_pivot.rotate_x(pitch_input)
 
-	# Clamp logic (kept same as your code)
-	twist_pivot.rotation.y = clamp(twist_pivot.rotation.y, -PI * 0.8, PI * 0.8)
-	pitch_pivot.rotation.x = clamp(pitch_pivot.rotation.x, -PI/2 * 0.8, PI/2 * 0.8)
+	# Clamp rotation to realistic human neck limits
+	# Horizontal: ~70 degrees left/right (0.77 * 90 = ~70 degrees)
+	twist_pivot.rotation.y = clamp(twist_pivot.rotation.y, -PI * 0.77, PI * 0.77)
+	# Vertical: ~65 degrees up/down (0.72 * 90 = ~65 degrees)
+	pitch_pivot.rotation.x = clamp(pitch_pivot.rotation.x, -PI/2 * 0.72, PI/2 * 0.72)
 
 	twist_input = 0.0
 	pitch_input = 0.0

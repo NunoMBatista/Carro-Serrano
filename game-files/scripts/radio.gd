@@ -14,7 +14,7 @@ func interact() -> void:
 		return
 
 	_view_open = true
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 	_set_player_raycast_enabled(false)
 
 	var view = RADIO_VIEW.instantiate()
@@ -23,7 +23,7 @@ func interact() -> void:
 
 func _on_view_closed() -> void:
 	_view_open = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 	_set_player_raycast_enabled(true)
 
 

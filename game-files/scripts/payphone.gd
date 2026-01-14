@@ -9,7 +9,7 @@ func interact() -> void:
 	_dialog_open = true
 
 	# Show cursor and disable player raycast while dialog is open
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 	_set_player_raycast_enabled(false)
 
 	# Build a confirmation dialog with Yes/No options
@@ -41,7 +41,7 @@ func _on_dialog_cancelled() -> void:
 
 func _close_dialog() -> void:
 	_dialog_open = false
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 	_set_player_raycast_enabled(true)
 
 

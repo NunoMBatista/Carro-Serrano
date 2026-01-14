@@ -73,9 +73,12 @@ func _ready() -> void:
 
 	visibility_changed.connect(func():
 		if visible and get_menu_items().size() > 0:
-			# Hide cursor when showing dialogue choices
-			print("[RESPONSES_MENU] Showing - setting mouse mode to HIDDEN")
-			DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_HIDDEN)
+			# Hide the game crosshair when showing dialogue choices
+			var crosshair = _get_crosshair()
+			if crosshair:
+				crosshair.visible = false
+				print("[RESPONSES_MENU] Hid crosshair")
+			# Set up the menu for keyboard navigation
 			var items = get_menu_items()
 			print("[RESPONSES_MENU] Menu items count: ", items.size())
 			_selected_index = 0
@@ -85,9 +88,12 @@ func _ready() -> void:
 			grab_focus()
 			print("[RESPONSES_MENU] Grabbed focus on container, selected index 0")
 		elif not visible:
-			# Restore cursor to captured mode when response menu is hidden
-			print("[RESPONSES_MENU] Hiding - setting mouse mode to CAPTURED")
-			DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
+			# Restore crosshair when hiding
+			var crosshair = _get_crosshair()
+			if crosshair:
+				crosshair.visible = true
+				print("[RESPONSES_MENU] Restored crosshair")
+			print("[RESPONSES_MENU] Hiding menu")
 	)
 
 	if is_instance_valid(response_template):
@@ -146,7 +152,6 @@ func _input(event: InputEvent) -> void:
 				var item: Control = items[_selected_index]
 				if item.has_meta("response") and not ("Disallowed" in item.name):
 					get_viewport().set_input_as_handled()
-					DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 					var logger = get_node_or_null("/root/PlaytestLogger")
 					if logger:
 						logger.log_action("dialogue_choice", item.get_meta("response").text)
@@ -213,6 +218,20 @@ func _configure_menu() -> void:
 		print("[RESPONSES_MENU] Configured item ", i, ": ", item.name)
 
 	print("[RESPONSES_MENU] Menu configured, ready for keyboard input")
+
+
+func _get_crosshair() -> Node:
+	"""Find the crosshair node in the scene"""
+	# Search for PlayerController/Control/CrossHair
+	var root = get_tree().root
+	var player_controller = root.find_child("PlayerController", true, false)
+	if player_controller:
+		var crosshair = player_controller.get_node_or_null("Control/CrossHair")
+		if crosshair:
+			return crosshair
+
+	# Fallback: search anywhere
+	return root.find_child("CrossHair", true, false)
 
 
 #endregion

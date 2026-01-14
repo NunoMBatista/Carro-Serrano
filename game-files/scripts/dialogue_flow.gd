@@ -12,11 +12,11 @@ signal empathy_changed(new_empathy: int)
 @export var empathy_gain: int = 5
 ## Empathy lost per step in bad branch
 @export var empathy_loss: int = 10
-## Coefficient for empathy changes (multiplier for middle_aged dialogue)
+## Coefficient for empathy changes (multiplier for pretentious man dialogue)
 @export var empathy_coefficient: float = 5
 
 ## Current empathy (0-100)
-var empathy: int = 71:
+var empathy: int = 50:
 	set(v):
 		var old_empathy = empathy
 		empathy = clampi(v, 0, 100)
@@ -35,11 +35,11 @@ var _debug_label: Label
 ## Stores the last choice made (for pre-dialogue branching)
 var last_choice: String = ""
 
-## Counter for positive choices (used in middle_aged dialogue)
+## Counter for positive choices (used in pretentious man dialogue)
 var n_positive_choices: int = 0
 
 ## Public property to check if dialogue is active
-var is_dialogue_active: bool = false:
+var is_dialogue_active: bool:
 	get:
 		return _active
 
@@ -92,6 +92,9 @@ func run_dialogue(dialogue_resource: DialogueResource, start_title: String = "st
 	if _active:
 		return
 	_active = true
+	print("[DIALOGUE_FLOW] Dialogue starting - is_dialogue_active now TRUE")
+	var mode_before = DisplayServer.mouse_get_mode()
+	print("[DIALOGUE_FLOW] Mouse mode at dialogue start: ", mode_before)
 	# Don't change mouse mode - keep camera active during dialogue
 
 	# Reset positive choice counter
@@ -156,6 +159,9 @@ func _on_dialogue_ended(_resource) -> void:
 	print("DEBUG DialogueFlow: _on_dialogue_ended called, _active=", _active)
 	if _active:
 		_active = false
+		print("[DIALOGUE_FLOW] Dialogue ending - is_dialogue_active now FALSE")
+		var mode_before = DisplayServer.mouse_get_mode()
+		print("[DIALOGUE_FLOW] Mouse mode at dialogue end: ", mode_before)
 		# Don't change mouse mode - camera stays active
 		var logger = get_node_or_null("/root/PlaytestLogger")
 		if logger:

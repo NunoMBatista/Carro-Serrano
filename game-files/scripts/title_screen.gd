@@ -14,7 +14,7 @@ func _ready() -> void:
 	print("Title screen _ready() called")
 
 	# Show mouse cursor as pointing hand
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_VISIBLE)
 	Input.set_default_cursor_shape(Input.CURSOR_POINTING_HAND)
 
 	# Connect button signal
@@ -125,7 +125,7 @@ func _complete_transition() -> void:
 	_enable_player_controls()
 
 	# Capture mouse for gameplay (crosshair mode)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	DisplayServer.mouse_set_mode(DisplayServer.MOUSE_MODE_CAPTURED)
 
 	# Reset cursor shape to default
 	Input.set_default_cursor_shape(Input.CURSOR_ARROW)

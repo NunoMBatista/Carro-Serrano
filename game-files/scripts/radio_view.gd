@@ -7,22 +7,25 @@ signal closed
 @onready var background: TextureRect = $BackgroundLayer/Background
 @onready var hint_label: Label = $UILayer/Root/HintLabel
 @onready var song_label: Label = $UILayer/Root/SongLabel
-@onready var volume_slider: VSlider = $UILayer/Root/VolumeSlider
+@onready var volume_knob: TextureRect = $UILayer/Root/VolumeKnob
+@onready var volume_display: Control = $UILayer/Root/VolumeDisplay
+@onready var volume_bar: ColorRect = $UILayer/Root/VolumeDisplay/VolumeBar
 @onready var power_button: Button = $UILayer/Root/PowerButton
 @onready var next_button: Button = $UILayer/Root/NextButton
 @onready var prev_button: Button = $UILayer/Root/PrevButton
 
+var mouse_over_knob: bool = false
+
 func _ready() -> void:
 	hint_label.text = "RMB to leave"
 
-	# Setup volume slider from RadioManager state
-	volume_slider.min_value = 0.0
-	volume_slider.max_value = 1.0
-	volume_slider.step = 0.05
-	volume_slider.value = RadioManager.volume
-	volume_slider.value_changed.connect(_on_volume_changed)
-	volume_slider.mouse_entered.connect(Callable(self, "_on_control_mouse_entered"))
-	volume_slider.mouse_exited.connect(Callable(self, "_on_control_mouse_exited"))
+	# Setup volume knob from RadioManager state
+	_update_knob_rotation(RadioManager.volume)
+	_update_volume_bar(RadioManager.volume)
+
+	# Connect knob mouse events for hover detection
+	volume_knob.mouse_entered.connect(_on_knob_mouse_entered)
+	volume_knob.mouse_exited.connect(_on_knob_mouse_exited)
 
 
 	# Setup buttons
@@ -60,20 +63,41 @@ func _process(_delta: float) -> void:
 	_update_song_label()
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_RIGHT:
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
 			close()
-		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			if _is_mouse_over_slider():
-				volume_slider.value = min(volume_slider.value + 0.05, 1.0)
-		elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			if _is_mouse_over_slider():
-				volume_slider.value = max(volume_slider.value - 0.05, 0.0)
+		elif mouse_over_knob and event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			# Increase volume
+			var new_volume = clamp(RadioManager.volume + 0.05, 0.0, 1.0)
+			RadioManager.set_volume(new_volume)
+			_update_knob_rotation(new_volume)
+			_update_volume_bar(new_volume)
+		elif mouse_over_knob and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			# Decrease volume
+			var new_volume = clamp(RadioManager.volume - 0.05, 0.0, 1.0)
+			RadioManager.set_volume(new_volume)
+			_update_knob_rotation(new_volume)
+			_update_volume_bar(new_volume)
 
-func _is_mouse_over_slider() -> bool:
-	var mouse_pos = get_viewport().get_mouse_position()
-	var slider_rect = volume_slider.get_global_rect()
-	return slider_rect.has_point(mouse_pos)
+func _on_knob_mouse_entered() -> void:
+	mouse_over_knob = true
+	_set_crosshair_hover(true)
+
+func _on_knob_mouse_exited() -> void:
+	mouse_over_knob = false
+	_set_crosshair_hover(false)
+
+func _update_knob_rotation(volume: float) -> void:
+	# Map volume (0-1) to rotation angle
+	# Start at -135 degrees (bottom left), end at +135 degrees (bottom right)
+	var angle = -135.0 + (volume * 270.0)
+	volume_knob.rotation_degrees = angle
+
+func _update_volume_bar(volume: float) -> void:
+	# Update the width of the green bar based on volume
+	if volume_bar and volume_display:
+		var max_width = volume_display.size.x
+		volume_bar.size.x = max_width * volume
 
 func _on_control_mouse_entered() -> void:
 	_set_crosshair_hover(true)
@@ -117,8 +141,7 @@ func _find_node(node: Node, target_name: String) -> Node:
 			if res:
 				return res
 	return null
-func _on_volume_changed(value: float) -> void:
-	RadioManager.set_volume(value)
+
 
 func _on_power_pressed() -> void:
 	RadioManager.toggle_power()

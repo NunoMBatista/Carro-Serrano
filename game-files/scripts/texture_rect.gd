@@ -8,7 +8,7 @@ func _process(_delta):
 	update_position()
 
 func update_position():
-	if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+	if DisplayServer.mouse_get_mode() == DisplayServer.MOUSE_MODE_CAPTURED:
 		var screen_size = get_viewport().get_visible_rect().size
 		position = (screen_size) / 2
 	else:

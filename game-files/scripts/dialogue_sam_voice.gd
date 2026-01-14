@@ -10,12 +10,19 @@ class_name DialogueSAMVoice
 @export var stop_on_new_line: bool = true
 @export var stop_on_skip: bool = true
 
-# SAM voice character controls (0-255 classic ranges)
+# SAM voice character controls (0-255 classic ranges) - defaults for pretentious man
 @export_range(0, 255, 1) var pitch: int = 64    ## higher = squeakier
 @export_range(0, 255, 1) var speed: int = 72    ## higher = faster
 @export_range(0, 255, 1) var throat: int = 128  ## timbre
 @export_range(0, 255, 1) var mouth: int = 128   ## timbre
 @export_range(0.0, 4.0, 0.01) var gain: float = 0.05 ## post gain multiplier
+
+# Default voice parameters
+var default_pitch: int = 64
+var default_speed: int = 72
+var default_throat: int = 128
+var default_mouth: int = 128
+var default_gain: float = 0.05
 
 @export var separators := " \t\n.,;:!?\"'()[]{}-"
 
@@ -42,6 +49,9 @@ func _connect_label() -> void:
 		_label.finished_typing.connect(_on_finished)
 		_label.skipped_typing.connect(_on_skipped)
 		_label.paused_typing.connect(_on_paused)
+		# Adjust voice when line changes
+		if _label.dialogue_line:
+			_adjust_voice_for_character(_label.dialogue_line.character)
 
 func _on_spoke(letter: String, _idx: int, _speed: float) -> void:
 	if _idx == 0:
@@ -120,6 +130,11 @@ func _speak(text: String) -> void:
 	if text == "":
 		return
 	_stop()
+
+	# Update voice for current character
+	if _label and _label.dialogue_line:
+		_adjust_voice_for_character(_label.dialogue_line.character)
+
 	_sam.pitch = pitch
 	_sam.speed = speed
 	_sam.throat = throat
@@ -143,3 +158,35 @@ func _is_stage_direction() -> bool:
 	# Check if the text starts with ** (stage directions)
 	var text = str(line.text).strip_edges()
 	return text.begins_with("**")
+
+func _adjust_voice_for_character(character: String) -> void:
+	var char_lower = character.to_lower().strip_edges()
+
+	# Young Woman - higher pitch, faster
+	if "young woman" in char_lower or "young" in char_lower:
+		pitch = 20
+		speed = 100
+		throat = 128
+		mouth = 128
+		gain = 0.05
+	# Old Man - deeper, slower
+	elif "old man" in char_lower or "old" in char_lower:
+		pitch = 120
+		speed = 50
+		throat = 128
+		mouth = 128
+		gain = 0.05
+	# Drunk Man - drunk voice (lower pitch, faster, altered throat/mouth)
+	elif "drunk" in char_lower:
+		pitch = 50
+		speed = 85
+		throat = 110
+		mouth = 140
+		gain = 0.06
+	# Pretentious Man or default - use defaults
+	else:
+		pitch = default_pitch
+		speed = default_speed
+		throat = default_throat
+		mouth = default_mouth
+		gain = default_gain
