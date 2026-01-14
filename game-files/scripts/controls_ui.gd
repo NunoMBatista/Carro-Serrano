@@ -47,14 +47,12 @@ func _ready() -> void:
 	_controls_label = Label.new()
 	_controls_label.text = """CONTROLS:
 
-WASD - Move
 SPACE - Jump / Brake
 LEFT MOUSE - Interact
 RIGHT MOUSE - Leave Screen
 L - Turn On/Off Lights
 ENTER - Skip Dialogue / Confirm Choice
-UP/DOWN ARROWS - Select Dialogue Option
-ESC - Toggle Mouse"""
+UP/DOWN ARROWS - Select Dialogue Option"""
 
 	if font:
 		_controls_label.add_theme_font_override("font", font)

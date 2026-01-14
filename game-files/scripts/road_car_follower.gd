@@ -905,7 +905,7 @@ func _show_breakdown_leave_prompt() -> void:
 	_breakdown_leave_prompt_ui.add_child(canvas)
 
 	var label = Label.new()
-	label.text = "Press L to leave the car"
+	label.text = "Press L to leave the car \n WASD to walk around"
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.set_anchors_preset(Control.PRESET_CENTER)
