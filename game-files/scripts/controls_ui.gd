@@ -48,7 +48,7 @@ func _ready() -> void:
 	_controls_label.text = """CONTROLS:
 
 SPACE - Jump / Brake
-LEFT MOUSE - Interact
+LEFT MOUSE - Interact (Radio/Glovebox)
 RIGHT MOUSE - Leave Screen
 L - Turn On/Off Lights
 ENTER - Skip Dialogue / Confirm Choice
