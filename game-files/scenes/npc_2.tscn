@@ -1,22 +1,8 @@
-[gd_scene load_steps=11 format=4 uid="uid://csyyhuhs1ntvi"]
+[gd_scene load_steps=9 format=4 uid="uid://csyyhuhs1ntvi"]
 
 [ext_resource type="Script" uid="uid://y8gx412reo07" path="res://scripts/npc_animation.gd" id="1_23bb0"]
 [ext_resource type="AnimationLibrary" uid="uid://bhtia8ocvcdrb" path="res://assets/npc/npc_animations.res" id="3_8v6sq"]
 [ext_resource type="AudioStream" uid="uid://bjjjw2oxywfpc" path="res://assets/audio/sfx/npc_hey.mp3" id="4_npc_audio"]
-
-[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_muffled"]
-cutoff_hz = 800.0
-resonance = 0.5
-
-[sub_resource type="AudioBusLayout" id="AudioBusLayout_npc"]
-bus/1/name = &"NPCMuffled"
-bus/1/solo = false
-bus/1/mute = false
-bus/1/bypass_fx = false
-bus/1/volume_db = 0.0
-bus/1/send = &"Master"
-bus/1/effect/0/effect = SubResource("AudioEffectLowPassFilter_muffled")
-bus/1/effect/0/enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1h5my"]
 
@@ -737,8 +723,6 @@ attenuation_model = 1
 volume_db = -10.0
 unit_size = 5.0
 max_distance = 50.0
-bus = &"NPCMuffled"
-_audio_bus_layout = SubResource("AudioBusLayout_npc")
 
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

@@ -10,6 +10,7 @@ signal player_passed_by(npc: Node3D)
 @export var stop_distance: float = 0.1
 @export var is_active: bool = false
 @export var hitchhiker_id: int  = 0
+@export var placement_id: int = 0
 @export var interacting: bool = false
 
 
@@ -24,7 +25,15 @@ var facing_player: bool = false
 var player_interacted: bool = false  # Track if player picked up this hitchhiker
 var audio_player: AudioStreamPlayer3D = null  # Reference to audio player
 
+# Store initial state for reset
+var initial_position: Vector3 = Vector3.ZERO
+var initial_rotation: Vector3 = Vector3.ZERO
+
 func _ready():
+	# Store initial state
+	initial_position = global_position
+	initial_rotation = rotation_degrees
+	
 	_fix_walk_animation()
 	$AnimationPlayer.animation_finished.connect(_on_animation_finished)
 	$AnimationPlayer.play("Wave")
@@ -210,3 +219,29 @@ func start_sequence():
 	walking_to_car = true
 	$AnimationPlayer.play("walk")
 	print("NPC starting to walk to car window")
+
+## Reset NPC to initial state as if fully reloaded
+func reset_to_initial_state():
+	# Reset position and rotation
+	# Reset all state variables
+	car_inside = null
+	car_follower = null
+	car_inside_area2 = null
+	next_animation = ""
+	sequence_triggered = false
+	walking_to_car = false
+	window_target = null
+	facing_player = false
+	player_interacted = false
+	
+	# Stop and reset audio
+	if audio_player and audio_player.playing:
+		audio_player.stop()
+	
+	# Reset animation to Wave with looping
+	var wave_anim = $AnimationPlayer.get_animation("Wave")
+	if wave_anim:
+		wave_anim.loop_mode = Animation.LOOP_LINEAR
+	$AnimationPlayer.play("Wave")
+	
+	print("NPC reset to initial state - Position: ", initial_position, " Rotation: ", initial_rotation)
