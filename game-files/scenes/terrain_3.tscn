@@ -20,6 +20,9 @@
 [ext_resource type="ArrayMesh" uid="uid://begsy3jdebk7w" path="res://assets/Untitled_Plane_001.res" id="16_owkif"]
 [ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Roughness.jpg" id="18_07emt"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="18_lb77h"]
+[ext_resource type="PackedScene" uid="uid://dwxiwhs1lcf4l" path="res://assets/old_sign.glb" id="21_hki7a"]
+[ext_resource type="Texture2D" uid="uid://cquqc5v7gv4sx" path="res://assets/traffic_signs/reflectorized-roadway-safety-notice-sign-boards-686-removebg-preview.png" id="22_hwmyp"]
+[ext_resource type="Texture2D" uid="uid://dm8yn2qlocs2s" path="res://assets/traffic_signs/image-removebg-preview.png" id="23_hwmyp"]
 
 [sub_resource type="Resource" id="Resource_bvgow"]
 script = ExtResource("3_e3k6c")
@@ -448,3 +451,30 @@ material = SubResource("StandardMaterial3D_4si6q")
 transform = Transform3D(-2.1411867, 0, 0, 0, 0.42936182, 0, 0, 0, 4.897965, -26.39666, -27.272827, -44.449924)
 size = Vector3(1.9852295, 2, 2)
 material = SubResource("FogMaterial_07emt")
+
+[node name="sign_curva" type="Node3D" parent="."]
+transform = Transform3D(0.08673841, 0, -0.9962312, 0, 1, 0, 0.9962312, 0, 0.08673841, 108.836334, 66.179, 209.13336)
+
+[node name="Sketchfab_Scene" parent="sign_curva" instance=ExtResource("21_hki7a")]
+transform = Transform3D(0.84714687, -0.020360893, -0.52311546, 0.031286195, 0.8307927, 0.004399282, 0.5203541, -0.016803332, 0.851378, -37.872627, -25.714338, 68.74)
+
+[node name="Sprite3D2" type="Sprite3D" parent="sign_curva"]
+transform = Transform3D(-0.68979937, 0, 0.49018097, 0, 0.5733726, 0, -0.47406846, 0, -0.71324396, -29.623451, -20.259764, 68.33837)
+texture = ExtResource("22_hwmyp")
+
+[node name="Sketchfab_Scene2" parent="sign_curva" instance=ExtResource("21_hki7a")]
+transform = Transform3D(0.84714687, -0.020360893, -0.52311546, 0.031286195, 0.8307927, 0.004399282, 0.5203541, -0.016803332, 0.851378, -40.04323, -25.714338, 67.0993)
+
+[node name="Sprite3D3" type="Sprite3D" parent="sign_curva"]
+transform = Transform3D(-0.68979937, 0, 0.49018097, 0, 0.5733726, 0, -0.47406846, 0, -0.71324396, -31.794052, -20.259764, 66.69767)
+texture = ExtResource("22_hwmyp")
+
+[node name="sign_tunel" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 71.890594, 0)
+
+[node name="Sketchfab_Scene" parent="sign_tunel" instance=ExtResource("21_hki7a")]
+transform = Transform3D(-0.9831864, 0.025990127, 0.15700026, 0.031328004, 0.8553003, 0.0044001103, -0.1562498, 0.007946974, -0.9870266, 26.343967, 7.260048, 43.99303)
+
+[node name="Sprite3D2" type="Sprite3D" parent="sign_tunel"]
+transform = Transform3D(1.1581944, 0, -0.10035345, 0, 1.2612096, 0, 0.07664319, 0, 1.5164922, 18.84166, 12.610992, 47.524815)
+texture = ExtResource("23_hwmyp")
