@@ -12,7 +12,7 @@ signal empathy_changed(new_empathy: int)
 @export var empathy_gain: int = 5
 ## Empathy lost per step in bad branch
 @export var empathy_loss: int = 10
-## Coefficient for empathy changes (multiplier for middle_aged dialogue)
+## Coefficient for empathy changes (multiplier for pretentious man dialogue)
 @export var empathy_coefficient: float = 5
 
 ## Current empathy (0-100)
@@ -35,7 +35,7 @@ var _debug_label: Label
 ## Stores the last choice made (for pre-dialogue branching)
 var last_choice: String = ""
 
-## Counter for positive choices (used in middle_aged dialogue)
+## Counter for positive choices (used in pretentious man dialogue)
 var n_positive_choices: int = 0
 
 ## Public property to check if dialogue is active

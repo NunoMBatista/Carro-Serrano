@@ -248,35 +248,35 @@ func start_dialogue_for_hitchhiker(hitchhiker_id: int):
 	in_dialogue = true  # Mark that dialogue is active
 
 	match hitchhiker_id:
-		1:  # Novinha - Two stage dialogue
+		1:  # Young Woman - Two stage dialogue
 			# Connect to generic pre-dialogue ended signal
 			if not DialogueFlow.dialogue_ended.is_connected(_on_pre_dialogue_ended):
 				DialogueFlow.dialogue_ended.connect(_on_pre_dialogue_ended)
 				print("DEBUG: Connected _on_pre_dialogue_ended signal")
-			# Start pre-dialogue (using Vovo's as placeholder until novinha_pre.dialogue is created)
+			# Start pre-dialogue (using Old Man's as placeholder until young woman pre-dialogue is created)
 			# TODO: Replace with NOVINHA_DIALOGUE_PRE when file is created
 			DialogueFlow.run_dialogue(VOVO_DIALOGUE_PRE, "start")
-		2:  # Vovo - Two stage dialogue
+		2:  # Old Man - Two stage dialogue
 			# Connect to generic pre-dialogue ended signal
 			if not DialogueFlow.dialogue_ended.is_connected(_on_pre_dialogue_ended):
 				DialogueFlow.dialogue_ended.connect(_on_pre_dialogue_ended)
 				print("DEBUG: Connected _on_pre_dialogue_ended signal")
 			# Start pre-dialogue
 			DialogueFlow.run_dialogue(VOVO_DIALOGUE_PRE, "start")
-		3:  # Drunk/Fent - Two stage dialogue
+		3:  # Drunk Man - Two stage dialogue
 			# Connect to generic pre-dialogue ended signal
 			if not DialogueFlow.dialogue_ended.is_connected(_on_pre_dialogue_ended):
 				DialogueFlow.dialogue_ended.connect(_on_pre_dialogue_ended)
 				print("DEBUG: Connected _on_pre_dialogue_ended signal")
-			# Start pre-dialogue (using Vovo's as placeholder until drunk_pre.dialogue is created)
+			# Start pre-dialogue (using Old Man's as placeholder until drunk man pre-dialogue is created)
 			# TODO: Replace with DRUNK_DIALOGUE_PRE when file is created
 			DialogueFlow.run_dialogue(VOVO_DIALOGUE_PRE, "start")
-		4:  # Middle-aged - Two stage dialogue
+		4:  # Pretentious Man - Two stage dialogue
 			# Connect to generic pre-dialogue ended signal
 			if not DialogueFlow.dialogue_ended.is_connected(_on_pre_dialogue_ended):
 				DialogueFlow.dialogue_ended.connect(_on_pre_dialogue_ended)
 				print("DEBUG: Connected _on_pre_dialogue_ended signal")
-			# Start pre-dialogue (using Vovo's as placeholder until middle_pre.dialogue is created)
+			# Start pre-dialogue (using Old Man's as placeholder until pretentious man pre-dialogue is created)
 			# TODO: Replace with MIDDLE_DIALOGUE_PRE when file is created
 			DialogueFlow.run_dialogue(VOVO_DIALOGUE_PRE, "start")
 		_:
@@ -379,21 +379,21 @@ func _handle_dialogue_rewards() -> void:
 	var glovebox_state = get_node_or_null("/root/GloveboxState")
 
 	match current_hitchhiker_id:
-		1:  # Novinha - spawn badesso in glovebox
+		1:  # Young Woman - spawn badesso in glovebox
 			if glovebox_state:
 				glovebox_state.add_item_to_spawn("badesso")
-				print("Novinha dialogue ended - badesso will appear in glovebox")
-		2:  # Vovo - spawn benga in glovebox
+				print("Young Woman dialogue ended - badesso will appear in glovebox")
+		2:  # Old Man - spawn benga in glovebox
 			if glovebox_state:
 				glovebox_state.add_item_to_spawn("benga")
-				print("Vovo dialogue ended - benga will appear in glovebox")
-		3:  # Drunk/Fent - spawn bottle on car (like pressing B)
+				print("Old Man dialogue ended - benga will appear in glovebox")
+		3:  # Drunk Man - spawn bottle on car (like pressing B)
 			_spawn_bottle_on_car()
-			print("Drunk dialogue ended - bottle spawned on car")
-		4:  # Middle-aged - spawn lebron (donut) in glovebox
+			print("Drunk Man dialogue ended - bottle spawned on car")
+		4:  # Pretentious Man - spawn lebron (donut) in glovebox
 			if glovebox_state:
 				glovebox_state.add_item_to_spawn("lebron")
-				print("Middle-aged dialogue ended - lebron (donut) will appear in glovebox")
+				print("Pretentious Man dialogue ended - lebron (donut) will appear in glovebox")
 
 func _spawn_bottle_on_car() -> void:
 	"""Spawn a bottle on the car dashboard (like pressing B key)"""

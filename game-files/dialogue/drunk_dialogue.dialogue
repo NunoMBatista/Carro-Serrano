@@ -3,14 +3,14 @@
 **The clearly drunk and soaking man stumbles into your car door.**
 **The second you let him in, a pungent smell of wet rags and alcohol infuses the air.**
 **He doesn't close the car door properly. There is an obvious gap.**
-Drunk: That's what I told him, I said, I went like: "Frank, you can't use 1/1000 pictures to replace a word, Frank!"
-Drunk: But he didn't listen, may god rest his soul...
+Drunk Man: That's what I told him, I said, I went like: "Frank, you can't use 1/1000 pictures to replace a word, Frank!"
+Drunk Man: But he didn't listen, may god rest his soul...
 **He starts restlessly fumbling with your air vent. The car manufacturers did not intend for the air vent to withstand this much fidgeting, it will probably break soon...**
 **The man looks into your soul with bloodshot eyes.**
-Drunk: The rac... The bi... That bitch ass raccoon stole my cigarettes when I was on my way here! I'm sure! I was there and I saw it. Oh, my poor ciggies... how I long for just one more drag...
-Drunk: I bet that foul creature worked for the government. I could see the robotic wires behind his eyes!
-Drunk: Hey you, I know you from my highschool years! You were the best, everybody was trying to get a piece of you. Your name is Charlie the Godslayer right?
-Drunk: I know you have an extra cigarette for me, huh?
+Drunk Man: The rac... The bi... That bitch ass raccoon stole my cigarettes when I was on my way here! I'm sure! I was there and I saw it. Oh, my poor ciggies... how I long for just one more drag...
+Drunk Man: I bet that foul creature worked for the government. I could see the robotic wires behind his eyes!
+Drunk Man: Hey you, I know you from my highschool years! You were the best, everybody was trying to get a piece of you. Your name is Charlie the Godslayer right?
+Drunk Man: I know you have an extra cigarette for me, huh?
 **You are sure that you have never seen this man before...**
 **You also know your name is not "Charlie the Godslayer"...**
 **His air vent fidgeting is getting louder...**
@@ -24,26 +24,26 @@ Drunk: I know you have an extra cigarette for me, huh?
 	=> step1_bad
 
 - Get out, I can't deal with this right now.
-	Drunk: Fine! Your loss, Charlie!
+	Drunk Man: Fine! Your loss, Charlie!
 	=> END
 
 # ===== STEP 1 GOOD BRANCH =====
 ~ step1_good
 
 **The man stares at you with disdain. He fumbles with the belt, getting it twisted before finally clicking it in.**
-Drunk: Fine. Fine! I'll wear the suppression strap. Happy?
-Drunk: You sound just like him. Frank. Always with the crazy safety talk. Weirdo...
-Drunk: Frank didn't understand the sacrifice required for science. He was too attached to the physical realm. That's why I had to... liberate him.
-Drunk: I told him: "Frank, I need to check your heart for transmitters!". But he wouldn't sit still! It was 1989. The year of the Great Tragedy. I had to open him up to check the wiring. I HAD TO DO IT, CHARLIE!
-Drunk: But there were no wires... just... goo. And the blueprints! Yes, I put the blueprints inside later to fill the empty space left by all of the goo that left his body. It made so much sense at the time.
+Drunk Man: Fine. Fine! I'll wear the suppression strap. Happy?
+Drunk Man: You sound just like him. Frank. Always with the crazy safety talk. Weirdo...
+Drunk Man: Frank didn't understand the sacrifice required for science. He was too attached to the physical realm. That's why I had to... liberate him.
+Drunk Man: I told him: "Frank, I need to check your heart for transmitters!". But he wouldn't sit still! It was 1989. The year of the Great Tragedy. I had to open him up to check the wiring. I HAD TO DO IT, CHARLIE!
+Drunk Man: But there were no wires... just... goo. And the blueprints! Yes, I put the blueprints inside later to fill the empty space left by all of the goo that left his body. It made so much sense at the time.
 **He tugs violently at the seatbelt, testing its locking mechanism. His breathing becomes shallow and rapid.**
-Drunk: Wait. This belt... it locked when I pulled it. It's a restraint system!
-Drunk: You're not Charlie. Charlie knows I don't wear restraints. You're a Fed! You're taking me to the adjustment facility, aren't you?!
-Drunk: I won't go back to the white room!
+Drunk Man: Wait. This belt... it locked when I pulled it. It's a restraint system!
+Drunk Man: You're not Charlie. Charlie knows I don't wear restraints. You're a Fed! You're taking me to the adjustment facility, aren't you?!
+Drunk Man: I won't go back to the white room!
 **He reaches into his jacket pocket and pulls out a festive, red Christmas bauble.**
-Drunk: I'll do it! I'll pull the pin! This is a special thermal detonator unit!
-Drunk: If you are really Charlie, prove you aren't a cop! You know the year I fixed Frank. You were there holding the flashlight!
-Drunk: WHEN WAS IT?
+Drunk Man: I'll do it! I'll pull the pin! This is a special thermal detonator unit!
+Drunk Man: If you are really Charlie, prove you aren't a cop! You know the year I fixed Frank. You were there holding the flashlight!
+Drunk Man: WHEN WAS IT?
 
 - It was in 1989.
 	do DialogueFlow.choice("positive")
@@ -54,29 +54,29 @@ Drunk: WHEN WAS IT?
 	=> step2_bad
 
 - I'm not Charlie and I'm calling the police, get out.
-	Drunk: TRAITOR!
+	Drunk Man: TRAITOR!
 	=> END
 
 # ===== STEP 1 BAD BRANCH =====
 ~ step1_bad
 
 **The man's eyes widen. He seems delighted. Almost maniacally... He leans over, invading your personal space. The smell of wet dog intensifies.**
-Drunk: I knew it! You're one of the awakened ones! Not like Frank. That's why Frank ended up the way he did...
-Drunk: It wasn't just a regular raccoon spy, Charlie! It was one of the most advanced units. I saw the barcode on its tail and I felt him scanning my brainwaves!
-Drunk: I know what it was... The CIA is trying to steal my divine intellect. They know I'm one of the few enlightened ones. Ever since I invented that stupid perpetual motion machine my life has been a living hell, they just can't leave me alone.
-Drunk: They know that if I release that knowledge the world would never be the same. They would lose control over the collective mind. Everyone would have infinite resources, everyone would finally be free and crown me the god of the new world, just like that guy with the kill book that was on the news the other day.
-Drunk: I know how dangerous they are... I hid the machine's blueprints inside Frank back in 1989 and erased the knowledge from my head using my microwave. I know the blueprints are safe there. Think about it: they never found Frank right? They used up all of their most advanced resources and they never actually managed to find him. If they are not able to find Frank, they shouldn't be able to find something INSIDE Frank.
-Drunk: This is the type of abstract thought and intellect someone has to have in order to survive 1 day in my life. No one understands how hard it is.
-Drunk: When it's time for the revolution, I'll know where to find the blueprints. You'll help me rig...
+Drunk Man: I knew it! You're one of the awakened ones! Not like Frank. That's why Frank ended up the way he did...
+Drunk Man: It wasn't just a regular raccoon spy, Charlie! It was one of the most advanced units. I saw the barcode on its tail and I felt him scanning my brainwaves!
+Drunk Man: I know what it was... The CIA is trying to steal my divine intellect. They know I'm one of the few enlightened ones. Ever since I invented that stupid perpetual motion machine my life has been a living hell, they just can't leave me alone.
+Drunk Man: They know that if I release that knowledge the world would never be the same. They would lose control over the collective mind. Everyone would have infinite resources, everyone would finally be free and crown me the god of the new world, just like that guy with the kill book that was on the news the other day.
+Drunk Man: I know how dangerous they are... I hid the machine's blueprints inside Frank back in 1989 and erased the knowledge from my head using my microwave. I know the blueprints are safe there. Think about it: they never found Frank right? They used up all of their most advanced resources and they never actually managed to find him. If they are not able to find Frank, they shouldn't be able to find something INSIDE Frank.
+Drunk Man: This is the type of abstract thought and intellect someone has to have in order to survive 1 day in my life. No one understands how hard it is.
+Drunk Man: When it's time for the revolution, I'll know where to find the blueprints. You'll help me rig...
 **He suddenly stops talking, he squints at you. His mood changes completely, he seems suspicious of something...**
-Drunk: Wait a mi...
-Drunk: WHAT HAVE I DONE?
-Drunk: YOU! YOU WORK WITH THE RACCOON DON'T YOU, CHARLIE?
-Drunk: You are not Charlie, you're a biological clone sent to extract information!
+Drunk Man: Wait a mi...
+Drunk Man: WHAT HAVE I DONE?
+Drunk Man: YOU! YOU WORK WITH THE RACCOON DON'T YOU, CHARLIE?
+Drunk Man: You are not Charlie, you're a biological clone sent to extract information!
 **He reaches into his jacket pocket and pulls out a festive, red Christmas bauble.**
-Drunk: STAY BACK! I'll detonate this grenade! I swear to god I'll do it.
-Drunk: Unless... unless you can prove you're really Charlie. The real Charlie was there in the night of the surgery, when I hid the legacy of this world.
-Drunk: If you are him... tell me when this happened. TELL ME!
+Drunk Man: STAY BACK! I'll detonate this grenade! I swear to god I'll do it.
+Drunk Man: Unless... unless you can prove you're really Charlie. The real Charlie was there in the night of the surgery, when I hid the legacy of this world.
+Drunk Man: If you are him... tell me when this happened. TELL ME!
 
 - It was in 1989.
 	do DialogueFlow.choice("positive")
@@ -87,19 +87,19 @@ Drunk: If you are him... tell me when this happened. TELL ME!
 	=> step2_bad
 
 - I'm not Charlie and I'm calling the police, get out.
-	Drunk: THE FEDS GOT TO YOU TOO!
+	Drunk Man: THE FEDS GOT TO YOU TOO!
 	=> END
 
 # ===== STEP 2 GOOD BRANCH =====
 ~ step2_good
 
 **He lowers the bauble slowly and exhales a putrid breath of relief.**
-Drunk: Yes... Yes, 1989. You are Charlie. I knew I could trust you.
-Drunk: You held the flashlight while I operated. Remember? The garage floor was so cold that night.
-Drunk: Frank was being so selfish. He kept screaming... He didn't understand that the blueprints are more important than his organs.
-Drunk: I had to make room, you know? I took some of his insides. Eventually, he stopped complaining, he finally understood his true purpose.
-Drunk: He's been guarding it ever since. In the backyard.
-Drunk: Do you think he's cold down there? Do you think we should dig him out?
+Drunk Man: Yes... Yes, 1989. You are Charlie. I knew I could trust you.
+Drunk Man: You held the flashlight while I operated. Remember? The garage floor was so cold that night.
+Drunk Man: Frank was being so selfish. He kept screaming... He didn't understand that the blueprints are more important than his organs.
+Drunk Man: I had to make room, you know? I took some of his insides. Eventually, he stopped complaining, he finally understood his true purpose.
+Drunk Man: He's been guarding it ever since. In the backyard.
+Drunk Man: Do you think he's cold down there? Do you think we should dig him out?
 
 - You're sick. I'm taking you to the hospital.
 	do DialogueFlow.choice("positive")
@@ -110,23 +110,23 @@ Drunk: Do you think he's cold down there? Do you think we should dig him out?
 	=> step3_bad
 
 - GET OUT!
-	Drunk: You're just like the rest of them!
+	Drunk Man: You're just like the rest of them!
 	=> END
 
 # ===== STEP 2 BAD BRANCH =====
 ~ step2_bad
 
 **His eyes bulge. He lets out a guttural, inhuman shriek that vibrates through the car chassis.**
-Drunk: WRONG! WRONG! WRONG!
-Drunk: YOU'RE ONE OF THEM!
-Drunk: FOR THE REVOLUTION!!!!!!
+Drunk Man: WRONG! WRONG! WRONG!
+Drunk Man: YOU'RE ONE OF THEM!
+Drunk Man: FOR THE REVOLUTION!!!!!!
 **He violently smashes the bauble against your dashboard.**
 **It does not explode. There is just a sickening crunch of plastic and glass.**
 **A shard pierces through the man's hand. He starts bleeding.**
-Drunk: It... it was a dud!? They replaced my grenade with...
+Drunk Man: It... it was a dud!? They replaced my grenade with...
 **He stares at the blood on his hand, mixing up with the glitter. The maniac energy left him for a second.**
-Drunk: Is this what Frank felt? He screamed so loud...
-Drunk: It was the only way, right?
+Drunk Man: Is this what Frank felt? He screamed so loud...
+Drunk Man: It was the only way, right?
 
 - You're bleeding. I'm taking you to the hospital.
 	do DialogueFlow.choice("positive")
@@ -137,22 +137,22 @@ Drunk: It was the only way, right?
 	=> step3_bad
 
 - GET OUT!
-	Drunk: THEY GOT TO YOU!
+	Drunk Man: THEY GOT TO YOU!
 	=> END
 
 # ===== STEP 3 GOOD BRANCH (ENDING) =====
 ~ step3_good
 
 **He freezes. The air in the car drops ten degrees. He looks at you not with anger, but with the hollow, dead stare of a cornered animal.**
-Drunk: Hospital?
-Drunk: The white room?
-Drunk: You want to take me back to the guys who once tried convincing me the machine isn't real?
+Drunk Man: Hospital?
+Drunk Man: The white room?
+Drunk Man: You want to take me back to the guys who once tried convincing me the machine isn't real?
 **He laughs, a rattling sound like an old engine.**
-Drunk: I thought you were Charlie. But Charlie wouldn't send me back. Charlie knows the doctors put static inside my head.
+Drunk Man: I thought you were Charlie. But Charlie wouldn't send me back. Charlie knows the doctors put static inside my head.
 **He lifts his hand, hastily reaching for the door handle.**
-Drunk: I won't go back to the white room!
+Drunk Man: I won't go back to the white room!
 **He tries to open the door, but the seatbelt restrains him. He struggles against it, panic rising in his eyes.**
-Drunk: Let me out! LET ME OUT!
+Drunk Man: Let me out! LET ME OUT!
 **He starts banging his head against the window repeatedly.**
 **Eventually, he figures out how to release the seatbelt lock and he leaves the car, stumbling into the night.**
 
@@ -163,10 +163,10 @@ do DialogueFlow.empathy -= 30
 ~ step3_bad
 
 **His posture straightens instantly. A terrifying, lucid smile cuts across his face. He wipes his hand on your upholstery, leaving a long grimy streak.**
-Drunk: Exactly. You see it too. The Pattern.
-Drunk: Pain is just data, Charlie. Frank was holding me back with his morality. You understand that. You are the only one who understands the weight of the crown.
-Drunk: We can't stop now. If we stop, Frank's sacrifice means nothing. They win if we stop!
-Drunk: I can feel it, Charlie. You are ready to give your body to our cause. Just like Frank did.
+Drunk Man: Exactly. You see it too. The Pattern.
+Drunk Man: Pain is just data, Charlie. Frank was holding me back with his morality. You understand that. You are the only one who understands the weight of the crown.
+Drunk Man: We can't stop now. If we stop, Frank's sacrifice means nothing. They win if we stop!
+Drunk Man: I can feel it, Charlie. You are ready to give your body to our cause. Just like Frank did.
 **He raises his hand, holding a rust-covered spoon. The handle had been filed down into a sharp blade.**
 **He lunges at you with the makeshift weapon.**
 

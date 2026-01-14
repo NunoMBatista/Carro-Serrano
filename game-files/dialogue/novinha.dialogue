@@ -3,18 +3,18 @@
 **The door slowly opens, and the mountain's frost floods the car.**
 **A small figure sheepishly climbs into the passenger seat, and carefully closes the door.**
 **Her eyes have been holding back tears of despair, and her voice quivers as she calms herself.**
-Novinha: Thank you so much, I don't think I would last much longer on this cold.
-Novinha: I.. I'm sorry, I was just getting scared out there...
-Novinha: The fog came in out of nowhere.. it was so sunny just minutes ago..
-Novinha: My phone wasn't getting any signal.. And the other drivers didn't even stop.. How can people be so cruel..
-Novinha: I'm sorry for the trouble. Thank you very much for helping me.
+Young Woman: Thank you so much, I don't think I would last much longer on this cold.
+Young Woman: I.. I'm sorry, I was just getting scared out there...
+Young Woman: The fog came in out of nowhere.. it was so sunny just minutes ago..
+Young Woman: My phone wasn't getting any signal.. And the other drivers didn't even stop.. How can people be so cruel..
+Young Woman: I'm sorry for the trouble. Thank you very much for helping me.
 **The hitchhiker takes deep breaths, slowly and surely regaining composure.**
 **She wipes away her teary eyes, and bravely regains composure.**
-Novinha: Thank you again.
-Novinha: How strange, I've lived on these mountains 19 years, and never before has the weather taken such a drastic and sudden turn for the worst.
-Novinha: It's as if the mountain herself senses that something terrible is about to go down, and has hidden her face in fear.
-Novinha: Lots of tourists taking the day off to go visit the Towers, I assume you're going there too?
-Novinha: Oh! I'm sorry, I didn't even ask where you were going. I don't want you to make any inconvenient detour, just drop me off where it's most convenient please...
+Young Woman: Thank you again.
+Young Woman: How strange, I've lived on these mountains 19 years, and never before has the weather taken such a drastic and sudden turn for the worst.
+Young Woman: It's as if the mountain herself senses that something terrible is about to go down, and has hidden her face in fear.
+Young Woman: Lots of tourists taking the day off to go visit the Towers, I assume you're going there too?
+Young Woman: Oh! I'm sorry, I didn't even ask where you were going. I don't want you to make any inconvenient detour, just drop me off where it's most convenient please...
 
 - I'm going to the Towers on the very top. I don't mind the detour, I'd rather know you got home safe.
 	do DialogueFlow.choice("positive")
@@ -25,7 +25,7 @@ Novinha: Oh! I'm sorry, I didn't even ask where you were going. I don't want you
 	=> step1_bad
 
 - I'm sorry, I'm getting second thoughts about this. Please leave.
-	Novinha: I... I understand...
+	Young Woman: I... I understand...
 	**She exits the car, disappearing into the fog.**
 	=> END
 
@@ -33,22 +33,22 @@ Novinha: Oh! I'm sorry, I didn't even ask where you were going. I don't want you
 ~ step1_good
 
 **The hitchhiker exhales in relief, now sitting comfortably on her seat.**
-Novinha: Thank... Thanks for being so understanding.
-Novinha: I'm really lucky you were passing by. People seem hesitant to help others.
-Novinha: There's really no need for taking exits though, my house is just on the side of this road, hidden by the trees. I'll warn you when we get close.
+Young Woman: Thank... Thanks for being so understanding.
+Young Woman: I'm really lucky you were passing by. People seem hesitant to help others.
+Young Woman: There's really no need for taking exits though, my house is just on the side of this road, hidden by the trees. I'll warn you when we get close.
 **She ponders for a short moment.**
-Novinha: I find it admirable, that mentality.
-Novinha: The world sometimes seems so terrible and unforgiving. It's no wonder that people so often default to measuring "strength" by the "ability to cause harm".
-Novinha: I believe strength is more "the will to change terrible situations". Just like you said!
-Novinha: You had the means to help me out of my situation, and were happy to do so, even if it was inconvenient.
-Novinha: Huh.. What I mean is..
-Novinha: I think we don't give ourselves enough credit. Being able to help others is a sign and show of strength.
-Novinha: I'm sorry for making assumptions, but looking at you, I think you are stronger than you realise.
+Young Woman: I find it admirable, that mentality.
+Young Woman: The world sometimes seems so terrible and unforgiving. It's no wonder that people so often default to measuring "strength" by the "ability to cause harm".
+Young Woman: I believe strength is more "the will to change terrible situations". Just like you said!
+Young Woman: You had the means to help me out of my situation, and were happy to do so, even if it was inconvenient.
+Young Woman: Huh.. What I mean is..
+Young Woman: I think we don't give ourselves enough credit. Being able to help others is a sign and show of strength.
+Young Woman: I'm sorry for making assumptions, but looking at you, I think you are stronger than you realise.
 **She ponders again.**
-Novinha: I'm sorry, this is just something I've been thinking about a lot lately.
-Novinha: You were really kind to help me. I wish there was something I could help you with too.
-Novinha: I think that in everyone exists a desire to help others... Perhaps in the hopes that they can help us too...
-Novinha: We were not made to live alone.
+Young Woman: I'm sorry, this is just something I've been thinking about a lot lately.
+Young Woman: You were really kind to help me. I wish there was something I could help you with too.
+Young Woman: I think that in everyone exists a desire to help others... Perhaps in the hopes that they can help us too...
+Young Woman: We were not made to live alone.
 
 - Helping makes me feel useful.
 	do DialogueFlow.choice("positive")
@@ -59,7 +59,7 @@ Novinha: We were not made to live alone.
 	=> step2_bad
 
 - I don't want to talk about this. Please get out.
-	Novinha: I... I'm sorry...
+	Young Woman: I... I'm sorry...
 	**She exits the car, looking hurt.**
 	=> END
 
@@ -67,14 +67,14 @@ Novinha: We were not made to live alone.
 ~ step1_bad
 
 **The hitchhiker shrinks in her seat, as if wanting to disappear.**
-Novinha: No no.. of course.. I don't.. I really don't want to be a bother.. I'm sorry.. Thank you again for picking me out... It's still a great help...
-Novinha: Don't worry... If you are going straight ahead, my house is just on the side of the road, hidden in the trees. There's no need to take any exits.
+Young Woman: No no.. of course.. I don't.. I really don't want to be a bother.. I'm sorry.. Thank you again for picking me out... It's still a great help...
+Young Woman: Don't worry... If you are going straight ahead, my house is just on the side of the road, hidden in the trees. There's no need to take any exits.
 **The car falls into awkward silence.**
 **She opens and closes her mouth to speak several times, trying to break the silence.**
-Novinha: I'm sorry, this is just something I've been thinking a lot lately.
-Novinha: You were really kind to help me. I wish there was something I could give you as thanks. It bothers me feeling like I owe you one.
-Novinha: I guess it's only natural to need outside help sometimes.
-Novinha: We were not made to live alone.
+Young Woman: I'm sorry, this is just something I've been thinking a lot lately.
+Young Woman: You were really kind to help me. I wish there was something I could give you as thanks. It bothers me feeling like I owe you one.
+Young Woman: I guess it's only natural to need outside help sometimes.
+Young Woman: We were not made to live alone.
 
 - Helping makes me feel useful.
 	do DialogueFlow.choice("positive")
@@ -85,7 +85,7 @@ Novinha: We were not made to live alone.
 	=> step2_bad
 
 - I don't want to talk about this. Please get out.
-	Novinha: I... I understand...
+	Young Woman: I... I understand...
 	**She exits the car, disappearing into the fog.**
 	=> END
 
@@ -93,21 +93,21 @@ Novinha: We were not made to live alone.
 ~ step2_good
 
 **Her eyes betray that she's remembering something.**
-Novinha: …Yeah. I get that.
-Novinha: There was a time when I didn't really know what I was doing with my life. No big tragedy. Just… stuck.
-Novinha: I started helping out at the little café near my house. Covering shifts. Cleaning up after closing.
-Novinha: Nothing important.
+Young Woman: …Yeah. I get that.
+Young Woman: There was a time when I didn't really know what I was doing with my life. No big tragedy. Just… stuck.
+Young Woman: I started helping out at the little café near my house. Covering shifts. Cleaning up after closing.
+Young Woman: Nothing important.
 **Pause.**
-Novinha: But people started recognizing me.
-Novinha: Asking how my day was.
-Novinha: Trusting me with small things.
+Young Woman: But people started recognizing me.
+Young Woman: Asking how my day was.
+Young Woman: Trusting me with small things.
 **She looks at you without her previous fear.**
-Novinha: It didn't suddenly make me happy. But it made me feel real again. Like I wasn't just passing through my own life.
-Novinha: By opening yourself up to strangers, they will sometimes open themselves up back at you.
-Novinha: We all need help one way or another sometimes, and we all can provide that help to others when they can't help themselves.
-Novinha: ...
-Novinha: That's my place. You can stop right here, if you don't mind...
-Novinha: Thank you again for the help. It was really nice talking to you.
+Young Woman: It didn't suddenly make me happy. But it made me feel real again. Like I wasn't just passing through my own life.
+Young Woman: By opening yourself up to strangers, they will sometimes open themselves up back at you.
+Young Woman: We all need help one way or another sometimes, and we all can provide that help to others when they can't help themselves.
+Young Woman: ...
+Young Woman: That's my place. You can stop right here, if you don't mind...
+Young Woman: Thank you again for the help. It was really nice talking to you.
 
 - I'm glad I could help. I think I needed it too.
 	do DialogueFlow.choice("positive")
@@ -118,24 +118,24 @@ Novinha: Thank you again for the help. It was really nice talking to you.
 	=> step3_bad
 
 - Just get out.
-	Novinha: ...Right.
+	Young Woman: ...Right.
 	**She exits quietly.**
 	=> END
 
 # ===== STEP 2 BAD BRANCH =====
 ~ step2_bad
 
-Novinha: That's fair...
-Novinha: I guess… if you never expect help, you never have to be disappointed.
-Novinha: It can feel safer that way.
+Young Woman: That's fair...
+Young Woman: I guess… if you never expect help, you never have to be disappointed.
+Young Woman: It can feel safer that way.
 **She seems to reconsider her answer.**
-Novinha: Can you really live like that forever?
-Novinha: After a while, it starts to feel like you're carrying everything alone.
-Novinha: Even the things that were never meant to be carried by one person.
-Novinha: Relying on someone isn't about making things easier. It's about survival.
-Novinha: ...
-Novinha: That's my place. You can stop right here, if you don't mind...
-Novinha: Thank you again for the help. I hope I did not sound too weird.
+Young Woman: Can you really live like that forever?
+Young Woman: After a while, it starts to feel like you're carrying everything alone.
+Young Woman: Even the things that were never meant to be carried by one person.
+Young Woman: Relying on someone isn't about making things easier. It's about survival.
+Young Woman: ...
+Young Woman: That's my place. You can stop right here, if you don't mind...
+Young Woman: Thank you again for the help. I hope I did not sound too weird.
 
 - I'm glad I could help. I think I needed it too.
 	do DialogueFlow.choice("positive")
@@ -146,7 +146,7 @@ Novinha: Thank you again for the help. I hope I did not sound too weird.
 	=> step3_bad
 
 - Just get out.
-	Novinha: ...Okay.
+	Young Woman: ...Okay.
 	**She exits quietly.**
 	=> END
 
@@ -154,12 +154,12 @@ Novinha: Thank you again for the help. I hope I did not sound too weird.
 ~ step3_good
 
 **Her eyes lighten up for the first time.**
-Novinha: Ye- Yeah, I'm glad I could be of some comfort.
+Young Woman: Ye- Yeah, I'm glad I could be of some comfort.
 **Door opens slowly, and the mountain air once again rushes to frost you.**
 **She smiles back at you.**
-Novinha: That makes me think...
-Novinha: Maybe that's another reason why we try to help others:
-Novinha: Even if we don't realise it... We want to make sure that we can still help ourselves.
+Young Woman: That makes me think...
+Young Woman: Maybe that's another reason why we try to help others:
+Young Woman: Even if we don't realise it... We want to make sure that we can still help ourselves.
 **Door closes gently.**
 
 do DialogueFlow.empathy += 20
@@ -168,11 +168,11 @@ do DialogueFlow.empathy += 20
 # ===== STEP 3 BAD BRANCH (ENDING) =====
 ~ step3_bad
 
-Novinha: ...
+Young Woman: ...
 **Door opens slowly, and the mountain air once again rushes to frost you.**
 **She looks back at you with some sadness.**
-Novinha: I... I don't think you got it, did you?
-Novinha: Still... I hope I could be of some comfort...
+Young Woman: I... I don't think you got it, did you?
+Young Woman: Still... I hope I could be of some comfort...
 **Door closes gently.**
 
 do DialogueFlow.empathy -= 10
