@@ -19,6 +19,7 @@ Pretentious Man: Well, enough yapping, I can tell you won't even understand.
 	=> step1_positive
 
 - You think i care about your cologne or Dubai? Get out.
+	do DialogueFlow.stop_car()
 	Pretentious Man: Fine! Whatever!
 	do DialogueFlow.resume_car()
 	=> END
