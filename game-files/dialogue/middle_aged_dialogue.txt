@@ -1,395 +1,324 @@
-*The well groomed man sits facing you and combs his hair*
+~ start
+
+**The well-groomed man sits facing you and combs his hair**
+Pretentious Man: Thanks man, old car you've got here, smells like it too
+Pretentious Man: Maybe my cologne can mask this god-awful smell... It better, I mean, it's Christian Dior. Still trying to figure out if it was worth the price...I mean I could've gotten my girl a new Birkin bag instead.
+Pretentious Man: Bought it when me and her went to Dubai this summer, now that's a city I can live in. That's the lifestyle I want, not this hillbilly bullshit where nothing happens and no one understands what a stock or an NFT is.
+**The man rolls his yes as he finished the sentence**
+**He start smoking his eletronic cigarete and turns the AC up**
+Pretentious Man: Well, enough yapping, I can tell you won't even understand.
+
+- Dubai sounds impressive. I guess someone like you can choose where to live.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step1_negative
 
 
-{
-Thanks man, old car you've got here, smells like it too
+- You're paying for the seat coverings if you keep smoking that wannabe cigarete in here.
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step1_positive
 
-Maybe my cologne can mask this god awful smell... It better, i mean, it's Christian Dior. Still strying to figure out if it was worth the price... i mean i could've gotten my girl a new birkin bag instead.
+- You think i care about your cologne or Dubai? Get out.
+	Pretentious Man: Fine! Whatever!
+	=> END
 
-Bought it when me and her went to dubai this summer, now that's a city i can live in. That's the lifestyle i want, not this hillbilly bullshit where nothing happens and no-one understands what is a stock or an NFT.
-}
+# ===== STEP 1 NEGATIVE =====
+~ step1_negative
+
+**The man smirks, leaning back and blowing a cloud of vapor onto the windshield.**
+Pretentious Man: I could buy this whole mountain if I wanted to; would turn it into a goddamn paradise resort, I'm talking Padel fields, Golf Clubs... You know, things for the elite
+Pretentious Man: My girlfriend... Well, she wanted to move here, to be closer to family. Whatever that means. I am always telling her, 'Babe, the winters there are cold as shit'. Why would anyone build a house there? And it's true you know, I spent my whole childhood repenting this place.
+Pretentious Man: Don't need this negativity. I'm fueled by success.
+
+- Why waste time thinking about some 'hillbilly' childhood?
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step2_negative
+
+- You're talking about success like it's a race. What happens when you reach the finish line and all that matters are the people you knew?
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step2_positive
+
+- You can fill your life with productivity and golf clubs, but I bet you know it won't make you whole. What are you actually running from?
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step2_positive
+
+# ===== STEP 1 POSITIVE =====
+~ step1_positive
+
+Pretentious Man: Fine, fine. God, everyone is so sensitive up here. It's just... I've had a day.
+**The man rolls his eyes again and takes a final puff before throwing the electronic cigarette. He looks out the window.**
+Pretentious Man: I envy the stars you know? They are so consistent, we are born, live shitty lives, and die, and they are always there, shining for like a gazilion years. Being able to see the stars this clear somedays is the only good thing about this shithole.
+Pretentious Man: I can tell you are from here, and all the people I met from this fucking place don't think like that. I bet you think it's sooooo good to be surrounded by this nature, by this cold and this whole bunch of unproductive nothing.
+Pretentious Man: I could buy this whole mountain if I wanted to; would turn it into a goddamn paradise resort, I'm talking Padel fields, Golf Clubs... You know, things for the elite...
+Pretentious Man: My girlfriend... Well, she wanted to move here, to be closer to family. Whatever that means. I am always telling her, 'Babe, the winters there are cold as shit'. Why would anyone build a house there? And it's true, you know, I spent my whole childhood repenting this place.
+
+- Why waste time thinking about some 'hillbilly' childhood?
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step2_negative
+
+- You're talking about success like it's a race. What happens when you reach the finish line and all that matters are the people you knew?
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step2_positive
+
+- You can fill your life with productivity and golf clubs, but I bet you know it won't make you whole. What are you actually running from?
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step2_positive
+
+- Stop the fake bragging and get out of my car.
+	Pretentious Man: Fine! Whatever!
+	=> END
+
+# ===== STEP 2 NEGATIVE =====
+~ step2_negative
+
+**The man starts fiddling with his gold watch strap. He rolls up his sleeves and turns the AC back to a colder temperature. His movements become more agitated.**
+Pretentious Man: Exactly I mean, look at me. I am the epitome of success, of the "American Dream"... living the freedom I always dreamt of. Shit... I'd like to be exercising that freedom right now. Instead, I'm back here because of a "family emergency."
+**The man suddenly stops all the frenetic movement**
+**His posture slumps just a fraction.**
+Pretentious Man: Yeah... My mother... she finally did it. She died. And you know what she left me? The reminder not to wind up as she was: an unskilled, incompetent and miserable loser.
+Pretentious Man: It's funny...I stopped at a gas station before entering the funeral and the guy working there gave me a free donut because I 'looked like I needed it.' Funny, right? A stranger shows more grace in thirty seconds than my mom managed in twenty years. He didn't even know me, I was her goddamn son.
+
+- Life's a bitch and then you die.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step3_negative
+
+- A free donut is a free donut. Better than nothing.
+	do DialogueFlow.empathy -= 1 * DialogueFlow.empathy_coefficient
+	=> step3_negative
+
+
+- Maybe admitting that it hurts isn't as difficult as you make it out to be.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step3_positive
+
+- Life's a bitch and you keep living.
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step3_positive
 
-
-*The man rolls his yes as he finished the sentece*
-*He start smoking his eletronic cigarete and turns the AC up*
-
-{
-Well, enough yapping i can tell you wont even undertand...are you going up the mountain or nah?
-}
-
-
-
-
-
-**CHOICE**
-
-1. **Dubai sounds impressive. I guess someone like you can easily choose where to live.**
-- Negative Empathy: You are leaning into his smugness and ego, which encourages his shallow facade.
-
-2. **Yes i am...never got to see dubai, probably for the best though. **
-- Neutral
-
-3. **You're paying for the seat coverings if you keep smoking that wanna-be cigarete in here. Why are you really heading up to the summit anyways?
-- Positive Empathy: Setting boundaries with a "shitty" person is often the first step toward a real conversation.
-
-3."I don't care about your cologne. Get out."
-- Ends the interaction
-
-
-
-## Negative Path
-
-*The man smirks, leaning back and blowing a cloud of vapor onto the windshield.
-
-{I could buy this whole mountain if I wanted to, would turn it into a paradise resort, I'm talking Paddle fields, Golf Clubs ... You know, things for the elite }
-
-My girlfriend—well, she wanted to move there, to be closer to family. Whatever that means. I am always telling her, 'Babe, the winters there are cold as shit'. Why would anyone build a house there? And it's true you know, i spent my whole childhood repenting this place.
-
-I don't need this negativity. I'm fueled by success.}
-
-
-
-
-
-##Positive Path
-
-{ Fine, fine. God, everyone is so sensitive up here. It's just... I've had a day}
-
-*The man rolls his eyes again and takes a final puff before throwing the electronic cigarette out the window. He looks out at the cruel uncaring void of the fog.*
-
-
-{
-It's crazy how even with all this fog, if you focus just enough, you start to see the outline of some stars far away. You ever look at them and feel like they’re tiny holes sucking up all the oxygen?
-
-
-Don't answer, i guess you are from here, and people from this fucking place never thing like that, i bet you think its sooooo good to be surrounded by this nature, by this cold and this whole bunch of nothing
-
-
-My girlfriend—well, she wanted to move here, to be closer to family. Whatever that means. I am always telling her, 'Babe, the winters there are cold as shit'. Why would anyone build a house there? And it's true you know, i spent my whole childhood repenting this place.
-}
-
-
-
-
-
-
-
-**CHOICE**
-
-
-1.**Why waste time thinking about some 'hillbilly' childhood**
--negative
-
-2.**You're talking about success like it's a race. What happens when you reach the finish line and all it matters are the people from your past**
--positive
-
-3.**You can fill your life with projects and golf clubs, but i bet you know it won’t make you whole. What are you actually running from?**
--very positive
-
-
-
-## Negative path
-
-
-*The man starts fiddling with his gold watch strap. He rolls up his sleeves and turns the AC back to a colder temperature. His movements becoming increasingly agitated.*
-
-{ Exactly i mean, look at me. I am the epitomy of succes, of the "American Dream" daily living the freedom i always dreamt of...or I would have, if I’d stayed in the city. Instead, I’m back here because of a "family emergency."}
-
-*The man suddenly stops all the frenetic movement*
-
-*His posture slumps just a fraction.*
-
-{My mother... she finally did it. She died. And you know what she left me? The reminder not to wind up as she was, an unskilled, imcompetent and miserable fraction of a human.
-
-Its funny...i stopped at a gas station before entering the funeral and the guy working there gave me a free donut because I 'looked like I needed it.' Funny, right? A stranger shows more grace in thirty seconds than my mom managed in twenty years. He didn't even know me, i was her goddam son"}
-
-
-## Positive Path
-
-*He exhales through his nose and smirks, the rest of his face isn't giving much hapiness though.*
-
-
-{ ...I got a call yesterday after leaving work. From my mother’s lawyer. She died.}
-
-*He stares at the dashboard, fingers tapping once, then stopping.*
-
-{
-She spent her whole life trying to prove she mattered.
-Always busy. Always tired. Always disappointed.
-
-And somehow I was the proof she’d failed.
-She was the biggest asshole I knew. 
-}
-
-{
-I stopped at a gas station on the way up here.
-Guy behind the counter gave me a free donut. Said I “looked like I needed it.”
-
-Thirty seconds. That’s all it took.
-More kindness than she managed in twenty years. The guy at the gas station didn't even know me...i was her goddam son
-}
-
-
-
-
-
-
-
-
-**CHOICE**
-
-
-1.**Life's a bitch and then you die**
--negative empathy
-
-2.**A free donut is a free donut. Better than nothing.**
--neutral empathy
-
-3..**Maybe admitting that it hurts isn't as dificult as you make it out to be**
--positive empathy
-
-4..**Life's a bitch and you keep living**
-
-
-
-
-
-## Negative Path
-
-*His smirk is bigger then in the beggining of the conversation, his eyes light up*
-
-{Amen...you know... i hate it when people fucking say that they want peace and quite.. what does that ever accomplish? All i see is vein excuses to live a sub-human life yo know, like sheep in a herd. All that people make it out to be important is just fuel for drama, more unimportant nonsense to keep us busy until we’re dead. 
-
-I'm better focusing on the path ahead
-}
-
-
-
-## Positive Path
-
-*He finally stops fidgeting with the watch.*
-
-{ Sitting in that funeral service today, looking at her... Even after lying to myself, lying to the ones i love the leak inside me didn't stop...
-
-
-I’m just a pit that good things fall into. I wanted to show her how good i am doing when she saw me again. The funny thing is... when i finally saw her, in the casket, i realized that i’m not. I’m just some other version of her, fueled by the same bitterness.
-
-A cancer, spread through generations.
-}
-
-
-
-
-
-
-
-
-**CHOICE**
-
-1**At least you have your money. That's more than most people get as a parting gift.**
-   -Negative Empathy: Encourages him to return to his shallow distractions and "meaningless nonsense." 
-
-2**You can't keep doing shitty things and then feeling bad about yourself like that makes it okay**
-  -neutral empathy
-
-3**It takes a long time to realize how truly miserable you are, but it takes even longer to see it doesn't have to be that way.**
-  -mega positive empathy
-  
-4**Have you thought that maybe it's not the drugs, the corruptness of society or even your childhood. It's just... you.
-  -positive empathy
-  
-  
-   
-   
-## Negative Path
-
-*He laughs louder than necessary.*
-
-{
-Yeah. Exactly.
-
-Everyone loves pretending life’s some deep emotional journey with a clear purpose.
-It’s not. It’s a transaction. You work. You conquer. You level up.
-When people start talking about “healing” or “taking care of yourself,”... all i see is code for giving up.
-}
-
-*He leans forward slightly*
-
-{
-Peace and quiet is what parasites say when they’re afraid to compete.
-}
-
-*He pauses*
-
-{
-My mother spent her whole life waiting for something to mean something.
-Look how that turned out.
-}
-
-*He looks out at the road again, jaw tight.*
-
-{
-I’m better off focusing on what’s ahead.
-No looking back.
-No excuses.
-}
-   
-   
-   
-   
-   
-#Positive Path
-   
-   
-*The man doesn’t answer right away.*
-
-*He continues to his finger against the edge of the watch, much slower now.
-
-*A quiet breath.*
-
-{
-It’s not the drugs.
-Not the city.
-Not even her.
-
-It’s jus... me.
-}
-
-*He seems almost out of breath*
-*pauses for a bit, starts speaking slower*
-
-{
-If it’s me, how the fuck can i outrun it.
-
-
-I realized that, looking at her cold body, surrounded by people that i dont even know anymore...
-
-I am never getting the relationship my young self would have given anything for. I don't know... i guess... some stupid part of me was still holding on to that chance.
-
-
-
-That part doesn’t have anywhere to go now.
-}
-
-
-
-
-1**Humans don’t need meaning. They just need something to distract them long enough.**
-- Negative Empathy: reinforces avoidance
-
-2**No one’s coming to fix this for you. Maybe you need to stop running and not let it make you who you are
--positive
-
-
-3**It’s hard to realize you’re the piece that doesn't quite fit anymore, but that doesn't mean you're a lost cause."
--neutral
-
-
-4**Can't you see that depending on someone else to complete you is not a real thing."
--small positive
-
-
-
-##Positive Path
-The man doesn’t laugh this time.
-
-He leans back into the seat. The fog outside swallows the headlights for a moment.
-
-{
-Yeah…
-}
-
-A long silence.
-
-{
-I think I spent my whole life believing that if I slowed down,
-everything I was running from would catch up and kill me.
-}
-
-He looks at the watch. Doesn’t adjust it. Just looks.
-
-{
-Turns out it already did.
-}
-
-A breath. Steadier now.
-
-{
-And I’m still here.
-}
-
-Another pause.
-
-{
-I’m afraid if I let myself be happy, I’ll forget why I was sad.
-
-I don’t even know what “taking care of myself” is supposed to look like.
-Maybe it’s jus...not letting my brain punish myself forever for something I never got.
-
-}
-
-*he takes his out of his watch and grabs his phone*
-
-{Maybe i'll call my girl...
-Tell her to come spend some days here with me, i heard there's some beautiful views this time of here that i never got to see...
-}
-
-
-
-
-
-
-
-
-
-
-    
-    
-#Negative Path
-
-
-
-He lets out a short, thin laugh..
-
-{
-Yeah.
-Exactly.
-
-You can’t keep doing shitty things and then feel bad about yourself like that makes it okay.
-}
-
-A scoff.
-
-{
-What, I sit with it?
-Let it hurt?
-}
-
-His jaw tightens.
-
-{
-That’s how you erase her.
-Or turn into her.
-Or prove she was right about me all along.
-
-That’s on me.
-}
-
-He adjusts the watch. Tightens it.
-
-{
-
-Why even try.
-
-I guess this is the best way i know how take care of myself.
-}
-
-
-*He opens the dor while the car is still driving*
-
-{
-Maybe just need to get out of this fucking place
-}
-    
-    
- 
+# ===== STEP 2 POSITIVE =====
+~ step2_positive
+
+
+**He laughs and looks directly at you*
+
+Pretentious Man: Didn't know I was talking to a psychologist. That's a good theory right there but can't you see I'm not a woke soyboy with those kinds of issues?
+
+**A moment of silence**
+
+Pretentious Man: I can see you don't talk much, well, I'll tell you a story. I can tell you'll like it given your PhD in bullshit psychology.
+
+
+**He exhales through his nose and smirks, the rest of his face isn't showing much hapiness though.**
+Pretentious Man:  I'm only back here because of a "family emergency"... I got a call yesterday after leaving work. From my mother's lawyer. She finally did it. She died.
+**He stares at the dashboard, fingers tapping once, then stopping.**
+Pretentious Man: She spent her whole life trying to prove she mattered.
+Pretentious Man: Always busy. Always tired. Always disappointed.
+Pretentious Man: And somehow I was the proof she'd failed.
+Pretentious Man: She was the biggest asshole I knew.
+Pretentious Man: I stopped at a gas station on the way up here.
+Pretentious Man: Guy behind the counter gave me a free donut. Said I "looked like I needed it."
+Pretentious Man: Thirty seconds. That's all it took.
+Pretentious Man: More kindness than she managed in twenty years. The guy at the gas station didn't even know me... I was her goddamn son
+Pretentious Man: Well... I bet you have some half-assed philosophical theory for that.
+
+- Life's a bitch and then you die.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step3_negative
+
+- A free donut is a free donut. Better than nothing.
+	do DialogueFlow.empathy -= 1 * DialogueFlow.empathy_coefficient
+	=> step3_negative
+
+- Maybe admitting that it hurts isn't as difficult as you make it out to be
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step3_positive
+
+- Life's a bitch and you keep living
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step3_positive
+
+# ===== STEP 3 NEGATIVE =====
+~ step3_negative
+
+**His smirk is bigger then in the beggining of the conversation, his eyes light up**
+Pretentious Man: Amen... you know something else i've been thinking about man?... I hate it when people fucking say that all that matters are the "simple things"... what does that ever accomplish?
+Pretentious Man: All I see are vain excuses to live like sheep in a herd. All that people make it out to be important is just fuel for drama, more unimportant nonsense to keep them busy until they're dead.
+Pretentious Man: I've always been better at focusing on the path ahead
+
+- At least you have your money. That's more than most people get as a parting gift.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step4_negative
+
+- It takes a long time to grasp how truly miserable you are, but it takes even longer to realize it doesn't have to be that way. It's up to you.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step4_positive
+
+- Have you thought that maybe all this hate isn't about all these external things? It's just you.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step4_positive
+
+# ===== STEP 3 POSITIVE =====
+~ step3_positive
+
+**He finally stops fidgeting with the watch.**
+Pretentious Man: There you go with your deep ass theories.
+Pretentious Man: Man... I can see you're trying to get something out of me...
+
+**A moment of silence**
+
+Pretentious Man: I guess I'll never see you again so I'll tell you this:
+Pretentious Man: Sitting in that funeral service today, looking at her... Even after lying to myself, lying to the ones I love... I can feel it... the leak inside me doesn’t ever stop.
+Pretentious Man: Since I was a child, like they always said, I'm just a pit that good things fall into. I wanted to show her how good I am doing when she saw me again. The funny thing is... when I finally saw her, in the casket, I realized that I'm not doing good. I'm just some other version of her, fueled by the same bitterness.
+Pretentious Man: A cancer, spread through generations.
+
+- At least you have your money. That's more than most people get as a parting gift.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> step4_negative
+
+- It takes a long time to grasp how truly miserable you are, but it takes even longer to realize it doesn't have to be that way. It's up to you.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step4_positive
+
+- Have you thought that maybe all this hate isn't about all these external things? It's just you.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> step4_positive
+
+# ===== STEP 4 NEGATIVE =====
+~ step4_negative
+
+**He laughs louder than necessary.**
+Pretentious Man: Yeah. Exactly.
+Pretentious Man: Everyone loves pretending life's some deep emotional journey with a clear purpose.
+Pretentious Man: It's not. It's a transaction. You work. You conquer. You level up.
+Pretentious Man: When people start talking about "healing" or "taking care of yourself,"... all I see is code for giving up. They can't keep doing shitty things and then feeling bad about it; they just have to be better, that easy.
+**He leans forward slightly**
+Pretentious Man: Peace and quiet is what parasites say when they're afraid to compete.
+**He pauses**
+Pretentious Man: My mother spent her whole life waiting for something to mean something.
+Pretentious Man: Look how that turned out.
+**He looks out at the road again, jaw tight.**
+Pretentious Man: We have to keep going right?
+Pretentious Man: No looking back.
+Pretentious Man: No excuses.
+
+- Humans don't need meaning. They just need something to distract them long enough.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> choose_ending
+
+- Maybe you need to stop running and not let all this define you.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+- I've recently realized it's hard to realize you're the piece that doesn't quite fit anymore, but that doesn't necessarily mean you're a lost cause.
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+- Can't you see that depending on a false sense of competition is not a real thing?
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+# ===== STEP 4 POSITIVE =====
+~ step4_positive
+
+**The man doesn't answer right away.**
+**He continues to his finger against the edge of the watch, much slower now.**
+**A quiet breath.**
+Pretentious Man: It's not the drugs.
+Pretentious Man: Not the city.
+Pretentious Man: Not even her.
+Pretentious Man: It's just... me.
+**He seems almost out of breath**
+**pauses for a bit, starts speaking slower**
+Pretentious Man: If it's me, how the fuck can I outrun it.
+Pretentious Man: I realized that, looking at her cold body, surrounded by people that I don't even know anymore...
+Pretentious Man: I am never getting the relationship my young self would have given anything for. I don't know... I guess... some stupid part of me was still holding on to that chance.
+Pretentious Man: That part doesn't have anywhere to go now.
+
+- Humans don't need meaning. They just need something to distract them long enough.
+	do DialogueFlow.empathy -= 2 * DialogueFlow.empathy_coefficient
+	=> choose_ending
+
+- No one's coming to fix this for you. Maybe you need to stop running and take responsibility for your own hapiness.
+	do DialogueFlow.empathy += 2 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+- I've recently realized it's hard to realize you're the piece that doesn't quite fit anymore, but that doesn't necessarily mean you're a lost cause.
+	if DialogueFlow.empathy >= DialogueFlow.empathy_threshold
+		do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+- Can't you see that depending on someone else to complete you is not a real thing?
+	do DialogueFlow.empathy += 1 * DialogueFlow.empathy_coefficient
+	do DialogueFlow.n_positive_choices += 1
+	=> choose_ending
+
+# ===== CHOOSE ENDING =====
+~ choose_ending
+
+if DialogueFlow.n_positive_choices >= 3
+	=> ending_positive
+else
+	=> ending_negative
+
+# ===== ENDING POSITIVE =====
+~ ending_positive
+
+**The man doesn't laugh this time.**
+**He leans back into the seat. The fog outside swallows the headlights for a moment.**
+Pretentious Man: Yeah…
+**A long silence.**
+Pretentious Man: I think I spent my whole life believing that if I slowed down, everything I was running from would catch up and kill me.
+**He looks at the watch. Doesn't adjust it. Just looks.**
+Pretentious Man: Turns out it already did.
+**A breath. Steadier now.**
+Pretentious Man: And I'm still here.
+**Another pause.**
+Pretentious Man: I'm afraid if I let myself be happy, I'll forget why I was sad.
+Pretentious Man: To be honest... I don't even know what "taking care of myself" is supposed to look like.
+
+**He looks at the dark road and clenches his fist*
+Pretentious Man: Some open wounds can't just fucking heal on their own can't they.**
+Pretentious Man: I mean, why can't I stop my brain from punishing myself forever for something I never got...something I couldn't even control.
+**He takes his watch out of his hand and grabs his phone**
+Pretentious Man: I guess.. these last years of my life... have just been a pretext to distract myself, just so I don't realize I have very few fucking hope...
+Pretentious Man: Fuck...Maybe I'll call my girl...
+Pretentious Man: Tell her to come spend some days here with me, I heard there's some beautiful views this time of here that I never got to see.
+Pretentious Man: I got service here, thanks for the ride and the chat man.
+=> END
+
+# ===== ENDING NEGATIVE =====
+~ ending_negative
+
+**He lets out a short, thin laugh.**
+Pretentious Man: Yeah.
+Pretentious Man: Exactly.
+**A scoff.**
+Pretentious Man: What, I sit with it?
+Pretentious Man: Let it hurt?
+**His jaw tightens.**
+Pretentious Man: That's how you erase her.
+Pretentious Man: Or turn into her. I promised my younger self that would never happen.
+Pretentious Man: That's how I prove she was right about me all along.
+Pretentious Man: That's on me.
+**He adjusts the watch. Tightens it.**
+Pretentious Man: Why even try.
+Pretentious Man: I guess this is the best way I know how to take care of myself. I just have to keep being productive, keep moving, then the lack of oxygen will never fucking catch me.
+**He looks at his phone**
+Pretentious Man: Or maybe i just need to get out of this fucking place... Well, I finally have service, like I said, need to make some calls. Bye.
+=> END

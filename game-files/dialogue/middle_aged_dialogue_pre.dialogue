@@ -6,24 +6,24 @@
 	do DialogueFlow.choice("positive")
 	=> END
 
-- No, i don't want anyone else here with me.
+- No, I don't want anyone else here with me.
 	???: Ok man.
 	=> END
 
-- Where do i leave you then?
+- Where do I leave you then?
 	do DialogueFlow.choice("negative")
 	=> step1_bad
 
 ~ step1_bad
 
-???: I get out as soon as i get service, i'll call a cab after so i don't freeze to death, nothing to worry.
+???: I will get out as soon as I get service, I'll call a cab after so I don't freeze to death, nothing to worry about.
 
-- I think that's ok, you can come.
+- I think that's okay, you can come.
 	do DialogueFlow.choice("positive")
 	=> END
 
-- I'm sorry but i really don't think you'll get service, and if can't find a cab then that's on me for leaving you stranded.
+- I'm sorry but I really don't think you'll get service, and if you can't find a cab then that's on me for leaving you stranded.
 	do DialogueFlow.choice("negative")
-	???: Damn ok
+	???: Damn okay.
 	=> END
 

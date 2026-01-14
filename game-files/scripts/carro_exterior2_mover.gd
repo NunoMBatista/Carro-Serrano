@@ -2,6 +2,8 @@ extends PathFollow3D
 
 signal movement_finished
 
+const HONK_SFX = preload("res://assets/audio/sfx/honk.mp3")
+
 @export var move_speed: float = 25
 
 var _moving: bool = false
@@ -15,6 +17,7 @@ var _smoothed_basis: Basis = Basis.IDENTITY
 var _position_offset: Vector3 = Vector3.ZERO
 var _orientation_offset: Basis = Basis.IDENTITY
 var _vertical_offset: float = 0.0
+var _audio_player: AudioStreamPlayer = null
 
 @export_range(0.0, 1.0, 0.01) var smoothing: float = 0.15
 @export var ride_height: float = 0.0
@@ -55,6 +58,12 @@ func _ready() -> void:
 			# Hide the car until the lift interaction actually starts it moving.
 			_car_node.visible = false
 
+			# Set up a local audio player for the honk.
+			_audio_player = AudioStreamPlayer.new()
+			_audio_player.stream = HONK_SFX
+			_audio_player.bus = "Master"
+			_car_node.add_child(_audio_player)
+
 	set_process(false)
 	_update_car_transform()
 
@@ -88,10 +97,19 @@ func _process(delta: float) -> void:
 		_update_car_transform()
 		_moving = false
 		set_process(false)
+		_play_honk()
 		emit_signal("movement_finished")
 		return
 
 	_update_car_transform()
+
+
+func _play_honk() -> void:
+	if _audio_player == null:
+		return
+	if _audio_player.playing:
+		return
+	_audio_player.play()
 
 
 func _update_car_transform() -> void:
