@@ -16,7 +16,7 @@ signal empathy_changed(new_empathy: int)
 @export var empathy_coefficient: float = 5
 
 ## Current empathy (0-100)
-var empathy: int = 500:
+var empathy: int = 50:
 	set(v):
 		var old_empathy = empathy
 		empathy = clampi(v, 0, 100)
@@ -203,26 +203,26 @@ func _get_car() -> Node:
 	if not scene:
 		print("[DialogueFlow] No current scene!")
 		return null
-	
+
 	print("[DialogueFlow] Searching for car in scene: ", scene.name)
-	
+
 	# Try common paths
 	var car = scene.get_node_or_null("RoadCarFollower")
 	if car:
 		print("[DialogueFlow] Found car at RoadCarFollower")
 		return car
-	
+
 	car = scene.get_node_or_null("road_car_follower")
 	if car:
 		print("[DialogueFlow] Found car at road_car_follower")
 		return car
-	
+
 	# Search recursively for any node with the script
 	car = _find_car_recursive(scene)
 	if car:
 		print("[DialogueFlow] Found car recursively: ", car.get_path())
 		return car
-	
+
 	print("[DialogueFlow] Car not found anywhere in scene tree")
 	return null
 
@@ -231,10 +231,10 @@ func _find_car_recursive(node: Node) -> Node:
 	# Check if this node has the start_dialogue method (indicating it's the car)
 	if node.has_method("start_dialogue") and node.has_method("end_dialogue") and node.has_method("teleport_to_torre"):
 		return node
-	
+
 	for child in node.get_children():
 		var result = _find_car_recursive(child)
 		if result:
 			return result
-	
+
 	return null

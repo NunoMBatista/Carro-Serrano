@@ -43,9 +43,9 @@ var _dialogue_active := false  # True when dialogue is active, disables player i
 var _breakdown_leave_prompt_ui: Control = null  # UI for "Press L to leave car" after breakdown
 var _waiting_for_breakdown_leave := false  # True when waiting for player to press L after breakdown
 
-const MAX_SPEED := 100
+const MAX_SPEED := 30
 const ACCEL_STRENGTH := 3.5
-const BRAKE_STRENGTH := 5000
+const BRAKE_STRENGTH := 100
 const MIN_SPEED := 0.0
 const FULLSTOP_SPEED := 6
 
@@ -131,7 +131,8 @@ func _process(delta: float) -> void:
 
 	# Handle input for torre teleport
 	if Input.is_action_just_pressed("teleport_to_torre"):  # F key
-		teleport_to_torre()
+		#teleport_to_torre()
+		pass
 
 	if not _should_stop:
 		_update_speed(delta)
