@@ -130,8 +130,8 @@ func _process(delta: float) -> void:
 		return
 
 	# Handle input for torre teleport
-	if Input.is_action_just_pressed("teleport_to_torre"):  # F key
-		teleport_to_torre()
+	#if Input.is_action_just_pressed("teleport_to_torre"):  # F key
+	#	teleport_to_torre()
 
 	if not _should_stop:
 		_update_speed(delta)
