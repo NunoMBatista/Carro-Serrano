@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dfmyjabbccxsr"]
+[gd_scene load_steps=28 format=3 uid="uid://dfmyjabbccxsr"]
 
 [ext_resource type="Script" uid="uid://dhyysmj0yhprb" path="res://addons/zylann.hterrain/hterrain.gd" id="1_emikk"]
 [ext_resource type="Resource" uid="uid://c8kouskeme58a" path="res://models/Terrain/data.hterrain" id="2_ea0xb"]
@@ -19,6 +19,8 @@
 [ext_resource type="Script" uid="uid://cbgchi2egw4f0" path="res://addons/road-generator/nodes/road_point.gd" id="14_eg15q"]
 [ext_resource type="ArrayMesh" uid="uid://begsy3jdebk7w" path="res://assets/Untitled_Plane_001.res" id="16_80jls"]
 [ext_resource type="PackedScene" uid="uid://cbj1qjxm0gm3g" path="res://scenes/tree.tscn" id="19_l7y6d"]
+[ext_resource type="PackedScene" uid="uid://dwxiwhs1lcf4l" path="res://assets/old_sign.glb" id="20_geru1"]
+[ext_resource type="Texture2D" uid="uid://cquqc5v7gv4sx" path="res://assets/traffic_signs/reflectorized-roadway-safety-notice-sign-boards-686-removebg-preview.png" id="21_xasde"]
 
 [sub_resource type="Resource" id="Resource_v81gp"]
 script = ExtResource("3_73l22")
@@ -605,3 +607,20 @@ transform = Transform3D(-0.16365315, 0, -0.9865192, 0, 1, 0, 0.9865192, 0, -0.16
 
 [node name="Tree259" parent="Forest" instance=ExtResource("19_l7y6d")]
 transform = Transform3D(-0.12308186, 0, -0.99239653, 0, 1, 0, 0.99239653, 0, -0.12308186, -10.628952, -64.28136, 21.844193)
+
+[node name="sign_curva" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 126.805115, 49.891365, 0)
+
+[node name="Sketchfab_Scene" parent="sign_curva" instance=ExtResource("20_geru1")]
+transform = Transform3D(0.84714687, -0.020360893, -0.52311546, 0.031286195, 0.8307927, 0.004399282, 0.5203541, -0.016803332, 0.851378, -37.872627, -25.714338, 68.74)
+
+[node name="Sprite3D2" type="Sprite3D" parent="sign_curva"]
+transform = Transform3D(-0.68979937, 0, 0.49018097, 0, 0.5733726, 0, -0.47406846, 0, -0.71324396, -29.623451, -20.259764, 68.33837)
+texture = ExtResource("21_xasde")
+
+[node name="Sketchfab_Scene2" parent="sign_curva" instance=ExtResource("20_geru1")]
+transform = Transform3D(0.84714687, -0.020360893, -0.52311546, 0.031286195, 0.8307927, 0.004399282, 0.5203541, -0.016803332, 0.851378, -40.04323, -25.714338, 67.0993)
+
+[node name="Sprite3D3" type="Sprite3D" parent="sign_curva"]
+transform = Transform3D(-0.68979937, 0, 0.49018097, 0, 0.5733726, 0, -0.47406846, 0, -0.71324396, -31.794052, -20.259764, 66.69767)
+texture = ExtResource("21_xasde")

@@ -43,7 +43,7 @@ var _dialogue_active := false  # True when dialogue is active, disables player i
 var _breakdown_leave_prompt_ui: Control = null  # UI for "Press L to leave car" after breakdown
 var _waiting_for_breakdown_leave := false  # True when waiting for player to press L after breakdown
 
-const MAX_SPEED := 30
+const MAX_SPEED := 100
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 5000
 const MIN_SPEED := 0.0
