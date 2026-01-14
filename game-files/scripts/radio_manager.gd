@@ -9,15 +9,15 @@ const SONGS = [
 	"res://assets/audio/radio/Jesu Bleibet Meine Freude.mp3",
 	"res://assets/audio/radio/Parece Parece.mp3",
 	"res://assets/audio/radio/Radio Comercial.mp3",
-	"res://assets/audio/radio/radio_static.mp3",
-	"res://assets/audio/radio/Tempo Para Cantar.mp3"  	
+	#"res://assets/audio/radio/radio_static.mp3",
+	"res://assets/audio/radio/Tempo Para Cantar.mp3"
 ]
 
 const STATIC_PATH = "res://assets/audio/radio/radio_static.mp3"
 const STATIC_MIN_DURATION := 0.3  # minimum static duration in seconds
 const STATIC_MAX_DURATION := 1.2  # maximum static duration in seconds
 
-# Base tracks (mood music)	
+# Base tracks (mood music)
 const BASE_TRACK_HAPPY = "res://assets/audio/base_tracks/happy_song.mp3"
 const BASE_TRACK_NEUTRAL = "res://assets/audio/base_tracks/neutral_song.mp3"
 const BASE_TRACK_SAD = "res://assets/audio/base_tracks/sad_song.mp3"

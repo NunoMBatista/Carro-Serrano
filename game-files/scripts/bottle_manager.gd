@@ -30,14 +30,15 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	# Spawn bottle with B key
 	if event is InputEventKey and event.pressed and event.keycode == KEY_B:
-		if bottle == null:
-			spawn_bottle()
-		else:
-			# If bottle exists, remove it and spawn a new one
-			bottle.queue_free()
-			bottle = null
-			spawn_bottle()
-		get_viewport().set_input_as_handled()
+		# if bottle == null:
+		# 	spawn_bottle()
+		# else:
+		# 	# If bottle exists, remove it and spawn a new one
+		# 	bottle.queue_free()
+		# 	bottle = null
+		# 	spawn_bottle()
+		# get_viewport().set_input_as_handled()
+		pass
 
 	# Handle mouse clicks
 	if event is InputEventMouseButton and event.pressed:

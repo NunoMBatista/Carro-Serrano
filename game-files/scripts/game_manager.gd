@@ -1,7 +1,7 @@
 extends Node3D
 
 ## Enable/disable dialogue debug overlay (top-right corner)
-@export var debug_dialogue: bool = false
+@export var debug_dialogue: bool = true
 
 # This is the variable you want to change
 @onready var empathy_score: int = 0
@@ -513,5 +513,6 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		match event.keycode:
 			KEY_G:
-				if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-					DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
+				#if Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
+				#	DialogueFlow.run_dialogue(DRUNK_DIALOGUE, "start")
+				pass
