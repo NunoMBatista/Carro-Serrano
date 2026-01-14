@@ -1,0 +1,20 @@
+~ start
+
+???: Excuse me sir, can you give me a ride? There's too much fog to be safe.
+
+- Where do you come from?
+	???: Oh... I was in Covilhã, and started going up when the fog came.
+	=> start
+
+- Where are you going?
+	???: My house is just up the road.
+	???: I don't want to give you any trouble... just leave where it's most convenient.
+	=> start
+
+- Come in, then.
+	do DialogueFlow.choice("positive")
+	=> END
+
+- I can't give you a ride.
+	???: Oh... I understand, thank you anyway...
+	=> END

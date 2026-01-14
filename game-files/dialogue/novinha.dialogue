@@ -173,7 +173,7 @@ Young Woman: Maybe that's another reason why we try to help others:
 Young Woman: Even if we don't realise it... We want to make sure that we can still help ourselves.
 **Door closes gently.**
 
-DialogueFlow.resume_car()
+do DialogueFlow.resume_car()
 do DialogueFlow.empathy += 20
 => END
 
