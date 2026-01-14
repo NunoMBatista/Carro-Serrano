@@ -948,6 +948,9 @@ shadow_blur = 10.0
 
 [node name="terrain_11" parent="." instance=ExtResource("6_c1pb6")]
 
+[node name="_Node3D_35778" parent="terrain_11/Terrain/HTerrain" index="0"]
+view_distance = 50.0
+
 [node name="edge_R" parent="terrain_11/Terrain/Node3D/RoadManager/Road_001/RP_001" index="0"]
 curve = SubResource("Curve3D_j2yw6")
 
@@ -1296,6 +1299,9 @@ script = ExtResource("1_18nlu")
 [node name="terrain_2" parent="." instance=ExtResource("2_7ykc4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1.0000541, 0, 0, 509.22595)
 
+[node name="HTerrainDetailLayer" parent="terrain_2/Terrain/HTerrain" index="0"]
+view_distance = 50.0
+
 [node name="RP_032" parent="terrain_2/Terrain/Node3D/RoadManager/Road_001" index="28"]
 transform = Transform3D(0.25136515, 0.35149294, 0.9018141, -0.017368447, 0.93321764, -0.3588919, -0.9677369, 0.074549824, 0.24068353, 1.3396049, 246.64803, 853.88513)
 
@@ -1317,6 +1323,9 @@ transform = Transform3D(1.0000002, 0, 0, 0, 0.9990485, 0.043619387, 0, -0.043619
 
 [node name="terrain_3" parent="." instance=ExtResource("7_c16ls")]
 transform = Transform3D(-1.00563, 0, 0, 0, 1, 0, 0, 0, -1.0048895, 0.67458725, 0.026493073, 510.85474)
+
+[node name="HTerrainDetailLayer" parent="terrain_3/Terrain/HTerrain" index="0"]
+view_distance = 50.0
 
 [node name="terrain_4" parent="." instance=ExtResource("6_c1pb6")]
 visible = false
