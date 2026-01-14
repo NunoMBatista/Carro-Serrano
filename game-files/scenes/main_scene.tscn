@@ -36,9 +36,9 @@
 [ext_resource type="PackedScene" uid="uid://w53pa5aphifw" path="res://assets/house_1.glb" id="34_1sx6m"]
 [ext_resource type="PackedScene" uid="uid://dyu43knp3o5c7" path="res://house_2.tscn" id="35_0uct7"]
 [ext_resource type="PackedScene" uid="uid://bman7pxxghc5i" path="res://balls.tscn" id="36_1a541"]
-[ext_resource type="PackedScene" path="res://castelo.tscn" id="37_gwxm2"]
+[ext_resource type="PackedScene" uid="uid://cqxwr5nb0gl44" path="res://castelo.tscn" id="37_gwxm2"]
 [ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Roughness.jpg" id="38_llmay"]
-[ext_resource type="PackedScene" path="res://pelourinho.tscn" id="39_ihyyi"]
+[ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="39_ihyyi"]
 [ext_resource type="PackedScene" uid="uid://dv3yrerb34qis" path="res://scenes/payphone2.tscn" id="40_xp01v"]
 [ext_resource type="PackedScene" uid="uid://c44qbvkxhw5bk" path="res://scenes/InvisibleWall.tscn" id="41_0wyf6"]
 [ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="42_0wyf6"]
@@ -51,7 +51,7 @@
 [ext_resource type="Texture2D" uid="uid://bl8i2q3myppwr" path="res://assets/traffic_signs/image.png" id="49_duuju"]
 [ext_resource type="Texture2D" uid="uid://box4jqnentf1d" path="res://assets/traffic_signs/image-removebg-preview1.png" id="50_ruju6"]
 [ext_resource type="PackedScene" uid="uid://l2loc6c8jgfe" path="res://assets/the_sun.glb" id="53_5nybl"]
-[ext_resource type="PackedScene" uid="uid://bx8k7oam3pqrs" path="res://scenes/title_screen.tscn" id="54_title"]
+[ext_resource type="PackedScene" path="res://scenes/title_screen.tscn" id="54_title"]
 [ext_resource type="Script" uid="uid://cay2642mv7eay" path="res://scripts/road_interact.gd" id="55_j2yw6"]
 [ext_resource type="Script" uid="uid://c2rgp0kd32mfx" path="res://scripts/arrow.gd" id="56_arrow"]
 [ext_resource type="Script" uid="uid://dtibo42op0npj" path="res://scripts/carro_exterior2_mover.gd" id="57_carro2"]
@@ -1290,6 +1290,18 @@ curve = SubResource("Curve3D_ufg4r")
 [node name="edge_C" parent="terrain_11/Terrain/Node3D/RoadManager/Road_001/RP_028" index="2"]
 curve = SubResource("Curve3D_mrvy2")
 
+[node name="PathMesh3D" parent="terrain_11/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
 [node name="GameManager" type="Node3D" parent="."]
 script = ExtResource("1_18nlu")
 
@@ -1298,6 +1310,42 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, -1.0000541, 0, 0, 509.22595)
 
 [node name="RP_032" parent="terrain_2/Terrain/Node3D/RoadManager/Road_001" index="28"]
 transform = Transform3D(0.25136515, 0.35149294, 0.9018141, -0.017368447, 0.93321764, -0.3588919, -0.9677369, 0.074549824, 0.24068353, 1.3396049, 246.64803, 853.88513)
+
+[node name="PathMesh3D" parent="terrain_2/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D2" parent="terrain_2/Terrain" index="3"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D3" parent="terrain_2/Terrain" index="4"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
 
 [node name="CarFollower" type="Node3D" parent="."]
 transform = Transform3D(-0.115325324, 0.0414615, 0.9923406, 0, 0.9989787, -0.041741267, -0.9932213, -0.004814195, -0.11522307, -2.8559113, -0.23949385, 0.2235527)
@@ -1317,6 +1365,54 @@ transform = Transform3D(1.0000002, 0, 0, 0, 0.9990485, 0.043619387, 0, -0.043619
 
 [node name="terrain_3" parent="." instance=ExtResource("7_c16ls")]
 transform = Transform3D(-1.00563, 0, 0, 0, 1, 0, 0, 0, -1.0048895, 0.67458725, 0.026493073, 510.85474)
+
+[node name="PathMesh3D" parent="terrain_3/Terrain" index="2"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D2" parent="terrain_3/Terrain" index="3"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D4" parent="terrain_3/Terrain" index="4"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
+
+[node name="PathMesh3D5" parent="terrain_3/Terrain" index="5"]
+_import_path = NodePath("")
+unique_name_in_owner = false
+process_mode = 0
+process_priority = 0
+process_physics_priority = 0
+process_thread_group = 0
+physics_interpolation_mode = 0
+auto_translate_mode = 0
+editor_description = ""
+script = null
 
 [node name="terrain_4" parent="." instance=ExtResource("6_c1pb6")]
 visible = false
