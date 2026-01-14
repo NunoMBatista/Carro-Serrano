@@ -58,7 +58,7 @@ Drunk Man: WHEN WAS IT?
 - I'm not Charlie and I'm calling the police, get out.
 	do DialogueFlow.stop_car()
 	Drunk Man: TRAITOR!
-	do DialogueFlow.stop_car()
+	do DialogueFlow.resume_car()
 	=> END
 
 # ===== STEP 1 BAD BRANCH =====
