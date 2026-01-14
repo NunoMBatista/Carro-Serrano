@@ -69,6 +69,7 @@ Mário Bento
 Miguel Cabral Pinto
 Miguel Gonçalves
 João Nave
+Mariana Guiomar
 Tiago Silva
 Humberto Batista
 Nuno Castela

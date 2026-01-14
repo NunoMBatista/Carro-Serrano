@@ -306,7 +306,7 @@ Pretentious Man: Tell her to come spend some days here with me, I heard there's 
 Pretentious Man: I got service here, thanks for the ride and the chat man.
 do DialogueFlow.stop_car()
 **The car comes to a halt**
-do DialogueFlow.resume_car
+do DialogueFlow.resume_car()
 => END
 
 # ===== ENDING NEGATIVE =====
@@ -331,5 +331,5 @@ Pretentious Man: Or maybe i just need to get out of this fucking place... Well, 
 do DialogueFlow.stop_car()
 **The car comes to a halt**
 Pretentious Man: Bye.
-do DialogueFlow.resume_car
+do DialogueFlow.resume_car()
 => END
