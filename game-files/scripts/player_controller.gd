@@ -26,6 +26,9 @@ var _pitch_input := 0.0
 var is_active := false
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+const WALKING_SFX := preload("res://assets/audio/sfx/walking-sound-effect.mp3")
+var walking_audio: AudioStreamPlayer3D
+
 @onready var camera_pivot = $CameraPivot
 @onready var camera = $CameraPivot/Camera3D
 @onready var head_position = $CameraPivot
@@ -44,6 +47,11 @@ func _ready() -> void:
 		crosshair.set_process(false)
 		crosshair.set_process_input(false)
 		crosshair.set_process_unhandled_input(false)
+
+	walking_audio = AudioStreamPlayer3D.new()
+	walking_audio.stream = WALKING_SFX
+	walking_audio.autoplay = false
+	add_child(walking_audio)
 
 func activate() -> void:
 	is_active = true
@@ -126,14 +134,24 @@ func _physics_process(delta: float) -> void:
 			velocity.z = lerp(velocity.z, 0.0, friction * delta)
 
 	# Head bob
-	if is_on_floor() and direction != Vector3.ZERO:
-		var horizontal_velocity = Vector2(velocity.x, velocity.z).length()
+	var horizontal_velocity = Vector2(velocity.x, velocity.z).length()
+	var is_moving_on_ground := is_on_floor() and direction != Vector3.ZERO and horizontal_velocity > 0.1
+	if is_moving_on_ground:
 		_bob_time += delta * bob_frequency * (horizontal_velocity / walk_speed)
 		var bob_offset = sin(_bob_time) * bob_amplitude
 		camera.position.y = lerp(camera.position.y, _camera_base_y + bob_offset, bob_lerp_speed * delta)
 	else:
 		_bob_time = 0.0
 		camera.position.y = lerp(camera.position.y, _camera_base_y, bob_lerp_speed * delta)
+
+	# Walking SFX
+	if walking_audio:
+		if is_moving_on_ground:
+			if not walking_audio.playing:
+				walking_audio.play()
+		else:
+			if walking_audio.playing:
+				walking_audio.stop()
 
 	# Camera rotation
 	camera_pivot.rotate_y(_twist_input)

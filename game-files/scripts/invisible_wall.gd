@@ -12,6 +12,10 @@ var _dialogue_label: Label = null
 var _visual_indicator: MeshInstance3D = null
 var _area: Area3D = null
 var _player_controller: CharacterBody3D = null
+var _dialogue_active := false
+var _use_dialogue_balloon := false
+var _wall_index := -1
+var _balloon_instance: CanvasLayer = null
 
 func _ready() -> void:
 	set_physics_process(true)
@@ -29,11 +33,28 @@ func _ready() -> void:
 		_area.body_entered.connect(_on_body_entered)
 		_area.body_exited.connect(_on_body_exited)
 
-	# Create dialogue label (hidden by default)
+	# Determine if this wall should show dialogue (only InvisibleWall1-12)
+	_wall_index = _get_wall_index()
+	_use_dialogue_balloon = _wall_index >= 1 and _wall_index <= 12
+
+	# Create dialogue label (hidden by default) for legacy use, but
+	# actual on-screen text is only shown via dialogue balloons for
+	# numbered walls 1-12.
 	_create_dialogue_ui()
 
 	# Find player controller in scene
 	call_deferred("_find_player_controller")
+
+func _get_wall_index() -> int:
+	var name_str := str(name)
+	var digits := ""
+	for i in range(name_str.length() - 1, -1, -1):
+		var ch := name_str[i]
+		if ch >= '0' and ch <= '9':
+			digits = ch + digits
+		else:
+			break
+	return int(digits) if digits != "" else -1
 
 func _find_player_controller() -> void:
 	"""Find the PlayerController in the scene"""
@@ -178,14 +199,40 @@ func _trigger_wall_effect(player: Node3D) -> void:
 	_cooldown_active = false
 
 func _show_dialogue_continuous() -> void:
-	"""Display the dialogue text continuously while player is in area"""
-	if not _dialogue_label:
-		print("DEBUG: No dialogue label found!")
+	"""Display the dialogue text while player is in area.
+
+	For InvisibleWall1-12 this uses the DialogueManager balloon so it
+	matches the payphone-style dialogue UI. Other walls keep their
+	pushback but show no on-screen text.
+	"""
+	if _use_dialogue_balloon:
+		_show_dialogue_balloon()
 		return
 
-	print("DEBUG: Setting dialogue visible - Text: ", dialogue_text)
-	_dialogue_label.text = dialogue_text
-	_dialogue_label.visible = true
+	# For walls outside 1-12, we don't show any on-screen text.
+	return
+
+func _show_dialogue_balloon() -> void:
+	"""Show a DialogueManager balloon with this wall's dialogue_text."""
+	if _dialogue_active:
+		return
+
+	_dialogue_active = true
+
+	var dm := Engine.get_singleton("DialogueManager")
+	if dm == null:
+		print("DEBUG: DialogueManager singleton not found; cannot show wall dialogue")
+		return
+
+	var text_block := "~ start\n\n**%s**\n\n=> END\n" % dialogue_text
+	var resource: Resource = dm.create_resource_from_text(text_block)
+	_balloon_instance = dm.show_example_dialogue_balloon(resource, "start")
+	if _balloon_instance:
+		_balloon_instance.tree_exited.connect(_on_balloon_closed)
+
+func _on_balloon_closed() -> void:
+	_dialogue_active = false
+	_balloon_instance = null
 
 func _hide_dialogue() -> void:
 	"""Hide the dialogue text"""

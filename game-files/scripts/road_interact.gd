@@ -33,14 +33,10 @@ func interact() -> void:
 	if root2:
 		var pf = root2.get_node_or_null("torre/Path3D/PathFollow3D")
 		if pf and pf.has_signal("movement_finished"):
-			print("DEBUG: Waiting for carro_exterior2 to finish movement...")
-			var finished := false
-			pf.movement_finished.connect(func(): finished = true)
-			var timer = get_tree().create_timer(25.0)
-			while not finished and timer.time_left > 0.0:
-				await get_tree().process_frame
-			print("DEBUG: Movement finished or timeout reached, starting fade quickly")
-			await get_tree().create_timer(0.2).timeout
+			print("DEBUG: Waiting for carro_exterior2 movement_finished (honk)...")
+			await pf.movement_finished
+			print("DEBUG: Help car movement_finished received, showing stranger dialogue")
+			await _show_stranger_lift_dialogue()
 	else:
 		# Fallback: fixed delay if PathFollow not found
 		print("DEBUG: PathFollow3D not found, falling back to fixed wait")
@@ -49,6 +45,20 @@ func interact() -> void:
 	# Trigger smooth fade to black and credits
 	print("DEBUG: Starting smooth fade credits")
 	_show_credits_with_fade()
+
+
+## Show the stranger dialogue after the help car arrives and honks
+func _show_stranger_lift_dialogue() -> void:
+	print("DEBUG: Showing stranger lift dialogue")
+	var dm = DialogueManager
+	if dm == null:
+		print("DEBUG: DialogueManager autoload not found; cannot show stranger dialogue")
+		return
+
+	var text_block := "~ start\n\n**Stranger: Is you car broken?**\n**Come on in, it's freezing, I'll give you a ride back.**\n\n=> END\n"
+	var resource: Resource = dm.create_resource_from_text(text_block)
+	dm.show_example_dialogue_balloon(resource, "start")
+	await dm.dialogue_ended
 
 
 func _show_credits_with_fade() -> void:

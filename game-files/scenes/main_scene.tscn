@@ -9,7 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://c5hksj70ixl23" path="res://scenes/terrain_3.tscn" id="7_c16ls"]
 [ext_resource type="CompositorEffect" uid="uid://cil7asi5ishrm" path="res://NewCloudsGD.tres" id="8_3mjum"]
 [ext_resource type="Script" uid="uid://byn3gfaemrrwf" path="res://scripts/fog_controller.gd" id="9_fog"]
-[ext_resource type="Resource" path="res://torre_data/data.hterrain" id="10_cn4eu"]
+[ext_resource type="Resource" uid="uid://dstyegoambfu1" path="res://torre_data/data.hterrain" id="10_cn4eu"]
 [ext_resource type="Script" uid="uid://dxqdn5ho6vkac" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="11_0wyf6"]
 [ext_resource type="Texture2D" uid="uid://d02y0r658ygci" path="res://slot0_albedo_bump.png" id="12_xp01v"]
 [ext_resource type="Texture2D" uid="uid://42clyokl46g5" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Color.jpg" id="13_jix7a"]
@@ -36,9 +36,9 @@
 [ext_resource type="PackedScene" uid="uid://w53pa5aphifw" path="res://assets/house_1.glb" id="34_1sx6m"]
 [ext_resource type="PackedScene" uid="uid://dyu43knp3o5c7" path="res://house_2.tscn" id="35_0uct7"]
 [ext_resource type="PackedScene" uid="uid://bman7pxxghc5i" path="res://balls.tscn" id="36_1a541"]
-[ext_resource type="PackedScene" uid="uid://cqxwr5nb0gl44" path="res://castelo.tscn" id="37_gwxm2"]
+[ext_resource type="PackedScene" path="res://castelo.tscn" id="37_gwxm2"]
 [ext_resource type="Texture2D" uid="uid://bkbskfoh2fet4" path="res://assets/raw_textures/torre_texture/Rocks006_1K-JPG_Roughness.jpg" id="38_llmay"]
-[ext_resource type="PackedScene" uid="uid://bmtrrsd84gcrh" path="res://pelourinho.tscn" id="39_ihyyi"]
+[ext_resource type="PackedScene" path="res://pelourinho.tscn" id="39_ihyyi"]
 [ext_resource type="PackedScene" uid="uid://dv3yrerb34qis" path="res://scenes/payphone2.tscn" id="40_xp01v"]
 [ext_resource type="PackedScene" uid="uid://c44qbvkxhw5bk" path="res://scenes/InvisibleWall.tscn" id="41_0wyf6"]
 [ext_resource type="PackedScene" uid="uid://csyyhuhs1ntvi" path="res://scenes/npc_2.tscn" id="42_0wyf6"]
@@ -1628,10 +1628,10 @@ modulate = Color(0.24705882, 0.39215687, 0.3137255, 1)
 text = "1900m"
 
 [node name="shed_1" parent="torre" instance=ExtResource("32_taqkn")]
-transform = Transform3D(-2.9726539, 0, -0.40413773, 0, 3, 0, 0.40413773, 0, -2.9726539, 457.67603, 216.06532, 337.01154)
+transform = Transform3D(-2.972654, 0, -0.40413773, 0, 3, 0, 0.40413773, 0, -2.972654, 457.67603, 213.07408, 337.01154)
 
 [node name="shed_2" parent="torre" instance=ExtResource("32_taqkn")]
-transform = Transform3D(0.1530906, 0, 10.567286, 0, 3, 0, -4.852536, 0, 0.33338273, 370.12906, 216.06532, 358.38232)
+transform = Transform3D(0.1530906, 0, 10.567286, 0, 3, 0, -4.852536, 0, 0.33338273, 370.12866, 214.65782, 358.38232)
 
 [node name="ski" parent="torre" instance=ExtResource("33_qnap4")]
 transform = Transform3D(-1.0871427, 0, 0.88211155, 0, 1.4, 0, -0.88211155, 0, -1.0871427, 284.23376, 215.46513, 337.49155)
@@ -1643,10 +1643,10 @@ transform = Transform3D(0.34876233, 0, -3.9847674, 0, 2.0190501, 0, 3.9847674, 0
 transform = Transform3D(-0.090749145, 0, -3.9989712, 0, 2.0190501, 0, 3.9989712, 0, -0.090749145, 362.75732, 216.62645, 502.7119)
 
 [node name="Sketchfab_Scene3" parent="torre" instance=ExtResource("35_0uct7")]
-transform = Transform3D(-0.0137616955, 0, -0.4968141, 0, 0.3714953, 0, 0.43166566, 0, -0.015838657, 365.93353, 214.70015, 413.56866)
+transform = Transform3D(-0.013761695, 0, -0.4968141, 0, 0.37149534, 0, 0.43166566, 0, -0.015838657, 365.93335, 213.62825, 413.56866)
 
 [node name="shed_4" parent="torre" instance=ExtResource("32_taqkn")]
-transform = Transform3D(0.07942061, 0, 2.998948, 0, 3, 0, -2.998948, 0, 0.07942061, 300.1438, 216.06532, 457.92984)
+transform = Transform3D(0.07942061, 0, 2.998948, 0, 3, 0, -2.998948, 0, 0.07942061, 300.1438, 215.45952, 457.92984)
 
 [node name="house_4" parent="torre" instance=ExtResource("27_wqttf")]
 transform = Transform3D(-0.49214274, 0, -0.026749782, 0, 0.5, 0, 0.018975127, 0, -0.69378775, 688.3332, 215.0849, 582.3478)
@@ -1759,6 +1759,7 @@ transform = Transform3D(0.6205869, 0, 0.7841378, 0, 1, 0, -0.7841378, 0, 0.62058
 transform = Transform3D(0.15615258, 0, 1.9938948, 0, 2, 0, -1.9938948, 0, 0.15615258, 424.8147, 216.42593, 594.08466)
 
 [node name="Sketchfab_Scene4" parent="torre/billboard" instance=ExtResource("47_267kh")]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, -1.2046127, 0)
 
 [node name="Sprite3D" type="Sprite3D" parent="torre/billboard"]
 transform = Transform3D(-0.02937571, 0, 2.3018136, 0, 0.9084649, 0, -1.0241266, 0, -0.06602444, 0.7786255, 9.812065, 0.024658203)
@@ -1852,31 +1853,108 @@ transform = Transform3D(-0.9056946, 0, 0.4239308, 0, 1, 0, -0.4239308, 0, -0.905
 hitchhiker_id = 1
 placement_id = 2
 
-[node name="InvisibleWall" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(3.321815, 0, 1.4512652, 0, 3.625, 0, -1.4512652, 0, 3.321815, 1050.6808, 75.795784, 156.2541)
-
-[node name="InvisibleWall2" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(-1.5586456, 0, 2.9313858, 0, 3.32, 0, -2.9313858, 0, -1.5586456, 1021.586, 76.6957, 180.02855)
-
-[node name="InvisibleWall3" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(2.9714508, 0, 1.8209074, 0, 3.485, 0, -1.8209074, 0, 2.9714508, 1030.4248, 76.699005, 166.97107)
-
-[node name="InvisibleWall4" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(2.2919197, 0, 1.1627572, 0, 2.57, 0, -1.1627572, 0, 2.2919197, 1032.3015, 77.84879, 182.79088)
-
-[node name="InvisibleWall5" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(2.6455567, 0, 1.0049528, 0, 2.83, 0, -1.0049528, 0, 2.6455567, 1053.3324, 76.544876, 174.26784)
-
-[node name="InvisibleWall6" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(0.6597512, 0, 2.551069, 0, 2.635, 0, -2.551069, 0, 0.6597512, 1085.0101, 76.56898, 158.66434)
-
-[node name="InvisibleWall7" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(2.35, 0, 0, 0, 2.35, 0, 0, 0, 2.35, 1074.9829, 76.73458, 170.01422)
-
-[node name="InvisibleWall8" parent="." instance=ExtResource("41_0wyf6")]
-transform = Transform3D(3.32, 0, 0, 0, 3.32, 0, 0, 0, 3.32, 1077.7452, 78.13745, 148.11412)
-
 [node name="TitleScreen" parent="." instance=ExtResource("54_title")]
+
+[node name="paredes" type="Node3D" parent="."]
+
+[node name="InvisibleWall" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(11.136613, 0, -0.20744513, 0, 3.625001, 0, 0.7750369, 0, 2.9808078, 1028.2397, 82.18552, 111.88045)
+
+[node name="InvisibleWall2" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.19396032, 0, 3.4676347, 0, 3.32, 0, -13.995301, 0, -0.04805781, 974.03217, 79.663895, 185.73024)
+
+[node name="InvisibleWall3" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(9.694106, 0, 0.2911838, 0, 3.4849997, 0, -0.6668275, 0, 4.233129, 1041.6934, 80.87148, 279.9149)
+
+[node name="InvisibleWall4" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-2.5220668, 0, 3.0585945, 0, 4.3476458, 0, -3.4070098, 0, -2.2641497, 990.27625, 77.84879, 268.0523)
+
+[node name="InvisibleWall5" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(8.44983, 0, 1.842492, 0, 5.4881196, 0, -3.2097898, 0, 4.850394, 1107.6696, 75.08842, 259.90903)
+
+[node name="InvisibleWall6" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(2.8392792, 0, -2.548409, 0, 4.4673576, 0, -13.634848, 0, -0.5306729, 1139.6405, 76.56898, 217.32109)
+
+[node name="InvisibleWall7" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(8.150098, 0, 0.55524814, 0, 3.9762204, 0, 3.1379995, 0, -1.4421055, 1140.785, 76.73458, 166.54022)
+
+[node name="InvisibleWall8" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(1.8082501, 0, -2.7843547, 0, 3.32, 0, 2.7843547, 0, 1.8082501, 1093.4063, 76.8032, 138.34538)
+
+[node name="InvisibleWall9" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(1.8486629, 0, -3.194389, 0, 5.48812, 0, 3.462383, 0, 1.7055731, 1080.8093, 75.08842, 124.38202)
+
+[node name="InvisibleWall10" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-3.0359795, 0, -2.2951152, 0, 5.4881196, 0, 2.4876647, 0, -2.80099, 972.72815, 75.08842, 114.02411)
+
+[node name="InvisibleWall11" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-3.0359795, 0, -2.2951152, 0, 5.4881196, 0, 2.4876647, 0, -2.80099, 972.72815, 75.08842, 114.02411)
+
+[node name="InvisibleWall12" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.058001608, 0, 20.012264, 0, 2.9887345, 0, -7.193102, 0, -0.16136971, 1005.0991, 78.89942, 195.75273)
+
+[node name="InvisibleWall13" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.017319907, 0, 19.892391, 0, 2.9887345, 0, -2.1479378, 0, -0.1604031, 984.09766, 78.89942, 195.75273)
+
+[node name="InvisibleWall14" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.005231322, 0, 7.2171974, 0, 2.9887345, 0, -0.64876515, 0, -0.05819617, 982.97546, 78.89942, 158.28436)
+
+[node name="InvisibleWall15" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.004780627, 0, 6.6048055, 0, 2.9887345, 0, -0.592872, 0, -0.05325812, 1039.1045, 78.89942, 117.56373)
+
+[node name="InvisibleWall16" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.021100199, 0, 26.984991, 0, 2.9887345, 0, -2.6167529, 0, -0.21759456, 1008.0533, 81.757515, 142.5528)
+
+[node name="InvisibleWall17" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.005620084, 0, 19.735483, 0, 2.9887345, 0, -0.69697773, 0, -0.15913786, 1005.20087, 78.89942, 123.63468)
+
+[node name="InvisibleWall18" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.006899819, 0, 8.578125, 0, 2.9887345, 0, -0.85568476, 0, -0.069170065, 1020.49133, 78.89942, 192.71942)
+
+[node name="InvisibleWall19" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.0025809014, 0, 3.0303276, 0, 2.9887345, 0, -0.32007188, 0, -0.02443517, 1027.2505, 78.89942, 205.54376)
+
+[node name="InvisibleWall20" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.009457327, 0, 15.346773, 0, 2.9887345, 0, -1.1728555, 0, -0.12374935, 1010.6873, 78.89942, 242.96048)
+
+[node name="InvisibleWall21" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.012369028, 0, 15.375959, 0, 2.9887345, 0, -1.5339518, 0, -0.123984694, 1038.1597, 78.89942, 274.43887)
+
+[node name="InvisibleWall22" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.01734932, 0, 14.051006, 0, 2.9887345, 0, -2.1515856, 0, -0.11330086, 997.2206, 78.89942, 264.2628)
+
+[node name="InvisibleWall23" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.022186985, 0, 14.080627, 0, 2.9887345, 0, -2.7515314, 0, -0.11353972, 1115.8745, 78.89942, 201.4126)
+
+[node name="InvisibleWall24" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(1.3905509, 0, 8.813523, 0, 2.9887345, 0, -1.6038241, 0, 7.641517, 979.0351, 80.762215, 117.03539)
+
+[node name="InvisibleWall25" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.00096366345, 0, 1.8811003, 0, 2.9887345, 0, -0.11950923, 0, -0.015168328, 1028.0582, 78.89942, 177.08257)
+
+[node name="InvisibleWall26" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(2.6441727, 0, -0.85537195, 0, 5.48812, 0, 0.38998565, 0, 5.799573, 1067.5103, 75.08842, 211.2137)
+
+[node name="InvisibleWall27" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(1.2472074, 0, 5.1849265, 0, 5.48812, 0, -2.3639398, 0, 2.7355518, 1084.4482, 75.08842, 204.5678)
+
+[node name="InvisibleWall28" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(1.4380882, 0, -4.941418, 0, 5.48812, 0, 2.2529175, 0, 3.1542184, 1084.3522, 75.08842, 187.5651)
+
+[node name="InvisibleWall29" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-2.6135917, 0, -1.2268492, 0, 5.4881206, 0, 0.5593517, 0, -5.7324996, 1065.9252, 75.08842, 178.15807)
+
+[node name="InvisibleWall30" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(0.16616066, 0, 3.9944086, 0, 5.488119, 0, -3.0591774, 0, 0.2169585, 1053.088, 75.08842, 193.51897)
+
+[node name="InvisibleWall31" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.05431966, 0, 3.6447935, 0, 5.4881196, 0, -5.1956477, 0, -0.0381053, 1060.7466, 75.08842, 127.80091)
+
+[node name="InvisibleWall32" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(-0.051799618, 0, 3.643425, 0, 5.4881196, 0, -4.954607, 0, -0.038090993, 1082.9594, 76.83316, 127.80091)
+
+[node name="InvisibleWall33" parent="paredes" instance=ExtResource("41_0wyf6")]
+transform = Transform3D(2.4242456, 0, 0.119396284, 0, 5.48812, 0, -0.08084384, 0, 3.5803223, 1071.6824, 76.83316, 152.22255)
 
 [editable path="terrain_11"]
 [editable path="terrain_2"]
