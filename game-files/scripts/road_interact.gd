@@ -55,7 +55,7 @@ func _show_stranger_lift_dialogue() -> void:
 		print("DEBUG: DialogueManager autoload not found; cannot show stranger dialogue")
 		return
 
-	var text_block := "~ start\n\n**Stranger: Is you car broken?**\n**Come on in, it's freezing, I'll give you a ride back.**\n\n=> END\n"
+	var text_block := "~ start\n\n**Stranger: Hey, it's freezing, where are you going?**\n****\n\n=> END\n"
 	var resource: Resource = dm.create_resource_from_text(text_block)
 	dm.show_example_dialogue_balloon(resource, "start")
 	await dm.dialogue_ended
