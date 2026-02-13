@@ -56,6 +56,9 @@ var mutation_cooldown: Timer = Timer.new()
 ## The menu of responses
 @onready var responses_menu: DialogueResponsesMenu = %ResponsesMenu
 
+const PHONE_RING_SFX := preload("res://assets/audio/sfx/phone-ring.mp3")
+var _ring_player: AudioStreamPlayer = null
+
 
 func _ready() -> void:
 	balloon.hide()
@@ -71,6 +74,11 @@ func _ready() -> void:
 
 	mutation_cooldown.timeout.connect(_on_mutation_cooldown_timeout)
 	add_child(mutation_cooldown)
+
+	# Set up local audio player for special payphone ring line
+	_ring_player = AudioStreamPlayer.new()
+	_ring_player.stream = PHONE_RING_SFX
+	add_child(_ring_player)
 
 
 func _process(delta: float) -> void:
@@ -182,6 +190,13 @@ func apply_dialogue_line() -> void:
 		dialogue_label.type_out()
 		await dialogue_label.finished_typing
 
+		# Special handling for payphone "..." line: play ring SFX and
+		# auto-advance only after the audio finishes, without allowing
+		# the player to skip early.
+		if _is_payphone_ring_line():
+			await _play_phone_ring_and_advance()
+			return
+
 	# Wait for input
 	if dialogue_line.responses.size() > 0:
 		balloon.focus_mode = Control.FOCUS_NONE
@@ -194,6 +209,24 @@ func apply_dialogue_line() -> void:
 		is_waiting_for_input = true
 		balloon.focus_mode = Control.FOCUS_ALL
 		balloon.grab_focus()
+
+
+func _is_payphone_ring_line() -> bool:
+	if resource == null:
+		return false
+	# Only care about the payphone dialogue resource
+	if not str(resource.resource_path).find("payphone_dialogue") != -1:
+		return false
+	var t := dialogue_line.text.strip_edges()
+	return t == "..." or t.contains("...")
+
+
+func _play_phone_ring_and_advance() -> void:
+	if _ring_player and _ring_player.stream:
+		_ring_player.stop()
+		_ring_player.play()
+		await _ring_player.finished
+	next(dialogue_line.next_id)
 
 
 ## Go to the next line
