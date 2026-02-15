@@ -3,6 +3,8 @@ extends PathFollow3D
 signal movement_finished
 
 const HONK_SFX = preload("res://assets/audio/sfx/honk.mp3")
+const CAR_IDLE_SFX = preload("res://assets/audio/sfx/car_idle.mp3")
+const CAR_DRIVING_SFX = preload("res://assets/audio/sfx/car_driving.mp3")
 
 @export var move_speed: float = 25
 
@@ -17,7 +19,9 @@ var _smoothed_basis: Basis = Basis.IDENTITY
 var _position_offset: Vector3 = Vector3.ZERO
 var _orientation_offset: Basis = Basis.IDENTITY
 var _vertical_offset: float = 0.0
-var _audio_player: AudioStreamPlayer = null
+var _honk_player: AudioStreamPlayer = null
+var _idle_player: AudioStreamPlayer = null
+var _driving_player: AudioStreamPlayer = null
 
 @export_range(0.0, 1.0, 0.01) var smoothing: float = 0.15
 @export var ride_height: float = 0.0
@@ -58,11 +62,27 @@ func _ready() -> void:
 			# Hide the car until the lift interaction actually starts it moving.
 			_car_node.visible = false
 
-			# Set up a local audio player for the honk.
-			_audio_player = AudioStreamPlayer.new()
-			_audio_player.stream = HONK_SFX
-			_audio_player.bus = "Master"
-			_car_node.add_child(_audio_player)
+			# Set up local audio players for the stranger's car
+			_honk_player = AudioStreamPlayer.new()
+			_honk_player.stream = HONK_SFX
+			_honk_player.bus = "Master"
+			_car_node.add_child(_honk_player)
+
+			_idle_player = AudioStreamPlayer.new()
+			_idle_player.stream = CAR_IDLE_SFX
+			_idle_player.bus = "Master"
+			_idle_player.autoplay = false
+			_car_node.add_child(_idle_player)
+			if _idle_player.stream is AudioStreamMP3:
+				(_idle_player.stream as AudioStreamMP3).loop = true
+
+			_driving_player = AudioStreamPlayer.new()
+			_driving_player.stream = CAR_DRIVING_SFX
+			_driving_player.bus = "Master"
+			_driving_player.autoplay = false
+			_car_node.add_child(_driving_player)
+			if _driving_player.stream is AudioStreamMP3:
+				(_driving_player.stream as AudioStreamMP3).loop = true
 
 	set_process(false)
 	_update_car_transform()
@@ -81,6 +101,7 @@ func start_moving() -> void:
 	_has_initial_transform = false
 	set_process(true)
 	_update_car_transform()
+	_start_engine_audio()
 
 
 func _process(delta: float) -> void:
@@ -97,7 +118,7 @@ func _process(delta: float) -> void:
 		_update_car_transform()
 		_moving = false
 		set_process(false)
-		_play_honk()
+		_stop_engine_audio()
 		emit_signal("movement_finished")
 		return
 
@@ -105,11 +126,23 @@ func _process(delta: float) -> void:
 
 
 func _play_honk() -> void:
-	if _audio_player == null:
+	if _honk_player == null:
 		return
-	if _audio_player.playing:
+	if _honk_player.playing:
 		return
-	_audio_player.play()
+	_honk_player.play()
+
+func _start_engine_audio() -> void:
+	if _driving_player:
+		_driving_player.play()
+	if _idle_player and _idle_player.playing:
+		_idle_player.stop()
+
+func _stop_engine_audio() -> void:
+	if _idle_player and _idle_player.playing:
+		_idle_player.stop()
+	if _driving_player and _driving_player.playing:
+		_driving_player.stop()
 
 
 func _update_car_transform() -> void:

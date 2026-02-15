@@ -23,6 +23,9 @@ var hitchhiker_4_completed: bool = false  # Flag to trigger torre teleport after
 # Format: { placement_id: { "position": Vector3, "rotation": Vector3 } }
 var hitchhiker_placements: Dictionary = {}
 
+const BREATHING_FAST_SFX := preload("res://assets/audio/sfx/breathing-fast.mp3")
+var _breathing_player: AudioStreamPlayer = null
+
 # Game start state
 var game_started: bool = false  # Flag to track if player has taken the wheel
 
@@ -98,6 +101,29 @@ func _ready():
 	print("GameManager initialized - connected to ", hitchhikers_node.get_child_count(), " hitchhikers")
 	print("Waiting for player to take the wheel before enabling hitchhikers...")
 
+	# Set up breathing-fast SFX player for bad ending "DO IT" choice
+	_breathing_player = AudioStreamPlayer.new()
+	_breathing_player.stream = BREATHING_FAST_SFX
+	_breathing_player.autoplay = false
+	if _breathing_player.stream is AudioStreamMP3:
+		(_breathing_player.stream as AudioStreamMP3).loop = true
+	add_child(_breathing_player)
+
+	print("GameManager: Breathing-fast SFX player initialized")
+
+func play_breathing_fast() -> void:
+	if _breathing_player == null:
+		return
+	if _breathing_player.playing:
+		return
+	_breathing_player.play()
+
+func stop_breathing_fast() -> void:
+	if _breathing_player == null:
+		return
+	if _breathing_player.playing:
+		_breathing_player.stop()
+
 func on_payphone_choice(chose_yes: bool) -> void:
 	# Record the player's choice at the torre payphone
 	payphone_used = true
@@ -107,26 +133,26 @@ func on_payphone_choice(chose_yes: bool) -> void:
 	if not root:
 		return
 
-	# Hide the initial torre arrow once the payphone has been used
-	var arrow = root.get_node_or_null("torre/arrow")
-	if arrow:
-		arrow.visible = false
+	# Hide the initial torre lamp once the payphone has been used
+	var lamp = root.get_node_or_null("torre/lamp")
+	if lamp:
+		lamp.visible = false
 
 	if chose_yes:
-		# Called for help - show arrow to road interaction (arrow3)
-		var arrow3 = root.get_node_or_null("torre/arrow3")
-		if arrow3:
-			arrow3.visible = true
+		# Called for help - show lamp to road interaction (lamp3)
+		var lamp3 = root.get_node_or_null("torre/lamp3")
+		if lamp3:
+			lamp3.visible = true
 
 		# Enable road interaction collider
 		var road_interact = root.get_node_or_null("torre/RoadInteract")
 		if road_interact and road_interact is StaticBody3D:
 			road_interact.collision_layer = 2
 	else:
-		# Didn't call for help - show arrow to car (arrow2)
-		var arrow2 = root.get_node_or_null("torre/arrow2")
-		if arrow2:
-			arrow2.visible = true
+		# Didn't call for help - show lamp to car (lamp2)
+		var lamp2 = root.get_node_or_null("torre/lamp2")
+		if lamp2:
+			lamp2.visible = true
 
 		# Enable interaction collider for the parked car in the torre
 		var carro_interact = root.get_node_or_null("torre/carro_exterior/CarroInteract")
@@ -275,6 +301,12 @@ func _on_player_passed_by_hitchhiker(npc: Node3D) -> void:
 func _on_lap_started(lap_number: int) -> void:
 	print("Car started lap ", lap_number)
 
+	# After the first full loop (once lap 2 starts), hide the
+	# on-screen "Press TAB to check controls" hint so it only
+	# appears for the first lap of the game.
+	if lap_number >= 2:
+		_hide_controls_hint()
+
 	# Check if we should enable the next hitchhiker
 	# Only enable if not currently in dialogue (prevents enabling during multi-lap dialogues)
 	if enable_next_hitchhiker_on_next_lap and not in_dialogue:
@@ -296,6 +328,23 @@ func _on_lap_started(lap_number: int) -> void:
 	# - Track lap count for achievements
 	# - Change game state based on lap progression
 	# - etc.
+
+func _hide_controls_hint() -> void:
+	var root = get_tree().get_current_scene()
+	if not root:
+		return
+
+	var player_controller = root.get_node_or_null("PlayerController")
+	if not player_controller:
+		return
+
+	var canvas_layer = player_controller.get_node_or_null("Control")
+	if not canvas_layer:
+		return
+
+	var controls_ui = canvas_layer.get_node_or_null("ControlsUI")
+	if controls_ui and controls_ui.has_method("hide_hint_forever"):
+		controls_ui.hide_hint_forever()
 
 func handle_hitchhiker_interaction(hitchhiker: Node3D):
 	# Stop the car and disable input via the road_car_follower

@@ -75,6 +75,10 @@ UP/DOWN ARROWS - Select Dialogue Option"""
 	_controls_panel.add_child(margin)
 	add_child(_controls_panel)
 
+func hide_hint_forever() -> void:
+	if _hint_label:
+		_hint_label.visible = false
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_TAB:
 		_controls_visible = not _controls_visible

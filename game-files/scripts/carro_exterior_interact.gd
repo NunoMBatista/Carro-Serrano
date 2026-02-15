@@ -58,6 +58,9 @@ func _on_dialogue_ended(_resource: DialogueResource) -> void:
 
 func _show_do_it_dialogue() -> void:
 	_dialogue_active = true
+	var gm = _get_game_manager()
+	if gm and gm.has_method("play_breathing_fast"):
+		gm.play_breathing_fast()
 	DialogueManager.passed_title.connect(_on_do_it_passed_title)
 	DialogueManager.dialogue_ended.connect(_on_do_it_dialogue_ended)
 	DialogueManager.show_example_dialogue_balloon(DO_IT_DIALOGUE, "start")
@@ -79,6 +82,9 @@ func _on_do_it_dialogue_ended(_resource: DialogueResource) -> void:
 
 func _trigger_hard_cut_credits() -> void:
 	print("DEBUG: _trigger_hard_cut_credits called")
+	var gm = _get_game_manager()
+	if gm and gm.has_method("stop_breathing_fast"):
+		gm.stop_breathing_fast()
 	# Hard cut: immediately stop music and cut to black, then show credits
 	RadioManager._stop_all()
 	RadioManager._stop_base_track()

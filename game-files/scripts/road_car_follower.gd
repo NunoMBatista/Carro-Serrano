@@ -43,7 +43,7 @@ var _dialogue_active := false  # True when dialogue is active, disables player i
 var _breakdown_leave_prompt_ui: Control = null  # UI for "Press L to leave car" after breakdown
 var _waiting_for_breakdown_leave := false  # True when waiting for player to press L after breakdown
 
-const MAX_SPEED := 30
+const MAX_SPEED := 300
 const ACCEL_STRENGTH := 3.5
 const BRAKE_STRENGTH := 100
 const MIN_SPEED := 0.0
@@ -140,6 +140,7 @@ func _process(delta: float) -> void:
 
 	# Handle audio based on velocity and braking
 	_update_audio(delta)
+	_sync_crosshairs()
 
 func _find_container() -> Node:
 	if road_container_path != NodePath(""):
@@ -770,10 +771,11 @@ func _show_torre_parked_car() -> void:
 		var parked_car = root.get_node("torre/carro_exterior/carro_mod_25d")
 		parked_car.visible = true
 
-	# Show the main torre arrow when leaving the car
-	if root and root.has_node("torre/arrow"):
-		var arrow = root.get_node("torre/arrow")
-		arrow.visible = true
+	# Show the main torre lamp when leaving the car
+	if root:
+		var lamp = root.get_node_or_null("torre/lamp")
+		if lamp:
+			lamp.visible = true
 
 
 func _disable_car_crosshair() -> void:
@@ -795,6 +797,34 @@ func _enable_car_crosshair() -> void:
 		crosshair.set_process(true)
 		crosshair.set_process_input(true)
 		crosshair.set_process_unhandled_input(true)
+
+
+func _sync_crosshairs() -> void:
+	var root = get_tree().get_current_scene()
+	if not root:
+		return
+
+	# Ensure only one crosshair is visible at a time:
+	# - In car mode: use the Carro/Player crosshair
+	# - On foot (walking mode): use the PlayerController crosshair
+	var carro = get_node_or_null("Carro")
+	if carro and carro.has_node("Player/Control/CrossHair"):
+		var car_crosshair = carro.get_node("Player/Control/CrossHair")
+		var want_car_visible = not _in_walking_mode
+		if car_crosshair.visible != want_car_visible:
+			car_crosshair.visible = want_car_visible
+
+	var player_controller: Node = null
+	if player_controller_path != NodePath(""):
+		player_controller = get_node_or_null(player_controller_path)
+	else:
+		player_controller = root.get_node_or_null("PlayerController")
+
+	if player_controller and player_controller.has_node("Control/CrossHair"):
+		var pc_crosshair = player_controller.get_node("Control/CrossHair")
+		var want_pc_visible = _in_walking_mode
+		if pc_crosshair.visible != want_pc_visible:
+			pc_crosshair.visible = want_pc_visible
 
 
 func return_to_car_from_torre() -> void:
@@ -850,6 +880,10 @@ func _on_leave_car_passed_title(title: String) -> void:
 func _show_bad_empathy_ending() -> void:
 	_leave_dialogue_active = true
 	_leave_last_title = ""
+
+	var gm = get_node_or_null("/root/GameManager")
+	if gm and gm.has_method("play_breathing_fast"):
+		gm.play_breathing_fast()
 
 	DialogueManager.passed_title.connect(_on_bad_ending_passed_title)
 	DialogueManager.dialogue_ended.connect(_on_bad_ending_dialogue_ended)
@@ -924,8 +958,8 @@ func _show_breakdown_leave_prompt() -> void:
 		label.add_theme_font_override("font", font)
 
 	# Style the label
-	label.add_theme_font_size_override("font_size", 48)
-	label.add_theme_color_override("font_color", Color.RED)
+	label.add_theme_font_size_override("font_size", 32)
+	label.add_theme_color_override("font_color", Color.WHITE)
 	label.add_theme_color_override("font_outline_color", Color.BLACK)
 	label.add_theme_constant_override("outline_size", 8)
 
@@ -941,6 +975,9 @@ func _hide_breakdown_leave_prompt() -> void:
 
 func _trigger_hard_cut_credits() -> void:
 	print("DEBUG: _trigger_hard_cut_credits called (road_car_follower)")
+	var gm = get_node_or_null("/root/GameManager")
+	if gm and gm.has_method("stop_breathing_fast"):
+		gm.stop_breathing_fast()
 	# Hard cut: immediately stop music and cut to black, then show credits
 	RadioManager._stop_all()
 	RadioManager._stop_base_track()

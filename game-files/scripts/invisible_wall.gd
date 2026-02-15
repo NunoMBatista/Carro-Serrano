@@ -1,7 +1,7 @@
 extends Node3D
 ## Invisible wall that shows dialogue and pushes player back when touched
 
-@export var dialogue_text := "get yo ass outa my dick"
+@export var dialogue_text := "..."
 @export var pushback_force := 3.0
 @export var dialogue_duration := 2.0
 @export var cooldown_time := 1.0  # Time before can trigger again
